@@ -4,7 +4,7 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #3b5998;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -74,6 +74,10 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  --theme-color: #3b5998;
+  --theme-black: #000000;
+  --ion-color-gray: #d7d8da;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -145,6 +149,8 @@
     --ion-color-light-contrast-rgb: 255,255,255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
+    
+
   }
 
   /*
@@ -184,6 +190,8 @@
     --ion-item-background: #000000;
 
     --ion-card-background: #1c1c1d;
+    
+   
   }
 
 
@@ -229,4 +237,17 @@
 
     --ion-card-background: #1e1e1e;
   }
+
+  //font
+  @font-face{
+    font-family: 'heebo-regular';
+    src: url('../assets/fonts/heebo/Heebo-Regular.ttf');
+  }
+  @font-face{
+    font-family: 'Heebo-Bold';
+    src: url('../assets/fonts/heebo/Heebo-Bold.ttf');
+  }
+
+  
+  
 }

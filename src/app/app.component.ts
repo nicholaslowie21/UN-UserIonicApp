@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthService } from './services/authentication.service';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
@@ -13,7 +15,9 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private authenticationService: AuthService,
+    private router: Router
   ) {
     this.initializeApp();
   }

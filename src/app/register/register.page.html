@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button color="light" (click)="back()">Close</ion-button>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <form #form="ngForm" (ngSubmit)="register(form)" method="post">
+    <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input ngModel name="name"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input ngModel name="username"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" ngModel name="email"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" ngModel name="password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Bio</ion-label>
+      <ion-input type="bio" ngModel name="bio"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Occupation</ion-label>
+      <ion-input type="occupation" ngModel name="occupation"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Country</ion-label>
+      <ion-input type="country" ngModel name="country"></ion-input>
+    </ion-item>
+  
+    <ion-button type="submit" expand="full" color="danger">Register</ion-button>
+  </form>
+  <p text-center>Already have a account?</p>
+  <ion-button expand="full" color="primary" (click)="back()">Login</ion-button>
+</ion-content>  

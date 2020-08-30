@@ -1,0 +1,39 @@
+<ion-header no-border>
+  <div class="login-header ion-padding">
+      <img class="logo-img" src="assets/img/logo.png">
+  </div>
+</ion-header>
+
+  <ion-content>
+    <div class="center">
+      <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
+        <ion-col size="12" size-sm="10" offset-sm="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4"
+          offset-xl="4">
+          
+            <div heading-column-lr>
+              <h1 class="big-heading">Login</h1>
+            </div>
+
+          <ion-card>
+            
+            <ion-card-content>
+              <ion-item transparent>
+                <img icon-small src="assets/img/user.png" />
+                <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="credentials.email"></ion-input>
+              </ion-item>
+              <ion-item transparent>
+                <img icon-small src="assets/img/lock.png" />
+                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.pw"></ion-input>
+              </ion-item>
+              <div linespace></div>
+              <ion-button (click)="login()" expand="block">Login</ion-button>
+              <ion-button expand="block" color="secondary" routerLink="/register" routerDirection="forward">Register
+              </ion-button>
+    
+            </ion-card-content>
+          </ion-card>
+    
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-content>
