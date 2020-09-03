@@ -17,18 +17,48 @@
           <ion-card>
             
             <ion-card-content>
+              <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
               <ion-item transparent>
-                <img icon-small src="assets/img/user.png" />
-                <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="credentials.email"></ion-input>
+                  <div>
+                    <img icon-small src="assets/img/user.png" />&nbsp;&nbsp;
+                  </div>
+                  <div class="form-group">
+                    <label for="username">Username or Email</label>
+                    <ion-input type="text" class="form-control" name="usernameOrEmail" [(ngModel)]="form.usernameOrEmail" required #usernameOrEmail="ngModel"></ion-input>
+                  </div>
               </ion-item>
               <ion-item transparent>
-                <img icon-small src="assets/img/lock.png" />
-                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="credentials.pw"></ion-input>
+                  <img icon-small src="assets/img/lock.png" />&nbsp;&nbsp;
+                  <div class="form-group">
+                    <label for="username">Password</label>
+                    <ion-input type="password" class="form-control" name="password" [(ngModel)]="form.password" required #password="ngModel"></ion-input>
+                    <div class="alert alert-danger" role="alert" *ngIf="f.submitted && password.invalid">
+                      <div *ngIf="password.errors.required">Password is required</div>
+                      <div *ngIf="password.errors.minlength">
+                          Password must be at least 6 characters
+                      </div>
+                    </div>
+                  </div>
+                
               </ion-item>
+              <div class="form-group">
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="f.submitted && isLoginFailed"
+                >
+                  Login failed: {{ errorMessage }}
+                </div>
+              </div>
               <div linespace></div>
-              <ion-button (click)="login()" expand="block">Login</ion-button>
+              <div class="form-group">
+                <ion-button expand="block" (click)="onSubmit()">Login</ion-button>
+              </div>
               <ion-button expand="block" color="secondary" routerLink="/register" routerDirection="forward">Register
               </ion-button>
+            
+
+            </form>
     
             </ion-card-content>
           </ion-card>

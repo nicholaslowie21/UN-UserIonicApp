@@ -24,3 +24,17 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-toast.toast-pass {
+    opacity: 0.9;
+    text-align: center;
+    color: var(--ion-color-dark);
+    --background: var(--ion-color-success);
+  }
+
+  ion-toast.toast-fail {
+    opacity: 0.9;
+    text-align: center;
+    color: var(--ion-color-dark);
+    --background: var(--ion-color-danger);
+  }

@@ -26,6 +26,14 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.authenticationService.authenticationState.subscribe(state => {
+        if (state) {
+          this.router.navigate(['tabs']);
+        } else {
+          this.router.navigate(['login']);
+        }
+      });
     });
   }
 }

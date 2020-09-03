@@ -2,61 +2,75 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/authentication.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
- 
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'; 
+import { TokenStorageService } from '../services/token-storage.service';
+import { ToastController } from '@ionic/angular';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
-  credentials = {
-    email: 'susan@unsdg.com',
-    pw: 'password'
-  };
- 
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-    private alertCtrl: AlertController
-  ) {}
- 
-  ngOnInit() {}
- 
+  form: any = {};
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
   
-  login() {
-    this.auth.login(this.credentials).subscribe(async res => {
-      if (res) {
-        this.router.navigateByUrl('/tabs');
-      } else {
-        const alert = await this.alertCtrl.create({
-          header: 'Login Failed',
-          message: 'Wrong credentials.',
-          buttons: ['OK']
-        });
-        await alert.present();
-      }
-    });
-  }
-  /*credentialsForm: FormGroup;
- 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
- 
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private tokenStorage:TokenStorageService, private toastCtrl:ToastController) { }
+      username: string;
+      password: string;
+      credentialsForm: FormGroup;
+
   ngOnInit() {
     this.credentialsForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      usernameOrEmail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
  
-  onSubmit() {
-    this.authService.login(this.credentialsForm.value).subscribe();
+  onSubmit(): void {
+    this.authService.login(this.form).subscribe(
+      res => {
+        this.tokenStorage.saveToken(res.data.token);
+        this.tokenStorage.saveUser(res);
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.tokenStorage.getUser().roles;
+        this.successToast();
+        this.router.navigateByUrl("/tabs");
+      },
+      err => {
+        this.failureToast(err);
+        this.isLoginFailed = true;
+      }
+    );
+  }
+
+  reloadPage(): void {
+    window.location.reload();
+  }
+
+  async successToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Login successful',
+      duration: 3000,
+      position: 'middle',
+      cssClass: "toast-pass"
+    });
+    (await toast).present();
   }
  
-  register() {
-    this.authService.register(this.credentialsForm.value).subscribe(res => {
-      // Call Login to automatically login the new user
-      this.authService.login(this.credentialsForm.value).subscribe();
+  async failureToast(error) {
+    const toast = this.toastCtrl.create({
+      message: 'Login Unsuccessful: ' + error,
+      duration: 3000,
+      position: 'middle',
+      cssClass: "toast-fail"
     });
-  }*/
+    (await toast).present();
+  }
  
 }
