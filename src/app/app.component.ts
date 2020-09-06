@@ -28,6 +28,7 @@ export class AppComponent {
       this.splashScreen.hide();
 
       this.authenticationService.authenticationState.subscribe(state => {
+        console.log(state);
         if (state) {
           this.router.navigate(['tabs']);
         } else {

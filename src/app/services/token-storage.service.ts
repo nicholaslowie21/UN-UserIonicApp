@@ -7,6 +7,7 @@ const USER_KEY = 'auth-user';
   providedIn: 'root'
 })
 export class TokenStorageService {
+  accountType: any;
 
   constructor() { }
 
@@ -30,5 +31,13 @@ export class TokenStorageService {
 
   public getUser(): any {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
+  }
+
+  public setAccountType(type) {
+    this.accountType = type;
+  }
+
+  public getAccountType(): any {
+    return this.accountType;
   }
 }

@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button color="light" (click)="back()">Back</ion-button>
+    <ion-title>Update Username</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+    <ion-item>
+        <ion-label position="floating">Username</ion-label>
+        <ion-input ngModel name="username" [(ngModel)]="user.username" required minlength="3" #inusername="ngModel"></ion-input>
+        <div class="alert-danger" *ngIf="updateForm.submitted && inusername.invalid">
+          <div *ngIf="inusername.errors.minlength">
+            Username must be at least 3 characters
+          </div>
+        </div>
+    </ion-item>
+
+    <ion-button type="submit" expand="full" color="danger">Update</ion-button>
+  </form>
+</ion-content>

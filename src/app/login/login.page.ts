@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
         this.router.navigateByUrl("/tabs");
       },
       err => {
-        this.failureToast(err);
+        this.failureToast(err.error.msg); 
         this.isLoginFailed = true;
       }
     );
@@ -56,7 +56,7 @@ export class LoginPage implements OnInit {
   async successToast() {
     const toast = this.toastCtrl.create({
       message: 'Login successful',
-      duration: 3000,
+      duration: 1000,
       position: 'middle',
       cssClass: "toast-pass"
     });
@@ -66,7 +66,7 @@ export class LoginPage implements OnInit {
   async failureToast(error) {
     const toast = this.toastCtrl.create({
       message: 'Login Unsuccessful: ' + error,
-      duration: 3000,
+      duration: 1000,
       position: 'middle',
       cssClass: "toast-fail"
     });

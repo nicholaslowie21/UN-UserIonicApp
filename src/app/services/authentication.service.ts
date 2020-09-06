@@ -9,6 +9,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpRequest, HttpHandler, H
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { tap, catchError, switchMap, map } from 'rxjs/operators';
+import { TokenStorageService } from '../services/token-storage.service';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -37,24 +38,24 @@ export class AuthService {
                 private router: Router, 
                 private alertController: AlertController,
                 private sessionService: SessionService,
-                private helper: JwtHelperService) { 
+                private helper: JwtHelperService,
+                private tokenStorage: TokenStorageService
+                ) { 
                   this.baseUrl = this.sessionService.getRootPath();
                 //check token when ready()
                 //Returns a promise when the platform is ready and native functionality can be called.
                 this.plt.ready().then(() => {
-                  
                     this.checkToken();
                   }); 
   }
-  
-  //Looks in the storage for a valid token and change auth state when found
-  /*checkToken(){
-      return this.storage.get(TOKEN_KEY).then(token => {
+
+
+    checkToken() {
+      this.storage.get(TOKEN_KEY).then(token => {
         if (token) {
-          console.log(token);
           let decoded = this.helper.decodeToken(token);
           let isExpired = this.helper.isTokenExpired(token);
-  
+   
           if (!isExpired) {
             this.user = decoded;
             this.authenticationState.next(true);
@@ -63,58 +64,90 @@ export class AuthService {
           }
         }
       });
-    }*/
-
-    checkToken() {
-      return this.storage.get(TOKEN_KEY).then(res => {
-        if (res) {
-          this.authenticationState.next(true);
-        }
-      })
     }
-
-    /*login(): Observable<any> {
-      console.log(credentials.username);
-      console.log(credentials.password);
-      return this.http.post(this.baseUrl + "/authorization/login", {
-        username: credentials.username,
-        password: credentials.password
-      }, httpOptions);
-    }*/
-
     login(credentials): Observable<any> {
       var loginReq = {}
       loginReq["usernameOrEmail"] = credentials.usernameOrEmail;
       loginReq["password"] = credentials.password;
+      console.log(this.baseUrl);
       return this.http.post(this.baseUrl + "/authorization/login", loginReq, httpOptions)
         .pipe(
           tap(res => {
+              this.tokenStorage.setAccountType(res.data.accountType);
+              this.tokenStorage.saveUser(res.data.user);
               this.authenticationState.next(true);
-          }),
-          catchError(this.handleError)
+          }, error => this.handleError(error)),
+          //catchError(this.handleError)
         ) 
     }
 
-  register(name: string, username: string, email: string, password: string, occupation: string, country: string): Observable<any> {
+  register(name: string, username: string, email: string, password: string, country: string): Observable<any> {
     let createUserReq = {
       "name": name,
       "username": username,
       "email": email,
       "password": password,
-      "occupation": occupation,
       "country": country
     }
-    return this.http.post(this.baseUrl + "/authorization/signup", createUserReq, httpOptions).pipe(
-      catchError(this.handleError)
+    return this.http.post(this.baseUrl + "/authorization/user/signup", createUserReq, httpOptions).pipe(
+      tap(res => {
+        this.tokenStorage.saveUser(res.data.user);
+    }, error => this.handleError(error)),
     );
   }
- 
-  /*logout() {
-    this.storage.remove(TOKEN_KEY).then(() => {
-      this.router.navigateByUrl('/');
-      this.userData.next(null);
-    });
-  }*/
+
+  instituteRegister(name: string, username: string, email: string, password: string, country: string): Observable<any> {
+    let createInstitutionReq = {
+      "name": name,
+      "username": username,
+      "email": email,
+      "password": password,
+      "country": country
+    }
+    return this.http.post(this.baseUrl + "/authorization/institution/signup", createInstitutionReq, httpOptions).pipe(
+      tap(res => {
+        this.tokenStorage.saveUser(res.data.user);
+    }, error => this.handleError(error)),
+    );
+  }
+
+  changeUserPassword(data): Observable<any> {
+    return this.http.post(this.baseUrl + '/authorization/user/changePassword', {
+      "password": data.password
+    }, httpOptions).pipe(
+      tap(res => {
+        this.tokenStorage.saveUser(res.data.user);
+    }, error => this.handleError(error)),
+    );
+  }
+
+  changeInstitutionPassword(data): Observable<any> {
+    return this.http.post(this.baseUrl + '/authorization/institution/changePassword', {
+      "password": data.password
+    }, httpOptions).pipe(
+      tap(res => {
+        this.tokenStorage.saveUser(res.data.user);
+    }, error => this.handleError(error)),
+    );
+  }
+
+  resetPassword(data): Observable<any> {
+    return this.http.post(this.baseUrl + '/authorization/reset-password-request', {
+      "email": data.email
+    }, httpOptions).pipe(
+      tap(res => {
+        this.tokenStorage.saveUser(res.data.user);
+    }, error => this.handleError(error)),
+    );
+  }
+
+  requestVerification(): Observable<any> {
+    return this.http.post(this.baseUrl + '/authorization/user/verifyRequest', httpOptions).pipe(
+      tap(res => {
+        this.tokenStorage.saveUser(res.data.user);
+    }, error => this.handleError(error)),
+    );
+  }
 
   test() {
     return this.http.post(this.baseUrl + "/authorization/testing", {}, httpOptions).pipe(

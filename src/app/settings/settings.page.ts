@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/authentication.service';
 import { Router } from '@angular/router';
+import { TokenStorageService } from '../services/token-storage.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-settings',
@@ -8,18 +10,30 @@ import { Router } from '@angular/router';
   styleUrls: ['settings.page.scss']
 })
 export class SettingsPage {
+  isLoggedIn = false;
+  user: any;
 
-  user = null;
-
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private tokenStorage: TokenStorageService) {}
  
-  ionViewWillEnter() {
-    //this.user = this.auth.getUser();
+  ngOnInit(): void {
+    console.log(this.tokenStorage.getUser());
+      this.isLoggedIn = true;
+      this.user = this.tokenStorage.getUser();
+      console.log("User from settings:" + this.user.data.user.email);
   }
- 
+  
+  ionViewDidLeave() {
+    this.user = this.tokenStorage.getUser();
+    console.log(this.user.data.user.email);
+  }
+
   logout() {
     this.auth.logout();
     this.router.navigateByUrl("/login");
+  }
+
+  update() {
+    this.router.navigateByUrl("/update-profile");
   }
   
 }

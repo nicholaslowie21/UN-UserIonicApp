@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, OnInit} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -6,6 +6,8 @@ import { IonicStorageModule, Storage } from '@ionic/storage';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { PopoverController } from '@ionic/angular';
+import { FormGroup, NgForm, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,6 +56,8 @@ export function jwtOptionsFactory(storage:Storage) {
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     ToastController,
+    PopoverController,
+    FormControl,
     authInterceptorProviders
   ],
   bootstrap: [AppComponent]

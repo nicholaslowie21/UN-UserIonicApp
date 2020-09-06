@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button color="light" (click)="back()">Close</ion-button>
+    <ion-title>Register A Institution</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <form #form="ngForm" (ngSubmit)="register(form)">
+    <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input ngModel name="name" [(ngModel)]="name" required minlength="3" #inname="ngModel"></ion-input>
+        <div class="alert-danger" *ngIf="form.submitted && inname.invalid">
+          <div *ngIf="inname.errors.required">Name is required</div>
+          <div *ngIf="inname.errors.minlength">
+            Name must be at least 3 characters
+          </div>
+        </div>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input ngModel name="username" [(ngModel)]="username" required minlength="3" maxlength="20" #inusername="ngModel"></ion-input>
+      <div class="alert-danger" *ngIf="form.submitted && inusername.invalid">
+        <div *ngIf="inusername.errors.required">Username is required</div>
+        <div *ngIf="inusername.errors.minlength">
+          Username must be at least 3 characters
+        </div>
+        <div *ngIf="inusername.errors.maxlength">
+          Username must be at most 20 characters
+        </div>
+      </div>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" ngModel name="email" [(ngModel)]="email" required #inemail="ngModel"></ion-input>
+      <div class="alert-danger" *ngIf="form.submitted && inemail.invalid">
+        <div *ngIf="inemail.errors.required">Email is required</div>
+        <div *ngIf="inemail.errors.email">
+          Email must be a valid email address
+        </div>
+      </div>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" ngModel name="password" [(ngModel)]="password" required minlength="6" #inpassword="ngModel"></ion-input>
+      <div class="alert-danger" *ngIf="form.submitted && inpassword.invalid">
+        <div *ngIf="inpassword.errors.required">Password is required</div>
+        <div *ngIf="inpassword.errors.minlength">
+          Password must be at least 6 characters
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Country</ion-label>
+      <ion-select ngModel name="country" [(ngModel)] = "country" #incountry="ngModel">
+        <ion-select-option *ngFor = "let c of countryData">{{c}}</ion-select-option>
+      </ion-select>
+  </ion-item>
+  
+    <ion-button type="submit" expand="full" color="danger">Register</ion-button>
+  </form>
+
+  <div *ngIf="resultSuccess == true" style="color: blue;">
+    {{message}}
+  </div>
+  
+  <div *ngIf="resultError == true" style="color: red;">
+    {{message}}
+  </div>
+  
+  <p text-center>Already have a account?</p>
+  <ion-button expand="full" color="primary" (click)="back()">Login</ion-button>
+</ion-content>  

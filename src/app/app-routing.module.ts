@@ -20,8 +20,60 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'register',
-    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+    path: 'userRegister',
+    loadChildren: () => import('./users/userRegister/userRegister.module').then( m => m.UserRegisterPageModule)
+  },
+  {
+    path: 'update-profile',
+    loadChildren: () => import('./update-profile/update-profile.module').then( m => m.UpdateProfilePageModule)
+  },
+  {
+    path: 'projects',
+    loadChildren: () => import('./projects/projects.module').then( m => m.ProjectsPageModule)
+  },
+  {
+    path: 'resources',
+    loadChildren: () => import('./resources/resources.module').then( m => m.ResourcesPageModule)
+  },
+  {
+    path: 'rewards',
+    loadChildren: () => import('./rewards/rewards.module').then( m => m.RewardsPageModule)
+  },
+  {
+    path: 'marketplace',
+    loadChildren: () => import('./marketplace/marketplace.module').then( m => m.MarketplacePageModule)
+  },
+  {
+    path: 'register-split',
+    loadChildren: () => import('./split/register-split/register-split.module').then( m => m.RegisterSplitPageModule)
+  },
+  {
+    path: 'institution-register',
+    loadChildren: () => import('./institutions/institution-register/institution-register.module').then( m => m.InstitutionRegisterPageModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./accountmanagement/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'update-username',
+    loadChildren: () => import('./accountmanagement/update-username/update-username.module').then( m => m.UpdateUsernamePageModule)
+  },
+  {
+    path: 'update-email',
+    loadChildren: () => import('./accountmanagement/update-email/update-email.module').then( m => m.UpdateEmailPageModule)
+  },
+  {
+    path: 'forget-password',
+    loadChildren: () => import('./accountmanagement/forget-password/forget-password.module').then( m => m.ForgetpasswordPageModule)
+  },
+  {
+    path: 'accountsettings',
+    loadChildren: () => import('./nav/accountsettings/accountsettings.module').then( m => m.AccountsettingsPageModule)
+  },
+  {
+    path: 'request-verification',
+    loadChildren: () => import('./accountmanagement/request-verification/request-verification.module').then( m => m.RequestVerificationPageModule)
   }
 ];
 @NgModule({

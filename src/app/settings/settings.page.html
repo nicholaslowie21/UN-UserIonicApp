@@ -6,17 +6,18 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card *ngIf="user">
-    <div>
-      <ion-button class="ion-btn" expand="block" >Change password</ion-button>
-    </div>
-  </ion-card>
-  <ion-card *ngIf="user">
+  <ion-card>
     <ion-card-content>
-      {{ user.email }} - {{ user.name }}
+      {{ user.data.user.email }} - {{ user.data.user.name }}
     </ion-card-content>
   </ion-card>
- 
+  <div class="words">
+    <ion-button class="ion-btn" expand="block" routerLink="/accountsettings">User Account Settings</ion-button>
+  </div>
+  
+  <div>
+    <ion-button expand="block" (click)="update()">Edit Profile</ion-button>
+  </div>
   <ion-button color= "danger" expand="block" (click)="logout()">Logout</ion-button>
  
 </ion-content>

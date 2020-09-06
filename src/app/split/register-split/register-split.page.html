@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button color="light" (click)="back()">Close</ion-button>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding >
+  <img class="background" src="assets/img/cover.jpeg"/>
+  <div class="center">
+    
+  <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
+    <ion-col size="12" size-sm="10" offset-sm="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4"
+      offset-xl="4">
+      <h4>Join Our KoCoSD Community Now!</h4>
+        <ion-button class="middleBut" shape="round" size="large" routerLink="/institution-register" routerDirection="forward">Register as Instituition</ion-button>
+        <ion-button class="middleBut" shape="round" size="large" routerLink="/userRegister" routerDirection="forward">Register as Individual</ion-button>
+
+    </ion-col>
+  </ion-row>
+</div>
+</ion-content>
