@@ -36,11 +36,21 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  onSubmit(){
+  /*onSubmit(){
     const formData = new FormData();
     formData.append('profilePic', this.images);
 
     this.http.post<any>('https://localhost:8080/api/user/uploadProfilePicture', formData).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+  }*/
+
+  onSubmit(){
+    const formData = new FormData();
+    formData.append('profilePic', this.images);
+
+    this.userService.uploadProfilePicture(formData).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );

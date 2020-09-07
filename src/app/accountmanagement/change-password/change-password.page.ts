@@ -13,7 +13,8 @@ import { MustMatch } from '../../helper/validators/match.validator';
 })
 export class ChangePasswordPage implements OnInit {
   changeForm: any;
-  password: string;
+  oldpassword: any;
+  newpassword: string;
   confirmPassword: string;
   user: any;
   accountType: any;
@@ -49,20 +50,21 @@ export class ChangePasswordPage implements OnInit {
 
 
   back() {
-    this.router.navigateByUrl("/tabs/settings");
+    this.router.navigateByUrl('/accountsettings');
   }
  
   changeInstitutionPassword() {
-      if(this.user.password == this.user.confirmPassword){
+      if(this.user.newpassword == this.user.confirmPassword){
         this.changeForm = {
-          "password": this.user.password
+          "oldpassword": this.user.oldpassword,
+          "newpassword": this.user.newpassword
         }
 
         this.authService.changeInstitutionPassword(this.changeForm).subscribe((res) => {
           this.resultSuccess = true;
             this.resultError = false;
             this.successToast();
-            this.router.navigateByUrl('tabs');
+            this.router.navigateByUrl('/accountsettings');
         },
         err => {
             this.resultSuccess = false;
@@ -76,10 +78,12 @@ export class ChangePasswordPage implements OnInit {
   }
 
   changeUserPassword() {
-    if(this.user.password == this.user.confirmPassword){
-        console.log(this.user.password);
+    if(this.user.newpassword == this.user.confirmPassword){
+        console.log(this.user.newpassword);
+        console.log(this.user.oldpassword);
           this.changeForm = {
-            "password": this.user.password
+            "oldpassword": this.user.oldpassword,
+            "newpassword": this.user.newpassword
           }
 
           this.authService.changeUserPassword(this.changeForm).subscribe((res) => {

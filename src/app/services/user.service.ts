@@ -31,14 +31,6 @@ export class UserService {
     );
   }
 
-  changePassword(data): Observable<any> {
-    return this.http.post(API_URL + '/changePassword', {
-      "password": data.password
-    }, httpOptions).pipe(
-      tap(res => {
-    }, error => this.handleError(error)),
-    );
-  }
 
   updateUsername(data): Observable<any> {
     return this.http.post(API_URL + '/updateUsername', {
@@ -61,7 +53,7 @@ export class UserService {
 
   uploadProfilePicture(data): Observable<any> {
     console.log(data);
-    return this.http.post(API_URL + '/uploadProfilePicture', data, httpOptions).pipe(
+    return this.http.post(API_URL + '/uploadProfilePicture', data).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

@@ -113,7 +113,8 @@ export class AuthService {
 
   changeUserPassword(data): Observable<any> {
     return this.http.post(this.baseUrl + '/authorization/user/changePassword', {
-      "password": data.password
+      "oldpassword": data.oldpassword,
+      "newpassword": data.newpassword
     }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
@@ -122,7 +123,8 @@ export class AuthService {
 
   changeInstitutionPassword(data): Observable<any> {
     return this.http.post(this.baseUrl + '/authorization/institution/changePassword', {
-      "password": data.password
+      "oldpassword": data.oldpassword,
+      "newpassword": data.newpassword
     }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),

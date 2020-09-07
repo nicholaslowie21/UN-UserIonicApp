@@ -41,7 +41,7 @@ export class UpdateUsernamePage implements OnInit {
   ngOnInit() {
     if(this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
-      this.user = this.tokenStorage.getUser();
+      this.user = this.tokenStorage.getUser().data.user;
     }
   }
 
@@ -55,7 +55,7 @@ export class UpdateUsernamePage implements OnInit {
           this.resultSuccess = true;
           this.resultError = false;
           this.successToast();
-          this.router.navigateByUrl('tabs');
+          this.router.navigateByUrl('/accountsettings');
         },
         err => {
           this.resultSuccess = false;
@@ -84,7 +84,7 @@ export class UpdateUsernamePage implements OnInit {
   }
 
   back() {
-    this.router.navigateByUrl("/tabs/settings");
+    this.router.navigateByUrl('/accountsettings');
   }
 
   async successToast() {

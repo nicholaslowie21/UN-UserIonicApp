@@ -31,7 +31,8 @@ export class InstitutionService {
 
   changePassword(data): Observable<any> {
     return this.http.post(API_URL + '/changePassword', {
-      "password": data.password
+      "oldpassword": data.oldpassword,
+      "newpassword": data.newpassword
     }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),

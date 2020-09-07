@@ -16,6 +16,8 @@ ion-title {
 
             img {
                 display: block;
+                max-width: 100%;
+                height: auto;
                 border-radius: 50%;
                 position: absolute;
                 bottom: calc(-1*(80px + 4px));
@@ -25,6 +27,11 @@ ion-title {
         }
     }
 }
+
+.profile-photo {
+    border-radius: 50% !important;
+    overflow: hidden;
+    }
 
 .user-meta {
     padding-top: 1px;
