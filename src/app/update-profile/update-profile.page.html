@@ -9,7 +9,7 @@
   <form #form="ngForm" (ngSubmit)="update(form)">
     <ion-item>
         <ion-label position="floating">Name</ion-label>
-        <ion-input ngModel name="name" [(ngModel)]="user.data.user.name" required minlength="3" #inname="ngModel"></ion-input>
+        <ion-input ngModel name="name" [(ngModel)]="user.name" required minlength="3" #inname="ngModel"></ion-input>
         <div class="alert-danger" *ngIf="form.submitted && inname.invalid">
           <div *ngIf="inname.errors.minlength">
             Name must be at least 3 characters
@@ -20,27 +20,27 @@
     <ion-item *ngIf="accountBoolean == true">
           
       <ion-label position="floating">Address</ion-label>
-      <ion-input type="address" ngModel name="address" [(ngModel)]="user.data.user.address" required #inaddress="ngModel"></ion-input>
+      <ion-input type="address" ngModel name="address" [(ngModel)]="user.address" required #inaddress="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inaddress.invalid"></div>
     </ion-item>
 
     <ion-item *ngIf="accountBoolean == false">
       <ion-label position="floating">Occupation</ion-label>
-      <ion-input type="occupation" ngModel name="occupation" [(ngModel)]="user.data.user.occupation" required #inoccupation="ngModel"></ion-input>
+      <ion-input type="occupation" ngModel name="occupation" [(ngModel)]="user.occupation" required #inoccupation="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inoccupation.invalid">
       </div>
     </ion-item>
     
     <ion-item>
       <ion-label position="floating">Bio</ion-label>
-      <ion-textarea ngModel name="bio" [(ngModel)]="user.data.user.bio" required #inbio="ngModel"></ion-textarea>
+      <ion-textarea ngModel name="bio" [(ngModel)]="user.bio" required #inbio="ngModel"></ion-textarea>
       <div class="alert-danger" *ngIf="form.submitted && inbio.invalid">
       </div>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Country</ion-label>
-      <ion-input type="country" ngModel name="country" [(ngModel)]="user.data.user.country" required #incountry="ngModel"></ion-input>
+      <ion-input type="country" ngModel name="country" [(ngModel)]="user.country" required #incountry="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && incountry.invalid">
       </div>
     </ion-item>
@@ -48,7 +48,7 @@
     <ion-item *ngIf="accountBoolean == true">
           
       <ion-label position="floating">Phone</ion-label>
-      <ion-input type="address" ngModel name="address" [(ngModel)]="user.data.user.phone" required #inphone="ngModel"></ion-input>
+      <ion-input type="address" ngModel name="address" [(ngModel)]="user.phone" required #inphone="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inphone.invalid"></div>
     </ion-item>
 

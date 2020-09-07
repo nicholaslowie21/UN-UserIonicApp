@@ -36,19 +36,23 @@ export class UpdateProfilePage implements OnInit {
               private institutionService: InstitutionService) { 
     this.resultSuccess = false;
     this.resultError = false;
+    //this.user = this.tokenStorage.getUser().data.user
+    console.log(this.tokenStorage.getUser().data);
     this.accountType = this.tokenStorage.getAccountType();
     if(this.accountType == "institution") {
       this.accountBoolean = true;
     } else {
       this.accountBoolean = false;
     }
+    console.log(this.user);
   }
           
 
   ngOnInit() {
+    console.log(this.tokenStorage.getToken());
     if(this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
-      this.user = this.tokenStorage.getUser();
+      this.user = this.tokenStorage.getUser().data.user;
     }
   }
 

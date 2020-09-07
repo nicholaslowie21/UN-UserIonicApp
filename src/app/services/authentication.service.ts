@@ -116,7 +116,6 @@ export class AuthService {
       "password": data.password
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -126,7 +125,6 @@ export class AuthService {
       "password": data.password
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -136,7 +134,6 @@ export class AuthService {
       "email": data.email
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -144,7 +141,6 @@ export class AuthService {
   requestVerification(): Observable<any> {
     return this.http.post(this.baseUrl + '/authorization/user/verifyRequest', httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }

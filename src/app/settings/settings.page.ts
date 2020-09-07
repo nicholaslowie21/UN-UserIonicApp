@@ -21,11 +21,6 @@ export class SettingsPage {
       this.user = this.tokenStorage.getUser();
       console.log("User from settings:" + this.user.data.user.email);
   }
-  
-  ionViewDidLeave() {
-    this.user = this.tokenStorage.getUser();
-    console.log(this.user.data.user.email);
-  }
 
   logout() {
     this.auth.logout();

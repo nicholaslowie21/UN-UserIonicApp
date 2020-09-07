@@ -25,7 +25,6 @@ export class InstitutionService {
       "phone": data.phone
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -35,7 +34,6 @@ export class InstitutionService {
       "password": data.password
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -45,7 +43,6 @@ export class InstitutionService {
       "username": data.username
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -55,7 +52,6 @@ export class InstitutionService {
       "email": data.email
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }

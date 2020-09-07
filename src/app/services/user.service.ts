@@ -27,7 +27,6 @@ export class UserService {
       "country": data.country
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -37,7 +36,6 @@ export class UserService {
       "password": data.password
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -48,7 +46,6 @@ export class UserService {
     }, httpOptions).pipe(
 
     tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -58,7 +55,6 @@ export class UserService {
       "email": data.email
     }, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
@@ -67,7 +63,6 @@ export class UserService {
     console.log(data);
     return this.http.post(API_URL + '/uploadProfilePicture', data, httpOptions).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
     );
   }
