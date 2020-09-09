@@ -78,7 +78,15 @@ const routes: Routes = [
   {
     path: 'change-photo',
     loadChildren: () => import('./change-photo/change-photo.module').then( m => m.ChangePhotoPageModule)
+  },
+  {
+    path: 'my-projects',
+    loadChildren: () => import('./my-projects/my-projects.module').then( m => m.MyProjectsPageModule)
+  },  {
+    path: 'my-resources',
+    loadChildren: () => import('./my-resources/my-resources.module').then( m => m.MyResourcesPageModule)
   }
+
 ];
 @NgModule({
   imports: [
