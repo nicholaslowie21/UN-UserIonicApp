@@ -13,32 +13,20 @@
 </ion-header>
 
 <ion-content [fullscreen]="true"> 
-  <ion-card class="card">
-    <div class="header">
-      <div class="avatar">
-        <img [src]=image alt="">
+<ion-card>
+        <img class="card-img-top rounded-circle img-fluid d-block center" style="width: 100px; height: 100px; object-fit: cover;" [src]=image alt="Profile Picture">
         
+      
+    <div class="centered">
+      <div >
+        <a style="font-size: 8px;" routerLink="/change-photo" routerDirection="forward">Edit Profile Picture</a>
       </div>
-      <div class="small">
-        <a routerLink="/change-photo" routerDirection="forward">Edit Profile Picture</a>
-      </div>
-    </div>
-    <div class="user-meta ion-text-center">
       <h3 class="name">{{ currentUser.data.user.name }}</h3>
-      <h5 class="country">{{ currentUser.data.user.country }}</h5>
     </div>
-  </ion-card>
+    </ion-card>
+    <ion-card>
+      <ion-label>Badges</ion-label>
+    </ion-card>
 
-<div style="text-align: center">
-  <form>      
-    <div>
-      <input type="file" name="image" (change)="selectImage($event)" />
-    </div>
-    <br>
-    <div>
-      <button type="submit" (click)="onSubmit()">Upload</button>
-    </div>
-  </form>
-</div>
 
 </ion-content>

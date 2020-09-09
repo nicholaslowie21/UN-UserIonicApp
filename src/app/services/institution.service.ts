@@ -22,7 +22,9 @@ export class InstitutionService {
       "address": data.address,
       "bio": data.bio,
       "country": data.country,
-      "phone": data.phone
+      "website": data.website,
+      "phone": data.phone,
+      "SDGs": data.sdgs,
     }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
@@ -52,6 +54,13 @@ export class InstitutionService {
     return this.http.post(API_URL + '/updateEmail', {
       "email": data.email
     }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getMembers(data): Observable<any> {
+    return this.http.get(API_URL + '/getMembers', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

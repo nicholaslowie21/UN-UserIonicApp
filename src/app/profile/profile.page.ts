@@ -15,6 +15,7 @@ export class ProfilePage implements OnInit {
   title = 'fileUpload';
   images;
   image;
+  badges: any[];
   
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private router: Router, private userService: UserService) { 
     
@@ -29,31 +30,10 @@ export class ProfilePage implements OnInit {
     this.router.navigateByUrl("/rewards")
   }
 
-  selectImage(event) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.images = file;
-    }
+  ionViewDidEnter() {
+    this.currentUser = this.tokenStorage.getUser();
+    this.image = this.currentUser.data.user.profilePic;
   }
-
-  /*onSubmit(){
-    const formData = new FormData();
-    formData.append('profilePic', this.images);
-
-    this.http.post<any>('https://localhost:8080/api/user/uploadProfilePicture', formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-  }*/
-
-  onSubmit(){
-    const formData = new FormData();
-    formData.append('profilePic', this.images);
-
-    this.userService.uploadProfilePicture(formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-  }
+  
 
 }

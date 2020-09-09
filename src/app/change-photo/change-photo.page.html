@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button color="light" (click)="back()">Back</ion-button>
+    <ion-title style="text-align: right;">Edit Profile Picture</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="centered center">
+  <ion-card>
+    <ion-card-header>Upload a picture to serve as your profile picture!</ion-card-header>
+    <ion-card-content>
+    <form>      
+      <div>
+        <input type="file" name="image" (change)="selectImage($event)" />
+      </div>
+      <br>
+      <div>
+        <button type="submit" (click)="onSubmit()">Upload</button>
+      </div>
+    </form>
+  </ion-card-content>
+  </ion-card>
+  </div>
+</ion-content>

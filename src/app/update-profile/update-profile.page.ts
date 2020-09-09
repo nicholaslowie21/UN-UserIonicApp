@@ -23,6 +23,14 @@ export class UpdateProfilePage implements OnInit {
     message: string;
     user: any;
     accountType: any;
+    website: any;
+    gender: any;
+    skills: string;
+    sdgs: any[];
+
+    sdgsList:any[];
+    skillsArray: any[];
+    genderList: any[];
 
   accountBoolean: boolean;
   resultSuccess: boolean;
@@ -36,40 +44,65 @@ export class UpdateProfilePage implements OnInit {
               private institutionService: InstitutionService) { 
     this.resultSuccess = false;
     this.resultError = false;
+    
+    
     //this.user = this.tokenStorage.getUser().data.user
-    console.log(this.tokenStorage.getUser().data);
     this.accountType = this.tokenStorage.getAccountType();
     if(this.accountType == "institution") {
       this.accountBoolean = true;
     } else {
       this.accountBoolean = false;
     }
-    console.log(this.user);
+    
   }
           
 
   ngOnInit() {
-    console.log(this.tokenStorage.getToken());
+    this.genderList = [
+      {"id": "Male", "g":"male"}, {"id": "Female", "g":"female"}
+    ]
+    this.sdgsList = [{"id":1, "name": "No Poverty"},{"id":2,"name": "Zero Hunger"}, {"id":3,"name": "Good Health and Well-Being"},
+      {"id":4, "name": "Quality Education"}, {"id":5, "name": "Gender Equality"},{"id":6,"name": "Clean Water and Sanitisation"},
+      {"id":7, "name": "Affordable and Clean Energy"}, {"id":8, "name": "Decent Work and Economic Growth"},{"id":9, "name": "Industry, Innovation and Infrastructure"},
+      {"id":10, "name": "Reduced Inequalities"}, {"id":11, "name": "Sustainable Cities and Communities"}, {"id":12, "name": "Responsible Consumption and Production"},
+      {"id":13, "name": "Climate Action"}, {"id":14, "name": "Life Below Water"}, {"id":15, "name": "Life On Land"},
+      {"id":16, "name": "Peace, Justice and Strong Institutions"},{"id":17, "name": "Partnerships for the Goals"}]
+
     if(this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.user = this.tokenStorage.getUser().data.user;
     }
-  }
+    this.user.website = "";
+    this.sdgs = this.user.SDGs;
+    console.log(this.sdgs);
+    this.gender = this.user.gender;
+    }
 
   update() {
+    //user update
     if(this.accountBoolean == false){
+      if(this.user.skills.length > 1) {
+        this.skillsArray = this.user.skills.split(",");
+      } else {
+        this.skillsArray = this.user.skills;
+      }
+      
         this.updateForm = {
           "name": this.user.name,
           "occupation": this.user.occupation,
           "bio": this.user.bio,
-          "country": this.user.country
+          "country": this.user.country,
+          "website": this.user.website,
+          "gender": this.user.gender.toLowerCase(),
+          "sdgs": this.sdgs,
+          "skills": this.skillsArray
 
         }
         this.userService.updateProfile(this.updateForm).subscribe((res) => {
           this.resultSuccess = true;
           this.resultError = false;
           this.successToast();
-          this.router.navigateByUrl('tabs');
+          this.router.navigateByUrl('/tabs');
         },
         err => {
           this.resultSuccess = false;
@@ -78,19 +111,22 @@ export class UpdateProfilePage implements OnInit {
           console.log('********** UpdateUserProfile.ts: ', err.error.msg);
         });
     } else {
+      //institution update
         this.updateForm = {
           "name": this.user.name,
           "address": this.user.address,
           "bio": this.user.bio,
           "country": this.user.country,
-          "phone": this.user.phone
+          "phone": this.user.phone,
+          "website": this.user.website,
+          "sdgs": this.sdgs
 
         }
         this.institutionService.updateProfile(this.updateForm).subscribe((res) => {
           this.resultSuccess = true;
           this.resultError = false;
           this.successToast();
-          this.router.navigateByUrl('tabs');
+          this.router.navigateByUrl('/tabs');
         },
         err => {
           this.resultSuccess = false;

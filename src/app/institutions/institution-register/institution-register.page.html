@@ -54,7 +54,22 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Country</ion-label>
+      <ion-label position="floating"> Confirm Password</ion-label>
+      <ion-input type="password" ngModel name="confirmPassword" [(ngModel)]="confirmPassword" required minlength="8" #inconfirmPassword="ngModel"></ion-input>
+      <div class="alert-danger" *ngIf="form.submitted && inconfirmPassword.invalid">
+        <div *ngIf="inconfirmPassword.errors.required"> Confirm Password is required</div>
+        <div *ngIf="inconfirmPassword.errors.minlength">
+          Password must be at least 8 characters
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      
+      <ion-toolbar>
+        <ion-label>Country</ion-label>
+        <ion-searchbar></ion-searchbar>
+      </ion-toolbar>
       <ion-select ngModel name="country" [(ngModel)] = "country" #incountry="ngModel">
         <ion-select-option *ngFor = "let c of countryData">{{c}}</ion-select-option>
       </ion-select>

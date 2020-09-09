@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { tap, catchError, switchMap, map } from 'rxjs/operators';
 import { TokenStorageService } from '../services/token-storage.service';
+import { Variable } from '@angular/compiler/src/render3/r3_ast';
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -52,6 +53,7 @@ export class AuthService {
 
     checkToken() {
       this.storage.get(TOKEN_KEY).then(token => {
+        
         if (token) {
           let decoded = this.helper.decodeToken(token);
           let isExpired = this.helper.isTokenExpired(token);
@@ -75,19 +77,22 @@ export class AuthService {
           tap(res => {
               this.tokenStorage.setAccountType(res.data.accountType);
               this.tokenStorage.saveUser(res.data.user);
+              console.log(res.data.token);
+              this.storage.set(TOKEN_KEY, res.data.token);
               this.authenticationState.next(true);
           }, error => this.handleError(error)),
           //catchError(this.handleError)
         ) 
     }
 
-  register(name: string, username: string, email: string, password: string, country: string): Observable<any> {
+  register(name: string, username: string, email: string, password: string, country: string, gender: string): Observable<any> {
     let createUserReq = {
       "name": name,
       "username": username,
       "email": email,
       "password": password,
-      "country": country
+      "country": country,
+      "gender": gender
     }
     return this.http.post(this.baseUrl + "/authorization/user/signup", createUserReq, httpOptions).pipe(
       tap(res => {
@@ -140,9 +145,11 @@ export class AuthService {
     );
   }
 
-  requestVerification(): Observable<any> {
-    return this.http.post(this.baseUrl + '/authorization/user/verifyRequest', httpOptions).pipe(
+  requestVerification(data): Observable<any> {
+    return this.http.post(this.baseUrl + '/authorization/user/verifyRequest', data).pipe(
       tap(res => {
+        this.tokenStorage.saveUser(res.data.user);
+        console.log(this.tokenStorage.getUser());
     }, error => this.handleError(error)),
     );
   }

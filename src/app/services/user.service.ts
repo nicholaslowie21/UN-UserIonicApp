@@ -24,9 +24,14 @@ export class UserService {
       "email": data.email,
       "occupation": data.occupation,
       "bio": data.bio,
-      "country": data.country
+      "country": data.country,
+      "website": data.website,
+      "gender": data.gender,
+      "SDGs": data.sdgs,
+      "skills": data.skills
     }, httpOptions).pipe(
       tap(res => {
+        this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
   }
@@ -55,6 +60,7 @@ export class UserService {
     console.log(data);
     return this.http.post(API_URL + '/uploadProfilePicture', data).pipe(
       tap(res => {
+        this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
   }

@@ -74,6 +74,10 @@ const routes: Routes = [
   {
     path: 'request-verification',
     loadChildren: () => import('./accountmanagement/request-verification/request-verification.module').then( m => m.RequestVerificationPageModule)
+  },
+  {
+    path: 'change-photo',
+    loadChildren: () => import('./change-photo/change-photo.module').then( m => m.ChangePhotoPageModule)
   }
 ];
 @NgModule({

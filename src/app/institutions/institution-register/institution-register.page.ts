@@ -20,6 +20,7 @@ export class InstitutionRegisterPage implements OnInit {
     country: string;
     message: string;
     countryData: String[];
+    confirmPassword: any;
 
   resultSuccess: boolean;
   resultError: boolean;
@@ -67,21 +68,24 @@ export class InstitutionRegisterPage implements OnInit {
   }
 
   register(registerForm:NgForm) {
-    console.log(1);
-    this.authService.instituteRegister(this.name, this.username, this.email, this.password, this.country).subscribe((res) => {
-      console.log(res);
-      this.resultSuccess = true;
-      this.resultError = false;
-      registerForm.reset();
-      this.successToast();
-      this.router.navigateByUrl('/login');
-    },
-    err => {
-      this.resultSuccess = false;
-      this.resultError = true;
-      this.failureToast(err.error.msg + ": " + err.error.param);
-      console.log('********** RegisterNewInstitutionPage.ts: ', err.error.msg);
-    });
+    if(this.password == this.confirmPassword){
+      this.authService.instituteRegister(this.name, this.username, this.email, this.password, this.country).subscribe((res) => {
+        console.log(res);
+        this.resultSuccess = true;
+        this.resultError = false;
+        registerForm.reset();
+        this.successToast();
+        this.router.navigateByUrl('/login');
+      },
+      err => {
+        this.resultSuccess = false;
+        this.resultError = true;
+        this.failureToast(err.error.msg + ": " + err.error.param);
+        console.log('********** RegisterNewInstitutionPage.ts: ', err.error.msg);
+      });
+    } else {
+      this.failureToast(Error("Passwords do not match"));
+    }
   }
 
   back() {

@@ -12,14 +12,20 @@ import { UserService } from '../services/user.service';
 export class SettingsPage {
   isLoggedIn = false;
   user: any;
+  email: any;
+  name: any;
 
   constructor(private auth: AuthService, private router: Router, private tokenStorage: TokenStorageService) {}
  
   ngOnInit(): void {
-    console.log(this.tokenStorage.getUser());
       this.isLoggedIn = true;
       this.user = this.tokenStorage.getUser();
-      console.log("User from settings:" + this.user.data.user.email);
+  }
+
+  ionViewDidEnter() {
+    this.user = this.tokenStorage.getUser();
+    this.email = this.user.data.user.email;
+    this.name = this.user.data.user.name;
   }
 
   logout() {

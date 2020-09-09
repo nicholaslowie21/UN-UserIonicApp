@@ -79,8 +79,6 @@ export class ChangePasswordPage implements OnInit {
 
   changeUserPassword() {
     if(this.user.newpassword == this.user.confirmPassword){
-        console.log(this.user.newpassword);
-        console.log(this.user.oldpassword);
           this.changeForm = {
             "oldpassword": this.user.oldpassword,
             "newpassword": this.user.newpassword

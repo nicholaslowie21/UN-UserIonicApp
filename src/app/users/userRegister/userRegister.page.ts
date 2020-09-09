@@ -3,6 +3,7 @@ import { Router } from  "@angular/router";
 import { AuthService } from '../../services/authentication.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { Variable } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,11 @@ export class UserRegisterPage implements OnInit {
     bio: string;
     occupation: string;
     country: string;
+    gender: any;
+    confirmPassword: string;
+
+    genderList: any[];
+
     message: string;
     countryData: String[];
     
@@ -32,6 +38,10 @@ export class UserRegisterPage implements OnInit {
           
 
   ngOnInit() {
+    this.genderList = [
+      {"id": "Male", "g":"male"}, {"id": "Female", "g":"female"}
+    ]
+
     this.countryData = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla",
     "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas",
     "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
@@ -68,21 +78,24 @@ export class UserRegisterPage implements OnInit {
   }
 
   register(registerForm:NgForm) {
-    console.log(1);
-    this.authService.register(this.name, this.username, this.email, this.password, this.country).subscribe((res) => {
-      console.log(res);
-      this.resultSuccess = true;
-      this.resultError = false;
-      registerForm.reset();
-      this.successToast();
-      this.router.navigateByUrl('/login');
-    },
-    err => {
-      this.resultSuccess = false;
-      this.resultError = true;
-      this.failureToast(err.error.msg + ": " + err.error.param);
-      console.log('********** RegisterNewUserPage.ts: ', err.error.msg);
-    });
+    if(this.password == this.confirmPassword){
+          this.authService.register(this.name, this.username, this.email, this.password, this.country, this.gender.toLowerCase()).subscribe((res) => {
+            console.log(res);
+            this.resultSuccess = true;
+            this.resultError = false;
+            registerForm.reset();
+            this.successToast();
+            this.router.navigateByUrl('/login');
+          },
+          err => {
+            this.resultSuccess = false;
+            this.resultError = true;
+            this.failureToast(err.error.msg + ": " + err.error.param);
+            console.log('********** RegisterNewUserPage.ts: ', err.error.msg);
+          });
+    } else {
+      this.failureToast(Error("Passwords do not match"));
+    }
   }
 
   back() {

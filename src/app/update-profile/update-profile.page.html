@@ -45,11 +45,38 @@
       </div>
     </ion-item>
 
+    <ion-item>
+          
+      <ion-label position="floating">Website</ion-label>
+      <ion-input type="website" ngModel name="website" [(ngModel)]="user.website" #inwebsite="ngModel"></ion-input>
+      <div class="alert-danger" *ngIf="form.submitted && inwebsite.invalid"></div>
+    </ion-item>
+
+    <ion-item *ngIf="accountBoolean == false">
+      <ion-label>Gender</ion-label>
+      <ion-select placeholder="Select One" id="gender" name="gender" #ingender="ngModel" [(ngModel)]="user.gender" required="true">
+        <ion-select-option *ngFor = "let g of genderList">{{g.g}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>SDGs</ion-label>
+      <ion-select placeholder="Select Many" id="s" name="s" [(ngModel)]="sdgs" multiple="true">
+        <ion-select-option *ngFor="let s of sdgsList" [value]="s.id">{{s.id}}-{{s.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <ion-item *ngIf="accountBoolean == true">
           
       <ion-label position="floating">Phone</ion-label>
       <ion-input type="address" ngModel name="address" [(ngModel)]="user.phone" required #inphone="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inphone.invalid"></div>
+    </ion-item>
+
+    <ion-item *ngIf="accountBoolean == false">
+      <ion-label position="floating">Enter your Skills(separated by commas. Eg: cooking, coding, data analytics)</ion-label>
+      <ion-textarea ngModel name="skills" [(ngModel)]="user.skills" #inskills="ngModel"></ion-textarea>
+      <div class="alert-danger" *ngIf="form.submitted && inskills.invalid">
+      </div>
     </ion-item>
 
 
