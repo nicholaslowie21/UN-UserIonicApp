@@ -1,9 +1,93 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>MyResources</ion-title>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" routerLink="/tabs/profile" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>My Resources</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="manpower" checked>
+        <ion-label>Manpower</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="knowledge">
+        <ion-label>Knowledge</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="item">
+        <ion-label>Item</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="venue">
+        <ion-label>Venue</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list [ngSwitch]="type">
+    <div *ngSwitchCase="'manpower'">
+      <div *ngFor="let m of manpowerResource">
+      <ion-card>
+        <img src="../../assets/img/manpower.jpg" className={{m.status}}/>
+        <ion-card-header>
+          <ion-card-title>{{m.title}}</ion-card-title>
+          <ion-card-subtitle>{{m.region}}</ion-card-subtitle>
+        </ion-card-header>
 
+        <ion-card-content>{{m.desc}}</ion-card-content>
+      </ion-card>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'knowledge'">
+    <div *ngFor="let k of knowledgeResource">
+    <ion-card>
+        <img src="../../assets/img/knowledge.jpg" className={{k.status}}/>
+        <ion-card-header>
+          <ion-card-title>{{k.title}}</ion-card-title>
+          <!-- <ion-div *ngFor="let s of p.SDG">
+            <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
+          </ion-div> -->
+        </ion-card-header>
+
+        <ion-card-content>{{k.desc}}</ion-card-content>
+    </ion-card>
+    </div>
+  </div>
+
+    <div *ngSwitchCase="'item'">
+    <div *ngFor="let i of itemResource">
+      <ion-card>
+          <img src="../../assets/img/item.jpg" className={{i.status}} />
+        <ion-card-header>
+          <ion-card-title>{{i.title}}</ion-card-title>
+          <ion-card-subtitle>{{i.region}}</ion-card-subtitle>
+          <!-- <ion-div *ngFor="let s of p.SDG">
+            <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
+          </ion-div> -->
+        </ion-card-header>
+  
+        <ion-card-content>{{i.desc}}</ion-card-content>
+      </ion-card>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'venue'">
+      <div *ngFor="let v of venueResource">
+        <ion-card>
+            <img src="../../assets/img/venue.jpg" className={{v.status}} />
+          <ion-card-header>
+            <ion-card-title>{{v.title}}</ion-card-title>
+            <ion-card-subtitle>{{v.region}}</ion-card-subtitle>
+            <ion-card-subtitle>{{v.address}}</ion-card-subtitle>
+            <!-- <ion-div *ngFor="let s of p.SDG">
+              <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
+            </ion-div> -->
+          </ion-card-header>
+    
+          <ion-card-content>{{v.desc}}</ion-card-content>
+        </ion-card>
+      </div>
+      </div>
+  </ion-list>
 </ion-content>
