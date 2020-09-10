@@ -26,6 +26,7 @@ export class SettingsPage {
     this.user = this.tokenStorage.getUser();
     this.email = this.user.data.user.email;
     this.name = this.user.data.user.name;
+    this.tokenStorage.setAccountType(this.user.data.accountType);
   }
 
   logout() {

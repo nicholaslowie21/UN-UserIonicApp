@@ -32,6 +32,7 @@ export class ChangePasswordPage implements OnInit {
     this.resultSuccess = false;
     this.resultError = false;
     this.accountType = this.tokenStorage.getAccountType();
+    console.log(this.accountType);
     if(this.accountType == "institution") {
       this.accountBoolean = true;
     } else {
@@ -43,6 +44,7 @@ export class ChangePasswordPage implements OnInit {
     if(this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.user = this.tokenStorage.getUser();
+      console.log(this.user);
     }
 
     

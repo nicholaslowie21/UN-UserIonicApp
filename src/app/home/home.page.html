@@ -13,5 +13,6 @@
     </ion-toolbar>
   </ion-header>
   <ion-button expand="full" (click)="test()">Load Special Info</ion-button>
+  <ion-button *ngIf="accountBoolean == true" routerLink="/affiliation-management">Affiliation</ion-button>
   <app-explore-container name="Home"></app-explore-container>
 </ion-content>

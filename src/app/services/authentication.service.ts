@@ -75,6 +75,7 @@ export class AuthService {
       return this.http.post(this.baseUrl + "/authorization/login", loginReq, httpOptions)
         .pipe(
           tap(res => {
+            console.log(res.data.accountType);
               this.tokenStorage.setAccountType(res.data.accountType);
               this.tokenStorage.saveUser(res.data.user);
               console.log(res.data.token);

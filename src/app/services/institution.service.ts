@@ -59,10 +59,19 @@ export class InstitutionService {
     );
   }
 
-  getMembers(data): Observable<any> {
+  getMembers(): Observable<any> {
     return this.http.get(API_URL + '/getMembers', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
+    );
+  }
+
+  delMembers(data): Observable<any> {
+    return this.http.post(API_URL + '/delMember', {
+      "userId": data.userId
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => console.log(error)),
     );
   }
 

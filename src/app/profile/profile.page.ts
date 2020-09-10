@@ -16,14 +16,29 @@ export class ProfilePage implements OnInit {
   images;
   image;
   badges: any[];
+  sdgs: any[];
+  accountType: any;
+  accountBoolean: boolean;
   
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private router: Router, private userService: UserService) { 
-    
+    this.accountType = this.tokenStorage.getAccountType();
+    if(this.accountType == "institution") {
+      this.accountBoolean = true;
+    } else {
+      this.accountBoolean = false;
+    }
   }
 
   ngOnInit(): void {
    this.currentUser = this.tokenStorage.getUser();
    this.image = this.currentUser.data.user.profilePic;
+   this.sdgs = this.currentUser.data.user.SDGs;
+   this.accountType = this.currentUser.data.accountType;
+   if(this.accountType == "institution") {
+    this.accountBoolean = true;
+  } else {
+    this.accountBoolean = false;
+  }
   }
 
   toRewards() {
@@ -33,6 +48,8 @@ export class ProfilePage implements OnInit {
   ionViewDidEnter() {
     this.currentUser = this.tokenStorage.getUser();
     this.image = this.currentUser.data.user.profilePic;
+    this.sdgs = this.currentUser.data.user.SDGs;
+    this.accountType = this.currentUser.data.accountType;
   }
   
 

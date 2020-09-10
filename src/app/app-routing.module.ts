@@ -82,9 +82,14 @@ const routes: Routes = [
   {
     path: 'my-projects',
     loadChildren: () => import('./my-projects/my-projects.module').then( m => m.MyProjectsPageModule)
-  },  {
+  },
+  {
     path: 'my-resources',
     loadChildren: () => import('./my-resources/my-resources.module').then( m => m.MyResourcesPageModule)
+  },
+  {
+    path: 'affiliation-management',
+    loadChildren: () => import('./institutions/affiliation-management/affiliation-management.module').then( m => m.AffiliationManagementPageModule)
   }
 
 ];

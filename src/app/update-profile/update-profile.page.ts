@@ -47,6 +47,7 @@ export class UpdateProfilePage implements OnInit {
     
     
     //this.user = this.tokenStorage.getUser().data.user
+   
     this.accountType = this.tokenStorage.getAccountType();
     if(this.accountType == "institution") {
       this.accountBoolean = true;
@@ -55,6 +56,7 @@ export class UpdateProfilePage implements OnInit {
     }
     
   }
+
           
 
   ngOnInit() {
@@ -73,16 +75,30 @@ export class UpdateProfilePage implements OnInit {
       this.user = this.tokenStorage.getUser().data.user;
     }
     this.user.website = "";
-    this.user.skillsString = ""
-    for(var i = 0; i < this.user.skills.length; i++) {
-      if(i == 0) {
-        this.user.skillsString += this.user.skills[i];
-      } else {
-        this.user.skillsString += "," + this.user.skills[i];
+    console.log(this.accountBoolean);
+    if(this.accountBoolean == false) {
+      this.user.skillsString = ""
+      for(var i = 0; i < this.user.skills.length; i++) {
+        if(i == 0) {
+          this.user.skillsString += this.user.skills[i];
+        } else {
+          this.user.skillsString += "," + this.user.skills[i];
+        }
       }
-    }
+    }  
+    
     this.sdgs = this.user.SDGs;
     this.gender = this.user.gender;
+    }
+
+    ionViewDidEnter() {
+      this.accountType = this.tokenStorage.getUser().data.accountType;
+      console.log(this.tokenStorage.getUser().data.accountType);
+      if(this.accountType == "institution") {
+        this.accountBoolean = true;
+      } else {
+        this.accountBoolean = false;
+      }
     }
 
   update() {
