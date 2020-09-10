@@ -25,7 +25,7 @@ export class UpdateProfilePage implements OnInit {
     accountType: any;
     website: any;
     gender: any;
-    skills: string;
+    skillsString: string;
     sdgs: any[];
 
     sdgsList:any[];
@@ -73,8 +73,15 @@ export class UpdateProfilePage implements OnInit {
       this.user = this.tokenStorage.getUser().data.user;
     }
     this.user.website = "";
+    this.user.skillsString = ""
+    for(var i = 0; i < this.user.skills.length; i++) {
+      if(i == 0) {
+        this.user.skillsString += this.user.skills[i];
+      } else {
+        this.user.skillsString += "," + this.user.skills[i];
+      }
+    }
     this.sdgs = this.user.SDGs;
-    console.log(this.sdgs);
     this.gender = this.user.gender;
     }
 
@@ -82,9 +89,9 @@ export class UpdateProfilePage implements OnInit {
     //user update
     if(this.accountBoolean == false){
       if(this.user.skills.length > 1) {
-        this.skillsArray = this.user.skills.split(",");
+        this.skillsArray = this.user.skillsString.split(",");
       } else {
-        this.skillsArray = this.user.skills;
+        this.skillsArray = [this.user.skillsString];
       }
       
         this.updateForm = {

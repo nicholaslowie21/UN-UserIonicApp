@@ -74,7 +74,7 @@
 
     <ion-item *ngIf="accountBoolean == false">
       <ion-label position="floating">Enter your Skills(separated by commas. Eg: cooking, coding, data analytics)</ion-label>
-      <ion-textarea ngModel name="skills" [(ngModel)]="user.skills" #inskills="ngModel"></ion-textarea>
+      <ion-textarea ngModel name="skills" [(ngModel)]="user.skillsString" #inskills="ngModel"></ion-textarea>
       <div class="alert-danger" *ngIf="form.submitted && inskills.invalid">
       </div>
     </ion-item>
