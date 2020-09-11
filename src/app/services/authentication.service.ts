@@ -78,8 +78,6 @@ export class AuthService {
             console.log(res.data.accountType);
               this.tokenStorage.setAccountType(res.data.accountType);
               this.tokenStorage.saveUser(res.data.user);
-              console.log(res.data.token);
-              this.storage.set(TOKEN_KEY, res.data.token);
               this.authenticationState.next(true);
           }, error => this.handleError(error)),
           //catchError(this.handleError)
@@ -150,7 +148,6 @@ export class AuthService {
     return this.http.post(this.baseUrl + '/authorization/user/verifyRequest', data).pipe(
       tap(res => {
         this.tokenStorage.saveUser(res.data.user);
-        console.log(this.tokenStorage.getUser());
     }, error => this.handleError(error)),
     );
   }

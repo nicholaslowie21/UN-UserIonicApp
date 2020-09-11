@@ -27,6 +27,7 @@ export class InstitutionService {
       "SDGs": data.sdgs,
     }, httpOptions).pipe(
       tap(res => {
+        this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
   }
@@ -46,6 +47,7 @@ export class InstitutionService {
       "username": data.username
     }, httpOptions).pipe(
       tap(res => {
+        this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
   }
@@ -55,6 +57,7 @@ export class InstitutionService {
       "email": data.email
     }, httpOptions).pipe(
       tap(res => {
+        this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
   }

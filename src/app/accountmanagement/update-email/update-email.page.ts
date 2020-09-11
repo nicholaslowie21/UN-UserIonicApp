@@ -33,9 +33,10 @@ export class UpdateEmailPage implements OnInit {
       this.accountType = this.tokenStorage.getAccountType();
       if(this.accountType == "institution") {
         this.accountBoolean = true;
-      } else {
+      } else if(this.accountType == "user") {
         this.accountBoolean = false;
       }
+      console.log(this.accountBoolean);
     }
 
     ngOnInit() {
@@ -55,7 +56,7 @@ export class UpdateEmailPage implements OnInit {
             this.resultError = false;
             this.successToast();
       
-            this.router.navigateByUrl('/accountsettings');
+            this.router.navigateByUrl('/tabs/home');
           },
           err => {
             this.resultSuccess = false;
@@ -72,7 +73,7 @@ export class UpdateEmailPage implements OnInit {
             this.resultSuccess = true;
             this.resultError = false;
             this.successToast();
-            this.router.navigateByUrl('/tabs/settings');
+            this.router.navigateByUrl('/tabs/home');
           },
           err => {
             this.resultSuccess = false;

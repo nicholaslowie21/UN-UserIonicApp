@@ -14,19 +14,30 @@ export class SettingsPage {
   user: any;
   email: any;
   name: any;
+  accountType: any;
+
+  accountBoolean: any;
 
   constructor(private auth: AuthService, private router: Router, private tokenStorage: TokenStorageService) {}
  
   ngOnInit(): void {
       this.isLoggedIn = true;
       this.user = this.tokenStorage.getUser();
+      console.log(this.user);
+      this.accountType = this.user.data.accountType;
+      if(this.accountType == "institution") {
+        this.accountBoolean = true;
+      } else if(this.accountType == "user") {
+        this.accountBoolean = false;
+      }
+      console.log(this.accountBoolean);
+
   }
 
   ionViewDidEnter() {
-    this.user = this.tokenStorage.getUser();
-    this.email = this.user.data.user.email;
-    this.name = this.user.data.user.name;
-    this.tokenStorage.setAccountType(this.user.data.accountType);
+      this.user = this.tokenStorage.getUser();
+      this.email = this.user.data.user.email;
+      this.name = this.user.data.user.name;
   }
 
   logout() {

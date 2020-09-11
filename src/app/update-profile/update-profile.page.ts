@@ -47,7 +47,7 @@ export class UpdateProfilePage implements OnInit {
     
     
     //this.user = this.tokenStorage.getUser().data.user
-   
+    console.log(this.tokenStorage.getAccountType());
     this.accountType = this.tokenStorage.getAccountType();
     if(this.accountType == "institution") {
       this.accountBoolean = true;
@@ -72,6 +72,7 @@ export class UpdateProfilePage implements OnInit {
 
     if(this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
+      console.log(this.tokenStorage.getUser());
       this.user = this.tokenStorage.getUser().data.user;
     }
     this.user.website = "";
@@ -92,8 +93,8 @@ export class UpdateProfilePage implements OnInit {
     }
 
     ionViewDidEnter() {
-      this.accountType = this.tokenStorage.getUser().data.accountType;
-      console.log(this.tokenStorage.getUser().data.accountType);
+      this.accountType = this.tokenStorage.getAccountType();
+      console.log(this.tokenStorage.getUser());
       if(this.accountType == "institution") {
         this.accountBoolean = true;
       } else {

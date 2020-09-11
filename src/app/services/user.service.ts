@@ -52,6 +52,7 @@ export class UserService {
       "email": data.email
     }, httpOptions).pipe(
       tap(res => {
+        this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
   }

@@ -16,10 +16,9 @@ export class RequestVerificationPage implements OnInit {
   constructor(private alertCtrl:AlertController, private router: Router, private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
-    this.currentUser = this.tokenStorage.getUser();
-    console.log(this.currentUser);
-    this.status = this.currentUser.data.user.isVerified;
-    
+    this.currentUser = this.tokenStorage.getUser().data.user;
+    this.status = this.currentUser.isVerified;
+    console.log(this.status);
   }
 
   back() {
@@ -47,8 +46,8 @@ export class RequestVerificationPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.currentUser = this.tokenStorage.getUser();
-    
+    this.currentUser = this.tokenStorage.getUser().data.user;
+    this.status = this.currentUser.isVerified;
   }
 
   async showAlert(msg) {  
@@ -56,7 +55,13 @@ export class RequestVerificationPage implements OnInit {
       header: 'Success',  
       subHeader: "You will be notified once an admin has verified your account", 
       message: msg,  
-      buttons: ['Return to Settings']  
+      buttons: [{
+        text: 'Return to Settings',
+        role: 'cancel',
+        handler: () => {
+         this.back();
+        }
+      }]
     });  
     await alert.present();  
     const result = await alert.onDidDismiss();  
