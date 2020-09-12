@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { TokenStorageService } from '../services/token-storage.service';
+import { InstitutionService } from '../services/institution.service';
 
 @Component({
   selector: 'app-change-photo',
@@ -10,7 +12,18 @@ import { ToastController } from '@ionic/angular';
 })
 export class ChangePhotoPage implements OnInit {
   images: any;
-  constructor(private userService: UserService, private router: Router, private toastCtrl: ToastController) { }
+  accountType: any;
+  accountBoolean: boolean;
+
+  constructor(private userService: UserService, private router: Router, private toastCtrl: ToastController, private tokenStorage: TokenStorageService, private institutionService: InstitutionService) {
+    this.accountType = this.tokenStorage.getAccountType();
+      if(this.accountType == "institution") {
+        this.accountBoolean = true;
+      } else if(this.accountType == "user") {
+        this.accountBoolean = false;
+      }
+      console.log(this.accountBoolean);
+   }
 
   ngOnInit() {
   }
@@ -25,12 +38,20 @@ export class ChangePhotoPage implements OnInit {
   onSubmit(){
     const formData = new FormData();
     formData.append('profilePic', this.images);
-
-    this.userService.uploadProfilePicture(formData).subscribe(
-      (res) => 
-      this.successToast(),
-      (err) => this.failureToast(err)
-    );
+    if(this.accountBoolean == true){
+      this.institutionService.uploadProfilePicture(formData).subscribe(
+        (res) => 
+        this.successToast(),
+        (err) => this.failureToast(err)
+      );
+    } else if(this.accountBoolean == false){
+      this.userService.uploadProfilePicture(formData).subscribe(
+        (res) => 
+        this.successToast(),
+        (err) => this.failureToast(err)
+      );
+    }
+    
   }
 
   back() {

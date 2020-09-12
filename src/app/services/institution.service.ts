@@ -78,6 +78,15 @@ export class InstitutionService {
     );
   }
 
+  uploadProfilePicture(data): Observable<any> {
+    console.log(data);
+    return this.http.post(API_URL + '/uploadProfilePicture', data).pipe(
+      tap(res => {
+        this.tokenStorage.saveUser(res);
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";
