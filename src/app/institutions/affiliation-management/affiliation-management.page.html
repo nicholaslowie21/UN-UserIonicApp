@@ -6,10 +6,18 @@
 </ion-header>
 
 <ion-content>
-    <ion-label style="text-align: center">List of Affiliated Individuals</ion-label>
-    <ion-card *ngFor = "let m of members" lines="none">
-      <ion-label >{{m.name}}</ion-label><br>
-      <ion-label >{{m.country}}</ion-label>
-      <ion-button style="float:right" (click)="presentAlertConfirm()" >Remove</ion-button>
+    <h2 style="text-align:center">List of Affiliated Individuals</h2>
+    <ion-card *ngFor = "let m of members">
+      <div class="aligned">
+      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=m.profilePic alt="Profile Picture">
+      <ion-title>{{m.name}}</ion-title>
+      <ion-button style="float:right;" (click)="presentAlertConfirm($event, m)" >Remove</ion-button>
+      </div>
+     
     </ion-card>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+      <ion-fab-button routerLink="/add-member" color="danger">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 </ion-content>

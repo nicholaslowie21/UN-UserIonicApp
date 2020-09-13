@@ -19,7 +19,15 @@
         <button type="submit" (click)="onSubmit()">Upload</button>
       </div>
     </form>
+    
   </ion-card-content>
   </ion-card>
+  
   </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="takePicture()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <img [src]="currentImage" *ngIf="currentImage">
 </ion-content>

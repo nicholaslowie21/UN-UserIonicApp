@@ -13,6 +13,7 @@ export class RequestVerificationPage implements OnInit {
   currentUser: any;
   images: any;
   status: any;
+  accountType: any;
   constructor(private alertCtrl:AlertController, private router: Router, private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
@@ -48,6 +49,7 @@ export class RequestVerificationPage implements OnInit {
   ionViewDidEnter() {
     this.currentUser = this.tokenStorage.getUser().data.user;
     this.status = this.currentUser.isVerified;
+    this.accountType = this.tokenStorage.getAccountType();
   }
 
   async showAlert(msg) {  

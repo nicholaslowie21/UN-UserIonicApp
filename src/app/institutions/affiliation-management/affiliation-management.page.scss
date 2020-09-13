@@ -1,0 +1,35 @@
+.card-img,
+.card-img-top,
+.card-img-bottom {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+  }
+
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .d-block {
+    display: block !important;
+  }
+
+  .aligned { 
+    display: flex; 
+    align-items: center;
+
+} 
+ion-title.five {
+  span {
+    background: black;
+    padding: 1px 8px;
+    &::before {
+      content: "";
+      display: block;
+    }
+  }
+}

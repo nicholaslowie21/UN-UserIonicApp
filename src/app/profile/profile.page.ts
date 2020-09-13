@@ -45,7 +45,6 @@ export class ProfilePage implements OnInit {
 
   ionViewDidEnter() {
     this.currentUser = this.tokenStorage.getUser();
-    console.log(this.currentUser);
     this.name = this.currentUser.data.user.name;
     this.image = this.currentUser.data.user.profilePic;
     this.sdgs = this.currentUser.data.user.SDGs;

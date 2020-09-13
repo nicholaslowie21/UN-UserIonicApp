@@ -16,7 +16,7 @@ export class SessionService {
 		
 		if(this.platform.is('hybrid'))
 		{
-			return "https://192.168.100.55:8080/";
+			return "https://localhost:8080/api";
 		}
 		else
 		{

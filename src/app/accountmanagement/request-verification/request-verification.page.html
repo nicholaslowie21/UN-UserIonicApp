@@ -28,7 +28,7 @@
   <ion-card *ngIf="status == 'pending'">
       <ion-label>Your Request for verification is pending! Check back again to see if you are verified!</ion-label>
   </ion-card>
-  <ion-card *ngIf="status == 'verified'">
+  <ion-card *ngIf="status == 'verified' || accountType == 'institution'">
     <ion-label>Your account has been verified! Start Creating your project to change the world!</ion-label>
     <!--<ion-button color="dark" (click)="createProject()"></ion-button>-->
 </ion-card>

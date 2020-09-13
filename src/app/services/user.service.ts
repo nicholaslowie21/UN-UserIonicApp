@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TokenStorageService } from './token-storage.service';
+import { FileTransferObject, FileUploadOptions, FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 const API_URL = 'https://localhost:8080/api/user';
 
@@ -15,7 +16,7 @@ const httpOptions = {
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private transfer: FileTransfer) { }
 
   updateProfile(data): Observable<any> {
     console.log(data.name);
@@ -62,6 +63,30 @@ export class UserService {
     return this.http.post(API_URL + '/uploadProfilePicture', data).pipe(
       tap(res => {
         this.tokenStorage.saveUser(res);
+    }, error => this.handleError(error)),
+    );
+  }
+
+  uploadCameraPicture(formData): Observable<any> {
+    console.log(formData);
+    return this.http.post(API_URL + '/uploadProfilePicture', formData).pipe(
+      tap(res => {
+        console.log(res);
+        this.tokenStorage.saveUser(res);
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getCurrentProjects(): Observable<any> {
+    return this.http.get(API_URL + '/currProjects', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getPastProjects(): Observable<any> {
+    return this.http.get(API_URL + '/pastProjects', httpOptions).pipe(
+      tap(res => {
     }, error => this.handleError(error)),
     );
   }

@@ -78,11 +78,35 @@ export class InstitutionService {
     );
   }
 
+  addMember(data): Observable<any> {
+    return this.http.post(API_URL + '/addMember', {
+      "userId": data.userId
+    }, httpOptions).pipe(
+      tap(res => {
+        this.tokenStorage.saveUser(res);
+    }, error => console.log(error)),
+    );
+  }
+
   uploadProfilePicture(data): Observable<any> {
     console.log(data);
     return this.http.post(API_URL + '/uploadProfilePicture', data).pipe(
       tap(res => {
         this.tokenStorage.saveUser(res);
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getCurrentProjects(): Observable<any> {
+    return this.http.get(API_URL + '/currProjects', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getPastProjects(): Observable<any> {
+    return this.http.get(API_URL + '/pastProjects', httpOptions).pipe(
+      tap(res => {
     }, error => this.handleError(error)),
     );
   }

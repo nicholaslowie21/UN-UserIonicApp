@@ -90,7 +90,12 @@ const routes: Routes = [
   {
     path: 'affiliation-management',
     loadChildren: () => import('./institutions/affiliation-management/affiliation-management.module').then( m => m.AffiliationManagementPageModule)
+  },
+  {
+    path: 'add-member',
+    loadChildren: () => import('./institutions/add-member/add-member.module').then( m => m.AddMemberPageModule)
   }
+
 
 ];
 @NgModule({

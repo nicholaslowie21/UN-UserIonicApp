@@ -15,25 +15,25 @@ export class AffiliationManagementPage implements OnInit {
   data: {};
 
   constructor(private institutionService: InstitutionService, private tokenStorage: TokenStorageService, private alertController: AlertController, private toastCtrl: ToastController, private router: Router) {
-    this.members = [{"userID": "5f527102fb5e4822bc9eacc0", "name": "Jack Sim", "country": "Singapore"}, {"name": "Lucy Lu", "country": "Malaysia"}];
    }
   
   ngOnInit() {
     this.user = this.tokenStorage.getUser();
     console.log(this.user);
-    /*this.institutionService.getMembers().subscribe((res) =>
+    this.institutionService.getMembers().subscribe((res) =>
     this.members = res.data.members)
     err => {
       console.log('********** AffiliationManagementPage.ts: ', err.error.msg);
-    };*/
+    };
   }
 
-  remove() {
+  remove(m) {
     this.data = {
-      "userId": this.user.data.user.id
+      "userId": m.id
     }
     this.institutionService.delMembers(this.data).subscribe((res) => {
       this.successToast();
+      this.router.navigateByUrl("/tabs/profile");
     }
    ),
     err => {
@@ -43,7 +43,7 @@ export class AffiliationManagementPage implements OnInit {
     };
   }
 
-  async presentAlertConfirm() {
+  async presentAlertConfirm(ev, m) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm',
@@ -59,7 +59,7 @@ export class AffiliationManagementPage implements OnInit {
         }, {
           text: 'Okay',
           handler: () => {
-            this.remove();
+            this.remove(m);
           }
         }
       ]

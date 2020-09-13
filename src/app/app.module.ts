@@ -17,6 +17,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 
 import { authInterceptorProviders } from './helper/auth.interceptor';
+import { Camera } from '@ionic-native/camera/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 
 /*Supply an array of whitelisted Domains
@@ -58,6 +61,9 @@ export function jwtOptionsFactory(storage:Storage) {
     ToastController,
     PopoverController,
     FormControl,
+    Camera,
+    File,
+    FileTransfer,
     authInterceptorProviders
   ],
   bootstrap: [AppComponent]
