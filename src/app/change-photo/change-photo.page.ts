@@ -71,8 +71,13 @@ export class ChangePhotoPage implements OnInit {
   back() {
     this.router.navigateByUrl('/tabs/home');
   }
-
+  //initialise file reader
+  //create a file reader to read contents of files using blob to specify data to read
+  //create a imgblob which is used in previous step
+  //append identity of file, blob and file name
+  //call uploadpicture api
   readFile(file: any) {
+    if(this.accountBoolean == false){
     const reader = new FileReader();
     reader.onloadend = () => {
       const imgBlob = new Blob([reader.result], {
@@ -80,12 +85,35 @@ export class ChangePhotoPage implements OnInit {
       });
       const formData = new FormData();
       formData.append('profilePic', imgBlob, file.name);
-      this.userService.uploadCameraPicture(formData).subscribe(dataRes => {
-        console.log(dataRes);
-      });
-    };
-    reader.readAsArrayBuffer(file);
-  }
+      
+            this.userService.uploadCameraPicture(formData).subscribe(dataRes => {
+              this.successToast(),
+              (err) => this.failureToast(err)
+            });
+          };
+          reader.readAsArrayBuffer(file);
+      } else if(this.accountBoolean == true){
+            const reader = new FileReader();
+        reader.onloadend = () => {
+          const imgBlob = new Blob([reader.result], {
+            type: file.type
+          });
+          const formData = new FormData();
+          formData.append('profilePic', imgBlob, file.name);
+          
+                this.institutionService.uploadCameraPicture(formData).subscribe(dataRes => {
+                  this.successToast(),
+                  (err) => this.failureToast(err)
+                });
+              };
+              reader.readAsArrayBuffer(file);
+    
+      }
+    }
+
+  //calls function getPicture to take picture
+  //Resolves the url of the file
+  //takes the file and calls readfile function to read its contents
   takePicture() {
     this.camera.getPicture(this.options).then((imageData) => {
       this.file.resolveLocalFilesystemUrl(imageData).then((entry: FileEntry) => {

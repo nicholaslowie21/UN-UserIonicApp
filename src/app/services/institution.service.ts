@@ -97,6 +97,16 @@ export class InstitutionService {
     );
   }
 
+  uploadCameraPicture(formData): Observable<any> {
+    console.log(formData);
+    return this.http.post(API_URL + '/uploadProfilePicture', formData).pipe(
+      tap(res => {
+        console.log(res);
+        this.tokenStorage.saveUser(res);
+    }, error => this.handleError(error)),
+    );
+  }
+
   getCurrentProjects(): Observable<any> {
     return this.http.get(API_URL + '/currProjects', httpOptions).pipe(
       tap(res => {
