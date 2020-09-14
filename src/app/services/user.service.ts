@@ -3,9 +3,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TokenStorageService } from './token-storage.service';
-import { FileTransferObject, FileUploadOptions, FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { SessionService } from './session.service';
 
-const API_URL = 'https://localhost:8080/api/user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,12 +14,14 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-
-  constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private transfer: FileTransfer) { }
+  API_URL: any;
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private sessionService: SessionService) {
+    this.API_URL = this.sessionService.getRootPath() + '/user';
+   }
 
   updateProfile(data): Observable<any> {
     console.log(data.name);
-    return this.http.post(API_URL + '/updateProfile', {
+    return this.http.post(this.API_URL + '/updateProfile', {
       "name": data.name,
       "email": data.email,
       "occupation": data.occupation,
@@ -39,17 +40,18 @@ export class UserService {
 
 
   updateUsername(data): Observable<any> {
-    return this.http.post(API_URL + '/updateUsername', {
+    return this.http.post(this.API_URL + '/updateUsername', {
       "username": data.username
     }, httpOptions).pipe(
 
     tap(res => {
+      this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
   }
 
   updateEmail(data): Observable<any> {
-    return this.http.post(API_URL + '/updateEmail', {
+    return this.http.post(this.API_URL + '/updateEmail', {
       "email": data.email
     }, httpOptions).pipe(
       tap(res => {
@@ -60,16 +62,7 @@ export class UserService {
 
   uploadProfilePicture(data): Observable<any> {
     console.log(data);
-    return this.http.post(API_URL + '/uploadProfilePicture', data).pipe(
-      tap(res => {
-        this.tokenStorage.saveUser(res);
-    }, error => this.handleError(error)),
-    );
-  }
-
-  uploadCameraPicture(formData): Observable<any> {
-    console.log(formData);
-    return this.http.post(API_URL + '/uploadProfilePicture', formData).pipe(
+    return this.http.post(this.API_URL + '/uploadProfilePicture', data).pipe(
       tap(res => {
         console.log(res);
         this.tokenStorage.saveUser(res);
@@ -77,15 +70,32 @@ export class UserService {
     );
   }
 
+  uploadCameraPicture(formData): Observable<any> {
+    console.log(formData);
+    return this.http.post(this.API_URL + '/uploadProfilePicture', formData).pipe(
+      tap(res => {
+        console.log(res);
+        this.tokenStorage.saveUser(res);
+    }, error => this.handleError(error)),
+    );
+  }
+
+  generateShare(): Observable<any> {
+    return this.http.get(this.API_URL + '/shareProfile', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   getCurrentProjects(): Observable<any> {
-    return this.http.get(API_URL + '/currProjects', httpOptions).pipe(
+    return this.http.get(this.API_URL + '/currProjects', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
   }
 
   getPastProjects(): Observable<any> {
-    return this.http.get(API_URL + '/pastProjects', httpOptions).pipe(
+    return this.http.get(this.API_URL + '/pastProjects', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
