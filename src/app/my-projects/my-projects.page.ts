@@ -13,10 +13,11 @@ export class MyProjectsPage implements OnInit {
   pastProjects : any[];
   accountBoolean: boolean;
   accountType: any;
-
+  user: any;
 
   constructor(private tokenStorage : TokenStorageService, private instituitionService: InstitutionService, private userService: UserService) {
         this.accountType = this.tokenStorage.getAccountType();
+        this.user = this.tokenStorage.getUser();
       console.log(this.accountType);
         if(this.accountType == "institution") {
           this.accountBoolean = true;
@@ -29,26 +30,26 @@ export class MyProjectsPage implements OnInit {
   ngOnInit() {
     if(this.accountBoolean == true)
     {
-        this.instituitionService.getCurrentProjects().subscribe((res) =>
+        this.instituitionService.getCurrentProjects(this.user.data.user.id).subscribe((res) =>
         this.currProjects = res.data.currProjects)
         err => {
           console.log('********** Current-projects(institution).ts: ', err.error.msg);
         };
 
-        this.instituitionService.getPastProjects().subscribe((res) =>
+        this.instituitionService.getPastProjects(this.user.data.user.id).subscribe((res) =>
         this.pastProjects = res.data.pastProjects)
         err => {
           console.log('********** Past-projects(institution).ts: ', err.error.msg);
         };
 
     } else if(this.accountBoolean == false) {
-      this.userService.getCurrentProjects().subscribe((res) =>
+      this.userService.getCurrentProjects(this.user.data.user.id).subscribe((res) =>
       this.currProjects = res.data.currProjects)
       err => {
         console.log('********** Current-projects(user).ts: ', err.error.msg);
       };
 
-      this.userService.getPastProjects().subscribe((res) =>
+      this.userService.getPastProjects(this.user.data.user.id).subscribe((res) =>
       this.pastProjects = res.data.pastProjects)
       err => {
         console.log('********** Past-projects(user).ts: ', err.error.msg);

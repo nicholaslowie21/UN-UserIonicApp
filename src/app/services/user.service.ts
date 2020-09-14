@@ -87,15 +87,15 @@ export class UserService {
     );
   }
 
-  getCurrentProjects(): Observable<any> {
-    return this.http.get(this.API_URL + '/currProjects', httpOptions).pipe(
+  getCurrentProjects(data): Observable<any> {
+    return this.http.get(this.API_URL + '/currProjects?userId=' + data, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
   }
 
-  getPastProjects(): Observable<any> {
-    return this.http.get(this.API_URL + '/pastProjects', httpOptions).pipe(
+  getPastProjects(data): Observable<any> {
+    return this.http.get(this.API_URL + '/pastProjects?userId=' + data, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

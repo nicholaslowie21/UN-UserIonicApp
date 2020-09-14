@@ -109,15 +109,15 @@ export class InstitutionService {
     );
   }
 
-  getCurrentProjects(): Observable<any> {
-    return this.http.get(this.API_URL + '/currProjects', httpOptions).pipe(
+  getCurrentProjects(data): Observable<any> {
+    return this.http.get(this.API_URL + '/currProjects?institutionId=' + data, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
   }
 
-  getPastProjects(): Observable<any> {
-    return this.http.get(this.API_URL + '/pastProjects', httpOptions).pipe(
+  getPastProjects(data): Observable<any> {
+    return this.http.get(this.API_URL + '/pastProjects?institutionId=' + data, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
