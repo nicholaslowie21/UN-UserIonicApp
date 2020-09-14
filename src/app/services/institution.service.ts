@@ -3,8 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TokenStorageService } from './token-storage.service';
-
-const API_URL = 'https://localhost:8080/api/institution';
+import { SessionService } from './session.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,11 +12,13 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class InstitutionService {
-
-  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
+  API_URL: any;
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private sessionService: SessionService) {
+    this.API_URL = this.sessionService.getRootPath() + '/institution';
+   }
 
   updateProfile(data): Observable<any> {
-    return this.http.post(API_URL + '/updateProfile', {
+    return this.http.post(this.API_URL + '/updateProfile', {
       "name": data.name,
       "address": data.address,
       "bio": data.bio,
@@ -33,7 +34,7 @@ export class InstitutionService {
   }
 
   changePassword(data): Observable<any> {
-    return this.http.post(API_URL + '/changePassword', {
+    return this.http.post(this.API_URL + '/changePassword', {
       "oldpassword": data.oldpassword,
       "newpassword": data.newpassword
     }, httpOptions).pipe(
@@ -43,7 +44,7 @@ export class InstitutionService {
   }
 
   updateUsername(data): Observable<any> {
-    return this.http.post(API_URL + '/updateUsername', {
+    return this.http.post(this.API_URL + '/updateUsername', {
       "username": data.username
     }, httpOptions).pipe(
       tap(res => {
@@ -53,7 +54,7 @@ export class InstitutionService {
   }
 
   updateEmail(data): Observable<any> {
-    return this.http.post(API_URL + '/updateEmail', {
+    return this.http.post(this.API_URL + '/updateEmail', {
       "email": data.email
     }, httpOptions).pipe(
       tap(res => {
@@ -62,15 +63,15 @@ export class InstitutionService {
     );
   }
 
-  getMembers(): Observable<any> {
-    return this.http.get(API_URL + '/getMembers', httpOptions).pipe(
+  getMembers(data): Observable<any> {
+    return this.http.get(this.API_URL + '/getMembers?institutionId=' + data , httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
   }
 
   delMembers(data): Observable<any> {
-    return this.http.post(API_URL + '/delMember', {
+    return this.http.post(this.API_URL + '/delMember', {
       "userId": data.userId
     }, httpOptions).pipe(
       tap(res => {
@@ -79,7 +80,7 @@ export class InstitutionService {
   }
 
   addMember(data): Observable<any> {
-    return this.http.post(API_URL + '/addMember', {
+    return this.http.post(this.API_URL + '/addMember', {
       "userId": data.userId
     }, httpOptions).pipe(
       tap(res => {
@@ -90,8 +91,9 @@ export class InstitutionService {
 
   uploadProfilePicture(data): Observable<any> {
     console.log(data);
-    return this.http.post(API_URL + '/uploadProfilePicture', data).pipe(
+    return this.http.post(this.API_URL + '/uploadProfilePicture', data).pipe(
       tap(res => {
+        console.log(res.host);
         this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
@@ -99,7 +101,7 @@ export class InstitutionService {
 
   uploadCameraPicture(formData): Observable<any> {
     console.log(formData);
-    return this.http.post(API_URL + '/uploadProfilePicture', formData).pipe(
+    return this.http.post(this.API_URL + '/uploadProfilePicture', formData).pipe(
       tap(res => {
         console.log(res);
         this.tokenStorage.saveUser(res);
@@ -108,14 +110,14 @@ export class InstitutionService {
   }
 
   getCurrentProjects(): Observable<any> {
-    return this.http.get(API_URL + '/currProjects', httpOptions).pipe(
+    return this.http.get(this.API_URL + '/currProjects', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
   }
 
   getPastProjects(): Observable<any> {
-    return this.http.get(API_URL + '/pastProjects', httpOptions).pipe(
+    return this.http.get(this.API_URL + '/pastProjects', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

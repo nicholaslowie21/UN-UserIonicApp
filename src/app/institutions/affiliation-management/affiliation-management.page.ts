@@ -20,7 +20,7 @@ export class AffiliationManagementPage implements OnInit {
   ngOnInit() {
     this.user = this.tokenStorage.getUser();
     console.log(this.user);
-    this.institutionService.getMembers().subscribe((res) =>
+    this.institutionService.getMembers(this.user.data.user.id).subscribe((res) =>
     this.members = res.data.members)
     err => {
       console.log('********** AffiliationManagementPage.ts: ', err.error.msg);

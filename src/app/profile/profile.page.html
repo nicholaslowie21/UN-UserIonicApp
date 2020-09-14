@@ -43,7 +43,7 @@
     <ion-icon name="cube" slot="start"></ion-icon>
     <ion-label>My Resources</ion-label>
   </ion-item>
-  <ion-item routerLink="/affiliation-management">
+  <ion-item *ngIf="accountBoolean == true" routerLink="/affiliation-management">
     <ion-icon name="people-outline" slot="start"></ion-icon>
     <ion-label>Affiliated Users</ion-label>
   </ion-item>
