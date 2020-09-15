@@ -13,7 +13,4 @@ export class RegisterSplitPage implements OnInit {
   ngOnInit() {
   }
 
-  back() {
-    this.router.navigateByUrl("/login");
-  }
 }

@@ -5,72 +5,68 @@
 </ion-header>
 
   <ion-content>
+    <img class="background" src="assets/img/cover.jpeg"/>
     <div class="center">
-      <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
-        <ion-col size="12" size-sm="10" offset-sm="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4"
-          offset-xl="4">
-          
-            <div heading-column-lr>
-              <h1 class="big-heading">Login</h1>
+      <div heading-column-lr>
+        <h1 class="big-heading">Login</h1>
+      </div>
+
+      <ion-card>   
+        <ion-card-content>
+          <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+          <ion-item transparent>
+              <div>
+                <img icon-small src="assets/img/user.png" />&nbsp;&nbsp;
+              </div>
+              <div class="form-group">
+                <label for="username">Username or Email</label>
+                <ion-input type="text" class="form-control" name="usernameOrEmail" [(ngModel)]="form.usernameOrEmail" required #usernameOrEmail="ngModel"></ion-input>
+              </div>
+          </ion-item>
+          <ion-item transparent>
+              <div>
+              <img icon-small src="assets/img/lock.png" />&nbsp;&nbsp;
             </div>
-
-          <ion-card>
-            
-            <ion-card-content>
-              <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-              <ion-item transparent>
-                  <div>
-                    <img icon-small src="assets/img/user.png" />&nbsp;&nbsp;
-                  </div>
-                  <div class="form-group">
-                    <label for="username">Username or Email</label>
-                    <ion-input type="text" class="form-control" name="usernameOrEmail" [(ngModel)]="form.usernameOrEmail" required #usernameOrEmail="ngModel"></ion-input>
-                  </div>
-              </ion-item>
-              <ion-item transparent>
-                  <div>
-                  <img icon-small src="assets/img/lock.png" />&nbsp;&nbsp;
-                </div>
-                  <div class="form-group">
-                    <label for="username">Password</label>
-                    <ion-input type="password" class="form-control" name="password" [(ngModel)]="form.password" required #password="ngModel"></ion-input>
-                    <div class="alert alert-danger" role="alert" *ngIf="f.submitted && password.invalid">
-                      <div *ngIf="password.errors.required">Password is required</div>
-                      <div *ngIf="password.errors.minlength">
-                          Password must be at least 6 characters
-                      </div>
-                    </div>
-                  </div>
-                
-              </ion-item>
               <div class="form-group">
-                <div
-                  class="alert alert-danger"
-                  role="alert"
-                  *ngIf="f.submitted && isLoginFailed"
-                >
-                  Login failed: {{ errorMessage }}
+                <label for="username">Password</label>
+                <ion-input type="password" class="form-control" name="password" [(ngModel)]="form.password" required #password="ngModel"></ion-input>
+                <div class="alert alert-danger" role="alert" *ngIf="f.submitted && password.invalid">
+                  <div *ngIf="password.errors.required">Password is required</div>
+                  <div *ngIf="password.errors.minlength">
+                      Password must be at least 6 characters
+                  </div>
                 </div>
               </div>
-              <div linespace></div>
-              <div class="form-group">
-                <ion-button expand="block" (click)="onSubmit()">Login</ion-button>
-              </div>
-              <div class="small">
-                <a routerLink="/forget-password" routerDirection="forward">Forget Password?</a>
-              </div>
-            </form>
             
-            </ion-card-content>
-          </ion-card>
-    
-        </ion-col>
-      </ion-row>
+          </ion-item>
+          <div class="form-group">
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="f.submitted && isLoginFailed"
+            >
+              Login failed: {{ errorMessage }}
+            </div>
+          </div>
+          <div linespace></div>
+          <div class="form-group">
+            <ion-button expand="block" (click)="onSubmit()">Login</ion-button>
+          </div>
+          <div class="small">
+            <a routerLink="/forget-password" routerDirection="forward">Forget Password?</a>
+          </div>
+        </form>
+        <hr>
+        <div class="small">
+          <p>Don't have an account?</p>
+          <ion-button routerLink="/userRegister" routerDirection="forward" size="small" fill="outline">Register as Individual</ion-button>
+          <ion-button routerLink="/institution-register" routerDirection="forward" size="small" fill="outline">Register as Institution</ion-button>
+        </div>
+        </ion-card-content>
+      </ion-card>
     </div>
 
-    <div class="footer">
-      <!-- <ion-button expand="block" color="secondary" routerLink="/register-split" routerDirection="forward">Register
-      </ion-button> -->
-      <p>Don't have an account? <a routerLink="/register-split" routerDirection="forward" class="sign-up">SIGN UP</a></p>
-    </div>
+    <!-- <div class="footer">
+      <p>Don't have an account? <a routerLink="/register-split" routerDirection="forward" class="sign-up">REGISTER NOW!</a></p>
+    </div> -->
   </ion-content>
