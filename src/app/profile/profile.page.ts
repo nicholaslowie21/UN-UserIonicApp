@@ -3,6 +3,7 @@ import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from  "@angular/router";
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service'
+import { AuthService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +22,7 @@ export class ProfilePage implements OnInit {
   accountType: any;
   accountBoolean: boolean;
   
-  constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private router: Router, private userService: UserService) { 
+  constructor(private auth: AuthService, private http: HttpClient, private tokenStorage: TokenStorageService, private router: Router, private userService: UserService) { 
     
   }
 
@@ -51,5 +52,9 @@ export class ProfilePage implements OnInit {
     this.accountType = this.currentUser.data.accountType;
   }
   
+  logout() {
+    this.auth.logout();
+    this.router.navigateByUrl("/login");
+  }
 
 }

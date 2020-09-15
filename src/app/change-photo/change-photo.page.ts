@@ -68,9 +68,6 @@ export class ChangePhotoPage implements OnInit {
     
   }
 
-  back() {
-    this.router.navigateByUrl('/tabs/home');
-  }
   //initialise file reader
   //create a file reader to read contents of files using blob to specify data to read
   //create a imgblob which is used in previous step

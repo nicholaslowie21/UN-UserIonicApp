@@ -21,10 +21,6 @@ export class AddMemberPage implements OnInit {
     this.users = [{"userID": "5f533ff9780a7f7c117af43c", "name": "Jack Sim", "country": "Singapore"}, {"name": "Lucy Lu", "country": "Malaysia"}]
   }
 
-  back() {
-    this.router.navigateByUrl("/affiliation-management");
-  }
-
   add(u) {
     console.log(u);
     this.data = {

@@ -43,10 +43,6 @@ export class ForgetpasswordPage implements OnInit {
     console.log('********** UpdateUserEmail.ts: ', err.error.msg);
   });
   }
-
-  back() {
-    this.router.navigateByUrl("/login");
-  }
   
   async showAlert(msg) {  
     const alert = await this.alertCtrl.create({  

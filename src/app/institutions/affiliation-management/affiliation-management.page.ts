@@ -68,10 +68,6 @@ export class AffiliationManagementPage implements OnInit {
     await alert.present();
   }
 
-  back() {
-    this.router.navigateByUrl("/tabs/profile");
-  }
-
   async successToast() {
     const toast = this.toastCtrl.create({
       message: 'Member deleted successfully',
