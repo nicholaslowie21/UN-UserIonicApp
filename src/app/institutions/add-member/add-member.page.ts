@@ -14,17 +14,21 @@ export class AddMemberPage implements OnInit {
   user: any;
   data: {};
   member: any;
+  words: any;
 
   constructor(private router: Router, private institutionService: InstitutionService, private alertController: AlertController, private toastCtrl: ToastController, private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
-    this.users = [{"userID": "5f533ff9780a7f7c117af43c", "name": "Jack Sim", "country": "Singapore"}, {"name": "Lucy Lu", "country": "Malaysia"}]
+  }
+
+  back() {
+    this.router.navigateByUrl("/affiliation-management");
   }
 
   add(u) {
     console.log(u);
     this.data = {
-      "userId": u.userID
+      "userId": u.id
     }
     this.institutionService.addMember(this.data).subscribe((res) => {
       this.successToast();
@@ -38,7 +42,19 @@ export class AddMemberPage implements OnInit {
     };
   }
 
-  async presentAlertConfirm(ev,u) {
+  search(words) {
+    this.institutionService.searchUser(words).subscribe((res) => {
+      this.users = res.data.users;
+    }
+   ),
+    err => {
+      console.log(err);
+      this.failureToast(err.error.msg);
+      console.log('********** AddInstitutionMemberPage.ts: ', err.error.msg);
+    };
+  }
+
+  async presentAlertConfirm(u) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm',
@@ -63,23 +79,7 @@ export class AddMemberPage implements OnInit {
     await alert.present();
   }
 
-  getItems(ev: any) {
-    // Reset items back to all of the items
-    this.initializeUsers();
-
-    // set val to the value of the searchbar
-    const val = ev.target.value;
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.users = this.users.filter((item) => {
-        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
-  }
-
-  initializeUsers() {
-    this.users = [{"userID": "5f527102fb5e4822bc9eacc0", "name": "Jack Sim", "country": "Singapore"}, {"name": "Lucy Lu", "country": "Malaysia"}]
-  }
+ 
   async successToast() {
     const toast = this.toastCtrl.create({
       message: 'Member added successfully!',

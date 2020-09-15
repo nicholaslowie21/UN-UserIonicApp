@@ -55,7 +55,7 @@
 
 <ion-content [fullscreen]="true"> 
 <ion-card>
-    <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture">
+    <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <div class="centered">
       <div >
         <a style="font-size: 8px;" routerLink="/change-photo" routerDirection="forward">Edit Profile Picture</a>

@@ -123,6 +123,14 @@ export class InstitutionService {
     );
   }
 
+  searchUser(data): Observable<any> {
+    return this.http.get(this.API_URL + '/searchUsers?username='  + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

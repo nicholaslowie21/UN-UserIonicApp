@@ -1,26 +1,32 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-icon name="arrow-back" slot="start" routerLink="/affiliation-management" style="padding-left:10px"></ion-icon>
-    </ion-buttons>
+    <ion-button (click)="back()"> Back </ion-button>
     <ion-title style="text-align: right">Add members</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-toolbar>
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
-  </ion-toolbar>
-  
+  <form name="form" (ngSubmit)="f.form.valid && search(words)" #f="ngForm" novalidate>
+    <ion-item transparent>
+        <div class="form-group">
+          <ion-input type="text" placeholder="Search" name="words" [(ngModel)]="words" required></ion-input>
+        </div>
+    </ion-item>
+    <div class="form-group">
+      <ion-button expand="block" (click)="search(words)">Search</ion-button>
+    </div>
+
+  </form>
   <ion-list >
     <ion-item *ngFor="let u of users" >
-      <img class="card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=u.profilePic alt="Profile Picture">
-      {{u.name}}
+      <img class="card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=u.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+      <ion-title>{{u.name}}</ion-title>
       {{u.country}}
       <ion-toolbar >
-        <ion-button class="add" (click)="presentAlertConfirm($event, u)" >Add member</ion-button>
+        <ion-button class="add" (click)="presentAlertConfirm(u)" >Add member</ion-button>
       </ion-toolbar>
     </ion-item>
   </ion-list>
 
 </ion-content>
+
