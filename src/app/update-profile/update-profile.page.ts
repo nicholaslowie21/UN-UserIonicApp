@@ -25,6 +25,7 @@ export class UpdateProfilePage implements OnInit {
     accountType: any;
     website: any;
     gender: any;
+    phone: any;
     skillsString: string;
     sdgs: any[];
 
@@ -75,7 +76,7 @@ export class UpdateProfilePage implements OnInit {
       console.log(this.tokenStorage.getUser());
       this.user = this.tokenStorage.getUser().data.user;
     }
-    this.user.website = "";
+    // this.user.website = "";
     console.log(this.accountBoolean);
     if(this.accountBoolean == false) {
       this.user.skillsString = ""
@@ -159,10 +160,6 @@ export class UpdateProfilePage implements OnInit {
           console.log('********** UpdateUserProfile.ts: ', err.error.msg);
         });
     }
-  }
-
-  back() {
-    this.router.navigateByUrl("/tabs/settings");
   }
 
   async successToast() {

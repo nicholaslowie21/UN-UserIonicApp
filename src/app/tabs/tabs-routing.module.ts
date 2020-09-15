@@ -21,12 +21,12 @@ const routes: Routes = [
         loadChildren: () => import('../marketplace/marketplace.module').then(m => m.MarketplacePageModule)
       },
       {
-        path: 'profile',
-        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
+        path: 'messages',
+        loadChildren: () => import('../messages/messages.module').then(m => m.MessagesPageModule)
       },
       {
-        path: 'settings',
-        loadChildren: () => import('../settings/settings.module').then(m => m.SettingsPageModule)
+        path: 'profile',
+        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
         path: '',

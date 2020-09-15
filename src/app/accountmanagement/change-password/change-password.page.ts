@@ -49,11 +49,6 @@ export class ChangePasswordPage implements OnInit {
 
     
   }
-
-
-  back() {
-    this.router.navigateByUrl('/accountsettings');
-  }
  
   changeInstitutionPassword() {
       if(this.user.newpassword == this.user.confirmPassword){
