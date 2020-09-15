@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+  <img class="background" src="assets/img/cover.jpeg"/>
   <div class="centered center">
   <ion-card>
     <ion-card-header>Upload a picture to serve as your profile picture!</ion-card-header>
@@ -18,7 +19,7 @@
       </div>
       <br>
       <div>
-        <button type="submit" (click)="onSubmit()">Upload</button>
+        <ion-button type="submit" expand="block" (click)="onSubmit()">Upload</ion-button>
       </div>
     </form>
     
