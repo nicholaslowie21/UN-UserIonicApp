@@ -41,9 +41,7 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-title slot="start">{{ currentUser.data.user.username }}</ion-title>
-      <div *ngIf="currentUser.data.user.isVerified == true">
-        <ion-icon name="checkmark-circle"></ion-icon>
-      </div>
+      <ion-icon *ngIf="currentUser.data.user.isVerified == true" name="checkmark-circle" size="big"></ion-icon>
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-menu-button><ion-icon name="settings-outline"></ion-icon></ion-menu-button>
