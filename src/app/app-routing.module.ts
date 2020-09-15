@@ -94,7 +94,11 @@ const routes: Routes = [
   {
     path: 'add-member',
     loadChildren: () => import('./institutions/add-member/add-member.module').then( m => m.AddMemberPageModule)
+  },  {
+    path: 'messages',
+    loadChildren: () => import('./messages/messages.module').then( m => m.MessagesPageModule)
   }
+
 
 
 ];
