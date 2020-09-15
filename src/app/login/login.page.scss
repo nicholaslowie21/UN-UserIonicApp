@@ -21,7 +21,7 @@
 }
 .logo-img{
     display: block;
-    width: 120px;
+    width: 80px;
     margin: 0 auto;
     text-align: center;
 }
@@ -69,6 +69,21 @@ ion-item {
     transform: translate(-49%, -49%);
     width: 90%;
   }
+
+.footer {
+    position: fixed;
+    left: 0;
+    width:100%;
+    bottom: 0;
+    text-align: center;
+    background: var(--theme-color);
+    color: white; 
+}
+
+.sign-up {
+    color: white;
+    font-weight: bold;
+}
 
 .toast-scheme{
     background:yellow;
