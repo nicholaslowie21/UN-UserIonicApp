@@ -93,7 +93,6 @@ export class InstitutionService {
     console.log(data);
     return this.http.post(this.API_URL + '/uploadProfilePicture', data).pipe(
       tap(res => {
-        console.log(res.host);
         this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
@@ -129,7 +128,6 @@ export class InstitutionService {
     }, error => this.handleError(error)),
     );
   }
-
 
   private handleError(error: HttpErrorResponse)
 	{

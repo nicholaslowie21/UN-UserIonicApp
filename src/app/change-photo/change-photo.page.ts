@@ -54,14 +54,19 @@ export class ChangePhotoPage implements OnInit {
     
     if(this.accountBoolean == true){
       this.institutionService.uploadProfilePicture(formData).subscribe(
-        (res) => 
-        this.successToast(),
+        (res) => {
+          this.successToast();
+          this.router.navigateByUrl('/tabs/home');
+        },
+        
         (err) => this.failureToast(err)
       );
     } else if(this.accountBoolean == false){
       this.userService.uploadProfilePicture(formData).subscribe(
-        (res) => 
-        this.successToast(),
+        (res) => {
+        this.successToast();
+        this.router.navigateByUrl('/tabs/home');
+      },
         (err) => this.failureToast(err)
       );
     }
@@ -83,10 +88,13 @@ export class ChangePhotoPage implements OnInit {
       const formData = new FormData();
       formData.append('profilePic', imgBlob, file.name);
       
-            this.userService.uploadCameraPicture(formData).subscribe(dataRes => {
-              this.successToast(),
+            this.userService.uploadCameraPicture(formData).subscribe(
+              (res) => {
+                this.successToast();
+                this.router.navigateByUrl('/tabs/home');
+              },
               (err) => this.failureToast(err)
-            });
+            );
           };
           reader.readAsArrayBuffer(file);
       } else if(this.accountBoolean == true){
@@ -98,10 +106,12 @@ export class ChangePhotoPage implements OnInit {
           const formData = new FormData();
           formData.append('profilePic', imgBlob, file.name);
           
-                this.institutionService.uploadCameraPicture(formData).subscribe(dataRes => {
-                  this.successToast(),
+                this.institutionService.uploadCameraPicture(formData).subscribe((res) => {
+                  this.successToast();
+                  this.router.navigateByUrl('/tabs/home');
+                },
                   (err) => this.failureToast(err)
-                });
+                );
               };
               reader.readAsArrayBuffer(file);
     

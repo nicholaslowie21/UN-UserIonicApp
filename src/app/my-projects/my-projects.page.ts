@@ -15,7 +15,7 @@ export class MyProjectsPage implements OnInit {
   accountType: any;
   user: any;
 
-  constructor(private tokenStorage : TokenStorageService, private instituitionService: InstitutionService, private userService: UserService) {
+  constructor(private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService) {
         this.accountType = this.tokenStorage.getAccountType();
         this.user = this.tokenStorage.getUser();
       console.log(this.accountType);
@@ -28,15 +28,15 @@ export class MyProjectsPage implements OnInit {
       }
 
   ngOnInit() {
-    if(this.accountBoolean == true)
+    /*if(this.accountBoolean == true)
     {
-        this.instituitionService.getCurrentProjects(this.user.data.user.id).subscribe((res) =>
+        this.institutionService.getCurrentProjects(this.user.data.user.id).subscribe((res) => 
         this.currProjects = res.data.currProjects)
         err => {
           console.log('********** Current-projects(institution).ts: ', err.error.msg);
         };
 
-        this.instituitionService.getPastProjects(this.user.data.user.id).subscribe((res) =>
+        this.institutionService.getPastProjects(this.user.data.user.id).subscribe((res) =>
         this.pastProjects = res.data.pastProjects)
         err => {
           console.log('********** Past-projects(institution).ts: ', err.error.msg);
@@ -54,7 +54,7 @@ export class MyProjectsPage implements OnInit {
       err => {
         console.log('********** Past-projects(user).ts: ', err.error.msg);
       };
-    }
+    }*/
     // Dummy data to be replaced with actual data when the proj endpoints are created. Some attributes not in the dummy data, and some (eg role) are created here.
     this.currProjects = [
       {"id": "1", "title": "Project One", "desc": "This is a special project", "SDG": [1, 3], "status": "ongoing", "role": "Contributor"},

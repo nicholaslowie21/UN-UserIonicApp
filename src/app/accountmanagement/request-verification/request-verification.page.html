@@ -10,7 +10,7 @@
 <ion-content>
   <img class="background" src="assets/img/cover.jpeg"/>
   <div class="centered center">
-  <ion-card *ngIf="status == 'false'">
+  <ion-card *ngIf="notVerified">
     <ion-card-header  >Upload a picture with your ID card and request for your account to be verified before you create new projects! Your verification request will be confirmed once an admin reviews your request!</ion-card-header>
     <ion-card-content>
     <form>      
@@ -25,10 +25,10 @@
   </ion-card-content>
     
   </ion-card>
-  <ion-card *ngIf="status == 'pending'">
+  <ion-card *ngIf="pendingVerified">
       <ion-label>Your Request for verification is pending! Check back again to see if you are verified!</ion-label>
   </ion-card>
-  <ion-card *ngIf="status == 'verified' || accountType == 'institution'">
+  <ion-card *ngIf="verified">
     <ion-label>Your account has been verified! Start Creating your project to change the world!</ion-label>
     <!--<ion-button color="dark" (click)="createProject()"></ion-button>-->
 </ion-card>

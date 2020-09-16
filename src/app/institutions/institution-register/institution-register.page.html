@@ -67,11 +67,7 @@
     </ion-item>
 
     <ion-item>
-      
-      <ion-toolbar>
         <ion-label>Country</ion-label>
-        <ion-searchbar></ion-searchbar>
-      </ion-toolbar>
       <ion-select ngModel name="country" [(ngModel)] = "country" #incountry="ngModel">
         <ion-select-option *ngFor = "let c of countryData">{{c}}</ion-select-option>
       </ion-select>

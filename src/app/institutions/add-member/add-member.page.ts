@@ -33,25 +33,23 @@ export class AddMemberPage implements OnInit {
     this.institutionService.addMember(this.data).subscribe((res) => {
       this.successToast();
       this.router.navigateByUrl("/tabs/profile");
-    }
-   ),
+    },
     err => {
       console.log(err);
       this.failureToast(err.error.msg);
       console.log('********** AddInstitutionMemberPage.ts: ', err.error.msg);
-    };
+    });
   }
 
   search(words) {
     this.institutionService.searchUser(words).subscribe((res) => {
       this.users = res.data.users;
-    }
-   ),
+    },
     err => {
       console.log(err);
       this.failureToast(err.error.msg);
       console.log('********** AddInstitutionMemberPage.ts: ', err.error.msg);
-    };
+    });
   }
 
   async presentAlertConfirm(u) {

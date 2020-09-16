@@ -14,12 +14,25 @@ export class RequestVerificationPage implements OnInit {
   images: any;
   status: any;
   accountType: any;
+
+  notVerified: boolean;
+  pendingVerified: boolean;
+  verified: boolean;
+
   constructor(private alertCtrl:AlertController, private router: Router, private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
     this.currentUser = this.tokenStorage.getUser().data.user;
-    this.status = this.currentUser.isVerified;
-    console.log(this.status);
+    if(this.currentUser.isVerified == "false") {
+      this.notVerified = true;
+    } else if(this.currentUser.isVerified == "pending"){
+      this.pendingVerified = true;
+    } else {
+      this.verified = true;
+    }
+      
+
+   
   }
 
   back() {
@@ -48,7 +61,13 @@ export class RequestVerificationPage implements OnInit {
 
   ionViewDidEnter() {
     this.currentUser = this.tokenStorage.getUser().data.user;
-    this.status = this.currentUser.isVerified;
+    if(this.currentUser.isVerified == "false") {
+      this.notVerified = true;
+    } else if(this.currentUser.isVerified == "pending"){
+      this.pendingVerified = true;
+    } else {
+      this.verified = true;
+    }
     this.accountType = this.tokenStorage.getAccountType();
   }
 
@@ -67,7 +86,6 @@ export class RequestVerificationPage implements OnInit {
     });  
     await alert.present();  
     const result = await alert.onDidDismiss();  
-    console.log(result);  
   }
 
   async showError(msg) {  

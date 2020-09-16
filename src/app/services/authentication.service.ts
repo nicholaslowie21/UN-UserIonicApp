@@ -71,11 +71,9 @@ export class AuthService {
       var loginReq = {}
       loginReq["usernameOrEmail"] = credentials.usernameOrEmail;
       loginReq["password"] = credentials.password;
-      console.log(this.baseUrl);
       return this.http.post(this.baseUrl + "/authorization/login", loginReq, httpOptions)
         .pipe(
           tap(res => {
-            console.log(res.data.accountType);
               this.tokenStorage.setAccountType(res.data.accountType);
               this.tokenStorage.saveUser(res.data.user);
               this.authenticationState.next(true);
@@ -147,7 +145,8 @@ export class AuthService {
   requestVerification(data): Observable<any> {
     return this.http.post(this.baseUrl + '/authorization/user/verifyRequest', data).pipe(
       tap(res => {
-        this.tokenStorage.saveUser(res.data.user);
+        this.tokenStorage.saveUser(res);
+        console.log(res.data.user);
     }, error => this.handleError(error)),
     );
   }
