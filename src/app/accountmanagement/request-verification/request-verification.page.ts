@@ -23,7 +23,7 @@ export class RequestVerificationPage implements OnInit {
   }
 
   back() {
-    this.router.navigateByUrl("/tabs/settings")
+    this.router.navigateByUrl("/tabs/profile")
   }
 
   selectImage(event) {
@@ -41,7 +41,7 @@ export class RequestVerificationPage implements OnInit {
         this.showAlert(res.msg);
     },
     err => {
-        this.showAlert(err.error.msg);
+        this.showError(err.error.msg);
         console.log('********** RequestUserVerification.ts: ', err.error.msg);
     })
   }
@@ -73,9 +73,15 @@ export class RequestVerificationPage implements OnInit {
   async showError(msg) {  
     const alert = await this.alertCtrl.create({  
       header: 'Error',  
-      subHeader: "You will be notified once an admin has verified your account", 
+      subHeader: "You encountered a problem requesting for verification. Do try again.", 
       message: msg,  
-      buttons: ['Return to Settings']  
+      buttons: [{
+        text: 'Return to Settings',
+        role: 'cancel',
+        handler: () => {
+         this.back();
+        }
+      }] 
     });  
     await alert.present();  
     const result = await alert.onDidDismiss();  
