@@ -15,7 +15,7 @@ export class ProfilePage implements OnInit {
   currentUser: any;
   title = 'fileUpload';
   images;
-  image;
+  image: any;
   badges: any[];
   sdgs: any[];
   name: any;
@@ -28,7 +28,6 @@ export class ProfilePage implements OnInit {
 
   ngOnInit(): void {
    this.currentUser = this.tokenStorage.getUser();
-   console.log(this.currentUser);
    
    this.accountType = this.tokenStorage.getAccountType();
    console.log(this.accountType);
@@ -45,11 +44,12 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    console.log("didenter");
+    console.log(this.tokenStorage.getUser());
     this.currentUser = this.tokenStorage.getUser();
+    console.log(this.tokenStorage.getUser().data.user.profilePic);
     this.name = this.currentUser.data.user.name;
-    this.image = this.currentUser.data.user.profilePic;
-    console.log(this.image);
+    this.image = this.tokenStorage.getUser().data.user.profilePic;
+    
     this.sdgs = this.currentUser.data.user.SDGs;
     this.accountType = this.currentUser.data.accountType;
   }
