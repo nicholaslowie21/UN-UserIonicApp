@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="update(form)">
+  <form #form="ngForm" (ngSubmit)="update()">
     <ion-item>
         <ion-label position="floating">Name</ion-label>
         <ion-input ngModel name="name" [(ngModel)]="user.name" required minlength="3" #inname="ngModel"></ion-input>
