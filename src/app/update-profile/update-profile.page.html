@@ -34,7 +34,7 @@
     </ion-item>
 
     <ion-item *ngIf="accountBoolean == false">
-      <ion-label position="floating">Enter your Skills(separated by commas. Eg: cooking, coding, data analytics)</ion-label>
+      <ion-label position="floating">Enter your Skills (separated by commas. Eg: cooking, coding, data analytics)</ion-label>
       <ion-textarea ngModel name="skills" [(ngModel)]="user.skillsString" #inskills="ngModel"></ion-textarea>
       <div class="alert-danger" *ngIf="form.submitted && inskills.invalid">
       </div>
@@ -42,7 +42,7 @@
 
     <ion-item>
           
-      <ion-label position="floating">Website(eg: https://yourwebsite.com)</ion-label>
+      <ion-label position="floating">Website (eg: https://yourwebsite.com)</ion-label>
       <ion-input type="website" ngModel name="website" [(ngModel)]="user.website" #inwebsite="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inwebsite.invalid"></div>
     </ion-item>

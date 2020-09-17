@@ -26,6 +26,7 @@ export class ProfilePage implements OnInit {
   accountType: any;
   accountBoolean: boolean;
   imageForSharing: any;
+  isVerified: boolean;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -50,6 +51,9 @@ export class ProfilePage implements OnInit {
       this.accountBoolean = false;
     }
     console.log(this.accountBoolean);
+    if(this.currentUser.data.user.isVerified == "true") {
+      this.isVerified = true;
+    }
   }
 
   toRewards() {
