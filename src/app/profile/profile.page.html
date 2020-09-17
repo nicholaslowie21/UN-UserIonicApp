@@ -53,6 +53,9 @@
 
 <ion-content [fullscreen]="true"> 
 <ion-card>
+  <ion-buttons>
+    <ion-icon size=large name="share-social-outline" (click)="presentActionSheet()" style="padding-left:10px"></ion-icon>
+  </ion-buttons>
     <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <div class="centered">
       <div >

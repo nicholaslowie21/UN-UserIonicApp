@@ -130,6 +130,13 @@ export class InstitutionService {
     );
   }
 
+  generateShare(): Observable<any> {
+    return this.http.get(this.API_URL + '/shareProfile', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

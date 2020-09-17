@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicStorageModule, Storage } from '@ionic/storage';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { ActionSheetController, IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { PopoverController } from '@ionic/angular';
@@ -20,6 +20,7 @@ import { authInterceptorProviders } from './helper/auth.interceptor';
 import { Camera } from '@ionic-native/camera/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 /*Supply an array of whitelisted Domains
@@ -64,6 +65,8 @@ export function jwtOptionsFactory(storage:Storage) {
     Camera,
     File,
     FileTransfer,
+    SocialSharing,
+    ActionSheetController,
     authInterceptorProviders
   ],
   bootstrap: [AppComponent]

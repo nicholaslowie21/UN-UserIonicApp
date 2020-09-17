@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service'
 import { AuthService } from '../services/authentication.service';
 import { SessionService } from '../services/session.service';
+import { InstitutionService } from '../services/institution.service';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile',
@@ -22,8 +25,17 @@ export class ProfilePage implements OnInit {
   name: any;
   accountType: any;
   accountBoolean: boolean;
+  imageForSharing: any;
   
-  constructor(private auth: AuthService, private http: HttpClient, private tokenStorage: TokenStorageService, private router: Router, private userService: UserService, private sessionService: SessionService) { 
+  constructor(private auth: AuthService, 
+    private http: HttpClient, 
+    private tokenStorage: TokenStorageService, 
+    private router: Router, 
+    private userService: UserService, 
+    private sessionService: SessionService, 
+    private institutionService: InstitutionService, 
+    private socialSharing: SocialSharing, 
+    private actionSheet: ActionSheetController) { 
     
   }
 
@@ -60,5 +72,177 @@ export class ProfilePage implements OnInit {
     this.auth.logout();
     this.router.navigateByUrl("/login");
   }
+
+  shareviaWhatsapp(){
+    if(this.accountBoolean == false) {
+      console.log("userShare");
+      this.userService.generateShare().subscribe((res) =>{
+        this.imageForSharing = res.data.theLink
+        this.socialSharing.shareViaWhatsApp("msg",this.imageForSharing)
+      .then((success) =>{
+          alert("Success");
+       })
+        .catch(()=>{
+          alert("Could not share information");
+        });
+      })
+    err => {
+      console.log('********** ShareImage.ts: ', err.error.msg);
+    };
+    } else if(this.accountBoolean == true ) {
+      console.log("InstitutionShare");
+      this.institutionService.generateShare().subscribe((res) =>{
+        this.imageForSharing = res.data.theLink
+        this.socialSharing.shareViaWhatsApp("msg",this.imageForSharing)
+      .then((success) =>{
+          alert("Success");
+       })
+        .catch(()=>{
+          alert("Could not share information");
+        });
+      })
+    err => {
+      console.log('********** ShareImage.ts: ', err.error.msg);
+    };
+    }
+    
+  }
+
+  /*shareviaFacebook(){
+    if(this.accountBoolean == false) {
+      console.log("userShare");
+      this.userService.generateShare().subscribe((res) =>{
+        this.imageForSharing = res.data.theLink
+        this.socialSharing.shareViaFacebook("msg",this.imageForSharing)
+      .then((success) =>{
+          alert("Success");
+       })
+        .catch(()=>{
+          alert("Could not share information");
+        });
+      })
+    err => {
+      console.log('********** ShareImage.ts: ', err.error.msg);
+    };
+    } else if(this.accountBoolean == true ) {
+      console.log("InstitutionShare");
+      this.institutionService.generateShare().subscribe((res) =>{
+        this.imageForSharing = res.data.theLink
+        this.socialSharing.shareViaFacebook("msg",this.imageForSharing)
+      .then((success) =>{
+          alert("Success");
+       })
+        .catch(()=>{
+          alert("Could not share information");
+        });
+      })
+    err => {
+      console.log('********** ShareImage.ts: ', err.error.msg);
+    };
+    }
+    
+  }*/
+
+  shareviaInstagram(){
+    if(this.accountBoolean == false) {
+      console.log("userShare");
+      this.userService.generateShare().subscribe((res) =>{
+        this.imageForSharing = res.data.theLink
+        this.socialSharing.shareViaInstagram("msg",this.imageForSharing)
+      .then((success) =>{
+          alert("Success");
+       })
+        .catch(()=>{
+          alert("Could not share information");
+        });
+      })
+    err => {
+      console.log('********** ShareImage.ts: ', err.error.msg);
+    };
+    } else if(this.accountBoolean == true ) {
+      console.log("InstitutionShare");
+      this.institutionService.generateShare().subscribe((res) =>{
+        this.imageForSharing = res.data.theLink
+        this.socialSharing.shareViaInstagram("msg",this.imageForSharing)
+      .then((success) =>{
+          alert("Success");
+       })
+        .catch(()=>{
+          alert("Could not share information");
+        });
+      })
+    err => {
+      console.log('********** ShareImage.ts: ', err.error.msg);
+    };
+    }
+    
+  }
+
+  /*shareviaTwitter(){
+    if(this.accountBoolean == false) {
+      console.log("userShare");
+      this.userService.generateShare().subscribe((res) =>{
+        this.imageForSharing = res.data.theLink
+        this.socialSharing.shareViaTwitter("msg",this.imageForSharing)
+      .then((success) =>{
+          alert("Success");
+       })
+        .catch(()=>{
+          alert("Could not share information");
+        });
+      })
+    err => {
+      console.log('********** ShareImage.ts: ', err.error.msg);
+    };
+    } else if(this.accountBoolean == true ) {
+      console.log("InstitutionShare");
+      this.institutionService.generateShare().subscribe((res) =>{
+        this.imageForSharing = res.data.theLink
+        this.socialSharing.shareViaTwitter("msg",this.imageForSharing)
+      .then((success) =>{
+          alert("Success");
+       })
+        .catch(()=>{
+          alert("Could not share information");
+        });
+      })
+    err => {
+      console.log('********** ShareImage.ts: ', err.error.msg);
+    };
+    }
+    
+  }*/
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheet.create({
+      header: 'Share',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Whatsapp',
+        role: 'destructive',
+        icon: 'logo-whatsapp',
+        handler: () => {
+          this.shareviaWhatsapp();
+          console.log('Whatsapp clicked');
+        }
+      }, {
+        text: 'Instagram',
+        icon: 'logo-instagram',
+        handler: () => {
+          this.shareviaInstagram();
+          console.log('Instagram clicked');
+        }
+      },{
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
 
 }
