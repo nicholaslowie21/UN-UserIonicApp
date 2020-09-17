@@ -44,20 +44,12 @@ const routes: Routes = [
     loadChildren: () => import('./marketplace/marketplace.module').then( m => m.MarketplacePageModule)
   },
   {
-    path: 'register-split',
-    loadChildren: () => import('./split/register-split/register-split.module').then( m => m.RegisterSplitPageModule)
-  },
-  {
     path: 'institution-register',
     loadChildren: () => import('./institutions/institution-register/institution-register.module').then( m => m.InstitutionRegisterPageModule)
   },
   {
     path: 'change-password',
     loadChildren: () => import('./accountmanagement/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
-  },
-  {
-    path: 'update-username',
-    loadChildren: () => import('./accountmanagement/update-username/update-username.module').then( m => m.UpdateUsernamePageModule)
   },
   {
     path: 'update-email',
@@ -94,13 +86,15 @@ const routes: Routes = [
   {
     path: 'add-member',
     loadChildren: () => import('./institutions/add-member/add-member.module').then( m => m.AddMemberPageModule)
-  },  {
+  },
+  {
     path: 'messages',
     loadChildren: () => import('./messages/messages.module').then( m => m.MessagesPageModule)
+  },
+  {
+    path: 'about',
+    loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
   }
-
-
-
 ];
 @NgModule({
   imports: [
