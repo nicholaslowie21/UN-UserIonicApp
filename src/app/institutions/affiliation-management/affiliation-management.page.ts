@@ -3,6 +3,7 @@ import { InstitutionService } from 'src/app/services/institution.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router'
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-affiliation-management',
@@ -14,14 +15,33 @@ export class AffiliationManagementPage implements OnInit {
   user: any;
   data: {};
 
-  constructor(private institutionService: InstitutionService, private tokenStorage: TokenStorageService, private alertController: AlertController, private toastCtrl: ToastController, private router: Router) {
+  constructor(private sessionService: SessionService, private institutionService: InstitutionService, private tokenStorage: TokenStorageService, private alertController: AlertController, private toastCtrl: ToastController, private router: Router) {
    }
   
   ngOnInit() {
     this.user = this.tokenStorage.getUser();
     console.log(this.user);
-    this.institutionService.getMembers(this.user.data.user.id).subscribe((res) =>
-    this.members = res.data.members)
+    this.institutionService.getMembers(this.user.data.user.id).subscribe((res) => {
+      this.members = res.data.members
+      for(var i=0; i < this.members.length; i++) {
+        this.members[i].profilePic =  this.sessionService.getRscPath() + this.members[i].ionicImg +'?random+=' + Math.random();
+        console.log(this.members[i].profilePic);
+      }
+    }
+    )
+    err => {
+      console.log('********** AffiliationManagementPage.ts: ', err.error.msg);
+    };
+  }
+
+  ionViewDidEnter() {
+    this.institutionService.getMembers(this.user.data.user.id).subscribe((res) => {
+      this.members = res.data.members
+      for(var i=0; i < this.members.length; i++) {
+        this.members[i].profilePic =  this.sessionService.getRscPath() + this.members[i].ionicImg +'?random+=' + Math.random();
+      }
+    }
+    )
     err => {
       console.log('********** AffiliationManagementPage.ts: ', err.error.msg);
     };
