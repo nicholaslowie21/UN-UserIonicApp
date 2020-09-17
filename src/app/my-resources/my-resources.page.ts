@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ResourceService } from '../services/resource.service';
+import { TokenStorageService } from '../services/token-storage.service';
 
 @Component({
   selector: 'app-my-resources',
@@ -11,10 +13,67 @@ export class MyResourcesPage implements OnInit {
   itemResource : any[];
   venueResource : any[];
   type : String;
+  accountType: any;
+  user: any;
+  accountBoolean: boolean;
 
-  constructor() { }
+  constructor(private resourceService: ResourceService, private tokenStorage: TokenStorageService) {
+    this.accountType = this.tokenStorage.getAccountType();
+        this.user = this.tokenStorage.getUser();
+      console.log(this.accountType);
+        if(this.accountType == "institution") {
+          this.accountBoolean = true;
+        } else if(this.accountType == "user") {
+          this.accountBoolean = false;
+        }
+   }
 
   ngOnInit() {
+    /*if(this.accountBoolean == true)
+    {
+        this.resourceService.getInstitutionKnowledgeResource(this.user.data.user.id).subscribe((res) =>
+          this.knowledgeResource = res.data.knowledges),
+        err => {
+          console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
+        }
+
+        this.resourceService.getInstitutionItemResource(this.user.data.user.id).subscribe((res) =>
+        this.itemResource = res.data.items)
+        err => {
+          console.log('********** Item Resource (institution).ts: ', err.error.msg);
+        };
+
+        this.resourceService.getInstitutionVenueResource(this.user.data.user.id).subscribe((res) =>
+        this.itemResource = res.data.venues)
+        err => {
+          console.log('********** Venue Resource (institution).ts: ', err.error.msg);
+        };
+
+    } else if(this.accountBoolean == false) {
+          this.resourceService.getUserKnowledgeResource(this.user.data.user.id).subscribe((res) =>
+          this.knowledgeResource = res.data.knowledges),
+        err => {
+          console.log('********** Knowledge Resource (user).ts: ', err.error.msg);
+        }
+
+        this.resourceService.getUserItemResource(this.user.data.user.id).subscribe((res) =>
+        this.itemResource = res.data.items)
+        err => {
+          console.log('********** Item Resource (user).ts: ', err.error.msg);
+        };
+
+        this.resourceService.getUserVenueResource(this.user.data.user.id).subscribe((res) =>
+        this.venueResource = res.data.venues)
+        err => {
+          console.log('********** Venue Resource (user).ts: ', err.error.msg);
+        };
+
+        this.resourceService.getUserManpowerResource(this.user.data.user.id).subscribe((res) =>
+        this.manpowerResource = res.data.manpowers)
+        err => {
+          console.log('********** Manpower Resource (user).ts: ', err.error.msg);
+        };
+    }*/
     this.manpowerResource = [{"title": "Software Engineer", "desc": "I can code through the night, just sponsor me Redbull", "status": "active", "region": "Singapore"}];
     this.knowledgeResource = [{"title": "How to code with stamina", "desc": "Have a Redbull at hand and Google and you're off"}];
     this.itemResource = [
@@ -31,7 +90,5 @@ export class MyResourcesPage implements OnInit {
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
   }
-
-
 
 }

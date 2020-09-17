@@ -93,7 +93,7 @@ export class InstitutionService {
     console.log(data);
     return this.http.post(this.API_URL + '/uploadProfilePicture', data).pipe(
       tap(res => {
-        console.log(res.host);
+        console.log(res);
         this.tokenStorage.saveUser(res);
     }, error => this.handleError(error)),
     );
@@ -130,6 +130,12 @@ export class InstitutionService {
     );
   }
 
+  generateShare(): Observable<any> {
+    return this.http.get(this.API_URL + '/shareProfile', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
 
   private handleError(error: HttpErrorResponse)
 	{

@@ -16,11 +16,25 @@ export class SessionService {
 		
 		if(this.platform.is('hybrid'))
 		{
-			return "https://localhost:8080/api";
+			return "https://192.168.1.127:8080/api";
 		}
 		else
 		{
 			return "/api";
+		}
+	}
+
+	getRscPath(): string
+	{
+		console.log('this.platform.is("hybrid"): ' + this.platform.is('hybrid'));
+		
+		if(this.platform.is('hybrid'))
+		{
+			return "http://192.168.1.127.156:8081";
+		}
+		else
+		{
+			return "http://localhost:8081";
 		}
 	}
 }

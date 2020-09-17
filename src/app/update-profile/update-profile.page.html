@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="update(form)">
+  <form #form="ngForm" (ngSubmit)="update()">
     <ion-item>
         <ion-label position="floating">Name</ion-label>
         <ion-input ngModel name="name" [(ngModel)]="user.name" required minlength="3" #inname="ngModel"></ion-input>
@@ -53,12 +53,12 @@
       <ion-input type="phone" ngModel name="phone" [(ngModel)]="user.phone" required #inphone="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inphone.invalid"></div>
     </ion-item>
-
+    
     <ion-item>
-      <ion-label position="floating">Country</ion-label>
-      <ion-input type="country" ngModel name="country" [(ngModel)]="user.country" required #incountry="ngModel"></ion-input>
-      <div class="alert-danger" *ngIf="form.submitted && incountry.invalid">
-      </div>
+      <ion-label>Country</ion-label>
+      <ion-select ngModel name="country" [(ngModel)]="user.country"   required #incountry="ngModel">
+        <ion-select-option *ngFor = "let c of countryData">{{c}}</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item *ngIf="accountBoolean == true">
