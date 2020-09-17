@@ -16,9 +16,7 @@
       <ion-card-header>
         <ion-card-title>{{c.title}}</ion-card-title>
         <ion-card-subtitle>{{c.role}}</ion-card-subtitle>
-        <div *ngFor="let s of c.SDG">
-          <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
-        </div>
+        <ion-badge *ngFor="let s of c.SDG" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
       </ion-card-header>
 
       <ion-card-content>{{c.desc}}</ion-card-content>
@@ -32,9 +30,7 @@
       <ion-card-header>
         <ion-card-title>{{p.title}}</ion-card-title>
         <ion-card-subtitle>{{p.role}}</ion-card-subtitle>
-        <div *ngFor="let s of p.SDG">
-          <ion-badge className="sdg{{s}}">SDG {{s}}</ion-badge>
-        </div>
+        <ion-badge *ngFor="let s of p.SDG" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
       </ion-card-header>
 
       <ion-card-content>{{p.desc}}</ion-card-content>
