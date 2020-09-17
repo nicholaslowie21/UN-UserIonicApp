@@ -101,6 +101,13 @@ export class UserService {
     );
   }
 
+  getBadges(data): Observable<any> {
+    return this.http.get(this.API_URL + '/badges?userId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

@@ -54,7 +54,24 @@ export class ProfilePage implements OnInit {
     if(this.currentUser.data.user.isVerified == "true") {
       this.isVerified = true;
     }
-  }
+
+    if(this.accountBoolean == true)
+    {
+        this.institutionService.getBadges(this.currentUser.data.user.id).subscribe((res) => 
+        this.badges = res.data.badges)
+        err => {
+          console.log('********** Badges(institution).ts: ', err.error.msg);
+        };
+
+    } else if(this.accountBoolean == false) {
+
+      this.userService.getBadges(this.currentUser.data.user.id).subscribe((res) =>
+      this.badges = res.data.badges)
+      err => {
+        console.log('********** Badges(user).ts: ', err.error.msg);
+      };
+    }
+}
 
   toRewards() {
     this.router.navigateByUrl("/rewards")

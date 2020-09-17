@@ -7,9 +7,11 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="manpower" checked>
+      <div *ngIf="accountBoolean==false">
+      <ion-segment-button  value="manpower" checked>
         <ion-label>Manpower</ion-label>
       </ion-segment-button>
+    </div>
       <ion-segment-button value="knowledge">
         <ion-label>Knowledge</ion-label>
       </ion-segment-button>
@@ -24,10 +26,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-list [ngSwitch]="type">
-    <div *ngSwitchCase="'manpower'">
-      <div *ngFor="let m of manpowerResource">
-      <ion-card>
+  <ion-list  [ngSwitch]="type">
+    <div *ngIf="accountBoolean==false">
+    <div *ngSwitchCase="'manpower'" >
+      <div *ngFor="let m of manpowerResource" >
+      <ion-card >
         <img src="../../assets/img/manpower.jpg" className={{m.status}}/>
         <ion-card-header>
           <ion-card-title>{{m.title}}</ion-card-title>
@@ -38,6 +41,7 @@
       </ion-card>
       </div>
     </div>
+  </div>
 
     <div *ngSwitchCase="'knowledge'">
     <div *ngFor="let k of knowledgeResource">
