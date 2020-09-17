@@ -67,7 +67,7 @@ export class ChangePhotoPage implements OnInit {
         this.successToast();
         this.router.navigateByUrl('/tabs/home');
       },
-        (err) => this.failureToast(err)
+        (err) => this.failureToast(err.message)
       );
     }
     
