@@ -64,6 +64,10 @@ export class LoginPage implements OnInit {
   }
  
   async failureToast(error) {
+    if(!error) {
+      error = 'Something went wrong!';
+    }
+
     const toast = this.toastCtrl.create({
       message: 'Login Unsuccessful: ' + error,
       duration: 1000,

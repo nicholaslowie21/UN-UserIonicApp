@@ -7,11 +7,9 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
-      <div *ngIf="accountBoolean==false">
-      <ion-segment-button  value="manpower" checked>
+      <ion-segment-button *ngIf="accountBoolean==false" value="manpower" checked>
         <ion-label>Manpower</ion-label>
       </ion-segment-button>
-    </div>
       <ion-segment-button value="knowledge">
         <ion-label>Knowledge</ion-label>
       </ion-segment-button>
@@ -29,6 +27,9 @@
   <ion-list  [ngSwitch]="type">
     <div *ngIf="accountBoolean==false">
     <div *ngSwitchCase="'manpower'" >
+      <div *ngIf="noManpowerResourceBoolean == true">
+        <ion-label style="padding-left: 15px;">You do not have any manpower resource created! Create one now!</ion-label>
+      </div>
       <div *ngFor="let m of manpowerResource" >
       <ion-card >
         <img src="../../assets/img/manpower.jpg" className={{m.status}}/>
@@ -44,6 +45,9 @@
   </div>
 
     <div *ngSwitchCase="'knowledge'">
+      <div *ngIf="noKnowledgeResourceBoolean == true">
+        <ion-label style="padding-left: 15px;">You do not have any knowledge resource created! Create one now!</ion-label>
+    </div>
     <div *ngFor="let k of knowledgeResource">
     <ion-card>
         <img src="../../assets/img/knowledge.jpg" className={{k.status}}/>
@@ -60,6 +64,9 @@
   </div>
 
     <div *ngSwitchCase="'item'">
+      <div *ngIf="noItemResourceBoolean == true">
+        <ion-label style="padding-left: 15px;">You do not have any item resource created! Create one now!</ion-label>
+    </div>
     <div *ngFor="let i of itemResource">
       <ion-card>
           <img src="../../assets/img/item.jpg" className={{i.status}} />
@@ -77,6 +84,9 @@
     </div>
 
     <div *ngSwitchCase="'venue'">
+      <div *ngIf="noVenueResourceBoolean == true">
+        <ion-label style="padding-left: 15px;">You do not have any venue resource created! Create one now!</ion-label>
+    </div>
       <div *ngFor="let v of venueResource">
         <ion-card>
             <img src="../../assets/img/venue.jpg" className={{v.status}} />

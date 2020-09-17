@@ -90,7 +90,7 @@ export class UserRegisterPage implements OnInit {
           err => {
             this.resultSuccess = false;
             this.resultError = true;
-            this.failureToast(err.error.msg + ": " + err.error.param);
+            this.failureToast(err.error.msg);
             console.log('********** RegisterNewUserPage.ts: ', err.error.msg);
           });
     } else {

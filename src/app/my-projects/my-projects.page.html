@@ -10,6 +10,9 @@
 <ion-content>
   <ion-list>
     <h2 style="padding-left:10px">Current Projects</h2>
+    <div *ngIf="noCurrProjectBoolean == true">
+        <ion-label style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</ion-label>
+    </div>
     <div *ngFor="let c of currProjects">
       <ion-card>
         <img src="../../assets/img/projects.jpg" />
@@ -24,6 +27,9 @@
     </div>
 
     <h2 style="padding-left:10px">Past Involvements</h2>
+    <div *ngIf="noCurrProjectBoolean == true">
+      <ion-label style="padding-left: 15px;">You have no previous projects! Start Creating Projects now!</ion-label>
+    </div>
     <div *ngFor="let p of pastProjects">
     <ion-card>
         <img src="../../assets/img/projects.jpg" class="inactive" />

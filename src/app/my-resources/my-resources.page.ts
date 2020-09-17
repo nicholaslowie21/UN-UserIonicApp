@@ -16,6 +16,10 @@ export class MyResourcesPage implements OnInit {
   accountType: any;
   user: any;
   accountBoolean: boolean;
+  noKnowledgeResourceBoolean: boolean;
+  noItemResourceBoolean: boolean;
+  noVenueResourceBoolean: boolean;
+  noManpowerResourceBoolean: boolean;
 
   constructor(private resourceService: ResourceService, private tokenStorage: TokenStorageService) {
     this.accountType = this.tokenStorage.getAccountType();
@@ -29,7 +33,7 @@ export class MyResourcesPage implements OnInit {
    }
 
   ngOnInit() {
-    /*if(this.accountBoolean == true)
+    if(this.accountBoolean == true)
     {
         this.resourceService.getInstitutionKnowledgeResource(this.user.data.user.id).subscribe((res) =>
           this.knowledgeResource = res.data.knowledges),
@@ -73,8 +77,21 @@ export class MyResourcesPage implements OnInit {
         err => {
           console.log('********** Manpower Resource (user).ts: ', err.error.msg);
         };
-    }*/
-    this.manpowerResource = [{"title": "Software Engineer", "desc": "I can code through the night, just sponsor me Redbull", "status": "active", "region": "Singapore"}];
+    }
+    if(this.knowledgeResource == undefined) {
+      this.noKnowledgeResourceBoolean = true;
+    }
+    if(this.itemResource == undefined) {
+      this.noItemResourceBoolean = true;
+    }
+    if(this.venueResource == undefined) {
+      this.noVenueResourceBoolean = true;
+    }
+    if(this.manpowerResource == undefined) {
+      this.noManpowerResourceBoolean = true;
+    }
+
+    /*this.manpowerResource = [{"title": "Software Engineer", "desc": "I can code through the night, just sponsor me Redbull", "status": "active", "region": "Singapore"}];
     this.knowledgeResource = [{"title": "How to code with stamina", "desc": "Have a Redbull at hand and Google and you're off"}];
     this.itemResource = [
       {"title": "Tables", "desc": "I have 10 tables as I clicked an extra 0 when I was ordering online. Up for grabs!", "status": "active", "region": "Singapore"},
@@ -84,7 +101,7 @@ export class MyResourcesPage implements OnInit {
       {"title": "Auditorium", "desc": "Can seat up to 100 pax", "address": "NUS Create Way #01-119", "status": "active", "region": "Singapore"},
       {"title": "Stairway to Fitness", "desc": "Open to people hosting Vertical Marathons!", "address":"Stairway Lane Singapore 133022", "status": "inactive", "region": "Singapore"}
     ];
-    this.type = 'manpower';
+    this.type = 'manpower';*/
   }
 
   segmentChanged(ev: any) {
