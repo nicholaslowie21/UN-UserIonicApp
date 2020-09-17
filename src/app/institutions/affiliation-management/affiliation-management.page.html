@@ -3,17 +3,16 @@
     <ion-buttons slot="start">
       <ion-icon name="arrow-back" slot="start" routerLink="/tabs/profile" style="padding-left:10px"></ion-icon>
     </ion-buttons>
-    <ion-title style="text-align: right">Affiliation management</ion-title>
+    <ion-title>Affiliated Users</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <h2 style="text-align:center">List of Affiliated Individuals</h2>
     <ion-card *ngFor = "let m of members">
       <div class="aligned">
       <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=m.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
       <ion-title>{{m.name}}</ion-title>
-      <ion-button style="float:right;" (click)="presentAlertConfirm($event, m)" >Remove</ion-button>
+      <ion-button style="float:right; fill: outline;" (click)="presentAlertConfirm($event, m)" >Remove</ion-button>
       </div>
      
     </ion-card>

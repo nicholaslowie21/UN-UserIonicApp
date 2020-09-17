@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-icon name="arrow-back" slot="start" routerLink="/tabs/profile" style="padding-left:10px"></ion-icon>
     </ion-buttons>
-    <ion-title style="text-align: middle;">Edit Profile</ion-title>
+    <ion-title>Edit Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -42,7 +42,7 @@
 
     <ion-item>
           
-      <ion-label position="floating">Website</ion-label>
+      <ion-label position="floating">Website(eg: https://yourwebsite.com)</ion-label>
       <ion-input type="website" ngModel name="website" [(ngModel)]="user.website" #inwebsite="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inwebsite.invalid"></div>
     </ion-item>
