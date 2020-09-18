@@ -84,7 +84,15 @@ export class ProfilePage implements OnInit {
     console.log(this.tokenStorage.getUser().data.user.profilePic);
     this.name = this.currentUser.data.user.name;
     this.image = this.sessionService.getRscPath() + this.tokenStorage.getUser().data.user.ionicImg +'?random+=' + Math.random();
-    
+    if(this.currentUser.data.user.occupation == "") {
+      this.currentUser.data.user.occupation = "-";
+    }
+    if(this.currentUser.data.user.skills == "") {
+      this.currentUser.data.user.skills = "-";
+    }
+    if(this.currentUser.data.user.bio == "") {
+      this.currentUser.data.user.bio = "-";
+    }
     this.sdgs = this.currentUser.data.user.SDGs;
     this.accountType = this.currentUser.data.accountType;
   }

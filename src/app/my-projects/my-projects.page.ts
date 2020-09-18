@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '../services/token-storage.service';
 import { InstitutionService } from '../services/institution.service';
 import { UserService } from '../services/user.service';
+import { SessionService } from '../services/session.service';
 
 @Component({
   selector: 'app-my-projects',
@@ -18,7 +19,7 @@ export class MyProjectsPage implements OnInit {
   noCurrProjectBoolean: boolean;
   noPastProjectBoolean: boolean;
 
-  constructor(private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService) {
+  constructor(private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService) {
         this.accountType = this.tokenStorage.getAccountType();
         this.user = this.tokenStorage.getUser();
       console.log(this.accountType);
@@ -35,36 +36,66 @@ export class MyProjectsPage implements OnInit {
     {
         this.institutionService.getCurrentProjects(this.user.data.user.id).subscribe((res) => {
             this.currProjects = res.data.currProjects;
+            if(this.currProjects.length > 0) {
+              for(var i = 0; i < this.currProjects.length; i++) {
+                this.currProjects[i].imgPath = this.sessionService.getRscPath() + this.currProjects[i].imgPath  +'?random+=' + Math.random();
+              }
+            } else {
+                this.noCurrProjectBoolean = true;
+            }
+            
         }
         ),
         err => {
           console.log('********** Current-projects(institution).ts: ', err.error.msg);
         };
 
-        this.institutionService.getPastProjects(this.user.data.user.id).subscribe((res) =>
-        this.pastProjects = res.data.pastProjects)
+        this.institutionService.getPastProjects(this.user.data.user.id).subscribe((res) => {
+        this.pastProjects = res.data.pastProjects
+        console.log(this.pastProjects.length);
+        if(this.pastProjects.length > 0) {
+          for(var i = 0; i < this.pastProjects.length; i++) {
+            this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
+          }
+        } else {
+            this.noPastProjectBoolean = true;
+        }
+
+      }),
         err => {
           console.log('********** Past-projects(institution).ts: ', err.error.msg);
         };
 
     } else if(this.accountBoolean == false) {
-      this.userService.getCurrentProjects(this.user.data.user.id).subscribe((res) =>
-      this.currProjects = res.data.currProjects)
+          this.userService.getCurrentProjects(this.user.data.user.id).subscribe((res) => {
+          this.currProjects = res.data.currProjects
+
+          if(this.currProjects.length > 0) {
+            for(var i = 0; i < this.currProjects.length; i++) {
+              this.currProjects[i].imgPath = this.sessionService.getRscPath() + this.currProjects[i].imgPath  +'?random+=' + Math.random();
+            }
+          } else {
+              this.noCurrProjectBoolean = true;
+          }
+    }),
       err => {
         console.log('********** Current-projects(user).ts: ', err.error.msg);
       };
 
-      this.userService.getPastProjects(this.user.data.user.id).subscribe((res) =>
-      this.pastProjects = res.data.pastProjects)
+      this.userService.getPastProjects(this.user.data.user.id).subscribe((res) => {
+            this.pastProjects = res.data.pastProjects
+
+            if(this.pastProjects.length > 0) {
+              for(var i = 0; i < this.pastProjects.length; i++) {
+                this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
+              }
+            } else {
+                this.noPastProjectBoolean = true;
+            }
+      }),
       err => {
         console.log('********** Past-projects(user).ts: ', err.error.msg);
       };
-    }
-    if(this.currProjects == undefined) {
-      this.noCurrProjectBoolean = true;
-    }
-    if(this.pastProjects == undefined) {
-      this.noPastProjectBoolean = true;
     }
     // Dummy data to be replaced with actual data when the proj endpoints are created. Some attributes not in the dummy data, and some (eg role) are created here.
     /*this.currProjects = [
