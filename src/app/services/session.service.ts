@@ -16,7 +16,7 @@ export class SessionService {
 		
 		if(this.platform.is('hybrid'))
 		{
-			return "https://192.168.1.127:8080/api";
+			return "https://192.168.100.161:8080/api";
 		}
 		else
 		{
@@ -30,7 +30,7 @@ export class SessionService {
 		
 		if(this.platform.is('hybrid'))
 		{
-			return "http://192.168.1.127.156:8081";
+			return "http://192.168.100.161:8081";
 		}
 		else
 		{

@@ -116,9 +116,9 @@ export class ProfilePage implements OnInit {
       console.log("userShare");
       this.userService.generateShare().subscribe((res) =>{
         this.imageForSharing = res.data.theLink
-        this.socialSharing.shareViaWhatsApp("msg",this.imageForSharing)
+        this.socialSharing.shareViaWhatsApp("Hi! This is my profile in KoCoSD.",this.imageForSharing)
       .then((success) =>{
-          alert("Success");
+          alert("Successfully shared your profile!");
        })
         .catch(()=>{
           alert("Could not share information");
@@ -131,7 +131,7 @@ export class ProfilePage implements OnInit {
       console.log("InstitutionShare");
       this.institutionService.generateShare().subscribe((res) =>{
         this.imageForSharing = res.data.theLink
-        this.socialSharing.shareViaWhatsApp("msg",this.imageForSharing)
+        this.socialSharing.shareViaWhatsApp("Hi! This is our profile in KoCoSD.",this.imageForSharing)
       .then((success) =>{
           alert("Success");
        })
@@ -186,9 +186,9 @@ export class ProfilePage implements OnInit {
       console.log("userShare");
       this.userService.generateShare().subscribe((res) =>{
         this.imageForSharing = res.data.theLink
-        this.socialSharing.shareViaInstagram("msg",this.imageForSharing)
+        this.socialSharing.shareViaInstagram("Hi! This is my profile in KoCoSD",this.imageForSharing)
       .then((success) =>{
-          alert("Success");
+          alert("Successfully shared your profile!");
        })
         .catch(()=>{
           alert("Could not share information");
@@ -201,9 +201,9 @@ export class ProfilePage implements OnInit {
       console.log("InstitutionShare");
       this.institutionService.generateShare().subscribe((res) =>{
         this.imageForSharing = res.data.theLink
-        this.socialSharing.shareViaInstagram("msg",this.imageForSharing)
+        this.socialSharing.shareViaInstagram("Hi! This is our profile in KoCoSD.",this.imageForSharing)
       .then((success) =>{
-          alert("Success");
+          alert("Successfully shared your profile");
        })
         .catch(()=>{
           alert("Could not share information");

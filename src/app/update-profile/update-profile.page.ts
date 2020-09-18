@@ -141,7 +141,7 @@ export class UpdateProfilePage implements OnInit {
   update() {
     //user update
     if(this.accountBoolean == false){
-      if(this.user.skills.length > 1) {
+      if(this.user.skillsString.length > 1) {
         this.skillsArray = this.user.skillsString.split(",");
       } else {
         this.skillsArray = [this.user.skillsString];
