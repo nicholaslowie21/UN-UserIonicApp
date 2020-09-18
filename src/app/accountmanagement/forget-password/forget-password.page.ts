@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { AuthService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ export class ForgetpasswordPage implements OnInit {
   clicked: boolean;
 
 
-  constructor(private alertCtrl:AlertController, private tokenStorage: TokenStorageService, private authService: AuthService, private router: Router) {
+  constructor(private alertCtrl:AlertController, private tokenStorage: TokenStorageService, private authService: AuthService, private router: Router, private toastCtrl: ToastController) {
       this.resultSuccess = false;
       this.resultError = false;
       this.clicked = false;
@@ -40,6 +40,7 @@ export class ForgetpasswordPage implements OnInit {
   },err => {
     this.resultSuccess = false;
     this.resultError = true;
+    this.failureToast(err.error.msg)
     console.log('********** UpdateUserEmail.ts: ', err.error.msg);
   });
   }
@@ -54,5 +55,15 @@ export class ForgetpasswordPage implements OnInit {
     await alert.present();  
     const result = await alert.onDidDismiss();  
     console.log(result);  
+  }
+
+  async failureToast(error) {
+    const toast = this.toastCtrl.create({
+      message: 'Request Unsuccessful: ' + error,
+      duration: 2000,
+      position: 'middle',
+      cssClass: "toast-fail"
+    });
+    (await toast).present();
   }
 }
