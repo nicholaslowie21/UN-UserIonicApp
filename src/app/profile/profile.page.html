@@ -116,8 +116,10 @@
     </ion-item-divider>
 
     <ion-item *ngFor="let b of badges" lines="none">
+      <div>
       <img [src]=b.imgPath />
-      <ion-label>{{b.title}}</ion-label>
+      <p>Tier: {{b.title}}</p>
+    </div>
       
     </ion-item>
 
