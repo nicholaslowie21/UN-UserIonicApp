@@ -2,13 +2,28 @@
   <ion-slides  pagination=true>
       <ion-slide class="step-one">
         <ion-img src="assets/img/slide1.jpeg"></ion-img>
+        <ion-card-title></ion-card-title>
+          <ion-card-content>
+              Look for solutions that are in place
+          </ion-card-content>
       </ion-slide>
       <ion-slide>
-        <ion-img src="assets/img/slide2.jpg"></ion-img>
+        <ion-img src="assets/img/slide2.jpeg"></ion-img>
+        <ion-card-title></ion-card-title>
+          <ion-card-content>
+              Work together to make the world a better place
+          </ion-card-content>
       </ion-slide>
-      <ion-slide class="step-three">
-        <ion-img src="assets/img/slide3.jpg" ></ion-img>
-          <ion-button color="secondary"(click)="next()" >Next</ion-button>
+      <ion-slide  class="step-three">
+          <ion-card>
+            <ion-img src="assets/img/slide3.jpeg"></ion-img>
+          <ion-card-title></ion-card-title>
+          <ion-card-content>
+            Collaborate with people all over the world and take advantage of our vast knowledge community
+          <ion-button expand="block" class="btn" color="secondary"(click)="next()" >Let's Get Started!</ion-button>
+          </ion-card-content>
+        </ion-card>
       </ion-slide>
+    
   </ion-slides>
 </ion-content>
