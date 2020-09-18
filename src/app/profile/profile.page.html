@@ -116,7 +116,9 @@
     </ion-item-divider>
 
     <ion-item *ngFor="let b of badges" lines="none">
-      <ion-label>{{b.imgPath}}</ion-label>
+      <img [src]=b.imgPath />
+      <ion-label>{{b.title}}</ion-label>
+      
     </ion-item>
 
   </ion-item-group>

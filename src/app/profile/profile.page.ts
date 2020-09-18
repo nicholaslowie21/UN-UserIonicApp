@@ -57,16 +57,24 @@ export class ProfilePage implements OnInit {
 
     if(this.accountBoolean == true)
     {
-        this.institutionService.getBadges(this.currentUser.data.user.id).subscribe((res) => 
-        this.badges = res.data.badges)
+        this.institutionService.getBadges(this.currentUser.data.user.id).subscribe((res) => {
+          this.badges = res.data.badges
+          for(var i = 0; i < this.badges.length; i++) {
+              this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+          }
+        }),
         err => {
           console.log('********** Badges(institution).ts: ', err.error.msg);
         };
 
     } else if(this.accountBoolean == false) {
 
-      this.userService.getBadges(this.currentUser.data.user.id).subscribe((res) =>
-      this.badges = res.data.badges)
+      this.userService.getBadges(this.currentUser.data.user.id).subscribe((res) => {
+        this.badges = res.data.badges
+        for(var i = 0; i < this.badges.length; i++) {
+          this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+        }
+      }),
       err => {
         console.log('********** Badges(user).ts: ', err.error.msg);
       };
@@ -95,6 +103,7 @@ export class ProfilePage implements OnInit {
     }
     this.sdgs = this.currentUser.data.user.SDGs;
     this.accountType = this.currentUser.data.accountType;
+    
   }
   
   logout() {
