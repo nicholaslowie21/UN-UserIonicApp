@@ -94,7 +94,16 @@ const routes: Routes = [
   {
     path: 'about',
     loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
-  }
+  },
+  {
+    path: 'project-creation',
+    loadChildren: () => import('./project-creation/create-project/create-project.module').then( m => m.CreateProjectPageModule)
+  },
+  {
+    path: 'update-project/:Id',
+    loadChildren: () => import('./project-creation/update-project/update-project.module').then( m => m.UpdateProjectPageModule)
+  },
+
 ];
 @NgModule({
   imports: [
