@@ -67,9 +67,12 @@
           <ion-card-title>{{r.title}}</ion-card-title>
           <ion-badge style="float: right;" className="">{{r.type}}</ion-badge>
           <ion-card-content>{{r.desc}}</ion-card-content>
+          <ion-card-subtitle>Progress: </ion-card-subtitle>
+          <ion-progress-bar value='{{r.completion/100}}'></ion-progress-bar>
           <ion-card-content style="text-align: right">Completion(%): {{r.completion}}</ion-card-content>
-          <ion-card-content *ngIf='(r.type == "money")'>Total: {{r.total}} | Received Sum: {{r.receivedSum}} | Pending Sum: {{r.pendingSum}}</ion-card-content>
-          <ion-progress-bar *ngIf='(r.type == "money")' value='r.receivedSum/r.total'></ion-progress-bar>
+          <ion-card-content *ngIf='(r.type == "money")'>Received Sum: {{r.receivedSum}} | Total: {{r.total}}</ion-card-content> 
+          <ion-card-content *ngIf='founderBoolean==true ||adminBoolean==true && r.type == "money"'>Pending Sum: {{r.pendingSum}} </ion-card-content>
+          
 
       </ion-card>    
       <br>

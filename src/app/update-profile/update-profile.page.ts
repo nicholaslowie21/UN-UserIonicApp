@@ -38,6 +38,7 @@ export class UpdateProfilePage implements OnInit {
   resultSuccess: boolean;
   resultError: boolean;
   isLoggedIn: boolean;
+  salutationList: string[];
   
   constructor(private  userService:  UserService, 
               private  router:  Router, 
@@ -62,6 +63,9 @@ export class UpdateProfilePage implements OnInit {
           
 
   ngOnInit() {
+
+    this.salutationList = ["Mr. ", "Mrs. ", "Ms. ", "Dr. ", "Prof. "]
+    
     this.countryData = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla",
     "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas",
     "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
@@ -96,9 +100,6 @@ export class UpdateProfilePage implements OnInit {
     "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)",
     "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"];
 
-    this.genderList = [
-      {"id": "Male", "g":"male"}, {"id": "Female", "g":"female"}
-    ]
     this.sdgsList = [{"id":1, "name": "No Poverty"},{"id":2,"name": "Zero Hunger"}, {"id":3,"name": "Good Health and Well-Being"},
       {"id":4, "name": "Quality Education"}, {"id":5, "name": "Gender Equality"},{"id":6,"name": "Clean Water and Sanitisation"},
       {"id":7, "name": "Affordable and Clean Energy"}, {"id":8, "name": "Decent Work and Economic Growth"},{"id":9, "name": "Industry, Innovation and Infrastructure"},
@@ -153,7 +154,7 @@ export class UpdateProfilePage implements OnInit {
           "bio": this.user.bio,
           "country": this.user.country,
           "website": this.user.website,
-          "gender": this.user.gender.toLowerCase(),
+          "salutation": this.user.salutation,
           "sdgs": this.sdgs,
           "skills": this.skillsArray
 

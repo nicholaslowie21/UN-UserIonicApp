@@ -24,17 +24,7 @@
       <ion-input ngModel name="total" [(ngModel)]="total" #intotal="ngModel"></ion-input>
     </ion-item>
 
-    <ion-item *ngIf='(type == "money")'>
-      <ion-label position="floating">Pending Sum($)</ion-label>
-      <ion-input ngModel name="pendingSum" [(ngModel)]="pendingSum" #inpendingSum="ngModel"></ion-input>
-    </ion-item>
-
-    <ion-item *ngIf='(type == "money")'>
-      <ion-label position="floating">Received Sum($)</ion-label>
-      <ion-input ngModel name="receivedSum" [(ngModel)]="receivedSum" #inreceivedSum="ngModel"></ion-input>
-    </ion-item>
-
-    <ion-item>
+    <ion-item *ngIf='(type != "money")'>
       <ion-label position="floating">Completion(%)</ion-label>
       <ion-range pin=true snaps=true step=10 ticks=true min="0" max="100" ngModel name="completion" [(ngModel)]="completion" #incompletion="ngModel"></ion-range>
     </ion-item>

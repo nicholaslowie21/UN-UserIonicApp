@@ -181,6 +181,7 @@ export class ProjectService {
       "needId": data.needId,
       "title": data.title,
       "desc": data.desc,
+      "total": data.total,
       "completion": data.completion
     }, httpOptions).pipe(
       tap(res => {

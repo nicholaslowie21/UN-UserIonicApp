@@ -65,7 +65,7 @@
       <div >
         <a style="font-size: 8px;" routerLink="/change-photo" routerDirection="forward">Edit Profile Picture</a>
       </div>
-      <h3 *ngIf="accountBoolean == false" class="name">{{ currentUser.data.user.name }} | {{currentUser.data.user.gender}}</h3>
+      <h3 *ngIf="accountBoolean == false" class="name">{{ currentUser.data.user.name }} | {{currentUser.data.user.salutation}}</h3>
       <h3 *ngIf="accountBoolean == true" class="name">{{ currentUser.data.user.name }}</h3>
       <h6 *ngIf="accountBoolean == true">{{currentUser.data.user.address}}</h6>
       <h6>{{ currentUser.data.user.country }}</h6>

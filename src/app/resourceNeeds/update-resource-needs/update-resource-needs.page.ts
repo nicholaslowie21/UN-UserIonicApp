@@ -88,10 +88,12 @@ export class UpdateResourceNeedsPage implements OnInit {
         console.log('********** UpdateResourceNeed.ts: ', err.error.msg);
         });
     } else {
+      console.log("i ran here")
         this.form = {
         "needId": this.id,
         "title": this.title,
         "desc": this.desc,
+        "total": this.total = 0,
         "completion": this.completion
         }
         this.projectService.updateResourceNeed(this.form).subscribe((res) => {
