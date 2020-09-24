@@ -158,7 +158,7 @@ export class MyResourcesPage implements OnInit {
   viewResource(resource) {
     // this.tokenStorage.saveCurrResource(resource);
     // this.tokenStorage.saveCurrResourceType(this.type);
-    this.router.navigateByUrl("/view-resource");
+    this.router.navigateByUrl("/view-resource/" + this.type + "/" + resource.id);
   }
 
   segmentChanged(ev: any) {

@@ -121,6 +121,34 @@ export class ResourceService {
     );
   }
 
+  viewItemResourceDetail(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/item/details?itemId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewKnowledgeResourceDetail(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/knowledge/details?knowledgeId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewManpowerResourceDetail(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/manpower/details?manpowerId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewVenueResourceDetail(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/venue/details?venueId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   // register(name: string, username: string, email: string, password: string, country: string, gender: string): Observable<any> {
   //   let createUserReq = {
   //     "name": name,
