@@ -13,10 +13,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ResourceService {
+  resourceAPI_URL: any;
   userAPI_URL: any;
   institutionAPI_URL: any;
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private sessionService: SessionService) {
+    this.resourceAPI_URL = this.sessionService.getRootPath() + '/resource';
     this.userAPI_URL = this.sessionService.getRootPath() + '/resource/user';
     this.institutionAPI_URL = this.sessionService.getRootPath() + '/resource/institution';
    }
@@ -69,6 +71,71 @@ export class ResourceService {
     }, error => this.handleError(error)),
     );
   }
+
+  createItemResource(title: string, desc: string): Observable<any> {
+    let createItemReq = {
+      "title": title,
+      "desc": desc
+    }
+
+    return this.http.post(this.resourceAPI_URL + "/createItem", createItemReq, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createVenueResource(title: string, desc: string, address: string): Observable<any> {
+    let createVenueReq = {
+      "title": title,
+      "desc": desc,
+      "address": address
+    }
+
+    return this.http.post(this.resourceAPI_URL + "/createVenue", createVenueReq, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createManpowerResource(title: string, desc: string): Observable<any> {
+    let createManpowerReq = {
+      "title": title,
+      "desc": desc
+    }
+
+    return this.http.post(this.resourceAPI_URL + "/createManpower", createManpowerReq, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createKnowledgeResource(title: string, desc: string): Observable<any> {
+    let createKnowledgeReq = {
+      "title": title,
+      "desc": desc
+    }
+
+    return this.http.post(this.resourceAPI_URL + "/createKnowledge", createKnowledgeReq, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  // register(name: string, username: string, email: string, password: string, country: string, gender: string): Observable<any> {
+  //   let createUserReq = {
+  //     "name": name,
+  //     "username": username,
+  //     "email": email,
+  //     "password": password,
+  //     "country": country,
+  //     "gender": gender
+  //   }
+  //   return this.http.post(this.baseUrl + "/authorization/user/signup", createUserReq, httpOptions).pipe(
+  //     tap(res => {
+  //       this.tokenStorage.saveUser(res.data.user);
+  //   }, error => this.handleError(error)),
+  //   );
+  // }
 
   private handleError(error: HttpErrorResponse)
 	{

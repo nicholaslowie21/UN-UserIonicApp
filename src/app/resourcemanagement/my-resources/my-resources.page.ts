@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ResourceService } from '../services/resource.service';
-import { SessionService } from '../services/session.service';
-import { TokenStorageService } from '../services/token-storage.service';
+import { ResourceService } from '../../services/resource.service';
+import { SessionService } from '../../services/session.service';
+import { TokenStorageService } from '../../services/token-storage.service';
 
 @Component({
   selector: 'app-my-resources',
@@ -86,7 +86,7 @@ export class MyResourcesPage implements OnInit {
           if(this.knowledgeResource.length > 0) {
             for(var i = 0; i < this.knowledgeResource.length; i++) {
               this.knowledgeResource[i].imgPath = this.sessionService.getRscPath() + this.knowledgeResource[i].imgPath  +'?random+=' + Math.random();
-            }
+            } 
           } else {
               this.noKnowledgeResourceBoolean = true;
           }
