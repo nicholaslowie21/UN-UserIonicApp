@@ -74,9 +74,9 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Gender</ion-label>
-    <ion-select ngModel name="gender" [(ngModel)] = "gender" #ingender="ngModel">
-      <ion-select-option *ngFor = "let g of genderList">{{g.id}}</ion-select-option>
+    <ion-label>Salutation</ion-label>
+    <ion-select ngModel name="salutation" [(ngModel)] = "salutation" #insalutation="ngModel">
+      <ion-select-option *ngFor = "let s of salutationList">{{s}}</ion-select-option>
     </ion-select>
 </ion-item>
 <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Register</ion-button>

@@ -82,14 +82,14 @@ export class AuthService {
         ) 
     }
 
-  register(name: string, username: string, email: string, password: string, country: string, gender: string): Observable<any> {
+  register(name: string, username: string, email: string, password: string, country: string, salutation: string): Observable<any> {
     let createUserReq = {
       "name": name,
       "username": username,
       "email": email,
       "password": password,
       "country": country,
-      "gender": gender
+      "salutation": salutation
     }
     return this.http.post(this.baseUrl + "/authorization/user/signup", createUserReq, httpOptions).pipe(
       tap(res => {
