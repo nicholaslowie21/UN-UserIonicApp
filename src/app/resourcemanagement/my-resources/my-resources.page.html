@@ -34,7 +34,7 @@
         <ion-label style="padding-left: 15px;">You do not have any manpower resource created! Create one now!</ion-label>
       </div>
       <div *ngFor="let m of manpowerResource" >
-      <ion-card >
+      <ion-card (onClick)= "viewResource(m)">
         <img src="../../assets/img/manpower.jpg" className={{m.status}}/>
         <ion-card-header>
           <ion-card-title>{{m.title}}</ion-card-title>
@@ -52,7 +52,7 @@
         <ion-label style="padding-left: 15px;">You do not have any knowledge resource created! Create one now!</ion-label>
     </div>
     <div *ngFor="let k of knowledgeResource">
-    <ion-card>
+    <ion-card (onClick)= "viewResource(k)">
         <img src="../../assets/img/knowledge.jpg" className={{k.status}}/>
         <ion-card-header>
           <ion-card-title>{{k.title}}</ion-card-title>
@@ -71,7 +71,7 @@
         <ion-label style="padding-left: 15px;">You do not have any item resource created! Create one now!</ion-label>
     </div>
     <div *ngFor="let i of itemResource">
-      <ion-card>
+      <ion-card (onClick)= "viewResource(i)">
           <img src="../../assets/img/item.jpg" className={{i.status}} />
         <ion-card-header>
           <ion-card-title>{{i.title}}</ion-card-title>
@@ -91,7 +91,7 @@
         <ion-label style="padding-left: 15px;">You do not have any venue resource created! Create one now!</ion-label>
     </div>
       <div *ngFor="let v of venueResource">
-        <ion-card>
+        <ion-card (onClick)= "viewResource(v)">
             <img src="../../assets/img/venue.jpg" className={{v.status}} />
           <ion-card-header>
             <ion-card-title>{{v.title}}</ion-card-title>

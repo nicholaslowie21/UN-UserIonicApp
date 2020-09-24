@@ -102,9 +102,10 @@ const routes: Routes = [
   {
     path: 'edit-resource',
     loadChildren: () => import('./resourcemanagement/edit-resource/edit-resource.module').then( m => m.EditResourcePageModule)
-  },  {
+  },
+  {
     path: 'view-resource',
-    loadChildren: () => import('./view-resource/view-resource.module').then( m => m.ViewResourcePageModule)
+    loadChildren: () => import('./resourcemanagement/view-resource/view-resource.module').then( m => m.ViewResourcePageModule)
   }
 
 

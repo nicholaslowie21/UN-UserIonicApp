@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResourceService } from '../../services/resource.service';
 import { SessionService } from '../../services/session.service';
 import { TokenStorageService } from '../../services/token-storage.service';
+import { Router } from  "@angular/router";
 
 @Component({
   selector: 'app-my-resources',
@@ -22,7 +23,7 @@ export class MyResourcesPage implements OnInit {
   noVenueResourceBoolean: boolean;
   noManpowerResourceBoolean: boolean;
 
-  constructor(private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService) {
+  constructor(private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
     this.accountType = this.tokenStorage.getAccountType();
         this.user = this.tokenStorage.getUser();
       console.log(this.accountType);
@@ -31,6 +32,7 @@ export class MyResourcesPage implements OnInit {
         } else if(this.accountType == "user") {
           this.accountBoolean = false;
         }
+    this.type = "manpower";
    }
 
   ngOnInit() {
@@ -151,6 +153,12 @@ export class MyResourcesPage implements OnInit {
       {"title": "Stairway to Fitness", "desc": "Open to people hosting Vertical Marathons!", "address":"Stairway Lane Singapore 133022", "status": "inactive", "region": "Singapore"}
     ];
     this.type = 'manpower';*/
+  }
+
+  viewResource(resource) {
+    this.tokenStorage.saveCurrResource(resource);
+    this.tokenStorage.saveCurrResourceType(this.type);
+    this.router.navigateByUrl("/view-resource");
   }
 
   segmentChanged(ev: any) {
