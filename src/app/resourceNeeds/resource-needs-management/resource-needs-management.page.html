@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Resource Needs Management</ion-title>
     <ion-buttons label="Create" slot="end">
-      <ion-icon name="add-outline" slot="end" (click)="create($event)">
+      <ion-icon name="add-circle-outline" slot="end" (click)="create($event)">
       </ion-icon>
     </ion-buttons>
   </ion-toolbar>
@@ -16,7 +16,7 @@
     <ion-card-title style="padding-left: 10px;">{{r.title}}</ion-card-title>
     <ion-badge style="float: right;" className="">{{r.type}}</ion-badge>
     <ion-card-content>{{r.desc}}</ion-card-content>
-    <ion-card-content>Completion(%): {{r.completion}}</ion-card-content>
+    <ion-card-content>Completion: {{r.completion}} %</ion-card-content>
     <ion-card-content *ngIf='(r.type == "money")'>Total: {{r.total}} | Received Sum: {{r.receivedSum}} | Pending Sum: {{r.pendingSum}}</ion-card-content>
     
     <ion-toolbar>

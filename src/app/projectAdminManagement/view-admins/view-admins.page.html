@@ -8,16 +8,7 @@
 </ion-header>
 
 <ion-content>
-
-    <ion-card *ngFor = "let a of admins">
-      <div class="aligned">
-      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=a.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-      <ion-title>{{a.name}}</ion-title>
-      <ion-button style="float:right; fill: outline;" (click)="presentAlertConfirm($event, a)" >Remove</ion-button>
-      </div>
-     
-    </ion-card>
-<ion-card>
+  <ion-card>
     <form name="form" (ngSubmit)="f.form.valid && search(words)" #f="ngForm" novalidate>
       <ion-item transparent>
           <div class="form-group">
@@ -40,4 +31,15 @@
     </ion-list>
    
   </ion-card>
+  <ion-card-title>Current Admins</ion-card-title>
+    <ion-card *ngFor = "let a of admins">
+      
+      <div class="aligned">
+      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=a.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+      <ion-title>{{a.name}}</ion-title>
+      <ion-button style="float:right; fill: outline;" (click)="presentAlertConfirm($event, a)" >Remove</ion-button>
+      </div>
+     
+    </ion-card>
+
 </ion-content>

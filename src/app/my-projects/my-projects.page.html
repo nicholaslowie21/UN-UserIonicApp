@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>My Projects</ion-title>
     <ion-buttons label="Create" slot="end">
-      <ion-icon name="add-outline" slot="end" routerLink="/project-creation">
+      <ion-icon name="add-circle-outline" slot="end" routerLink="/project-creation">
       </ion-icon>
     </ion-buttons>
   </ion-toolbar>
@@ -19,10 +19,10 @@
         <ion-label style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</ion-label>
     </div>
     <div *ngFor="let c of currProjects">
-      <ion-card>
+      <ion-card (click)="view($event, c)">
         <img [src]=c.imgPath onerror="this.src='./assets/img/projects.jpg'" />
       <ion-card-header>
-        <ion-card-title (click)="view($event, c)">{{c.title}}</ion-card-title>
+        <ion-card-title >{{c.title}}</ion-card-title>
         <ion-card-subtitle>{{c.role}}</ion-card-subtitle>
         <ion-badge *ngFor="let s of c.SDGs" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
       </ion-card-header>
@@ -39,10 +39,10 @@
       <ion-label style="padding-left: 15px;">You have no previous projects! Start Creating Projects now!</ion-label>
     </div>
     <div *ngFor="let p of pastProjects">
-    <ion-card>
+    <ion-card (click)="view($event, p)">
         <img [src]=p.imgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
       <ion-card-header>
-        <ion-card-title (click)="view($event, p)">{{p.title}}</ion-card-title>
+        <ion-card-title >{{p.title}}</ion-card-title>
         <ion-card-subtitle>{{p.role}}</ion-card-subtitle>
         <ion-badge *ngFor="let s of p.SDGs" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
       </ion-card-header>

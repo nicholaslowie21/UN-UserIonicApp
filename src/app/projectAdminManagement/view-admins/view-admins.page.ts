@@ -68,7 +68,7 @@ export class ViewAdminsPage implements OnInit {
     err => {
       console.log(err);
       this.failureToast(err.error.msg);
-      console.log('********** AddProjectAdmin(View admin page).ts: ', err.error.msg);
+      console.log('********** RemoveProjectAdmin(View admin page).ts: ', err.error.msg);
     });
   }
 
@@ -76,7 +76,7 @@ export class ViewAdminsPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm',
-      message: 'Are you sure you want to remove this member?',
+      message: 'Are you sure you want to remove this admin?',
       buttons: [
         {
           text: 'Cancel',
@@ -98,7 +98,7 @@ export class ViewAdminsPage implements OnInit {
 
   async successToast() {
     const toast = this.toastCtrl.create({
-      message: 'Member deleted successfully',
+      message: 'Admin deleted successfully',
       duration: 1000,
       position: 'middle',
       cssClass: "toast-pass"
@@ -108,7 +108,7 @@ export class ViewAdminsPage implements OnInit {
  
   async failureToast(error) {
     const toast = this.toastCtrl.create({
-      message: 'Member deleted unsuccessfully: ' + error,
+      message: 'Admin deleted unsuccessfully: ' + error,
       duration: 1000,
       position: 'middle',
       cssClass: "toast-fail"
