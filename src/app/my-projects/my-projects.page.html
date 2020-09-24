@@ -4,7 +4,12 @@
       <ion-icon name="arrow-back" slot="start" routerLink="/tabs/profile" style="padding-left:10px"></ion-icon>
     </ion-buttons>
     <ion-title>My Projects</ion-title>
+    <ion-buttons label="Create" slot="end">
+      <ion-icon name="add-outline" slot="end" routerLink="/project-creation">
+      </ion-icon>
+    </ion-buttons>
   </ion-toolbar>
+  
 </ion-header>
 
 <ion-content>
@@ -22,7 +27,17 @@
         <ion-badge *ngFor="let s of c.SDGs" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
       </ion-card-header>
 
-      <ion-card-content>{{c.desc}}</ion-card-content>
+      <ion-card-content>{{c.desc}}
+        <ion-toolbar *ngIf="c != null">
+          <ion-buttons slot="end" >
+            <ion-icon slot="end" name="create-outline" (click)="update($event, c)"></ion-icon>
+          </ion-buttons>
+          <ion-buttons slot="end" >
+            <ion-icon slot="end" name="trash" (click)="update($event, c)"></ion-icon>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-card-content>
+      
     </ion-card>
     </div>
 
@@ -43,4 +58,5 @@
     </ion-card>
     </div>
   </ion-list>
+  
 </ion-content>

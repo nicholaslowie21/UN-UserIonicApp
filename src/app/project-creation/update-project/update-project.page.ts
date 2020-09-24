@@ -1,46 +1,123 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from  "@angular/router";
-import { AuthService } from '../../services/authentication.service';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { Variable } from '@angular/compiler/src/render3/r3_ast';
+import { ProjectService } from 'src/app/services/project.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './userRegister.page.html',
-  styleUrls: ['./userRegister.page.scss'],
+  selector: 'app-update-project',
+  templateUrl: './update-project.page.html',
+  styleUrls: ['./update-project.page.scss'],
 })
-export class UserRegisterPage implements OnInit {
-    form: FormGroup;
-    name: string;
-    username: string; 
-    email: string;
-    password: string;
-    bio: string;
-    occupation: string;
-    country: string;
-    salutation: any;
-    confirmPassword: string;
-
-    salutationList: any[];
-
-    message: string;
-    countryData: String[];
-    
+export class UpdateProjectPage implements OnInit {
 
   resultSuccess: boolean;
   resultError: boolean;
-  constructor(private  authService:  AuthService, private  router:  Router, private toastCtrl: ToastController) { 
+  accountBoolean: boolean;
+  isLoggedIn: boolean;
+
+  user: any;
+  accountType: any;
+  title: any;
+  desc: any;
+  rating: any;
+  sdgs: any;
+  sdgsList: any[];
+  ratingsList: any[];
+  form: any;
+  country: any;
+  countryData: string[];
+  projectToUpdate: any;
+  id: any;
+  tst: any;
+  retrieveProjectError: boolean;
+
+  constructor(private  userService:  UserService, 
+    private  router:  Router, 
+    private toastCtrl: ToastController, 
+    private tokenStorage: TokenStorageService,
+    private projectService: ProjectService,
+    private activatedRoute: ActivatedRoute) { 
+this.resultSuccess = false;
+this.resultError = false;
+this.retrieveProjectError = false;
+//this.user = this.tokenStorage.getUser().data.user
+this.accountType = this.tokenStorage.getAccountType();
+if(this.accountType == "institution") {
+this.accountBoolean = true;
+} else {
+this.accountBoolean = false;
+}
+
+}
+
+
+
+ngOnInit() {
+  this.initialiseLists();
+  this.id = this.activatedRoute.snapshot.paramMap.get('Id');
+  this.projectToUpdate = this.projectService.viewProject(this.id).subscribe((res)=> {
+    this.projectToUpdate = res.data.targetProject;
+  },
+  (err) => {
+    console.log("******Retrieve Project error");
+  });
+      this.ratingsList = [1 ,2 ,3 ,4 ,5];
+}
+
+update() {
+    this.form = {
+    "projectId": this.projectToUpdate.id,
+    "title": this.projectToUpdate.title,
+    "desc": this.projectToUpdate.desc,
+    "rating": this.projectToUpdate.rating,
+    "country": this.projectToUpdate.country,
+    "sdgs": this.projectToUpdate.SDGs,
+    }
+    this.projectService.updateProject(this.form).subscribe((res) => {
+    this.resultSuccess = true;
+    this.resultError = false;
+    this.successToast();
+    this.router.navigateByUrl('/my-projects');
+    },
+    err => {
     this.resultSuccess = false;
-		this.resultError = false;
-    
-  }
-          
+    this.resultError = true;
+    this.failureToast(err.error.msg);
+    console.log('********** UpdateProjects.ts: ', err.error.msg);
+    });
+} 
 
-  ngOnInit() {
-    this.salutationList = ["Mr. ", "Mrs. ", "Ms. ", "Dr. ", "Prof. "]
+async successToast() {
+    let toast = this.toastCtrl.create({
+    message: 'Update Successful!',
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-pass"      
+    });
+    (await toast).present();
+}
 
-    this.countryData = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla",
+async failureToast(error) {
+    const toast = this.toastCtrl.create({
+    message: 'Update Unsuccessful: ' + error,
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-fail"
+    });
+    (await toast).present();
+}
+
+initialiseLists() {
+      this.sdgsList = [{"id":1, "name": "No Poverty"},{"id":2,"name": "Zero Hunger"}, {"id":3,"name": "Good Health and Well-Being"},
+      {"id":4, "name": "Quality Education"}, {"id":5, "name": "Gender Equality"},{"id":6,"name": "Clean Water and Sanitisation"},
+      {"id":7, "name": "Affordable and Clean Energy"}, {"id":8, "name": "Decent Work and Economic Growth"},{"id":9, "name": "Industry, Innovation and Infrastructure"},
+      {"id":10, "name": "Reduced Inequalities"}, {"id":11, "name": "Sustainable Cities and Communities"}, {"id":12, "name": "Responsible Consumption and Production"},
+      {"id":13, "name": "Climate Action"}, {"id":14, "name": "Life Below Water"}, {"id":15, "name": "Life On Land"},
+      {"id":16, "name": "Peace, Justice and Strong Institutions"},{"id":17, "name": "Partnerships for the Goals"}];
+
+      this.countryData = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla",
     "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas",
     "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
     "Bosnia and Herzegowina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam",
@@ -73,53 +150,8 @@ export class UserRegisterPage implements OnInit {
     "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay",
     "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)",
     "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"];
-  }
-
-  register(registerForm:NgForm) {
-    if(this.password == this.confirmPassword){
-          this.authService.register(this.name, this.username, this.email, this.password, this.country, this.salutation).subscribe((res) => {
-            console.log(res);
-            this.resultSuccess = true;
-            this.resultError = false;
-            registerForm.reset();
-            this.successToast();
-            this.router.navigateByUrl('/login');
-          },
-          err => {
-            this.resultSuccess = false;
-            this.resultError = true;
-            this.failureToast(err.error.msg);
-            console.log('********** RegisterNewUserPage.ts: ', err.error.msg);
-          });
-    } else {
-      this.failureToast(Error("Passwords do not match"));
-    }
-  }
-
-  back() {
-    this.router.navigateByUrl("/login");
-  }
-
-
-  async successToast() {
-    let toast = this.toastCtrl.create({
-      message: 'Registration successful!',
-      duration: 2000,
-      position: 'middle',
-      cssClass: "toast-pass"      
-    });
-    (await toast).present();
-  }
-
-  async failureToast(error) {
-    const toast = this.toastCtrl.create({
-      message: 'Registration Unsuccessful: ' + error,
-      duration: 2000,
-      position: 'middle',
-      cssClass: "toast-fail"
-    });
-    (await toast).present();
-  }
+}
 
 
 }
+

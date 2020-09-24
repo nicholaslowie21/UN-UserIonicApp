@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" routerLink="/my-projects" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Create Project</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="create()">
+    <ion-item>
+        <ion-label position="floating">Title</ion-label>
+        <ion-input ngModel name="title" [(ngModel)]="title" required #intitle="ngModel"></ion-input>
+        <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
+          <div *ngIf="intitle.errors.required">
+            Title is required!
+          </div>
+        </div>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea ngModel name="desc" [(ngModel)]="desc" required #indesc="ngModel"></ion-textarea>
+      <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
+        <div *ngIf="indesc.errors.required">
+          Desc is required!
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Rating</ion-label>
+      <ion-select id="rating" name="rating" [(ngModel)]="rating">
+        <ion-select-option *ngFor="let rating of ratingsList" [value]="rating">{{rating}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>SDGs</ion-label>
+      <ion-select placeholder="Select Many" id="s" name="s" [(ngModel)]="sdgs" multiple="true">
+        <ion-select-option *ngFor="let s of sdgsList" [value]="s.id">{{s.id}}-{{s.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+   
+  
+    <ion-button type="submit" color="danger" expand="block" style = "margin-left: 10px; margin-right:10px;">Create</ion-button>
+  </form>
+</ion-content>

@@ -106,8 +106,15 @@ const routes: Routes = [
   {
     path: 'view-resource',
     loadChildren: () => import('./resourcemanagement/view-resource/view-resource.module').then( m => m.ViewResourcePageModule)
-  }
-
+  },
+  {
+    path: 'project-creation',
+    loadChildren: () => import('./project-creation/create-project/create-project.module').then( m => m.CreateProjectPageModule)
+  },
+  {
+    path: 'update-project/:Id',
+    loadChildren: () => import('./project-creation/update-project/update-project.module').then( m => m.UpdateProjectPageModule)
+  },
 
 ];
 @NgModule({
