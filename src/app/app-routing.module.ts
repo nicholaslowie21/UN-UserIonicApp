@@ -77,7 +77,7 @@ const routes: Routes = [
   },
   {
     path: 'my-resources',
-    loadChildren: () => import('./my-resources/my-resources.module').then( m => m.MyResourcesPageModule)
+    loadChildren: () => import('./resourcemanagement/my-resources/my-resources.module').then( m => m.MyResourcesPageModule)
   },
   {
     path: 'affiliation-management',
@@ -94,6 +94,18 @@ const routes: Routes = [
   {
     path: 'about',
     loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
+  },
+  {
+    path: 'create-resource',
+    loadChildren: () => import('./resourcemanagement/create-resource/create-resource.module').then( m => m.CreateResourcePageModule)
+  },
+  {
+    path: 'edit-resource/:type/:id',
+    loadChildren: () => import('./resourcemanagement/edit-resource/edit-resource.module').then( m => m.EditResourcePageModule)
+  },
+  {
+    path: 'view-resource/:type/:id',
+    loadChildren: () => import('./resourcemanagement/view-resource/view-resource.module').then( m => m.ViewResourcePageModule)
   },
   {
     path: 'project-creation',

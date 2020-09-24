@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" routerLink="/my-resources" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Create Resource Offering</ion-title>
+  </ion-toolbar>
+</ion-header>
+<form #form="ngForm" (ngSubmit)="createRes(form)">
+  <ion-item>
+    <ion-label>Resource Type</ion-label>
+    <ion-select ngModel name="type" [(ngModel)] = "type" #intype="ngModel" (ngModelChange)="renderType(type)">
+      <ion-select-option *ngFor = "let t of typeList">{{t}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item *ngIf="isChosenType == true">
+      <ion-label position="floating">Title</ion-label>
+      <ion-input ngModel name="title" [(ngModel)]="title" required minlength="3" #intitle="ngModel"></ion-input>
+      <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
+        <div *ngIf="intitle.errors.required">Title is required</div>
+        <div *ngIf="intitle.errors.minlength">
+          Title must be at least 3 characters
+        </div>
+      </div>
+    </ion-item>
+
+  <ion-item *ngIf = "isChosenType == true">
+    <ion-label position="floating">Description</ion-label>
+    <ion-input ngModel name="desc" [(ngModel)]="desc" required minlength="3" #indesc="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
+      <div *ngIf="indesc.errors.required">Description is required</div>
+      <div *ngIf="indesc.errors.minlength">
+        Description must be at least 3 characters
+      </div>
+    </div>
+  </ion-item>
+
+  <ion-item *ngIf="isVenueType == true">
+    <ion-label position="floating">Address</ion-label>
+    <ion-input ngModel name="address" [(ngModel)]="address" required minlength="3" #inaddress="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && inaddress.invalid">
+      <div *ngIf="inaddress.errors.required">Address is required</div>
+      <div *ngIf="inaddress.errors.minlength">
+        Address must be at least 3 characters
+      </div>
+    </div>
+  </ion-item>
+  <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Offer Resource</ion-button>
+</form>
+
+<ion-content>
+  <div *ngIf="resultSuccess == true" style="color: blue;">
+    {{message}}
+  </div>
+  
+  <div *ngIf="resultError == true" style="color: red;">
+    {{message}}
+  </div>
+</ion-content>

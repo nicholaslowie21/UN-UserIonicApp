@@ -9,6 +9,8 @@ const USER_KEY = 'auth-user';
 export class TokenStorageService {
   accountType: any;
   projectId: any;
+  currResource: any;
+  currResourceType: any;
 
   constructor() { }
 
@@ -51,4 +53,21 @@ export class TokenStorageService {
   }
 
 
+  // public getCurrResource(): any {
+  //   return this.currResource;
+  // }
+  
+  // public saveCurrResource(currResource) {
+  //   console.log(currResource);
+  //   this.currResource = currResource;
+  // }
+
+  // public getCurrResourceType(): any {
+  //   return this.currResourceType;
+  // }
+
+  // public saveCurrResourceType(currResourceType) {
+  //   console.log(currResourceType);
+  //   this.currResourceType = currResourceType;
+  // }
 }

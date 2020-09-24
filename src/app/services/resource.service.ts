@@ -13,10 +13,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ResourceService {
+  resourceAPI_URL: any;
   userAPI_URL: any;
   institutionAPI_URL: any;
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private sessionService: SessionService) {
+    this.resourceAPI_URL = this.sessionService.getRootPath() + '/resource';
     this.userAPI_URL = this.sessionService.getRootPath() + '/resource/user';
     this.institutionAPI_URL = this.sessionService.getRootPath() + '/resource/institution';
    }
@@ -65,6 +67,131 @@ export class ResourceService {
 
   getUserVenueResource(data): Observable<any> {
     return this.http.get(this.userAPI_URL + '/venue?userId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createItemResource(title: string, desc: string): Observable<any> {
+    let createItemReq = {
+      "title": title,
+      "desc": desc
+    }
+
+    return this.http.post(this.resourceAPI_URL + "/createItem", createItemReq, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createVenueResource(title: string, desc: string, address: string): Observable<any> {
+    let createVenueReq = {
+      "title": title,
+      "desc": desc,
+      "address": address
+    }
+
+    return this.http.post(this.resourceAPI_URL + "/createVenue", createVenueReq, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createManpowerResource(title: string, desc: string): Observable<any> {
+    let createManpowerReq = {
+      "title": title,
+      "desc": desc
+    }
+
+    return this.http.post(this.resourceAPI_URL + "/createManpower", createManpowerReq, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createKnowledgeResource(title: string, desc: string): Observable<any> {
+    let createKnowledgeReq = {
+      "title": title,
+      "desc": desc
+    }
+
+    return this.http.post(this.resourceAPI_URL + "/createKnowledge", createKnowledgeReq, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewItemResourceDetail(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/item/details?itemId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewKnowledgeResourceDetail(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/knowledge/details?knowledgeId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewManpowerResourceDetail(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/manpower/details?manpowerId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewVenueResourceDetail(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/venue/details?venueId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateItem(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/updateItem", {
+      "itemId": data.itemId,
+      "title": data.title,
+      "desc": data.desc,
+      "country": data.country
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateVenue(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/updateVenue", {
+      "venueId": data.venueId,
+      "title": data.title,
+      "desc": data.desc,
+      "address": data.address,
+      "country": data.country
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateManpower(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/updateManpower", {
+      "manpowerId": data.manpowerId,
+      "title": data.title,
+      "desc": data.desc,
+      "country": data.country
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateKnowledge(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/updateKnowledge", {
+      "knowledgeId": data.itemId,
+      "title": data.title,
+      "desc": data.desc,
+    }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
