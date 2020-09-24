@@ -181,7 +181,21 @@ export class ProjectService {
       "needId": data.needId,
       "title": data.title,
       "desc": data.desc,
+      "completion": data.completion
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateMoneyResourceNeed(data): Observable<any> {
+    return this.http.post(this.API_URL + '/editResourceNeed', {
+      "needId": data.needId,
+      "title": data.title,
+      "desc": data.desc,
       "total": data.total,
+      "pendingSum": data.pendingSum,
+      "receivedSum": data.receivedSum,
       "completion": data.completion
     }, httpOptions).pipe(
       tap(res => {

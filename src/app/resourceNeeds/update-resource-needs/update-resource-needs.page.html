@@ -11,42 +11,32 @@
   <form #form="ngForm" (ngSubmit)="update()">
     <ion-item>
         <ion-label position="floating">Title</ion-label>
-        <ion-input ngModel name="title" [(ngModel)]="title" required #intitle="ngModel"></ion-input>
-        <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
-          <div *ngIf="intitle.errors.required">
-            Title is required!
-          </div>
-        </div>
+        <ion-input ngModel name="title" [(ngModel)]="title" #intitle="ngModel"></ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label position="floating">Description</ion-label>
-      <ion-textarea ngModel name="desc" [(ngModel)]="desc" required #indesc="ngModel"></ion-textarea>
-      <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
-        <div *ngIf="indesc.errors.required">
-          Desc is required!
-        </div>
-      </div>
+      <ion-textarea ngModel name="desc" [(ngModel)]="desc"  #indesc="ngModel"></ion-textarea>
     </ion-item>
 
     <ion-item *ngIf='(type == "money")'>
-      <ion-label position="floating">Total</ion-label>
-      <ion-range pin=true snaps=true step=10 ticks=true min="0" max="{{total}}" ngModel name="total" [(ngModel)]="total" required #intotal="ngModel"></ion-range>
-      <div class="alert-danger" *ngIf="form.submitted && intotal.invalid">
-        <div *ngIf="indesc.errors.required">
-          Total is required!
-        </div>
-      </div>
+      <ion-label position="floating">Total($)</ion-label>
+      <ion-input ngModel name="total" [(ngModel)]="total" #intotal="ngModel"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf='(type == "money")'>
+      <ion-label position="floating">Pending Sum($)</ion-label>
+      <ion-input ngModel name="pendingSum" [(ngModel)]="pendingSum" #inpendingSum="ngModel"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf='(type == "money")'>
+      <ion-label position="floating">Received Sum($)</ion-label>
+      <ion-input ngModel name="receivedSum" [(ngModel)]="receivedSum" #inreceivedSum="ngModel"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Completion(%)</ion-label>
-      <ion-range pin=true snaps=true step=10 ticks=true min="0" max="100" ngModel name="completion" [(ngModel)]="completion" required #incompletion="ngModel"></ion-range>
-      <div class="alert-danger" *ngIf="form.submitted && incompletion.invalid">
-        <div *ngIf="indesc.errors.required">
-          Completion is required!
-        </div>
-      </div>
+      <ion-range pin=true snaps=true step=10 ticks=true min="0" max="100" ngModel name="completion" [(ngModel)]="completion" #incompletion="ngModel"></ion-range>
     </ion-item>
 
     <ion-button type="submit" color="danger" expand="block" style = "margin-left: 10px; margin-right:10px;">Update</ion-button>

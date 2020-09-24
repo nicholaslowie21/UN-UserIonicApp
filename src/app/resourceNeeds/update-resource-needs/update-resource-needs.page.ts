@@ -23,6 +23,8 @@ export class UpdateResourceNeedsPage implements OnInit {
   resourceNeeds: any[];
   total: any;
   type: any;
+  pendingSum: any;
+  receivedSum: any;
   constructor(private tokenStorage: TokenStorageService, private toastCtrl: ToastController, private projectService: ProjectService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -42,6 +44,10 @@ export class UpdateResourceNeedsPage implements OnInit {
               this.completion = this.resourceNeeds[i].completion;
               this.type = this.resourceNeeds[i].type;
               this.total = this.resourceNeeds[i].total;
+              if(this.type == "money") {
+                this.pendingSum = this.resourceNeeds[i].pendingSum;
+                this.receivedSum = this.resourceNeeds[i].receivedSum;
+              }
             }
         }
       }
@@ -57,27 +63,51 @@ export class UpdateResourceNeedsPage implements OnInit {
 
   
   update() {
-
-    this.form = {
-    "needId": this.id,
-    "title": this.title,
-    "desc": this.desc,
-    "total": this.total,
-    "completion": this.completion
+    if(this.type == "money"){
+      this.completion = (this.receivedSum/this.total) * 100;
+      this.form = {
+        "needId": this.id,
+        "title": this.title,
+        "desc": this.desc,
+        "total": this.total,
+        "pendingSum": this.pendingSum,
+        "receivedSum": this.receivedSum,
+        "completion": this.completion
+        }
+        this.projectService.updateMoneyResourceNeed(this.form).subscribe((res) => {
+          this.projectId = res.data.projectId;
+        this.resultSuccess = true;
+        this.resultError = false;
+        this.successToast();
+        this.back();
+        },
+        err => {
+        this.resultSuccess = false;
+        this.resultError = true;
+        this.failureToast(err.error.msg);
+        console.log('********** UpdateResourceNeed.ts: ', err.error.msg);
+        });
+    } else {
+        this.form = {
+        "needId": this.id,
+        "title": this.title,
+        "desc": this.desc,
+        "completion": this.completion
+        }
+        this.projectService.updateResourceNeed(this.form).subscribe((res) => {
+          this.projectId = res.data.projectId;
+        this.resultSuccess = true;
+        this.resultError = false;
+        this.successToast();
+        this.back();
+        },
+        err => {
+        this.resultSuccess = false;
+        this.resultError = true;
+        this.failureToast(err.error.msg);
+        console.log('********** UpdateResourceNeed.ts: ', err.error.msg);
+        });
     }
-    this.projectService.updateResourceNeed(this.form).subscribe((res) => {
-      this.projectId = res.data.projectId;
-    this.resultSuccess = true;
-    this.resultError = false;
-    this.successToast();
-    this.back();
-    },
-    err => {
-    this.resultSuccess = false;
-    this.resultError = true;
-    this.failureToast(err.error.msg);
-    console.log('********** UpdateResourceNeed.ts: ', err.error.msg);
-    });
   } 
 
   async successToast() {
