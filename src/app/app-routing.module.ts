@@ -104,7 +104,7 @@ const routes: Routes = [
     loadChildren: () => import('./resourcemanagement/edit-resource/edit-resource.module').then( m => m.EditResourcePageModule)
   },
   {
-    path: 'view-resource',
+    path: 'view-resource/:type/:id',
     loadChildren: () => import('./resourcemanagement/view-resource/view-resource.module').then( m => m.ViewResourcePageModule)
   }
 

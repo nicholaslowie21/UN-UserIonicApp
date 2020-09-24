@@ -43,21 +43,21 @@ export class TokenStorageService {
     return this.accountType;
   }
 
-  public getCurrResource(): any {
-    return this.currResource;
-  }
+  // public getCurrResource(): any {
+  //   return this.currResource;
+  // }
   
-  public saveCurrResource(currResource) {
-    console.log(currResource);
-    this.currResource = currResource;
-  }
+  // public saveCurrResource(currResource) {
+  //   console.log(currResource);
+  //   this.currResource = currResource;
+  // }
 
-  public getCurrResourceType(): any {
-    return this.currResourceType;
-  }
+  // public getCurrResourceType(): any {
+  //   return this.currResourceType;
+  // }
 
-  public saveCurrResourceType(currResourceType) {
-    console.log(currResourceType);
-    this.currResourceType = currResourceType;
-  }
+  // public saveCurrResourceType(currResourceType) {
+  //   console.log(currResourceType);
+  //   this.currResourceType = currResourceType;
+  // }
 }
