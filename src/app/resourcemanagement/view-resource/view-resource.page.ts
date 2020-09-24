@@ -18,10 +18,9 @@ export class ViewResourcePage implements OnInit {
   retrieveResourceError: boolean;
 
   constructor(private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute) {
+    //See BG update project, for the toast
     this.retrieveResourceError = false;
   
-    // this.resourceType = this.tokenStorageService.getCurrResourceType;
-    // this.currResource = this.tokenStorageService.getCurrResource;
    }
 
   ngOnInit() {
@@ -58,16 +57,14 @@ export class ViewResourcePage implements OnInit {
     } else if (this.resourceType == "venue") {
       this.currResource = this.resourceService.viewVenueResourceDetail('5f6c2ce61a06684a78ae3dd9').subscribe((res) => {
         this.currResource = res.data.venue;
-      }), err => {
+      }), (err) => {
         console.log('********** ViewResource.ts - Venue: ', err.error.msg);
       };
     }
-    // this.projectToUpdate = this.projectService.viewProject(this.id).subscribe((res)=> {
-    //   this.projectToUpdate = res.data.targetProject;
-    // },
-    // (err) => {
-    //   console.log("******Retrieve Project error");
-    // });
   }
 
+  toEditResource() {
+    console.log("I am going to redirect you");
+    this.router.navigateByUrl("/edit-resource/" + this.resourceType + "/" + this.resourceId);
+  }
 }

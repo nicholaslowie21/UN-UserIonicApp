@@ -149,21 +149,53 @@ export class ResourceService {
     );
   }
 
-  // register(name: string, username: string, email: string, password: string, country: string, gender: string): Observable<any> {
-  //   let createUserReq = {
-  //     "name": name,
-  //     "username": username,
-  //     "email": email,
-  //     "password": password,
-  //     "country": country,
-  //     "gender": gender
-  //   }
-  //   return this.http.post(this.baseUrl + "/authorization/user/signup", createUserReq, httpOptions).pipe(
-  //     tap(res => {
-  //       this.tokenStorage.saveUser(res.data.user);
-  //   }, error => this.handleError(error)),
-  //   );
-  // }
+  updateItem(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/updateItem", {
+      "itemId": data.itemId,
+      "title": data.title,
+      "desc": data.desc,
+      "country": data.country
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateVenue(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/updateVenue", {
+      "venueId": data.venueId,
+      "title": data.title,
+      "desc": data.desc,
+      "address": data.address,
+      "country": data.country
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateManpower(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/updateManpower", {
+      "manpowerId": data.manpowerId,
+      "title": data.title,
+      "desc": data.desc,
+      "country": data.country
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateKnowledge(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/updateKnowledge", {
+      "knowledgeId": data.itemId,
+      "title": data.title,
+      "desc": data.desc,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
 
   private handleError(error: HttpErrorResponse)
 	{
