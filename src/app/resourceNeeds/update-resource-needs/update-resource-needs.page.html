@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Update Resource Need</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="update()">
+    <ion-item>
+        <ion-label position="floating">Title</ion-label>
+        <ion-input ngModel name="title" [(ngModel)]="title" required #intitle="ngModel"></ion-input>
+        <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
+          <div *ngIf="intitle.errors.required">
+            Title is required!
+          </div>
+        </div>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea ngModel name="desc" [(ngModel)]="desc" required #indesc="ngModel"></ion-textarea>
+      <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
+        <div *ngIf="indesc.errors.required">
+          Desc is required!
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item *ngIf='(type == "money")'>
+      <ion-label position="floating">Total</ion-label>
+      <ion-range pin=true snaps=true step=10 ticks=true min="0" max="{{total}}" ngModel name="total" [(ngModel)]="total" required #intotal="ngModel"></ion-range>
+      <div class="alert-danger" *ngIf="form.submitted && intotal.invalid">
+        <div *ngIf="indesc.errors.required">
+          Total is required!
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Completion(%)</ion-label>
+      <ion-range pin=true snaps=true step=10 ticks=true min="0" max="100" ngModel name="completion" [(ngModel)]="completion" required #incompletion="ngModel"></ion-range>
+      <div class="alert-danger" *ngIf="form.submitted && incompletion.invalid">
+        <div *ngIf="indesc.errors.required">
+          Completion is required!
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-button type="submit" color="danger" expand="block" style = "margin-left: 10px; margin-right:10px;">Update</ion-button>
+  </form>
+</ion-content>

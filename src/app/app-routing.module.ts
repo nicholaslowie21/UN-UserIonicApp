@@ -103,6 +103,46 @@ const routes: Routes = [
     path: 'update-project/:Id',
     loadChildren: () => import('./project-creation/update-project/update-project.module').then( m => m.UpdateProjectPageModule)
   },
+  {
+    path: 'view-project/:Id',
+    loadChildren: () => import('./project-creation/view-project/view-project.module').then( m => m.ViewProjectPageModule)
+  },
+  {
+    path: 'kpi-management/:Id',
+    loadChildren: () => import('./kpi/kpi-management/kpi-management.module').then( m => m.KpiManagementPageModule)
+  },
+  {
+    path: 'create-kpi/:Id',
+    loadChildren: () => import('./kpi/create-kpi/create-kpi.module').then( m => m.CreateKpiPageModule)
+  },
+  {
+    path: 'upload-projectPic/:Id',
+    loadChildren: () => import('./project-creation/upload-project-pic/upload-project-pic.module').then( m => m.UploadProjectPicPageModule)
+  },
+  {
+    path: 'view-admins/:Id',
+    loadChildren: () => import('./projectAdminManagement/view-admins/view-admins.module').then( m => m.ViewAdminsPageModule)
+  },
+  {
+    path: 'resource-needs-management/:Id',
+    loadChildren: () => import('./resourceNeeds/resource-needs-management/resource-needs-management.module').then( m => m.ResourceNeedsManagementPageModule)
+  },
+  {
+    path: 'create-resource-need/:Id',
+    loadChildren: () => import('./resourceNeeds/create-resource-need/create-resource-need.module').then( m => m.CreateResourceNeedPageModule)
+  },
+  {
+    path: 'update-kpi/:Id',
+    loadChildren: () => import('./kpi/update-kpi/update-kpi.module').then( m => m.UpdateKpiPageModule)
+  },
+  {
+    path: 'update-resource-needs/:Id',
+    loadChildren: () => import('./resourceNeeds/update-resource-needs/update-resource-needs.module').then( m => m.UpdateResourceNeedsPageModule)
+  },
+  {
+    path: 'create-money-resource-need/:Id/:title/:desc',
+    loadChildren: () => import('./resourceNeeds/create-money-resource-need/create-money-resource-need.module').then( m => m.CreateMoneyResourceNeedPageModule)
+  },
 
 ];
 @NgModule({

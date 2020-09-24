@@ -52,6 +52,161 @@ export class ProjectService {
     );
   }
 
+  deleteProject(data): Observable<any> {
+    return this.http.post(this.API_URL + '/deleteProject',{
+      "projectId": data
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createKpi(data, projectId): Observable<any> {
+    return this.http.post(this.API_URL + '/createKPI', {
+      "projectId": projectId,
+      "title": data.title,
+      "desc": data.desc
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateKpi(data): Observable<any> {
+    return this.http.post(this.API_URL + '/updateKPI', {
+      "kpiId": data.kpiId,
+      "title": data.title,
+      "desc": data.desc,
+      "completion":data.completion
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+
+  getKpi(data): Observable<any> {
+    return this.http.get(this.API_URL + '/projectKPI?projectId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deleteKpi(data): Observable<any> {
+    return this.http.post(this.API_URL + '/deleteKPI',{
+      "kpiId": data
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getAdmins(data): Observable<any> {
+    return this.http.get(this.API_URL + '/projectAdmins?projectId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  uploadProjectPicture(data): Observable<any> {
+    return this.http.post(this.API_URL + '/uploadProjectPicture', data).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  searchUser(data): Observable<any> {
+    return this.http.get(this.API_URL + '/searchUsers?username='  + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  completeProject(data): Observable<any> {
+    return this.http.post(this.API_URL + '/completeProject', {
+      "projectId": data
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  addAdmin(data, projectId): Observable<any> {
+    return this.http.post(this.API_URL + '/addAdmin', {
+      "projectId": projectId,
+      "userId": data.userId
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deleteAdmin(data, projectId): Observable<any> {
+    return this.http.post(this.API_URL + '/deleteAdmin', {
+      "projectId": projectId,
+      "userId": data.userId
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createResourceNeed(data, projectId): Observable<any> {
+    return this.http.post(this.API_URL + '/createResourceNeed', {
+      "projectId": projectId,
+      "title": data.title,
+      "desc": data.desc,
+      "resourceType": data.resourceType
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createMoneyResourceNeed(data, projectId): Observable<any> {
+    return this.http.post(this.API_URL + '/createResourceNeed', {
+      "projectId": projectId,
+      "title": data.title,
+      "desc": data.desc,
+      "resourceType": data.resourceType,
+      "total": data.total
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateResourceNeed(data): Observable<any> {
+    return this.http.post(this.API_URL + '/editResourceNeed', {
+      "needId": data.needId,
+      "title": data.title,
+      "desc": data.desc,
+      "total": data.total,
+      "completion": data.completion
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+
+  getResourceNeeds(data): Observable<any> {
+    return this.http.get(this.API_URL + '/resourceNeeds?projectId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deleteResourceNeed(data): Observable<any> {
+    return this.http.post(this.API_URL + '/deleteResourceNeed',{
+      "needId": data
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

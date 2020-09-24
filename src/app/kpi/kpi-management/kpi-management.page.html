@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>KPI Management</ion-title>
+    <ion-buttons label="Create" slot="end">
+      <ion-icon name="add-outline" slot="end" (click)="create($event)">
+      </ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor = "let k of kpis">
+    <ion-card-title style="padding-left: 10px;">{{k.title}}</ion-card-title>
+    <ion-card-content>{{k.desc}}</ion-card-content>   
+    <ion-card-content>Completion: {{k.completion}}</ion-card-content>
+    <ion-toolbar>
+      <ion-buttons slot="end" >
+        <ion-icon slot="end" name="create-outline" (click)="update($event, k)"></ion-icon>
+      </ion-buttons>
+      <ion-buttons slot="end" >
+        <ion-icon slot="end" name="trash" (click)="delete($event, k)"></ion-icon>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-card>
+</ion-content>

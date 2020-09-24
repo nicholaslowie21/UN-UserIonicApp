@@ -4,6 +4,8 @@ import { InstitutionService } from '../services/institution.service';
 import { UserService } from '../services/user.service';
 import { SessionService } from '../services/session.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-my-projects',
@@ -20,8 +22,11 @@ export class MyProjectsPage implements OnInit {
   noCurrProjectBoolean: boolean;
   noPastProjectBoolean: boolean;
   code: any;
+  resultSuccess: boolean;
+  error: boolean;
+  errorMessage: any;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
         this.accountType = this.tokenStorage.getAccountType();
         this.user = this.tokenStorage.getUser();
       console.log(this.accountType);
@@ -50,6 +55,7 @@ export class MyProjectsPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    console.log(this.noCurrProjectBoolean);
     this.initialise();
   }
 
@@ -59,10 +65,12 @@ export class MyProjectsPage implements OnInit {
         this.institutionService.getCurrentProjects(this.user.data.user.id).subscribe((res) => {
             this.currProjects = res.data.currProjects;
             if(this.currProjects.length > 0) {
+              this.noCurrProjectBoolean = false;
               for(var i = 0; i < this.currProjects.length; i++) {
                 this.currProjects[i].imgPath = this.sessionService.getRscPath() + this.currProjects[i].imgPath  +'?random+=' + Math.random();
               }
             } else {
+              console.log("else ran");
                 this.noCurrProjectBoolean = true;
             }
             
@@ -76,6 +84,7 @@ export class MyProjectsPage implements OnInit {
         this.pastProjects = res.data.pastProjects
         console.log(this.pastProjects.length);
         if(this.pastProjects.length > 0) {
+          this.noPastProjectBoolean = false;
           for(var i = 0; i < this.pastProjects.length; i++) {
             this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
           }
@@ -93,6 +102,7 @@ export class MyProjectsPage implements OnInit {
           this.currProjects = res.data.currProjects
 
           if(this.currProjects.length > 0) {
+            this.noCurrProjectBoolean = false;
             for(var i = 0; i < this.currProjects.length; i++) {
               this.currProjects[i].imgPath = this.sessionService.getRscPath() + this.currProjects[i].imgPath  +'?random+=' + Math.random();
             }
@@ -108,6 +118,7 @@ export class MyProjectsPage implements OnInit {
             this.pastProjects = res.data.pastProjects
 
             if(this.pastProjects.length > 0) {
+              this.noPastProjectBoolean = false;
               for(var i = 0; i < this.pastProjects.length; i++) {
                 this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
               }
@@ -121,42 +132,14 @@ export class MyProjectsPage implements OnInit {
     }
   }
 
-  update(event, project) {
-    this.router.navigate(["/update-project/" + project.id]);
+  
+
+  view(event, project) {
+    this.router.navigate(["/view-project/" + project.id])
   }
 
-  async deleteProduct()
-	{
-		/* const alert = await this.alertController.create({
-			header: 'Confirm Delete Project',
-			message: 'Confirm delete Project?',
-			buttons: [
-			{
-			  text: 'Cancel',
-			  role: 'cancel',
-			  cssClass: 'secondary',
-			  handler: (blah) => {
-				
-			  }
-			}, {
-			  text: 'Okay',
-			  handler: () => {
-				this.projectService.deleteProduct(this.productId).subscribe(
-					response => {
-						this.resultSuccess = true;
-						this.productToView = null;
-					},
-					error => {
-						this.error = true;
-						this.errorMessage = error;
-					}
-				);
-			  }
-			}
-			]
-		});
-
-		await alert.present(); */
-	}
+ 
+  
+ 
 
 }

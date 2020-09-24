@@ -8,6 +8,7 @@ const USER_KEY = 'auth-user';
 })
 export class TokenStorageService {
   accountType: any;
+  projectId: any;
 
   constructor() { }
 
@@ -40,4 +41,14 @@ export class TokenStorageService {
   public getAccountType(): any {
     return this.accountType;
   }
+
+  public setProjectId(projectId) {
+      this.projectId = projectId;
+  }
+
+  public getProjectId(): any {
+      return this.projectId;
+  }
+
+
 }

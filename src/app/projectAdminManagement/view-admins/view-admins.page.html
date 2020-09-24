@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Admins</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card *ngFor = "let a of admins">
+      <div class="aligned">
+      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=a.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+      <ion-title>{{a.name}}</ion-title>
+      <ion-button style="float:right; fill: outline;" (click)="presentAlertConfirm($event, a)" >Remove</ion-button>
+      </div>
+     
+    </ion-card>
+<ion-card>
+    <form name="form" (ngSubmit)="f.form.valid && search(words)" #f="ngForm" novalidate>
+      <ion-item transparent>
+          <div class="form-group">
+            <ion-input type="text" placeholder="Search" name="words" [(ngModel)]="words" required></ion-input>
+          </div>
+      </ion-item>
+      <div class="form-group">
+        <ion-button expand="block" style = "margin-left: 10px; margin-right:10px;" (click)="search(words)">Search</ion-button>
+      </div>
+  
+    </form>
+    <ion-list >
+      <ion-item *ngFor="let u of users" >
+        <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=u.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <ion-title>{{u.name}}</ion-title>
+        <ion-toolbar >
+          <ion-button class="add" (click)="add(u)" >Add Admin</ion-button>
+        </ion-toolbar>
+      </ion-item>
+    </ion-list>
+   
+  </ion-card>
+</ion-content>

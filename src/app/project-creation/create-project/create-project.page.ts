@@ -85,7 +85,7 @@ create() {
     this.resultSuccess = true;
     this.resultError = false;
     this.successToast();
-    this.router.navigateByUrl('/my-projects');
+    this.router.navigate(['/my-projects']);
     },
     err => {
     this.resultSuccess = false;

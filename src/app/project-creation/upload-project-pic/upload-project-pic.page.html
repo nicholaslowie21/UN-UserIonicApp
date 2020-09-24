@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title style="text-align: right;">Edit Project Picture</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img class="background" src="assets/img/cover 5.jpg"/>
+  <div class="centered center">
+  <ion-card>
+    <ion-card-header>Upload a picture to serve as your project picture!</ion-card-header>
+    <ion-card-content>
+    <form>      
+      <div>
+        <input type="file" name="image" (change)="selectImage($event)" />
+      </div>
+      <br>
+      <div>
+        <ion-button type="submit" expand="block" (click)="onSubmit()">Upload</ion-button>
+      </div>
+    </form>
+    
+  </ion-card-content>
+  </ion-card>
+  
+  </div>
+</ion-content>

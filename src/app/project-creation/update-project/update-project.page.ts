@@ -89,6 +89,10 @@ update() {
     });
 } 
 
+back() {
+  this.router.navigate(['/view-project', this.id]);
+}
+
 async successToast() {
     let toast = this.toastCtrl.create({
     message: 'Update Successful!',
