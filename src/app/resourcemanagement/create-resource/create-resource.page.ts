@@ -17,6 +17,7 @@ export class CreateResourcePage implements OnInit {
   type: string;
   typeList: String[]
   
+  message: string;
   isChosenType: boolean;
   isVenueType: boolean;
   resultSuccess: boolean;
@@ -51,7 +52,7 @@ export class CreateResourcePage implements OnInit {
         this.resultError = false;
         resourceForm.reset();
         this.successToast();
-        this.router.navigateByUrl('/my-resource');
+        this.router.navigateByUrl('/my-resources');
       },
       err => {
         this.resultSuccess = false;
@@ -66,7 +67,7 @@ export class CreateResourcePage implements OnInit {
         this.resultError = false;
         resourceForm.reset();
         this.successToast();
-        this.router.navigateByUrl('/my-resource');
+        this.router.navigateByUrl('/my-resources');
       },
       err => {
         this.resultSuccess = false;
@@ -81,7 +82,7 @@ export class CreateResourcePage implements OnInit {
         this.resultError = false;
         resourceForm.reset();
         this.successToast();
-        this.router.navigateByUrl('/my-resource');
+        this.router.navigateByUrl('/my-resources');
       },
       err => {
         this.resultSuccess = false;
@@ -96,7 +97,7 @@ export class CreateResourcePage implements OnInit {
         this.resultError = false;
         resourceForm.reset();
         this.successToast();
-        this.router.navigateByUrl('/my-resource');
+        this.router.navigateByUrl('/my-resources');
       },
       err => {
         this.resultSuccess = false;

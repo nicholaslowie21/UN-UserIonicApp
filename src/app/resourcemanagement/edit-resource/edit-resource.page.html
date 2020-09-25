@@ -9,15 +9,22 @@
 
 <form #form="ngForm" (ngSubmit)="update()">
   <ion-item>
-      <ion-label position="floating">Title</ion-label>
-      <ion-input ngModel name="title" [(ngModel)]="currResource.title" required minlength="3" #intitle="ngModel"></ion-input>
-      <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
-        <div *ngIf="intitle.errors.required">Title is required</div>
-        <div *ngIf="intitle.errors.minlength">
-          Title must be at least 3 characters
-        </div>
+    <ion-label position="floating">Title</ion-label>
+    <ion-input ngModel name="title" [(ngModel)]="currResource.title" required minlength="3" #intitle="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
+      <div *ngIf="intitle.errors.required">Title is required</div>
+      <div *ngIf="intitle.errors.minlength">
+        Title must be at least 3 characters
       </div>
-    </ion-item>
+    </div>
+  </ion-item>
+
+  <ion-item *ngIf="resourceType != 'knowledge'">
+    <ion-label>Country</ion-label>
+    <ion-select ngModel name="country" [(ngModel)]="currResource.country" required #incountry="ngModel">
+      <ion-select-option *ngFor = "let c of countryData">{{c}}</ion-select-option>
+    </ion-select>
+  </ion-item>
 
   <ion-item>
     <ion-label position="floating">Description</ion-label>
@@ -43,7 +50,7 @@
   <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Confirm</ion-button>
 </form>
 
-  <ion-content>
+<ion-content>
     <div *ngIf="resultSuccess == true" style="color: blue;">
       {{message}}
     </div>

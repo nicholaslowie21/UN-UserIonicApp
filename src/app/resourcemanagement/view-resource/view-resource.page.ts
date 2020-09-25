@@ -13,7 +13,7 @@ export class ViewResourcePage implements OnInit {
   resourceType: any;
   currResource: any;
   resourceId: any;
-  resourceOwner
+  resourceOwner: any;
 
   retrieveResourceError: boolean;
 
@@ -25,15 +25,12 @@ export class ViewResourcePage implements OnInit {
 
   ngOnInit() {
 
-    this.resourceId = this.activatedRoute.paramMap.subscribe(params => {
-      this.resourceType = params.get('type');
-      this.resourceId = params.get('id');
-      console.log(this.resourceType + " " + this.resourceId);
-
-    });
+    this.resourceId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.resourceType = this.activatedRoute.snapshot.paramMap.get('type');
+    console.log(this.resourceType + " " + this.resourceId);
 
     if(this.resourceType == "manpower") {
-      this.currResource = this.resourceService.viewManpowerResourceDetail('5f6c2b4b1a06684a78ae3dd8').subscribe((res) => {
+      this.currResource = this.resourceService.viewManpowerResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.manpower;
         //Can call the other JSON parts if needed, like owner details
 
@@ -55,7 +52,7 @@ export class ViewResourcePage implements OnInit {
         console.log('********** ViewResource.ts - Item: ', err.error.msg);
       };
     } else if (this.resourceType == "venue") {
-      this.currResource = this.resourceService.viewVenueResourceDetail('5f6c2ce61a06684a78ae3dd9').subscribe((res) => {
+      this.currResource = this.resourceService.viewVenueResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.venue;
       }), (err) => {
         console.log('********** ViewResource.ts - Venue: ', err.error.msg);
@@ -63,7 +60,7 @@ export class ViewResourcePage implements OnInit {
     }
   }
 
-  toEditResource() {
+  toEditResource(event) {
     console.log("I am going to redirect you");
     this.router.navigateByUrl("/edit-resource/" + this.resourceType + "/" + this.resourceId);
   }
