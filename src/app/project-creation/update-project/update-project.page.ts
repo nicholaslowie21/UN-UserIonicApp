@@ -79,7 +79,7 @@ update() {
     this.resultSuccess = true;
     this.resultError = false;
     this.successToast();
-    this.router.navigateByUrl('/my-projects');
+    this.router.navigate(['/view-project' , this.id]);
     },
     err => {
     this.resultSuccess = false;
