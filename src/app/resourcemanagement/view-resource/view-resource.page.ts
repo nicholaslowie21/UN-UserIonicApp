@@ -70,6 +70,7 @@ export class ViewResourcePage implements OnInit {
       };
     }
   }
+
   toEditResource(event) {
     this.router.navigate(["/edit-resource/" + this.resourceType + "/" + this.resourceId]);
   }

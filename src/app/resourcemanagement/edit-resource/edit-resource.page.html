@@ -39,7 +39,7 @@
 
   <ion-item>
     <ion-label position="floating">Description</ion-label>
-    <ion-input ngModel name="desc" [(ngModel)]="currResource.desc" required minlength="3" #indesc="ngModel"></ion-input>
+    <ion-textarea ngModel name="desc" [(ngModel)]="currResource.desc" required minlength="3" #indesc="ngModel"></ion-textarea>
     <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
       <div *ngIf="indesc.errors.required">Description is required</div>
       <div *ngIf="indesc.errors.minlength">
@@ -47,6 +47,11 @@
       </div>
     </div>
   </ion-item>
+
+  <ion-item>
+    <ion-label>Status</ion-label>
+    <ion-label>Inactive <ion-toggle [(ngModel)]="isActive" [checked]="isActive" name="status" style="height:25px;"></ion-toggle> Active </ion-label>
+    </ion-item>
   <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Confirm</ion-button>
 </form>
 

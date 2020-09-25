@@ -16,15 +16,24 @@ export class ResourceService {
   resourceAPI_URL: any;
   userAPI_URL: any;
   institutionAPI_URL: any;
+  privateAPI_URL: any;
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private sessionService: SessionService) {
     this.resourceAPI_URL = this.sessionService.getRootPath() + '/resource';
     this.userAPI_URL = this.sessionService.getRootPath() + '/resource/user';
     this.institutionAPI_URL = this.sessionService.getRootPath() + '/resource/institution';
+    this.privateAPI_URL = this.sessionService.getRootPath() + '/resource/private';
    }
 
   getInstitutionKnowledgeResource(data): Observable<any> {
     return this.http.get(this.institutionAPI_URL + '/knowledge?institutionId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getInstitutionPrivateKnowledgeResource(): Observable<any> {
+    return this.http.get(this.privateAPI_URL + '/institution/knowledge', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
@@ -37,8 +46,22 @@ export class ResourceService {
     );
   }
 
+  getInstitutionPrivateItemResource(): Observable<any> {
+    return this.http.get(this.privateAPI_URL + '/institution/item', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   getInstitutionVenueResource(data): Observable<any> {
     return this.http.get(this.institutionAPI_URL + '/venue?institutionId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getInstitutionPrivateVenueResource(): Observable<any> {
+    return this.http.get(this.privateAPI_URL + '/institution/venue', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
@@ -51,8 +74,22 @@ export class ResourceService {
     );
   }
 
+  getUserPrivateManpowerResource(): Observable<any> {
+    return this.http.get(this.privateAPI_URL + '/user/manpower', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   getUserKnowledgeResource(data): Observable<any> {
     return this.http.get(this.userAPI_URL + '/knowledge?userId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getUserPrivateKnowledgeResource(): Observable<any> {
+    return this.http.get(this.privateAPI_URL + '/user/knowledge', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
@@ -65,8 +102,22 @@ export class ResourceService {
     );
   }
 
+  getUserPrivateItemResource(): Observable<any> {
+    return this.http.get(this.privateAPI_URL + '/user/item', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   getUserVenueResource(data): Observable<any> {
     return this.http.get(this.userAPI_URL + '/venue?userId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getUserPrivateVenueResource(): Observable<any> {
+    return this.http.get(this.privateAPI_URL + '/user/venue', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
@@ -228,6 +279,78 @@ export class ResourceService {
 
   deleteVenue(data): Observable<any> {
     return this.http.post(this.resourceAPI_URL + "/delete/venue", {
+      "venueId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  activateItem(data) {
+    return this.http.post(this.resourceAPI_URL + "/activate/item", {
+      "itemId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deactivateItem(data) {
+    return this.http.post(this.resourceAPI_URL + "/deactivate/item", {
+      "itemId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  activateManpower(data) {
+    return this.http.post(this.resourceAPI_URL + "/activate/manpower", {
+      "manpowerId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deactivateManpower(data) {
+    return this.http.post(this.resourceAPI_URL + "/deactivate/manpower", {
+      "manpowerId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  activateKnowledge(data) {
+    return this.http.post(this.resourceAPI_URL + "/activate/knowledge", {
+      "knowledgeId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deactivateKnowledge(data) {
+    return this.http.post(this.resourceAPI_URL + "/deactivate/knowledge", {
+      "knowledgeId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  activateVenue(data) {
+    return this.http.post(this.resourceAPI_URL + "/activate/venue", {
+      "venueId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deactivateVenue(data) {
+    return this.http.post(this.resourceAPI_URL + "/deactivate/venue", {
       "venueId": data,
     }, httpOptions).pipe(
       tap(res => {

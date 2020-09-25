@@ -17,7 +17,8 @@ export class CreateResourcePage implements OnInit {
   address: string;
   type: string;
   country: string;
-  typeList: String[]
+  typeList: String[];
+  countryData: any[];
   
   message: string;
   isChosenType: boolean;

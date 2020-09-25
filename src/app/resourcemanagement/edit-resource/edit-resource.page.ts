@@ -19,6 +19,8 @@ export class EditResourcePage implements OnInit {
   desc: any;
   country: any;
   address: any;
+  isActive: boolean;
+  isOriginalActive: boolean;
 
   countryData: any[];
   resultSuccess: boolean;
@@ -37,6 +39,8 @@ export class EditResourcePage implements OnInit {
     if(this.resourceType == "manpower") {
       this.currResource = this.resourceService.viewManpowerResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.manpower;
+
+        this.internalActive();
         //Can call the other JSON parts if needed, like owner details
 
         // To check w BG, bcs not all of them hv image Path...
@@ -47,22 +51,26 @@ export class EditResourcePage implements OnInit {
     } else if (this.resourceType == "knowledge") {
       this.currResource = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.knowledge;
+        this.internalActive();
       }), err => {
         console.log('********** EditResource.ts - Knowledge: ', err.error.msg);
       };
     } else if (this.resourceType == "item") {
       this.currResource = this.resourceService.viewItemResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.item;
+        this.internalActive();
       }), err => {
         console.log('********** EditResource.ts - Item: ', err.error.msg);
       };
     } else if (this.resourceType == "venue") {
       this.currResource = this.resourceService.viewVenueResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.venue;
+        this.internalActive();
       }), (err) => {
         console.log('********** EditResource.ts - Venue: ', err.error.msg);
       };
     }
+
     this.countryData = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla",
     "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas",
     "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
@@ -98,6 +106,17 @@ export class EditResourcePage implements OnInit {
     "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"];
   }
 
+  internalActive() {
+    if(this.currResource.status == "active") {
+      this.isOriginalActive = true;
+      this.isActive = true;
+    } else {
+      this.isOriginalActive = false;
+      this.isActive = false;
+    }
+    console.log("ngOnIt active status is " + this.isActive);
+  }
+
   update() {
     if (this.resourceType == "manpower") {
       this.updateForm= {
@@ -107,6 +126,22 @@ export class EditResourcePage implements OnInit {
         "country": this.currResource.country,
       }
       
+      if (this.isActive != this.isOriginalActive) {
+        if(this.isActive == true) {
+          this.resourceService.activateManpower(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Manpower: ', err.error.msg);
+          });
+        } else {
+          this.resourceService.deactivateManpower(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Manpower: ', err.error.msg);
+          });
+        }
+      }
+
       this.resourceService.updateManpower(this.updateForm).subscribe((res) => {
         this.resultSuccess = true;
         this.resultError = false;
@@ -119,14 +154,30 @@ export class EditResourcePage implements OnInit {
         this.failureToast(err.error.msg);
         console.log('********** EditResource.ts - Manpower: ', err.error.msg);
       });
+      
     } else if (this.resourceType == "knowledge") {
-      console.log ("I am posting knowledge" + this.resourceId);
       this.updateForm= {
         "knowledgeId": this.resourceId,
         "title": this.currResource.title,
         "desc": this.currResource.desc,
       }
       
+      if (this.isActive != this.isOriginalActive) {
+        if(this.isActive == true) {
+          this.resourceService.activateKnowledge(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Knowledge: ', err.error.msg);
+          });
+        } else {
+          this.resourceService.deactivateKnowledge(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Knowledge: ', err.error.msg);
+          });
+        }
+      }
+
       this.resourceService.updateKnowledge(this.updateForm).subscribe((res) => {
         this.resultSuccess = true;
         this.resultError = false;
@@ -140,12 +191,27 @@ export class EditResourcePage implements OnInit {
         console.log('********** EditResource.ts - Knowledge: ', err.error.msg);
       });
     } else if (this.resourceType == "item") {
-      console.log ("I am posting item" + this.resourceId);
       this.updateForm= {
         "itemId": this.resourceId,
         "title": this.currResource.title,
         "desc": this.currResource.desc,
         "country": this.currResource.country
+      }
+
+      if (this.isActive != this.isOriginalActive) {
+        if(this.isActive == true) {
+          this.resourceService.activateItem(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Item: ', err.error.msg);
+          });
+        } else {
+          this.resourceService.deactivateItem(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Item: ', err.error.msg);
+          });
+        }
       }
       
       this.resourceService.updateItem(this.updateForm).subscribe((res) => {
@@ -167,6 +233,22 @@ export class EditResourcePage implements OnInit {
         "desc": this.currResource.desc,
         "address": this.currResource.address,
         "country": this.currResource.country
+      }
+
+      if (this.isActive != this.isOriginalActive) {
+        if(this.isActive == true) {
+          this.resourceService.activateVenue(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Venue: ', err.error.msg);
+          });
+        } else {
+          this.resourceService.deactivateVenue(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Venue: ', err.error.msg);
+          });
+        }
       }
       
       this.resourceService.updateVenue(this.updateForm).subscribe((res) => {
