@@ -90,7 +90,7 @@
           <ion-progress-bar *ngIf='(r.type != "money")' value='{{r.completion/100}}'></ion-progress-bar>
           <ion-progress-bar *ngIf='(r.type == "money")' value='{{(r.receivedSum/r.total)}}'></ion-progress-bar>
           <ion-card-content *ngIf='(r.type == "money")'>Received Sum: {{r.receivedSum}} | Total: {{r.total}}</ion-card-content> 
-          <ion-card-subtitle *ngIf='r.type == "money" && founderBoolean==true ||adminBoolean==true'>Pending Sum: {{r.pendingSum}} </ion-card-subtitle>
+          <ion-card-subtitle *ngIf='r.type == "money" && (founderBoolean==true ||adminBoolean==true)'>Pending Sum: {{r.pendingSum}} </ion-card-subtitle>
           <br>
       </ion-card>  
       </ion-card>  
