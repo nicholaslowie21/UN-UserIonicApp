@@ -120,6 +120,7 @@ export class EditResourcePage implements OnInit {
         console.log('********** EditResource.ts - Manpower: ', err.error.msg);
       });
     } else if (this.resourceType == "knowledge") {
+      console.log ("I am posting knowledge" + this.resourceId);
       this.updateForm= {
         "knowledgeId": this.resourceId,
         "title": this.currResource.title,
@@ -139,6 +140,7 @@ export class EditResourcePage implements OnInit {
         console.log('********** EditResource.ts - Knowledge: ', err.error.msg);
       });
     } else if (this.resourceType == "item") {
+      console.log ("I am posting item" + this.resourceId);
       this.updateForm= {
         "itemId": this.resourceId,
         "title": this.currResource.title,
@@ -167,7 +169,7 @@ export class EditResourcePage implements OnInit {
         "country": this.currResource.country
       }
       
-      this.resourceService.updateItem(this.updateForm).subscribe((res) => {
+      this.resourceService.updateVenue(this.updateForm).subscribe((res) => {
         this.resultSuccess = true;
         this.resultError = false;
         this.successToast();

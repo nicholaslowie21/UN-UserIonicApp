@@ -72,10 +72,11 @@ export class ResourceService {
     );
   }
 
-  createItemResource(title: string, desc: string): Observable<any> {
+  createItemResource(title: string, desc: string, country: string): Observable<any> {
     let createItemReq = {
       "title": title,
-      "desc": desc
+      "desc": desc, 
+      "country": country,
     }
 
     return this.http.post(this.resourceAPI_URL + "/createItem", createItemReq, httpOptions).pipe(
@@ -84,11 +85,12 @@ export class ResourceService {
     );
   }
 
-  createVenueResource(title: string, desc: string, address: string): Observable<any> {
+  createVenueResource(title: string, desc: string, address: string, country: string): Observable<any> {
     let createVenueReq = {
       "title": title,
       "desc": desc,
-      "address": address
+      "address": address,
+      "country": country,
     }
 
     return this.http.post(this.resourceAPI_URL + "/createVenue", createVenueReq, httpOptions).pipe(
@@ -188,9 +190,45 @@ export class ResourceService {
 
   updateKnowledge(data): Observable<any> {
     return this.http.post(this.resourceAPI_URL + "/updateKnowledge", {
-      "knowledgeId": data.itemId,
+      "knowledgeId": data.knowledgeId,
       "title": data.title,
       "desc": data.desc,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deleteItem(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/delete/item", {
+      "itemId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deleteManpower(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/delete/manpower", {
+      "manpowerId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deleteKnowledge(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/delete/knowledge", {
+      "knowledgeId": data,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deleteVenue(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/delete/venue", {
+      "venueId": data,
     }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),

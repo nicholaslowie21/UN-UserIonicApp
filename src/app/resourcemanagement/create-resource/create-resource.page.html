@@ -35,6 +35,13 @@
     </div>
   </ion-item>
 
+  <ion-item *ngIf="isVenueType == true || isItemType == true">
+    <ion-label>Country</ion-label>
+    <ion-select ngModel name="country" [(ngModel)]="country" required #incountry="ngModel">
+      <ion-select-option *ngFor = "let c of countryData">{{c}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
   <ion-item *ngIf="isVenueType == true">
     <ion-label position="floating">Address</ion-label>
     <ion-input ngModel name="address" [(ngModel)]="address" required minlength="3" #inaddress="ngModel"></ion-input>

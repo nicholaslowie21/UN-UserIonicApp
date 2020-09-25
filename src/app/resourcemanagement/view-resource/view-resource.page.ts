@@ -3,6 +3,7 @@ import { ResourceService } from '../../services/resource.service';
 import { SessionService } from '../../services/session.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { Router, ActivatedRoute } from  "@angular/router";
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-view-resource',
@@ -15,20 +16,30 @@ export class ViewResourcePage implements OnInit {
   resourceId: any;
   resourceOwner: any;
 
+  resultSuccess: boolean;
+  error: boolean;
+  errorMessage: any;
   retrieveResourceError: boolean;
 
-  constructor(private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController) {
     //See BG update project, for the toast
     this.retrieveResourceError = false;
   
    }
 
   ngOnInit() {
-
     this.resourceId = this.activatedRoute.snapshot.paramMap.get('id');
     this.resourceType = this.activatedRoute.snapshot.paramMap.get('type');
     console.log(this.resourceType + " " + this.resourceId);
 
+    this.initialise();
+  }
+
+  ionViewDidEnter() {
+    this.initialise();
+  }
+
+  initialise() {
     if(this.resourceType == "manpower") {
       this.currResource = this.resourceService.viewManpowerResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.manpower;
@@ -59,9 +70,103 @@ export class ViewResourcePage implements OnInit {
       };
     }
   }
-
   toEditResource(event) {
-    console.log("I am going to redirect you");
-    this.router.navigateByUrl("/edit-resource/" + this.resourceType + "/" + this.resourceId);
+    this.router.navigate(["/edit-resource/" + this.resourceType + "/" + this.resourceId]);
   }
+
+  async delete(event)
+	{
+		const alert = await this.alertController.create({
+			header: 'Delete Resource',
+			message: 'Confirm delete Resource?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+          if(this.resourceType == 'manpower') {
+            this.resourceService.deleteManpower(this.resourceId).subscribe(
+              response => {
+                this.resultSuccess = true;
+                this.successToast();
+                this.router.navigateByUrl("/my-resources");
+              },
+              error => {
+                this.failureToast(error);
+                this.error = true;
+                this.errorMessage = error;
+              }
+            );
+			  } else if (this.resourceType == 'knowledge') {
+          this.resourceService.deleteKnowledge(this.resourceId).subscribe(
+            response => {
+              this.resultSuccess = true;
+              this.successToast();
+              this.router.navigateByUrl("/my-resources");
+            },
+            error => {
+              this.failureToast(error);
+              this.error = true;
+              this.errorMessage = error;
+            }
+          );
+        } else if (this.resourceType == 'item') {
+          this.resourceService.deleteItem(this.resourceId).subscribe(
+            response => {
+              this.resultSuccess = true;
+              this.successToast();
+              this.router.navigateByUrl("/my-resources");
+            },
+            error => {
+              this.failureToast(error);
+              this.error = true;
+              this.errorMessage = error;
+            }
+          );
+        } else if (this.resourceType == 'venue') {
+          this.resourceService.deleteVenue(this.resourceId).subscribe(
+            response => {
+              this.resultSuccess = true;
+              this.successToast();
+              this.router.navigateByUrl("/my-resources");
+            },
+            error => {
+              this.failureToast(error);
+              this.error = true;
+              this.errorMessage = error;
+            }
+          );
+        }
+			}}]
+		});
+
+		await alert.present(); 
+  }
+
+  async successToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Deletion successful!',
+      duration: 2000,
+      position: 'middle',
+      cssClass: "toast-pass"      
+    });
+    (await toast).present();
+  }
+
+  async failureToast(error) {
+    const toast = this.toastCtrl.create({
+      message: 'Deletion Unsuccessful: ' + error,
+      duration: 2000,
+      position: 'middle',
+      cssClass: "toast-fail"
+    });
+    (await toast).present();
+  }
+
 }

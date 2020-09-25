@@ -48,7 +48,7 @@
       <ion-item *ngIf="resourceType == 'knowledge'" lines="none">
         <p>Attachment</p>
       </ion-item>
-      <ion-button color="danger" slot="end">
+      <ion-button color="danger" slot="end" (click) = "delete($event)">
         <ion-label style="font-weight: bold;">DELETE<ion-icon slot="end" name="trash-outline"></ion-icon></ion-label>
       </ion-button>
     </ion-card-content>
