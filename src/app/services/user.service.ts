@@ -28,7 +28,7 @@ export class UserService {
       "bio": data.bio,
       "country": data.country,
       "website": data.website,
-      "gender": data.gender,
+      "salutation": data.salutation,
       "SDGs": data.sdgs,
       "skills": data.skills
     }, httpOptions).pipe(
