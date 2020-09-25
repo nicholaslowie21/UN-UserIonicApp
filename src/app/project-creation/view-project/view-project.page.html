@@ -12,7 +12,8 @@
   
 </ion-header>
 
-<ion-content> 
+<ion-content>
+  
 <ion-card>
   <img [src]=image alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
   <ion-label style="float: right; text-decoration: underline ;" *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Project Picture</ion-label>
@@ -36,8 +37,40 @@
 </ion-card>
 
 <ion-card>
-  <ion-list>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="page">
+      <ion-segment-button value="feed" checked>
+        <ion-label>Project Feed</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="contributions">
+        <ion-label>Contributions</ion-label>
+      </ion-segment-button>
+      <ion-segment-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" value="manage">
+        <ion-label>Manage</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-list [ngSwitch]="page">
     <ion-item-group>
+
+    </ion-item-group>
+    <ion-item-group *ngSwitchCase="'contributions'" >
+    <ion-card>
+      <ion-item-divider>
+        <ion-label color=dark>Resource Contributions</ion-label>
+      </ion-item-divider>
+      
+      <ion-card *ngFor="let c of contributions" lines="none">
+        <ion-card-title>{{c.needTitle}}</ion-card-title>
+        <ion-card-content style="font-weight: bolder;">Provided Resource: {{c.resourceTitle}}</ion-card-content>
+        <ion-card-content style="font-weight: bold;">{{c.desc}}</ion-card-content>
+        <ion-card-content style="text-align: right" (click)="viewProfile($event, c)">Provided By: {{c.contributorUsername}}</ion-card-content>
+
+      </ion-card>
+    </ion-card>
+  </ion-item-group>
+  <div *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)">
+    <ion-item-group *ngSwitchCase="'manage'" >
       <ion-card>
       <ion-item-divider>
         <ion-label color=dark>Admins</ion-label>
@@ -50,7 +83,7 @@
       <ion-item *ngFor="let a of admins">
         <div class="aligned">
           <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=a.ionicImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-          <ion-label>{{a.name}}</ion-label>
+          <ion-label (click)="viewAdminProfile($event, a)">{{a.name}}</ion-label>
           </div>
       </ion-item>
     </ion-card>
@@ -93,9 +126,10 @@
           <ion-card-subtitle *ngIf='r.type == "money" && (founderBoolean==true ||adminBoolean==true)'>Pending Sum: {{r.pendingSum}} </ion-card-subtitle>
           <br>
       </ion-card>  
-      </ion-card>  
+      </ion-card>
   
     </ion-item-group>
+  </div>
   </ion-list>
  
 </ion-card>

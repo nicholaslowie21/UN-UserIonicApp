@@ -108,6 +108,13 @@ export class UserService {
     );
   }
 
+  viewUser(data): Observable<any> {
+    return this.http.get(this.API_URL + '/viewUser?username=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

@@ -11,12 +11,12 @@
     <ion-card *ngFor = "let m of members">
       <div class="aligned">
       <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=m.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-      <ion-title>{{m.name}}</ion-title>
-      <ion-button style="float:right; fill: outline;" (click)="presentAlertConfirm($event, m)" >Remove</ion-button>
+      <ion-title (click)="viewProfile($event, m)">{{m.name}}</ion-title>
+      <ion-button *ngIf="user.data.user.id == id" style="float:right; fill: outline;" (click)="presentAlertConfirm($event, m)" >Remove</ion-button>
       </div>
      
     </ion-card>
-    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab *ngIf="user.data.user.id == id" horizontal="end" vertical="bottom" slot="fixed">
       <ion-fab-button routerLink="/add-member" color="danger">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>

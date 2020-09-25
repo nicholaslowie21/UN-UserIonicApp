@@ -80,7 +80,7 @@ const routes: Routes = [
     loadChildren: () => import('./resourcemanagement/my-resources/my-resources.module').then( m => m.MyResourcesPageModule)
   },
   {
-    path: 'affiliation-management',
+    path: 'affiliation-management/:Id',
     loadChildren: () => import('./institutions/affiliation-management/affiliation-management.module').then( m => m.AffiliationManagementPageModule)
   },
   {
@@ -155,6 +155,10 @@ const routes: Routes = [
     path: 'create-money-resource-need/:Id/:title/:desc',
     loadChildren: () => import('./resourceNeeds/create-money-resource-need/create-money-resource-need.module').then( m => m.CreateMoneyResourceNeedPageModule)
   },
+  {
+    path: 'view-others-profile/:username/:contributorType',
+    loadChildren: () => import('./view-others-profile/view-others-profile.module').then( m => m.ViewOthersProfilePageModule)
+  }
 
 ];
 @NgModule({

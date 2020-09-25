@@ -19,7 +19,7 @@
         </div>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="accountBoolean == false">
       <ion-label>Salutation</ion-label>
       <ion-select ngModel name="salutation" [(ngModel)]="user.salutation" #insalutation="ngModel">
         <ion-select-option *ngFor = "let s of salutationList">{{s}}</ion-select-option>

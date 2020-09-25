@@ -19,6 +19,7 @@ export class ViewProjectPage implements OnInit {
   adminBoolean: boolean;
   userBoolean: boolean;
   image: string;
+  page: any;
 
   title: any;
   admins: any;
@@ -34,6 +35,7 @@ export class ViewProjectPage implements OnInit {
   error: boolean;
   errorMessage: any;
   completedBoolean: boolean;
+  contributions: any;
   
   
 
@@ -42,6 +44,25 @@ export class ViewProjectPage implements OnInit {
   ngOnInit() {
     this.initialise();
     this.tokenStorage.setProjectId(this.id);
+    this.page = "feed";
+
+    this.contributions = [
+      {
+        "projectId": "5f6b11ada7e36f1445610166",
+        "needId": "5f6b1538a054134644039654",
+        "requestId": "5f6c6b3d0db3cd871b3e2b44",
+        "requestType": "project",
+        "resType": "manpower",
+        "rating": 0,
+        "contributor": "5f63fa7876e51a95bde86666",
+        "contributorType": "institution",
+        "needTitle": "50 Coats for dogs",
+        "resourceTitle": "Software Engineer",
+        "resourceId": "5f6c6c2c0be9cf4628b40b5e",
+        "desc": "Backend Software Engineer (Part-Time)",
+        "contributorUsername": "wtoilet"
+      }
+    ]
   }
 
   ionViewDidEnter() {
@@ -99,6 +120,13 @@ err=> {
   console.log('******* KPI retrieval error: ', err.error.msg);
 })
 
+/*this.projectService.getResourceContributions(this.id).subscribe((res)=>{
+    this.contributions = res.data.contributions;
+},
+(err) => {
+  console.log('******* Contributions retrieval error: ', err.error.msg);
+})*/
+
 if(this.status == "completed") {
   this.completedBoolean = true;
 } else {
@@ -126,6 +154,14 @@ console.log(this.completedBoolean);
 
   manageNeeds(ev) {
     this.router.navigate(["/resource-needs-management/" + this.id]);
+  }
+
+  viewProfile(ev, c) {
+    this.router.navigate(['/view-others-profile/' + c.contributorUsername + "/" + c.contributorType ])
+  }
+
+  viewAdminProfile(ev, a) {
+    this.router.navigate(['/view-others-profile/' + a.username + "/user" ])
   }
 
 

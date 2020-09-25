@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InstitutionService } from 'src/app/services/institution.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { AlertController, ToastController } from '@ionic/angular';
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { SessionService } from 'src/app/services/session.service';
 
 @Component({
@@ -14,14 +14,16 @@ export class AffiliationManagementPage implements OnInit {
   members: any[];
   user: any;
   data: {};
+  id: any;
 
-  constructor(private sessionService: SessionService, private institutionService: InstitutionService, private tokenStorage: TokenStorageService, private alertController: AlertController, private toastCtrl: ToastController, private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, private sessionService: SessionService, private institutionService: InstitutionService, private tokenStorage: TokenStorageService, private alertController: AlertController, private toastCtrl: ToastController, private router: Router) {
    }
   
   ngOnInit() {
+    this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     this.user = this.tokenStorage.getUser();
     console.log(this.user);
-    this.institutionService.getMembers(this.user.data.user.id).subscribe((res) => {
+    this.institutionService.getMembers(this.id).subscribe((res) => {
       this.members = res.data.members
       for(var i=0; i < this.members.length; i++) {
         this.members[i].profilePic =  this.sessionService.getRscPath() + this.members[i].ionicImg +'?random+=' + Math.random();
@@ -35,7 +37,8 @@ export class AffiliationManagementPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.institutionService.getMembers(this.user.data.user.id).subscribe((res) => {
+    this.id = this.activatedRoute.snapshot.paramMap.get('Id');
+    this.institutionService.getMembers(this.id).subscribe((res) => {
       this.members = res.data.members
       for(var i=0; i < this.members.length; i++) {
         this.members[i].profilePic =  this.sessionService.getRscPath() + this.members[i].ionicImg +'?random+=' + Math.random();
@@ -61,6 +64,15 @@ export class AffiliationManagementPage implements OnInit {
       this.failureToast(err.error.msg);
       console.log('********** AffiliationManagementPage.ts: ', err.error.msg);
     };
+  }
+
+  viewProfile($event, m) {
+    console.log(this.tokenStorage.getUser().data.user.id);
+    if(m.id == this.tokenStorage.getUser().data.user.id) {
+      this.router.navigateByUrl("/tabs/profile");
+    } else {
+      this.router.navigate(["/view-others-profile/" + m.id]);
+    }
   }
 
   async presentAlertConfirm(ev, m) {

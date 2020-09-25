@@ -72,6 +72,10 @@ export class ViewAdminsPage implements OnInit {
     });
   }
 
+  viewAdminProfile(ev, a) {
+    this.router.navigate(['/view-others-profile/' + a.username + "/user" ])
+  }
+
   async presentAlertConfirm(ev, u) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

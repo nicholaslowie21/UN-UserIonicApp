@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '../services/token-storage.service';
-import { Router } from  "@angular/router";
+import { ActivatedRoute, Router } from  "@angular/router";
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service'
 import { AuthService } from '../services/authentication.service';
 import { SessionService } from '../services/session.service';
 import { InstitutionService } from '../services/institution.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss']
+  selector: 'app-view-others-profile',
+  templateUrl: './view-others-profile.page.html',
+  styleUrls: ['./view-others-profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ViewOthersProfilePage implements OnInit {
 
   currentUser: any;
   title = 'fileUpload';
@@ -27,6 +27,18 @@ export class ProfilePage implements OnInit {
   accountBoolean: boolean;
   imageForSharing: any;
   isVerified: boolean;
+  username: string;
+  contributerType: string;
+  gender: any;
+  salutation: any;
+  website: any;
+  country: any;
+  bio: any;
+  skills: any;
+  occupation: any;
+  phone: any;
+  address: any;
+  id: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -36,28 +48,118 @@ export class ProfilePage implements OnInit {
     private sessionService: SessionService, 
     private institutionService: InstitutionService, 
     private socialSharing: SocialSharing, 
-    private actionSheet: ActionSheetController) { 
+    private actionSheet: ActionSheetController,
+    private activatedRoute: ActivatedRoute,
+    private navCtrl: NavController) { 
     
   }
 
   ngOnInit(): void {
-   this.currentUser = this.tokenStorage.getUser();
-   
-   this.accountType = this.tokenStorage.getAccountType();
-   console.log(this.accountType);
+    this.username = this.activatedRoute.snapshot.paramMap.get('username');
+    this.accountType = this.activatedRoute.snapshot.paramMap.get('contributorType');
+    console.log(this.accountType);
     if(this.accountType == "institution") {
       this.accountBoolean = true;
     } else if(this.accountType == "user") {
       this.accountBoolean = false;
     }
     console.log(this.accountBoolean);
-    if(this.currentUser.data.user.isVerified == "true") {
+    if(this.accountType == "institution") {
+      this.accountBoolean = true;
+      this.institutionService.viewInstitution(this.username).subscribe((res)=> {
+        this.currentUser = res.data.targetInstitution;
+        this.initialiseInstituion();
+      },
+      (err) => {
+        console.log("Error retrieving Institution: " + err.error.msg);
+      })
+    } else if(this.accountType == "user") {
+      console.log("here");
+      this.accountBoolean = false;
+      this.userService.viewUser(this.username).subscribe((res)=> {
+        this.currentUser = res.data.targetUser;
+        this.initialiseUser();
+      },
+      (err) => {
+        console.log("Error retrieving User: " + err.error.msg);
+      })
+    }
+
+    
+
+   
+}
+
+
+  initialiseUser() {
+    this.image = '';
+    this.name = this.currentUser.name;
+    this.gender = this.currentUser.gender;
+    this.salutation = this.currentUser.salutation;
+    this.website = this.currentUser.website;
+    this.country = this.currentUser.country;
+    this.bio = this.currentUser.bio;
+    this.occupation = this.currentUser.occupation;
+    this.skills = this.currentUser.skills;
+    this.id = this.currentUser.id;
+    this.image = this.sessionService.getRscPath() + this.currentUser.ionicImg +'?random+=' + Math.random();
+    if(this.currentUser.occupation == "") {
+      this.currentUser.occupation = "-";
+    }
+    if(this.currentUser.skills == "") {
+      this.currentUser.skills = "-";
+    }
+    if(this.currentUser.bio == "") {
+      this.currentUser.bio = "-";
+    }
+    this.sdgs = this.currentUser.SDGs;
+
+    if(this.currentUser.isVerified == "true") {
+      this.isVerified = true;
+    }
+
+
+      this.userService.getBadges(this.currentUser.id).subscribe((res) => {
+        this.badges = res.data.badges
+        for(var i = 0; i < this.badges.length; i++) {
+          this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+        }
+      }),
+      err => {
+        console.log('********** Badges(user).ts: ', err.error.msg);
+      };
+
+     
+    }
+
+  initialiseInstituion() {
+    this.image = '';
+    this.name = this.currentUser.name;
+    this.phone = this.currentUser.phone;
+    this.website = this.currentUser.website;
+    this.country = this.currentUser.country;
+    this.bio = this.currentUser.bio;
+    this.address = this.currentUser.address;
+    this.id = this.currentUser.id;
+    this.image = this.sessionService.getRscPath() + this.currentUser.ionicImg +'?random+=' + Math.random();
+    if(this.currentUser.occupation == "") {
+      this.currentUser.occupation = "-";
+    }
+    if(this.currentUser.skills == "") {
+      this.currentUser.skills = "-";
+    }
+    if(this.currentUser.bio == "") {
+      this.currentUser.bio = "-";
+    }
+    this.sdgs = this.currentUser.SDGs;
+
+    if(this.currentUser.isVerified == "true") {
       this.isVerified = true;
     }
 
     if(this.accountBoolean == true)
     {
-        this.institutionService.getBadges(this.currentUser.data.user.id).subscribe((res) => {
+        this.institutionService.getBadges(this.currentUser.id).subscribe((res) => {
           this.badges = res.data.badges
           for(var i = 0; i < this.badges.length; i++) {
               this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
@@ -69,7 +171,7 @@ export class ProfilePage implements OnInit {
 
     } else if(this.accountBoolean == false) {
 
-      this.userService.getBadges(this.currentUser.data.user.id).subscribe((res) => {
+      this.userService.getBadges(this.currentUser.id).subscribe((res) => {
         this.badges = res.data.badges
         for(var i = 0; i < this.badges.length; i++) {
           this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
@@ -79,43 +181,39 @@ export class ProfilePage implements OnInit {
         console.log('********** Badges(user).ts: ', err.error.msg);
       };
     }
-}
-
-  toRewards() {
-    this.router.navigateByUrl("/rewards")
   }
 
   ionViewDidEnter() {
-    this.image = '';
-    console.log(this.tokenStorage.getUser());
-    this.currentUser = this.tokenStorage.getUser();
-    console.log(this.tokenStorage.getUser().data.user.profilePic);
-    this.name = this.currentUser.data.user.name;
-    this.image = this.sessionService.getRscPath() + this.tokenStorage.getUser().data.user.ionicImg +'?random+=' + Math.random();
-    if(this.currentUser.data.user.occupation == "") {
-      this.currentUser.data.user.occupation = "-";
+    this.username = this.activatedRoute.snapshot.paramMap.get('username');
+    this.accountType = this.activatedRoute.snapshot.paramMap.get('contributorType');
+    if(this.accountType == "institution") {
+      this.accountBoolean = true;
+      this.institutionService.viewInstitution(this.username).subscribe((res)=> {
+        this.initialiseInstituion();
+      },
+      (err) => {
+        console.log("Error retrieving Institution: " + err.error.msg);
+      })
+    } else if(this.accountType == "user") {
+      this.accountBoolean = false;
+      this.userService.viewUser(this.username).subscribe((res)=> {
+        this.currentUser = res.data.targetUser;
+        this.initialiseUser();
+      },
+      (err) => {
+        console.log("Error retrieving User: " + err.error.msg);
+      })
     }
-    if(this.currentUser.data.user.skills == "") {
-      this.currentUser.data.user.skills = "-";
-    }
-    if(this.currentUser.data.user.bio == "") {
-      this.currentUser.data.user.bio = "-";
-    }
-    this.sdgs = this.currentUser.data.user.SDGs;
-    this.accountType = this.currentUser.data.accountType;
+
     
-  }
-  
-  logout() {
-    this.auth.logout();
-    this.router.navigateByUrl("/login");
+    
   }
 
   getAffiliates($event) {
-    this.router.navigate(['/affiliation-management/' + this.currentUser.data.user.id]);
+    this.router.navigate(['/affiliation-management/' + this.id]);
   }
 
-  shareviaWhatsapp(){
+  /*shareviaWhatsapp(){
     if(this.accountBoolean == false) {
       console.log("userShare");
       this.userService.generateShare().subscribe((res) =>{
@@ -185,7 +283,7 @@ export class ProfilePage implements OnInit {
     
   }*/
 
-  shareviaInstagram(){
+  /*shareviaInstagram(){
     if(this.accountBoolean == false) {
       console.log("userShare");
       this.userService.generateShare().subscribe((res) =>{
@@ -218,7 +316,7 @@ export class ProfilePage implements OnInit {
     };
     }
     
-  }
+  }*/
 
   /*shareviaTwitter(){
     if(this.accountBoolean == false) {
@@ -255,7 +353,7 @@ export class ProfilePage implements OnInit {
     
   }*/
 
-  async presentActionSheet() {
+  /*async presentActionSheet() {
     const actionSheet = await this.actionSheet.create({
       header: 'Share',
       cssClass: 'my-custom-class',
@@ -284,7 +382,10 @@ export class ProfilePage implements OnInit {
       }]
     });
     await actionSheet.present();
-  }
+  }*/
 
+  back() {
+    this.navCtrl.pop();
+ }
 
 }
