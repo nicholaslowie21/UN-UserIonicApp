@@ -10,16 +10,33 @@
 <ion-content>
   <ion-card>
     <div>
-      <img *ngIf = "resourceType == 'manpower'" src="../../../assets/img/manpower.jpg" />
+      <img *ngIf = "resourceType == 'manpower'" class="card-img-top rounded-circle img-fluid d-block center {{currResource.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
       <img *ngIf = "resourceType == 'knowledge'" src="../../../assets/img/knowledge.jpg" />
-      <img *ngIf = "resourceType == 'item'" src="../../../assets/img/item.jpg" />
-      <img *ngIf = "resourceType == 'venue'" src="../../../assets/img/venue.jpg" />
-      <!-- Multiple pictures for Venue.. -->
+      <div *ngIf = "resourceType == 'item'" >
+        <img [src]=image  onerror="this.src='./assets/img/item.jpg'" />
+        <!-- <ion-label style="float: right; text-decoration: underline ; padding-right: 10px;" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label> -->
+        <ion-button style="float: right;" slot="end" (click)="upload($event)">
+          <ion-label><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
+        </ion-button>
+      </div>
+      <div *ngIf = "resourceType == 'venue'">
+        <div *ngFor ="let v of currResource.imgPath">
+        <img [src]=v onerror="this.src='./assets/img/venue.jpg'" />
+        </div>
+        <ion-label style="float: right; text-decoration: underline ; padding-right: 10px;" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
+      </div>
     </div>
     <ion-card-header>
+      <ion-button style="float: right;" slot="end" (click)="upload($event)">
+        <ion-label style="text-decoration: underline ; padding-right: 10px;"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
+      </ion-button>
       <ion-card-title>{{currResource.title}}</ion-card-title>
       <ion-card-subtitle>{{currResource.createdAt}}</ion-card-subtitle>
-      <!-- TO add owner's face and name, SDG, and reflect status image-wise -->
+      <div *ngIf ="resourceType !='knowledge'">
+        <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <!-- <ion-card-subtitle>{{resourceOwner.name}}</ion-card-subtitle> -->
+      </div>
+      <!-- TO add SDG, and reflect status image-wise -->
     </ion-card-header>
 
     <ion-card-content>
@@ -27,9 +44,19 @@
         <ion-label style="font-weight:bold;">Status: {{currResource.status}}</ion-label>
       </ion-item-divider>
 
+      <ion-item-divider *ngIf="resourceType == 'knowledge'">
+        <ion-label>Owners</ion-label>
+        <ion-button style="float: right;" slot="end" (click)="toEditOwners($event)">
+          <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp"></ion-icon></ion-label>
+        </ion-button>
+      </ion-item-divider>
+      <ion-item lines="none" *ngIf="resourceType == 'knowledge'">
+        <p>Owners</p>
+      </ion-item>
+
       <ion-item-divider>
         <ion-label>Details</ion-label>
-        <ion-button style="float: right;" slot="end" (click)="toEditResource($event)">
+        <ion-button style="float: right;" slot="end" (click)="upload($event)">
           <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp"></ion-icon></ion-label>
         </ion-button>
       </ion-item-divider>

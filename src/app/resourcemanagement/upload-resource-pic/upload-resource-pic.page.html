@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)= back() style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Upload Resource Picture</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img class="background" src="assets/img/cover 5.jpg"/>
+  <div class="centered center">
+    <form>  
+  <ion-card>
+    <ion-card-header>Upload a picture to serve as your resource picture!</ion-card-header>
+    <ion-card-content>
+      <div>
+        <input type="file" name="image1" (change)="selectImage($event)" />
+      </div>
+    
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf = "resourceType == 'venue'">
+    <ion-card-header>Upload another picture to show more of your venue!</ion-card-header>
+    <ion-card-content>  
+      <div>
+        <input type="file" name="image2" (change)="selectImage2($event)" />
+      </div> 
+    </ion-card-content>
+    </ion-card>
+
+  <div>
+    <ion-button type="submit" expand="block" (click)="onSubmit()">Upload</ion-button>
+  </div>
+  </form>
+  
+  </div>
+
+</ion-content>

@@ -15,6 +15,10 @@ export class ViewResourcePage implements OnInit {
   currResource: any;
   resourceId: any;
   resourceOwner: any;
+  knowledgeOwners: any[];
+  image: any;
+  venueImage: any[];
+  ownerImg: any;
 
   resultSuccess: boolean;
   error: boolean;
@@ -43,28 +47,39 @@ export class ViewResourcePage implements OnInit {
     if(this.resourceType == "manpower") {
       this.currResource = this.resourceService.viewManpowerResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.manpower;
-        //Can call the other JSON parts if needed, like owner details
-
-        // To check w BG, bcs not all of them hv image Path...
-        // this.manpowerResource[i].imgPath = this.sessionService.getRscPath() + this.manpowerResource[i].imgPath  +'?random+=' + Math.random();
-      }), err => {
+        this.resourceOwner = res.data.owner;
+        this.image = this.sessionService.getRscPath() + this.resourceOwner.ionicImg + '?random+=' + Math.random();
+        // this.ownerImg no need to print la hor
+    }), err => {
         console.log('********** ViewResource.ts - Manpower: ', err.error.msg);
       };
     } else if (this.resourceType == "knowledge") {
       this.currResource = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.knowledge;
+        this.knowledgeOwners = res.data.owner;
+        // PROFILE PIC
       }), err => {
         console.log('********** ViewResource.ts - Knowledge: ', err.error.msg);
       };
     } else if (this.resourceType == "item") {
       this.currResource = this.resourceService.viewItemResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.item;
+        this.resourceOwner = res.data.owner;
+        this.ownerImg = this.sessionService.getRscPath() + this.resourceOwner.ionicImg + '?random+=' + Math.random();
+        this.image = this.sessionService.getRscPath() + this.currResource.imgPath + '?random+=' + Math.random(); 
       }), err => {
         console.log('********** ViewResource.ts - Item: ', err.error.msg);
       };
     } else if (this.resourceType == "venue") {
       this.currResource = this.resourceService.viewVenueResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.venue;
+        this.resourceOwner = res.data.owner;
+        this.ownerImg = this.sessionService.getRscPath() + this.resourceOwner.ionicImg + '?random+=' + Math.random();
+        if (this.currResource.imgPath.length > 0) {
+          for (var i = 0; i < this.currResource.imgPath.length; i++) {
+            this.currResource.imgPath[i] = this.sessionService.getRscPath() + this.currResource.imgPath[i] + '?random+=' + Math.random(); 
+          }
+        }
       }), (err) => {
         console.log('********** ViewResource.ts - Venue: ', err.error.msg);
       };
@@ -73,6 +88,16 @@ export class ViewResourcePage implements OnInit {
 
   toEditResource(event) {
     this.router.navigate(["/edit-resource/" + this.resourceType + "/" + this.resourceId]);
+  }
+
+  toEditOwners(event) {
+    this.router.navigate(["/knowledge/edit-owners/" + this.resourceId]);
+  }
+
+  upload(event) {
+    this.router.navigate(["/upload-resource-pic/" + this.resourceType + "/" + this.resourceId]);
+    // this.router.navigate(["/edit-resource/" + this.resourceType + "/" + this.resourceId]);
+  
   }
 
   async delete(event)

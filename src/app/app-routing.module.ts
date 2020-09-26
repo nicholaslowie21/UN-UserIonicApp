@@ -155,6 +155,14 @@ const routes: Routes = [
     path: 'create-money-resource-need/:Id/:title/:desc',
     loadChildren: () => import('./resourceNeeds/create-money-resource-need/create-money-resource-need.module').then( m => m.CreateMoneyResourceNeedPageModule)
   },
+  {
+    path: 'knowledge/edit-owners/:id',
+    loadChildren: () => import('./resourcemanagement/edit-owners/edit-owners.module').then( m => m.EditOwnersPageModule)
+  },
+  {
+    path: 'upload-resource-pic/:type/:id',
+    loadChildren: () => import('./resourcemanagement/upload-resource-pic/upload-resource-pic.module').then( m => m.UploadResourcePicPageModule)
+  }
 
 ];
 @NgModule({

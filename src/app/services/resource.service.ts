@@ -358,6 +358,32 @@ export class ResourceService {
     );
   }
 
+  updateKnowledgeOwner(data) {
+    return this.http.post(this.resourceAPI_URL + "/updateKnowledgeOwner", {
+      "knowledgeId": data.knowledgeId,
+      "owners": data.owner,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  uploadItemPic(data) {
+    return this.http.post(this.resourceAPI_URL + "/uploadItemPicture", data).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  uploadVenuePic(data) {
+    return this.http.post(this.resourceAPI_URL + "/uploadVenuePicture", data).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

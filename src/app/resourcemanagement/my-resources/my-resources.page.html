@@ -38,7 +38,7 @@
       </div>
       <div *ngFor="let m of manpowerResource" >
       <ion-card (click)= "viewResource(m)">
-        <img src="../../assets/img/manpower.jpg" className={{m.status}}/>
+        <img class="card-img-top rounded-circle img-fluid d-block center {{m.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=manpowerImgPath alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-card-header>
           <ion-card-title>{{m.title}}</ion-card-title>
           <ion-card-subtitle>{{m.region}}</ion-card-subtitle>
@@ -79,7 +79,7 @@
     </div>
     <div *ngFor="let i of itemResource">
       <ion-card (click)= "viewResource(i)">
-          <img src="../../assets/img/item.jpg" className={{i.status}} />
+          <img className={{i.status}} [src]=i.imgPath  onerror="this.src='./assets/img/item.jpg'" />
         <ion-card-header>
           <ion-card-title>{{i.title}}</ion-card-title>
           <ion-card-subtitle>{{i.region}}</ion-card-subtitle>
@@ -101,7 +101,7 @@
     </div>
       <div *ngFor="let v of venueResource">
         <ion-card (click)= "viewResource(v)">
-            <img src="../../assets/img/venue.jpg" className={{v.status}} />
+            <img className={{v.status}} [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
           <ion-card-header>
             <ion-card-title>{{v.title}}</ion-card-title>
             <ion-card-subtitle>{{v.region}}</ion-card-subtitle>

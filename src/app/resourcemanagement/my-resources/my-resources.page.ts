@@ -17,6 +17,7 @@ export class MyResourcesPage implements OnInit {
   type : String;
   accountType: any;
   user: any;
+  manpowerImgPath: any;
   accountBoolean: boolean;
   noKnowledgeResourceBoolean: boolean;
   noItemResourceBoolean: boolean;
@@ -50,9 +51,6 @@ export class MyResourcesPage implements OnInit {
         this.knowledgeResource = res.data.knowledges;
         if(this.knowledgeResource.length > 0) {
           this.noKnowledgeResourceBoolean = false;
-          for(var i = 0; i < this.knowledgeResource.length; i++) {
-            this.knowledgeResource[i].imgPath = this.sessionService.getRscPath() + this.knowledgeResource[i].imgPath  +'?random+=' + Math.random();
-          }
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
@@ -82,7 +80,9 @@ export class MyResourcesPage implements OnInit {
         if(this.venueResource.length > 0) {
           this.noVenueResourceBoolean = false;
           for(var i = 0; i < this.venueResource.length; i++) {
-            this.venueResource[i].imgPath = this.sessionService.getRscPath() + this.venueResource[i].imgPath  +'?random+=' + Math.random();
+            if(this.venueResource[i].imgPath.length > 0) {
+                this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+            }
           }
         } else {
             this.noVenueResourceBoolean = true;
@@ -98,9 +98,6 @@ export class MyResourcesPage implements OnInit {
         this.knowledgeResource = res.data.knowledges
         if(this.knowledgeResource.length > 0) {
           this.noKnowledgeResourceBoolean = false;
-          for(var i = 0; i < this.knowledgeResource.length; i++) {
-            this.knowledgeResource[i].imgPath = this.sessionService.getRscPath() + this.knowledgeResource[i].imgPath  +'?random+=' + Math.random();
-          } 
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
@@ -129,7 +126,9 @@ export class MyResourcesPage implements OnInit {
       if(this.venueResource.length > 0) {
         this.noVenueResourceBoolean = false;
         for(var i = 0; i < this.venueResource.length; i++) {
-          this.venueResource[i].imgPath = this.sessionService.getRscPath() + this.venueResource[i].imgPath  +'?random+=' + Math.random();
+          if(this.venueResource[i].imgPath.length > 0) {
+              this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+          }
         }
       } else {
           this.noVenueResourceBoolean = true;
@@ -144,9 +143,8 @@ export class MyResourcesPage implements OnInit {
       this.manpowerResource = res.data.manpowers;
       if(this.manpowerResource.length > 0) {
         this.noManpowerResourceBoolean = false;
-        for(var i = 0; i < this.manpowerResource.length; i++) {
-          this.manpowerResource[i].imgPath = this.sessionService.getRscPath() + this.manpowerResource[i].imgPath  +'?random+=' + Math.random();
-        }
+        this.manpowerImgPath = this.sessionService.getRscPath() + this.user.data.user.ionicImg  +'?random+=' + Math.random();
+        console.log(this.manpowerImgPath);
       } else {
           this.noManpowerResourceBoolean = true;
       }
@@ -201,7 +199,9 @@ export class MyResourcesPage implements OnInit {
         if(this.venueResource.length > 0) {
           this.noVenueResourceBoolean = false;
           for(var i = 0; i < this.venueResource.length; i++) {
-            this.venueResource[i].imgPath = this.sessionService.getRscPath() + this.venueResource[i].imgPath  +'?random+=' + Math.random();
+            if(this.venueResource[i].imgPath.length > 0) {
+                this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+            }
           }
         } else {
             this.noVenueResourceBoolean = true;
@@ -216,10 +216,7 @@ export class MyResourcesPage implements OnInit {
         this.resourceService.getUserKnowledgeResource(this.user.data.user.id).subscribe((res) => {
         this.knowledgeResource = res.data.knowledges
         if(this.knowledgeResource.length > 0) {
-          this.noKnowledgeResourceBoolean = false;
-          for(var i = 0; i < this.knowledgeResource.length; i++) {
-            this.knowledgeResource[i].imgPath = this.sessionService.getRscPath() + this.knowledgeResource[i].imgPath  +'?random+=' + Math.random();
-          } 
+          this.noKnowledgeResourceBoolean = false; 
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
@@ -248,7 +245,9 @@ export class MyResourcesPage implements OnInit {
       if(this.venueResource.length > 0) {
         this.noVenueResourceBoolean = false;
         for(var i = 0; i < this.venueResource.length; i++) {
-          this.venueResource[i].imgPath = this.sessionService.getRscPath() + this.venueResource[i].imgPath  +'?random+=' + Math.random();
+          if(this.venueResource[i].imgPath.length > 0) {
+              this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+          }
         }
       } else {
           this.noVenueResourceBoolean = true;
