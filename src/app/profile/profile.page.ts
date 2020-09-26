@@ -89,7 +89,6 @@ export class ProfilePage implements OnInit {
     this.image = '';
     console.log(this.tokenStorage.getUser());
     this.currentUser = this.tokenStorage.getUser();
-    console.log(this.tokenStorage.getUser().data.user.profilePic);
     this.name = this.currentUser.data.user.name;
     this.image = this.sessionService.getRscPath() + this.tokenStorage.getUser().data.user.ionicImg +'?random+=' + Math.random();
     if(this.currentUser.data.user.occupation == "") {
@@ -108,11 +107,20 @@ export class ProfilePage implements OnInit {
   
   logout() {
     this.auth.logout();
+    this.tokenStorage.saveViewId(undefined);
     this.router.navigateByUrl("/login");
   }
 
   getAffiliates($event) {
     this.router.navigate(['/affiliation-management/' + this.currentUser.data.user.id]);
+  }
+
+  getProjects($event) {
+    this.router.navigate(['/my-projects/' + this.currentUser.data.user.id]);
+  }
+
+  getResources($event) {
+    this.router.navigate(['/my-resources/' + this.currentUser.data.user.id]);
   }
 
   shareviaWhatsapp(){

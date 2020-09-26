@@ -11,6 +11,7 @@ export class TokenStorageService {
   projectId: any;
   currResource: any;
   currResourceType: any;
+  viewId: any;
 
   constructor() { }
 
@@ -50,6 +51,14 @@ export class TokenStorageService {
 
   public getProjectId(): any {
       return this.projectId;
+  }
+
+  public saveViewId(viewId) {
+    this.viewId = viewId;
+  }
+
+  public getViewId() {
+    return this.viewId;
   }
 
 

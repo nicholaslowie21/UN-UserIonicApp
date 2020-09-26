@@ -76,7 +76,7 @@
 </ion-card>
 
 <ion-card>
-  <ion-item routerLink="/my-projects" routerDirection="forward">
+  <ion-item (click)="getProjects($event)" routerDirection="forward">
     <ion-icon name="list" slot="start"></ion-icon>
     <ion-label>My Projects</ion-label>
   </ion-item>

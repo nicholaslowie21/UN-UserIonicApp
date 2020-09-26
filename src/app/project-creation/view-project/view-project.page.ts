@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { ProjectService } from 'src/app/services/project.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -36,14 +36,19 @@ export class ViewProjectPage implements OnInit {
   errorMessage: any;
   completedBoolean: boolean;
   contributions: any;
+  viewId: any;
   
   
 
-  constructor(private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
+  constructor(private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.initialise();
     this.tokenStorage.setProjectId(this.id);
+    if(this.tokenStorage.getViewId() != undefined) {
+      this.viewId = this.tokenStorage.getViewId().id;
+    }
+    
     this.page = "feed";
 
     this.contributions = [
@@ -66,6 +71,9 @@ export class ViewProjectPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    if(this.tokenStorage.getViewId() != undefined) {
+      this.viewId = this.tokenStorage.getViewId().id;
+    }
     this.initialise();
   }
 
@@ -161,9 +169,23 @@ console.log(this.completedBoolean);
   }
 
   viewAdminProfile(ev, a) {
-    this.router.navigate(['/view-others-profile/' + a.username + "/user" ])
+    if(a.id == this.currentUser.data.user.id) {
+      this.router.navigateByUrl("/tabs/profile");
+    } else {
+      this.router.navigate(['/view-others-profile/' + a.username + "/user" ])
+    }
+    
   }
 
+  back() {
+    if(this.currentUser.data.user.id != this.tokenStorage.getViewId() && this.tokenStorage.getViewId() != undefined) {
+      this.router.navigate(["/my-projects/" + this.tokenStorage.getViewId().id]);
+    } else if(this.currentUser.data.user.id == this.tokenStorage.getViewId()) {
+      this.router.navigate(["/my-projects/" + this.currentUser.data.user.id]);
+    } else if(this.tokenStorage.getViewId() == undefined) {
+      this.router.navigate(["/my-projects/" + this.currentUser.data.user.id]);
+    }
+  }
 
   async delete(event)
 	{
@@ -185,7 +207,7 @@ console.log(this.completedBoolean);
 					response => {
             this.resultSuccess = true;
             this.successToast();
-            this.router.navigateByUrl("/my-projects");
+            this.back();
 					},
 					error => {
             this.failureToast(error);
@@ -221,7 +243,7 @@ console.log(this.completedBoolean);
 					response => {
             this.resultSuccess = true;
             this.completeSuccessToast();
-            this.router.navigateByUrl("/my-projects");
+            this.router.navigate(["/my-projects/" + this.currentUser.data.user.id]);
 					},
 					error => {
             this.failureToast(error);

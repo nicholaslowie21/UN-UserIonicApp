@@ -85,7 +85,7 @@ create() {
     this.resultSuccess = true;
     this.resultError = false;
     this.successToast();
-    this.router.navigate(['/my-projects']);
+    this.router.navigate(['/my-projects/' + this.user.id]);
     },
     err => {
     this.resultSuccess = false;
@@ -113,6 +113,10 @@ position: 'middle',
 cssClass: "toast-fail"
 });
 (await toast).present();
+}
+
+toProjects() {
+  this.router.navigate(["/my-projects/" + this.user.id])
 }
 
 

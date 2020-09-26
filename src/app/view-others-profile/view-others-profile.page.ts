@@ -39,6 +39,7 @@ export class ViewOthersProfilePage implements OnInit {
   phone: any;
   address: any;
   id: any;
+  viewInfo: {};
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -68,7 +69,7 @@ export class ViewOthersProfilePage implements OnInit {
       this.accountBoolean = true;
       this.institutionService.viewInstitution(this.username).subscribe((res)=> {
         this.currentUser = res.data.targetInstitution;
-        this.initialiseInstituion();
+        this.initialiseInstitution();
       },
       (err) => {
         console.log("Error retrieving Institution: " + err.error.msg);
@@ -92,6 +93,12 @@ export class ViewOthersProfilePage implements OnInit {
 
 
   initialiseUser() {
+    this.viewInfo = {
+      "username": this.username,
+      "id": this.id,
+      "accountType": this.accountType
+    }
+    this.tokenStorage.saveViewId(this.viewInfo);
     this.image = '';
     this.name = this.currentUser.name;
     this.gender = this.currentUser.gender;
@@ -104,13 +111,13 @@ export class ViewOthersProfilePage implements OnInit {
     this.id = this.currentUser.id;
     this.image = this.sessionService.getRscPath() + this.currentUser.ionicImg +'?random+=' + Math.random();
     if(this.currentUser.occupation == "") {
-      this.currentUser.occupation = "-";
+      this.occupation = "-";
     }
     if(this.currentUser.skills == "") {
-      this.currentUser.skills = "-";
+      this.skills = "-";
     }
     if(this.currentUser.bio == "") {
-      this.currentUser.bio = "-";
+      this.bio = "-";
     }
     this.sdgs = this.currentUser.SDGs;
 
@@ -132,7 +139,13 @@ export class ViewOthersProfilePage implements OnInit {
      
     }
 
-  initialiseInstituion() {
+  initialiseInstitution() {
+    this.viewInfo = {
+      "username": this.username,
+      "id": this.id,
+      "accountType": this.accountType
+    }
+    this.tokenStorage.saveViewId(this.viewInfo);
     this.image = '';
     this.name = this.currentUser.name;
     this.phone = this.currentUser.phone;
@@ -189,7 +202,7 @@ export class ViewOthersProfilePage implements OnInit {
     if(this.accountType == "institution") {
       this.accountBoolean = true;
       this.institutionService.viewInstitution(this.username).subscribe((res)=> {
-        this.initialiseInstituion();
+        this.initialiseInstitution();
       },
       (err) => {
         console.log("Error retrieving Institution: " + err.error.msg);
@@ -211,6 +224,14 @@ export class ViewOthersProfilePage implements OnInit {
 
   getAffiliates($event) {
     this.router.navigate(['/affiliation-management/' + this.id]);
+  }
+
+  getProjects($event) {
+    this.router.navigate(['/my-projects/' + this.id]);
+  }
+
+  getResources($event) {
+    this.router.navigate(['/my-resources/' + this.id]);
   }
 
   /*shareviaWhatsapp(){
@@ -386,6 +407,8 @@ export class ViewOthersProfilePage implements OnInit {
 
   back() {
     this.navCtrl.pop();
+    //this.router.navigate(["/view-project/" + this.tokenStorage.getProjectId()]);
+    this.tokenStorage.saveViewId(this.tokenStorage.getUser().data.user.id);
  }
 
 }

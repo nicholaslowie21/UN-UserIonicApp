@@ -4,7 +4,7 @@ import { InstitutionService } from '../services/institution.service';
 import { UserService } from '../services/user.service';
 import { SessionService } from '../services/session.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { ProjectService } from '../services/project.service';
 
 @Component({
@@ -25,11 +25,27 @@ export class MyProjectsPage implements OnInit {
   resultSuccess: boolean;
   error: boolean;
   errorMessage: any;
+  id: string;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
-        this.accountType = this.tokenStorage.getAccountType();
+  constructor(private navCtrl: NavController, private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
+        /*this.accountType = this.tokenStorage.getAccountType();
         this.user = this.tokenStorage.getUser();
       console.log(this.accountType);
+        if(this.accountType == "institution") {
+          this.accountBoolean = true;
+        } else if(this.accountType == "user") {
+          this.accountBoolean = false;
+        }*/
+        this.user = this.tokenStorage.getUser();
+        console.log(this.tokenStorage.getViewId());
+        if(this.tokenStorage.getViewId() != this.user.data.user.id && this.tokenStorage.getViewId()!= undefined ){
+            this.accountType = this.tokenStorage.getViewId().accountType;
+        } else {
+          console.log("elsenran");
+          this.accountType = this.tokenStorage.getAccountType();
+        
+        }
+        console.log(this.accountType);
         if(this.accountType == "institution") {
           this.accountBoolean = true;
         } else if(this.accountType == "user") {
@@ -39,6 +55,7 @@ export class MyProjectsPage implements OnInit {
       }
 
   ngOnInit() {
+    this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     this.initialise();
     // Dummy data to be replaced with actual data when the proj endpoints are created. Some attributes not in the dummy data, and some (eg role) are created here.
     /*this.currProjects = [
@@ -60,9 +77,10 @@ export class MyProjectsPage implements OnInit {
   }
 
   initialise() {
+    this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     if(this.accountBoolean == true)
     {
-        this.institutionService.getCurrentProjects(this.user.data.user.id).subscribe((res) => {
+        this.institutionService.getCurrentProjects(this.id).subscribe((res) => {
             this.currProjects = res.data.currProjects;
             if(this.currProjects.length > 0) {
               this.noCurrProjectBoolean = false;
@@ -80,7 +98,7 @@ export class MyProjectsPage implements OnInit {
           console.log('********** Current-projects(institution).ts: ', err.error.msg);
         };
 
-        this.institutionService.getPastProjects(this.user.data.user.id).subscribe((res) => {
+        this.institutionService.getPastProjects(this.id).subscribe((res) => {
         this.pastProjects = res.data.pastProjects
         console.log(this.pastProjects.length);
         if(this.pastProjects.length > 0) {
@@ -98,7 +116,8 @@ export class MyProjectsPage implements OnInit {
         };
 
     } else if(this.accountBoolean == false) {
-          this.userService.getCurrentProjects(this.user.data.user.id).subscribe((res) => {
+      console.log("retrieved projects")
+          this.userService.getCurrentProjects(this.id).subscribe((res) => {
           this.currProjects = res.data.currProjects
 
           if(this.currProjects.length > 0) {
@@ -113,8 +132,8 @@ export class MyProjectsPage implements OnInit {
       err => {
         console.log('********** Current-projects(user).ts: ', err.error.msg);
       };
-
-      this.userService.getPastProjects(this.user.data.user.id).subscribe((res) => {
+      console.log("retrieved projects")
+      this.userService.getPastProjects(this.id).subscribe((res) => {
             this.pastProjects = res.data.pastProjects
 
             if(this.pastProjects.length > 0) {
@@ -138,7 +157,15 @@ export class MyProjectsPage implements OnInit {
     this.router.navigate(["/view-project/" + project.id])
   }
 
- 
+  back() {
+    if(this.user.data.user.id != this.tokenStorage.getViewId() && this.tokenStorage.getViewId() != undefined) {
+      this.router.navigate(['/view-others-profile/' + this.tokenStorage.getViewId().username + "/" + this.tokenStorage.getViewId().accountType]);
+    } else if(this.user.data.user.id == this.tokenStorage.getViewId()) {
+      this.router.navigateByUrl("/tabs/profile");
+    } else if(this.tokenStorage.getViewId() == undefined) {
+      this.router.navigateByUrl("/tabs/profile");
+    }
+ }
   
  
 

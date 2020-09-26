@@ -72,7 +72,7 @@ const routes: Routes = [
     loadChildren: () => import('./change-photo/change-photo.module').then( m => m.ChangePhotoPageModule)
   },
   {
-    path: 'my-projects',
+    path: 'my-projects/:Id',
     loadChildren: () => import('./my-projects/my-projects.module').then( m => m.MyProjectsPageModule)
   },
   {

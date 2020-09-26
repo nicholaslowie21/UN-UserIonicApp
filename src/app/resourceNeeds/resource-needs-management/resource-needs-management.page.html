@@ -14,7 +14,7 @@
 <ion-content>
   <ion-card *ngFor = "let r of resourceNeeds">
     <ion-card-title style="padding-left: 10px;">{{r.title}}</ion-card-title>
-    <ion-badge style="float: right;" className="">{{r.type}}</ion-badge>
+    <ion-badge style="float: right;" class="{{r.type}}type">{{r.type}}</ion-badge>
     <ion-card-content>{{r.desc}}</ion-card-content>
     <ion-card-content>Completion: {{r.completion}} %</ion-card-content>
     <ion-card-content *ngIf='(r.type == "money")'>Total: {{r.total}} | Received Sum: {{r.receivedSum}} | Pending Sum: {{r.pendingSum}}</ion-card-content>
