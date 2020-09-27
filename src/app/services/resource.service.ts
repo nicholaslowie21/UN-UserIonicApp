@@ -382,7 +382,12 @@ export class ResourceService {
     );
   }
 
-
+  uploadKnowledgeAttachment(data) {
+    return this.http.post(this.resourceAPI_URL + "/uploadKnowledgeAttachment", data).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
 
   private handleError(error: HttpErrorResponse)
 	{

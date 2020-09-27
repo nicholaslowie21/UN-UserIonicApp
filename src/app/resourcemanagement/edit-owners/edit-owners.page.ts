@@ -40,7 +40,7 @@ export class EditOwnersPage implements OnInit {
       for(var i = 0; i < this.initialOwners.length; i++) {
         // this.owners[i].imgPath = this.sessionService.getRscPath() + this.owners[i].imgPath  +'?random+=' + Math.random();
         if(this.initialOwners[i].ownerType == "user") {
-          this.owners.push(this.userService.viewUserProfile(this.initialOwners[i].theId));
+          this.owners.push(this.userService.viewUserById(this.initialOwners[i].theId));
         } else {
           // this.owners.push(this.institutionService.viewInstitutionProfile(this.initialOwners[i].theId)); NEED TO INCL THE METHOD IN SERVICE
         }

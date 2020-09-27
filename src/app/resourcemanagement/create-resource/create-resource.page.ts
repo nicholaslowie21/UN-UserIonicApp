@@ -12,11 +12,11 @@ import { Router } from  "@angular/router";
 })
 export class CreateResourcePage implements OnInit {
   form: FormGroup;
-  title: string;
-  desc: string;
-  address: string;
+  title: any;
+  desc: any;
+  address: any;
   type: string;
-  country: string;
+  country: any;
   typeList: String[];
   countryData: any[];
   

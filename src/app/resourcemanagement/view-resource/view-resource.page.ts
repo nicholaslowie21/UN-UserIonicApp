@@ -15,10 +15,11 @@ export class ViewResourcePage implements OnInit {
   currResource: any;
   resourceId: any;
   resourceOwner: any;
-  knowledgeOwners: any[];
+  knowledgeOwners: any;
   image: any;
   venueImage: any[];
   ownerImg: any;
+  institutionKnowledgeOwner: boolean;
 
   resultSuccess: boolean;
   error: boolean;
@@ -28,6 +29,7 @@ export class ViewResourcePage implements OnInit {
   constructor(private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController) {
     //See BG update project, for the toast
     this.retrieveResourceError = false;
+    this.institutionKnowledgeOwner = false;
   
    }
 
@@ -47,40 +49,82 @@ export class ViewResourcePage implements OnInit {
     if(this.resourceType == "manpower") {
       this.currResource = this.resourceService.viewManpowerResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.manpower;
-        this.resourceOwner = res.data.owner;
-        this.image = this.sessionService.getRscPath() + this.resourceOwner.ionicImg + '?random+=' + Math.random();
-        // this.ownerImg no need to print la hor
-    }), err => {
+        this.image = this.sessionService.getRscPath() + res.data.owner.ionicImg + '?random+=' + Math.random();
+      }), err => {
         console.log('********** ViewResource.ts - Manpower: ', err.error.msg);
       };
+      
+      this.resourceOwner = this.resourceService.viewManpowerResourceDetail(this.resourceId).subscribe((res) => {
+        this.resourceOwner = res.data.owner;
+        this.ownerImg = this.image;
+        // this.ownerImg = this.sessionService.getRscPath() + this.resourceOwner.ionicImg + '?random+=' + Math.random();
+    }), err => {
+        console.log('********** ViewResource.ts - ManpowerOwner: ', err.error.msg);
+      };
+
     } else if (this.resourceType == "knowledge") {
+      // PLS LOOK AT THIS AGAIN, AND FIX IT SO THAT WE CAN FETCH THE OWNERS
       this.currResource = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.knowledge;
-        this.knowledgeOwners = res.data.owner;
-        // PROFILE PIC
-      }), err => {
+        }), err => {
         console.log('********** ViewResource.ts - Knowledge: ', err.error.msg);
       };
+
+      // this.resourceOwner = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
+      //   //Here, resourceOwner is by default the institution Owner. Value can be empty
+      //   this.resourceOwner = res.data.institutionOwner;
+      //   if(this.resourceOwner != null) {
+      //     this.institutionKnowledgeOwner = true;
+      //     this.ownerImg = this.sessionService.getRscPath() + this.resourceOwner[0].ionicImg + '?random+=' + Math.random();
+      //     console.log(this.resourceOwner[0].name);
+      //   }
+      //   }), err => {
+      //   console.log('********** ViewResource.ts - KnowledgeOwner: ', err.error.msg);
+      // };
+
+      // this.knowledgeOwners = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
+      //   this.knowledgeOwners = res.data.userOwner;
+      //   if(this.knowledgeOwners.length > 0) {
+      //     for (var i = 0; i < this.knowledgeOwners.length; i++) {
+      //       this.knowledgeOwners[i].profilePic = this.sessionService.getRscPath() + this.knowledgeOwners[i].ionicImg + '?random+=' + Math.random();
+      //     }
+      //   }
+
+      //   }), err => {
+      //   console.log('********** ViewResource.ts - KnowledgeOwner: ', err.error.msg);
+      // };
+
     } else if (this.resourceType == "item") {
       this.currResource = this.resourceService.viewItemResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.item;
-        this.resourceOwner = res.data.owner;
-        this.ownerImg = this.sessionService.getRscPath() + this.resourceOwner.ionicImg + '?random+=' + Math.random();
         this.image = this.sessionService.getRscPath() + this.currResource.imgPath + '?random+=' + Math.random(); 
-      }), err => {
+        }), err => {
         console.log('********** ViewResource.ts - Item: ', err.error.msg);
       };
+
+      this.resourceOwner = this.resourceService.viewItemResourceDetail(this.resourceId).subscribe((res) => {
+        this.resourceOwner = res.data.owner;
+        this.ownerImg = this.sessionService.getRscPath() + this.resourceOwner.ionicImg + '?random+=' + Math.random();
+        }), err => {
+        console.log('********** ViewResource.ts - ItemOwner: ', err.error.msg);
+      };
+
     } else if (this.resourceType == "venue") {
       this.currResource = this.resourceService.viewVenueResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.venue;
-        this.resourceOwner = res.data.owner;
-        this.ownerImg = this.sessionService.getRscPath() + this.resourceOwner.ionicImg + '?random+=' + Math.random();
         if (this.currResource.imgPath.length > 0) {
           for (var i = 0; i < this.currResource.imgPath.length; i++) {
             this.currResource.imgPath[i] = this.sessionService.getRscPath() + this.currResource.imgPath[i] + '?random+=' + Math.random(); 
           }
         }
       }), (err) => {
+      console.log('********** ViewResource.ts - Venue: ', err.error.msg);
+      };
+
+      this.resourceOwner = this.resourceService.viewVenueResourceDetail(this.resourceId).subscribe((res) => {
+        this.resourceOwner = res.data.owner;
+        this.ownerImg = this.sessionService.getRscPath() + this.resourceOwner.ionicImg + '?random+=' + Math.random();
+        }), (err) => {
         console.log('********** ViewResource.ts - Venue: ', err.error.msg);
       };
     }
@@ -96,8 +140,6 @@ export class ViewResourcePage implements OnInit {
 
   upload(event) {
     this.router.navigate(["/upload-resource-pic/" + this.resourceType + "/" + this.resourceId]);
-    // this.router.navigate(["/edit-resource/" + this.resourceType + "/" + this.resourceId]);
-  
   }
 
   async delete(event)

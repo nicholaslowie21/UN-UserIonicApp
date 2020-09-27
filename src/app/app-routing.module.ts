@@ -162,7 +162,12 @@ const routes: Routes = [
   {
     path: 'upload-resource-pic/:type/:id',
     loadChildren: () => import('./resourcemanagement/upload-resource-pic/upload-resource-pic.module').then( m => m.UploadResourcePicPageModule)
+  },
+  {
+    path: 'knowledge/upload-attachment/:id',
+    loadChildren: () => import('./resourcemanagement/upload-attachment/upload-attachment.module').then( m => m.UploadAttachmentPageModule)
   }
+
 
 ];
 @NgModule({

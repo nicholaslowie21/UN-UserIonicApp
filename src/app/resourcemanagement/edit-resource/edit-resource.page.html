@@ -50,10 +50,24 @@
 
   <ion-item>
     <ion-label>Status</ion-label>
-    <ion-label>Inactive <ion-toggle [(ngModel)]="isActive" [checked]="isActive" name="status" style="height:25px;"></ion-toggle> Active </ion-label>
+    <ion-label>Inactive <ion-toggle [(ngModel)]="isActive" [checked]="isActive" name="status"></ion-toggle> Active </ion-label>
     </ion-item>
+
+  <ion-card *ngIf= "resourceType == 'knowledge'">
+    <ion-card-header>Upload the attachment for your knowledge resource!</ion-card-header>
+    <ion-card-content>
+      <div>
+        <input type="file" name="attachment" (change)="selectAttachment($event)" />
+      </div>
+      <div>
+        <ion-button type="submit" expand="block" (click)="upload()">Upload</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
   <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Confirm</ion-button>
 </form>
+
+
 
 <ion-content>
     <div *ngIf="resultSuccess == true" style="color: blue;">

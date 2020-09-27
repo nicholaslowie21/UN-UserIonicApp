@@ -144,6 +144,13 @@ export class InstitutionService {
     );
   }
 
+  viewInstitutionById(data): Observable<any> {
+    return this.http.get(this.API_URL + '/viewInstitutionById?institutionId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

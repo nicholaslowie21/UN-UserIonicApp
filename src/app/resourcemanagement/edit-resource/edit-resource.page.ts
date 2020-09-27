@@ -19,6 +19,8 @@ export class EditResourcePage implements OnInit {
   desc: any;
   country: any;
   address: any;
+  attachment: any;
+  file: any;
   isActive: boolean;
   isOriginalActive: boolean;
 
@@ -264,6 +266,29 @@ export class EditResourcePage implements OnInit {
         console.log('********** EditResource.ts - Knowledge: ', err.error.msg);
       });
     }
+  }
+
+  selectAttachment(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.attachment = file;
+      console.log(this.attachment);
+    }
+  }
+
+  upload(){
+    const formData = new FormData();
+    console.log(this.attachment);
+    formData.append('knowledgeId', this.resourceId);
+    formData.append('IP', this.attachment);
+
+      this.resourceService.uploadKnowledgeAttachment(formData).subscribe(
+        (res) => {
+          this.successToast();
+        },
+        
+        (err) => this.failureToast(err)
+      );
   }
 
   back() {
