@@ -140,7 +140,7 @@ export class EditOwnersPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm',
-      message: 'Are you sure you want to remove this member?',
+      message: 'Are you sure you want to remove this owner?',
       buttons: [
         {
           text: 'Cancel',
