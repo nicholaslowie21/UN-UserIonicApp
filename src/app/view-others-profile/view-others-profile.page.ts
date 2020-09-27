@@ -40,6 +40,7 @@ export class ViewOthersProfilePage implements OnInit {
   address: any;
   id: any;
   viewInfo: {};
+  originPage: string;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -58,6 +59,7 @@ export class ViewOthersProfilePage implements OnInit {
   ngOnInit(): void {
     this.username = this.activatedRoute.snapshot.paramMap.get('username');
     this.accountType = this.activatedRoute.snapshot.paramMap.get('contributorType');
+    this.originPage = "/view-project/" + this.tokenStorage.getProjectId();
     console.log(this.accountType);
     if(this.accountType == "institution") {
       this.accountBoolean = true;
@@ -231,7 +233,7 @@ export class ViewOthersProfilePage implements OnInit {
   }
 
   getResources($event) {
-    this.router.navigate(['/my-resources/' + this.id]);
+    this.router.navigate(['/view-others-resources/' + this.id]);
   }
 
   /*shareviaWhatsapp(){
@@ -406,8 +408,8 @@ export class ViewOthersProfilePage implements OnInit {
   }*/
 
   back() {
-    this.navCtrl.pop();
-    //this.router.navigate(["/view-project/" + this.tokenStorage.getProjectId()]);
+    //this.navCtrl.pop();
+    this.router.navigate([this.originPage]);
     this.tokenStorage.saveViewId(this.tokenStorage.getUser().data.user.id);
  }
 

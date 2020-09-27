@@ -170,6 +170,10 @@ const routes: Routes = [
   {
     path: 'knowledge/upload-attachment/:id',
     loadChildren: () => import('./resourcemanagement/upload-attachment/upload-attachment.module').then( m => m.UploadAttachmentPageModule)
+  },
+  {
+    path: 'view-others-resources/:Id',
+    loadChildren: () => import('./view-others-resources/view-others-resources.module').then( m => m.ViewOthersResourcesPageModule)
   }
 
 

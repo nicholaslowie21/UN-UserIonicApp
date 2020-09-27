@@ -36,7 +36,7 @@
   <ion-label>My Projects</ion-label>
 </ion-item>
 
-<ion-item routerLink="/my-resources">
+<ion-item (click)="getResources($event)">
   <ion-icon  name="cube" slot="start"></ion-icon>
   <ion-label>My Resources</ion-label>
 </ion-item>

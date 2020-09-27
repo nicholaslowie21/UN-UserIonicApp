@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="pop()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon name="filter-outline" slot="end" style="padding-right: 10px" (click)="filter()"></ion-icon>
+    </ion-buttons>
+    <ion-title>My Resources</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+      <ion-segment-button *ngIf="accountBoolean==false" value="manpower" checked>
+        <ion-label>Manpower</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="knowledge">
+        <ion-label>Knowledge</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="item">
+        <ion-label>Item</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="venue">
+        <ion-label>Venue</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list  [ngSwitch]="type">
+    <div *ngIf="accountBoolean==false">
+    <div *ngSwitchCase="'manpower'" >
+      <div *ngIf="noManpowerResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>You do not have any active manpower resource! Create one now!</ion-label>
+      </div>
+      <div *ngFor="let m of manpowerResource" >
+      <ion-card (click)= "viewResource(m)">
+        <img class="card-img-top rounded-circle img-fluid d-block center {{m.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=manpowerImgPath alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <ion-card-header>
+          <ion-card-title>{{m.title}}</ion-card-title>
+          <ion-card-subtitle>{{m.region}}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-label>{{m.desc}}</ion-label>
+        </ion-card-content>
+      </ion-card>
+      </div>
+    </div>
+  </div>
+
+    <div *ngSwitchCase="'knowledge'">
+      <div *ngIf="noKnowledgeResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>You do not have any active knowledge resource! Create one now!</ion-label>
+    </div>
+    <div *ngFor="let k of knowledgeResource">
+    <ion-card (click)= "viewResource(k)">
+        <img src="../../assets/img/knowledge.jpg" className={{k.status}}/>
+        <ion-card-header>
+          <ion-card-title>{{k.title}}</ion-card-title>
+          <!-- <ion-div *ngFor="let s of p.SDG">
+            <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
+          </ion-div> -->
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-label>{{k.desc}}</ion-label>
+        </ion-card-content>
+    </ion-card>
+    </div>
+  </div>
+
+    <div *ngSwitchCase="'item'">
+      <div *ngIf="noItemResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>You do not have any active item resource! Create one now!</ion-label>
+    </div>
+    <div *ngFor="let i of itemResource">
+      <ion-card (click)= "viewResource(i)">
+          <img className={{i.status}} [src]=i.imgPath  onerror="this.src='./assets/img/item.jpg'" />
+        <ion-card-header>
+          <ion-card-title>{{i.title}}</ion-card-title>
+          <ion-card-subtitle>{{i.region}}</ion-card-subtitle>
+          <!-- <ion-div *ngFor="let s of p.SDG">
+            <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
+          </ion-div> -->
+        </ion-card-header>
+  
+        <ion-card-content>
+          <ion-label>{{i.desc}}</ion-label>
+        </ion-card-content>
+      </ion-card>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'venue'">
+      <div *ngIf="noVenueResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>You do not have any active venue resource! Create one now!</ion-label>
+    </div>
+      <div *ngFor="let v of venueResource">
+        <ion-card (click)= "viewResource(v)">
+            <img className={{v.status}} [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
+          <ion-card-header>
+            <ion-card-title>{{v.title}}</ion-card-title>
+            <ion-card-subtitle>{{v.region}}</ion-card-subtitle>
+            <ion-card-subtitle>{{v.address}}</ion-card-subtitle>
+            <!-- <ion-div *ngFor="let s of p.SDG">
+              <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
+            </ion-div> -->
+          </ion-card-header>
+    
+          <ion-card-content>
+            <ion-label>{{v.desc}}</ion-label>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      </div>
+  </ion-list>
+</ion-content>

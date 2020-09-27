@@ -25,19 +25,19 @@
         <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=u.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-title>{{u.name}}</ion-title>
         <ion-toolbar >
-          <ion-button class="add" (click)="add(u)" >Add Admin</ion-button>
+          <ion-button class="add" (click)="add(u)" >Add Owner</ion-button>
         </ion-toolbar>
       </ion-item>
     </ion-list>
    
   </ion-card>
   <ion-card-title>Current Owners</ion-card-title>
-    <ion-card *ngFor = "let o of owners">
+    <ion-card *ngFor = "let o of ownersArray">
       
       <div class="aligned">
-      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=a.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=o.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
       <ion-title>{{o.name}}</ion-title>
-      <ion-button style="float:right; fill: outline;" (click)="presentAlertConfirm($event, a)" >Remove</ion-button>
+      <ion-button style="float:right; fill: outline;" (click)="presentAlertConfirm($event, o)" >Remove</ion-button>
       </div>
      
     </ion-card>

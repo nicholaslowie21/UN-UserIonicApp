@@ -389,6 +389,20 @@ export class ResourceService {
     );
   }
 
+  addKnowledgeOwner(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + '/addKnowledgeOwner', data, httpOptions).pipe(
+      tap(res => {
+    }, error => console.log(error)),
+    );
+  }
+
+  delKnowledgeOwner(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + '/deleteKnowledgeOwner', data, httpOptions).pipe(
+      tap(res => {
+    }, error => console.log(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";
