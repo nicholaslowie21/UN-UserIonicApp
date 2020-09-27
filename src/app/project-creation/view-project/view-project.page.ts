@@ -51,7 +51,7 @@ export class ViewProjectPage implements OnInit {
     
     this.page = "feed";
 
-    this.contributions = [
+    /*this.contributions = [
       {
         "projectId": "5f6b11ada7e36f1445610166",
         "needId": "5f6b1538a054134644039654",
@@ -67,7 +67,7 @@ export class ViewProjectPage implements OnInit {
         "desc": "Backend Software Engineer (Part-Time)",
         "contributorUsername": "wtoilet"
       }
-    ]
+    ]*/
   }
 
   ionViewDidEnter() {
@@ -127,13 +127,15 @@ err=> {
 err=> {
   console.log('******* KPI retrieval error: ', err.error.msg);
 })
+console.log(this.id);
 
-/*this.projectService.getResourceContributions(this.id).subscribe((res)=>{
+this.projectService.getResourceContributions(this.id).subscribe((res)=>{
     this.contributions = res.data.contributions;
+    console.log(this.contributions);
 },
 (err) => {
   console.log('******* Contributions retrieval error: ', err.error.msg);
-})*/
+})
 
 if(this.status == "completed") {
   this.completedBoolean = true;

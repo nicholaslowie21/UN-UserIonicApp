@@ -14,6 +14,13 @@ export class ResourceNeedsManagementPage implements OnInit {
   resultSuccess: boolean;
   error: boolean;
   errorMessage: any;
+  form: any;
+  title: any;
+  desc: any;
+  total: number;
+  completion: any;
+  projectId: any;
+  resultError: boolean;
 
   constructor(private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private activatedRoute: ActivatedRoute, private projectService: ProjectService, ) { }
 
@@ -53,6 +60,48 @@ export class ResourceNeedsManagementPage implements OnInit {
     console.log("**********Retrieve ResourceNeeds.ts error")
   })
   }
+
+  markAsComplete(ev, r) {
+    this.form = {
+      "needId": r.id,
+      "title": r.title,
+      "desc": r.desc,
+      "total": r.total = 0,
+      "completion": r.completion=100
+      }
+      this.projectService.updateResourceNeed(this.form).subscribe((res) => {
+        this.projectId = res.data.projectId;
+      this.resultSuccess = true;
+      this.resultError = false;
+      this.updateSuccessToast();
+      this.back();
+      },
+      err => {
+      this.resultSuccess = false;
+      this.resultError = true;
+      this.updateFailureToast(err.error.msg);
+      console.log('********** UpdateResourceNeed.ts: ', err.error.msg);
+      });
+  }
+  async updateSuccessToast() {
+    let toast = this.toastCtrl.create({
+    message: 'Resource Need Update is successful!',
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-pass"      
+    });
+    (await toast).present();
+    }
+  
+    async updateFailureToast(error) {
+    const toast = this.toastCtrl.create({
+    message: 'Resource Need Update Unsuccessful: ' + error,
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-fail"
+    });
+    (await toast).present();
+    }
 
 
   async delete(event, need)

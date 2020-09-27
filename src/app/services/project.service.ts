@@ -222,10 +222,11 @@ export class ProjectService {
   }
 
   getResourceContributions(data): Observable<any> {
+    console.log("im running");
     return this.http.get(this.API_URL + '/contributions?projectId=' + data, httpOptions).pipe(
       tap(res => {
-    }, error => this.handleError(error)),
-    );
+        console.log("projServ: " + res.data.contributions);
+    }, error => console.log(error.msg)));
   }
 
 
