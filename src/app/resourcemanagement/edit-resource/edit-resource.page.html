@@ -3,25 +3,43 @@
     <ion-buttons slot="start">
       <ion-icon name="arrow-back" slot="start" style="padding-left:10px" (click)="back()"></ion-icon>
     </ion-buttons>
-    <ion-title>Edit Manpower Resource</ion-title>
+    <ion-title>Edit Resource</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <form #form="ngForm" (ngSubmit)="update()">
   <ion-item>
-      <ion-label position="floating">Title</ion-label>
-      <ion-input ngModel name="title" [(ngModel)]="currResource.title" required minlength="3" #intitle="ngModel"></ion-input>
-      <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
-        <div *ngIf="intitle.errors.required">Title is required</div>
-        <div *ngIf="intitle.errors.minlength">
-          Title must be at least 3 characters
-        </div>
+    <ion-label position="floating">Title</ion-label>
+    <ion-input ngModel name="title" [(ngModel)]="currResource.title" required minlength="3" #intitle="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
+      <div *ngIf="intitle.errors.required">Title is required</div>
+      <div *ngIf="intitle.errors.minlength">
+        Title must be at least 3 characters
       </div>
-    </ion-item>
+    </div>
+  </ion-item>
+
+  <ion-item *ngIf="resourceType != 'knowledge'">
+    <ion-label>Country</ion-label>
+    <ion-select ngModel name="country" [(ngModel)]="currResource.country" required #incountry="ngModel">
+      <ion-select-option *ngFor = "let c of countryData">{{c}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="resourceType == 'venue'">
+    <ion-label position="floating">Address</ion-label>
+    <ion-input ngModel name="address" [(ngModel)]="currResource.address" required minlength="3" #inaddress="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && inaddress.invalid">
+      <div *ngIf="inaddress.errors.required">Address is required</div>
+      <div *ngIf="inaddress.errors.minlength">
+        Address must be at least 3 characters
+      </div>
+    </div>
+  </ion-item>
 
   <ion-item>
     <ion-label position="floating">Description</ion-label>
-    <ion-input ngModel name="desc" [(ngModel)]="currResource.desc" required minlength="3" #indesc="ngModel"></ion-input>
+    <ion-textarea ngModel name="desc" [(ngModel)]="currResource.desc" required minlength="3" #indesc="ngModel"></ion-textarea>
     <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
       <div *ngIf="indesc.errors.required">Description is required</div>
       <div *ngIf="indesc.errors.minlength">
@@ -30,20 +48,28 @@
     </div>
   </ion-item>
 
-  <!-- <ion-item *ngIf="isVenueType == true">
-    <ion-label position="floating">Address</ion-label>
-    <ion-input ngModel name="address" [(ngModel)]="address" required minlength="3" #inaddress="ngModel"></ion-input>
-    <div class="alert-danger" *ngIf="form.submitted && inaddress.invalid">
-      <div *ngIf="inaddress.errors.required">Address is required</div>
-      <div *ngIf="inaddress.errors.minlength">
-        Address must be at least 3 characters
+  <ion-item>
+    <ion-label>Status</ion-label>
+    <ion-label>Inactive <ion-toggle [(ngModel)]="isActive" [checked]="isActive" name="status"></ion-toggle> Active </ion-label>
+    </ion-item>
+
+  <ion-card *ngIf= "resourceType == 'knowledge'">
+    <ion-card-header>Upload the attachment for your knowledge resource!</ion-card-header>
+    <ion-card-content>
+      <div>
+        <input type="file" name="attachment" (change)="selectAttachment($event)" />
       </div>
-    </div>
-  </ion-item> -->
+      <div>
+        <ion-button type="submit" expand="block" (click)="upload()">Upload</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
   <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Confirm</ion-button>
 </form>
 
-  <ion-content>
+
+
+<ion-content>
     <div *ngIf="resultSuccess == true" style="color: blue;">
       {{message}}
     </div>

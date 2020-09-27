@@ -122,6 +122,7 @@ export class UserService {
     );
   }
 
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

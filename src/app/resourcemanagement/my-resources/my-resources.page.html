@@ -4,6 +4,9 @@
       <ion-icon name="arrow-back" slot="start" routerLink="/tabs/profile" style="padding-left:10px"></ion-icon>
     </ion-buttons>
     <ion-buttons slot="end">
+      <ion-icon name="filter-outline" slot="end" style="padding-right: 10px" (click)="filter()"></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end">
       <ion-icon name="add-circle-outline" slot="end" routerLink="/create-resource" style="padding-right: 10px"></ion-icon>
     </ion-buttons>
     <ion-title>My Resources</ion-title>
@@ -30,26 +33,28 @@
   <ion-list  [ngSwitch]="type">
     <div *ngIf="accountBoolean==false">
     <div *ngSwitchCase="'manpower'" >
-      <div *ngIf="noManpowerResourceBoolean == true">
-        <ion-label style="padding-left: 15px;">You do not have any manpower resource created! Create one now!</ion-label>
+      <div *ngIf="noManpowerResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>You do not have any active manpower resource! Create one now!</ion-label>
       </div>
       <div *ngFor="let m of manpowerResource" >
       <ion-card (click)= "viewResource(m)">
-        <img src="../../assets/img/manpower.jpg" className={{m.status}}/>
+        <img class="card-img-top rounded-circle img-fluid d-block center {{m.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=manpowerImgPath alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-card-header>
           <ion-card-title>{{m.title}}</ion-card-title>
           <ion-card-subtitle>{{m.region}}</ion-card-subtitle>
         </ion-card-header>
 
-        <ion-card-content>{{m.desc}}</ion-card-content>
+        <ion-card-content>
+          <ion-label>{{m.desc}}</ion-label>
+        </ion-card-content>
       </ion-card>
       </div>
     </div>
   </div>
 
     <div *ngSwitchCase="'knowledge'">
-      <div *ngIf="noKnowledgeResourceBoolean == true">
-        <ion-label style="padding-left: 15px;">You do not have any knowledge resource created! Create one now!</ion-label>
+      <div *ngIf="noKnowledgeResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>You do not have any active knowledge resource! Create one now!</ion-label>
     </div>
     <div *ngFor="let k of knowledgeResource">
     <ion-card (click)= "viewResource(k)">
@@ -61,18 +66,20 @@
           </ion-div> -->
         </ion-card-header>
 
-        <ion-card-content>{{k.desc}}</ion-card-content>
+        <ion-card-content>
+          <ion-label>{{k.desc}}</ion-label>
+        </ion-card-content>
     </ion-card>
     </div>
   </div>
 
     <div *ngSwitchCase="'item'">
-      <div *ngIf="noItemResourceBoolean == true">
-        <ion-label style="padding-left: 15px;">You do not have any item resource created! Create one now!</ion-label>
+      <div *ngIf="noItemResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>You do not have any active item resource! Create one now!</ion-label>
     </div>
     <div *ngFor="let i of itemResource">
       <ion-card (click)= "viewResource(i)">
-          <img src="../../assets/img/item.jpg" className={{i.status}} />
+          <img className={{i.status}} [src]=i.imgPath  onerror="this.src='./assets/img/item.jpg'" />
         <ion-card-header>
           <ion-card-title>{{i.title}}</ion-card-title>
           <ion-card-subtitle>{{i.region}}</ion-card-subtitle>
@@ -81,18 +88,20 @@
           </ion-div> -->
         </ion-card-header>
   
-        <ion-card-content>{{i.desc}}</ion-card-content>
+        <ion-card-content>
+          <ion-label>{{i.desc}}</ion-label>
+        </ion-card-content>
       </ion-card>
       </div>
     </div>
 
     <div *ngSwitchCase="'venue'">
-      <div *ngIf="noVenueResourceBoolean == true">
-        <ion-label style="padding-left: 15px;">You do not have any venue resource created! Create one now!</ion-label>
+      <div *ngIf="noVenueResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>You do not have any active venue resource! Create one now!</ion-label>
     </div>
       <div *ngFor="let v of venueResource">
         <ion-card (click)= "viewResource(v)">
-            <img src="../../assets/img/venue.jpg" className={{v.status}} />
+            <img className={{v.status}} [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
           <ion-card-header>
             <ion-card-title>{{v.title}}</ion-card-title>
             <ion-card-subtitle>{{v.region}}</ion-card-subtitle>
@@ -102,7 +111,9 @@
             </ion-div> -->
           </ion-card-header>
     
-          <ion-card-content>{{v.desc}}</ion-card-content>
+          <ion-card-content>
+            <ion-label>{{v.desc}}</ion-label>
+          </ion-card-content>
         </ion-card>
       </div>
       </div>

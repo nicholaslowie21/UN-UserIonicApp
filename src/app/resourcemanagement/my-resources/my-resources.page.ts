@@ -17,6 +17,7 @@ export class MyResourcesPage implements OnInit {
   type : String;
   accountType: any;
   user: any;
+  manpowerImgPath: any;
   accountBoolean: boolean;
   noKnowledgeResourceBoolean: boolean;
   noItemResourceBoolean: boolean;
@@ -36,128 +37,246 @@ export class MyResourcesPage implements OnInit {
    }
 
   ngOnInit() {
+    this.initialise();
+  }
+  
+  ionViewDidEnter() {
+    this.initialise();
+  }
+
+  initialise() {
     if(this.accountBoolean == true)
     {
-        this.resourceService.getInstitutionKnowledgeResource(this.user.data.user.id).subscribe((res) => {
-          this.knowledgeResource = res.data.knowledges;
-          if(this.knowledgeResource.length > 0) {
-            for(var i = 0; i < this.knowledgeResource.length; i++) {
-              this.knowledgeResource[i].imgPath = this.sessionService.getRscPath() + this.knowledgeResource[i].imgPath  +'?random+=' + Math.random();
-            }
-          } else {
-              this.noKnowledgeResourceBoolean = true;
-          }
-        }),
-        err => {
-          console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
+      this.resourceService.getInstitutionPrivateKnowledgeResource().subscribe((res) => {
+        this.knowledgeResource = res.data.knowledges;
+        if(this.knowledgeResource.length > 0) {
+          this.noKnowledgeResourceBoolean = false;
+        } else {
+            this.noKnowledgeResourceBoolean = true;
         }
+      }),
+      err => {
+        console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
+      }
 
-        this.resourceService.getInstitutionItemResource(this.user.data.user.id).subscribe((res) => {
-          this.itemResource = res.data.items;
-          if(this.itemResource.length > 0) {
-            for(var i = 0; i < this.itemResource.length; i++) {
-              this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
-            }
-          } else {
-              this.noItemResourceBoolean = true;
-          }
-        }
-        ),
-        err => {
-          console.log('********** Item Resource (institution).ts: ', err.error.msg);
-        };
-
-        this.resourceService.getInstitutionVenueResource(this.user.data.user.id).subscribe((res) => {
-          this.venueResource = res.data.venues
-          if(this.venueResource.length > 0) {
-            for(var i = 0; i < this.venueResource.length; i++) {
-              this.venueResource[i].imgPath = this.sessionService.getRscPath() + this.venueResource[i].imgPath  +'?random+=' + Math.random();
-            }
-          } else {
-              this.noVenueResourceBoolean = true;
-          }
-        }),
-        
-        err => {
-          console.log('********** Venue Resource (institution).ts: ', err.error.msg);
-        };
-
-    } else if(this.accountBoolean == false) {
-          this.resourceService.getUserKnowledgeResource(this.user.data.user.id).subscribe((res) => {
-          this.knowledgeResource = res.data.knowledges
-          if(this.knowledgeResource.length > 0) {
-            for(var i = 0; i < this.knowledgeResource.length; i++) {
-              this.knowledgeResource[i].imgPath = this.sessionService.getRscPath() + this.knowledgeResource[i].imgPath  +'?random+=' + Math.random();
-            } 
-          } else {
-              this.noKnowledgeResourceBoolean = true;
-          }
-        }),
-        err => {
-          console.log('********** Knowledge Resource (user).ts: ', err.error.msg);
-        }
-
-        this.resourceService.getUserItemResource(this.user.data.user.id).subscribe((res) => {
+      this.resourceService.getInstitutionPrivateItemResource().subscribe((res) => {
         this.itemResource = res.data.items;
         if(this.itemResource.length > 0) {
+          this.noItemResourceBoolean = false;
           for(var i = 0; i < this.itemResource.length; i++) {
             this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
           }
         } else {
             this.noItemResourceBoolean = true;
         }
-        }),
-        err => {
-          console.log('********** Item Resource (user).ts: ', err.error.msg);
-        };
+      }
+      ),
+      err => {
+        console.log('********** Item Resource (institution).ts: ', err.error.msg);
+      };
 
-        this.resourceService.getUserVenueResource(this.user.data.user.id).subscribe((res) => {
-        this.venueResource = res.data.venues;
+      this.resourceService.getInstitutionPrivateVenueResource().subscribe((res) => {
+        this.venueResource = res.data.venues
         if(this.venueResource.length > 0) {
+          this.noVenueResourceBoolean = false;
           for(var i = 0; i < this.venueResource.length; i++) {
-            this.venueResource[i].imgPath = this.sessionService.getRscPath() + this.venueResource[i].imgPath  +'?random+=' + Math.random();
+            if(this.venueResource[i].imgPath.length > 0) {
+                this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+            }
           }
         } else {
             this.noVenueResourceBoolean = true;
         }
+      }),
       
-        }),
-        err => {
-          console.log('********** Venue Resource (user).ts: ', err.error.msg);
-        };
+      err => {
+        console.log('********** Venue Resource (institution).ts: ', err.error.msg);
+      };
 
-        this.resourceService.getUserManpowerResource(this.user.data.user.id).subscribe((res) => {
-        this.manpowerResource = res.data.manpowers;
-        if(this.manpowerResource.length > 0) {
-          for(var i = 0; i < this.manpowerResource.length; i++) {
-            this.manpowerResource[i].imgPath = this.sessionService.getRscPath() + this.manpowerResource[i].imgPath  +'?random+=' + Math.random();
+  } else if(this.accountBoolean == false) {
+        this.resourceService.getUserPrivateKnowledgeResource().subscribe((res) => {
+        this.knowledgeResource = res.data.knowledges
+        if(this.knowledgeResource.length > 0) {
+          this.noKnowledgeResourceBoolean = false;
+        } else {
+            this.noKnowledgeResourceBoolean = true;
+        }
+      }),
+      err => {
+        console.log('********** Knowledge Resource (user).ts: ', err.error.msg);
+      }
+
+      this.resourceService.getUserPrivateItemResource().subscribe((res) => {
+      this.itemResource = res.data.items;
+      if(this.itemResource.length > 0) {
+        this.noItemResourceBoolean = false;
+        for(var i = 0; i < this.itemResource.length; i++) {
+          this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+        }
+      } else {
+          this.noItemResourceBoolean = true;
+      }
+      }),
+      err => {
+        console.log('********** Item Resource (user).ts: ', err.error.msg);
+      };
+
+      this.resourceService.getUserPrivateVenueResource().subscribe((res) => {
+      this.venueResource = res.data.venues;
+      if(this.venueResource.length > 0) {
+        this.noVenueResourceBoolean = false;
+        for(var i = 0; i < this.venueResource.length; i++) {
+          if(this.venueResource[i].imgPath.length > 0) {
+              this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+          }
+        }
+      } else {
+          this.noVenueResourceBoolean = true;
+      }
+    
+      }),
+      err => {
+        console.log('********** Venue Resource (user).ts: ', err.error.msg);
+      };
+
+      this.resourceService.getUserPrivateManpowerResource().subscribe((res) => {
+      this.manpowerResource = res.data.manpowers;
+      if(this.manpowerResource.length > 0) {
+        this.noManpowerResourceBoolean = false;
+        this.manpowerImgPath = this.sessionService.getRscPath() + this.user.data.user.ionicImg  +'?random+=' + Math.random();
+        console.log(this.manpowerImgPath);
+      } else {
+          this.noManpowerResourceBoolean = true;
+      }
+    
+      }),
+      err => {
+        console.log('********** Manpower Resource (user).ts: ', err.error.msg);
+      };
+  }
+  }
+
+  filter() {
+    this.initialiseActiveOnly();
+  }
+
+  initialiseActiveOnly() {
+    if(this.accountBoolean == true)
+    {
+      this.resourceService.getInstitutionKnowledgeResource(this.user.data.user.id).subscribe((res) => {
+        this.knowledgeResource = res.data.knowledges;
+        if(this.knowledgeResource.length > 0) {
+          this.noKnowledgeResourceBoolean = false;
+          for(var i = 0; i < this.knowledgeResource.length; i++) {
+            this.knowledgeResource[i].imgPath = this.sessionService.getRscPath() + this.knowledgeResource[i].imgPath  +'?random+=' + Math.random();
           }
         } else {
-            this.noManpowerResourceBoolean = true;
+            this.noKnowledgeResourceBoolean = true;
         }
-      
-        }),
-        err => {
-          console.log('********** Manpower Resource (user).ts: ', err.error.msg);
-        };
-    }
+      }),
+      err => {
+        console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
+      }
 
-    /*this.manpowerResource = [{"title": "Software Engineer", "desc": "I can code through the night, just sponsor me Redbull", "status": "active", "region": "Singapore"}];
-    this.knowledgeResource = [{"title": "How to code with stamina", "desc": "Have a Redbull at hand and Google and you're off"}];
-    this.itemResource = [
-      {"title": "Tables", "desc": "I have 10 tables as I clicked an extra 0 when I was ordering online. Up for grabs!", "status": "active", "region": "Singapore"},
-      {"title": "Chairs", "desc": "I have 10 chairs as I clicked an extra 0 when I was ordering online. Up for grabs!", "status": "inactive", "region": "Singapore"},
-    ];
-    this.venueResource = [
-      {"title": "Auditorium", "desc": "Can seat up to 100 pax", "address": "NUS Create Way #01-119", "status": "active", "region": "Singapore"},
-      {"title": "Stairway to Fitness", "desc": "Open to people hosting Vertical Marathons!", "address":"Stairway Lane Singapore 133022", "status": "inactive", "region": "Singapore"}
-    ];
-    this.type = 'manpower';*/
+      this.resourceService.getInstitutionItemResource(this.user.data.user.id).subscribe((res) => {
+        this.itemResource = res.data.items;
+        if(this.itemResource.length > 0) {
+          this.noItemResourceBoolean = false;
+          for(var i = 0; i < this.itemResource.length; i++) {
+            this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+          }
+        } else {
+            this.noItemResourceBoolean = true;
+        }
+      }
+      ),
+      err => {
+        console.log('********** Item Resource (institution).ts: ', err.error.msg);
+      };
+
+      this.resourceService.getInstitutionVenueResource(this.user.data.user.id).subscribe((res) => {
+        this.venueResource = res.data.venues
+        if(this.venueResource.length > 0) {
+          this.noVenueResourceBoolean = false;
+          for(var i = 0; i < this.venueResource.length; i++) {
+            if(this.venueResource[i].imgPath.length > 0) {
+                this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+            }
+          }
+        } else {
+            this.noVenueResourceBoolean = true;
+        }
+      }),
+      
+      err => {
+        console.log('********** Venue Resource (institution).ts: ', err.error.msg);
+      };
+
+  } else if(this.accountBoolean == false) {
+        this.resourceService.getUserKnowledgeResource(this.user.data.user.id).subscribe((res) => {
+        this.knowledgeResource = res.data.knowledges
+        if(this.knowledgeResource.length > 0) {
+          this.noKnowledgeResourceBoolean = false; 
+        } else {
+            this.noKnowledgeResourceBoolean = true;
+        }
+      }),
+      err => {
+        console.log('********** Knowledge Resource (user).ts: ', err.error.msg);
+      }
+
+      this.resourceService.getUserItemResource(this.user.data.user.id).subscribe((res) => {
+      this.itemResource = res.data.items;
+      if(this.itemResource.length > 0) {
+        this.noItemResourceBoolean = false;
+        for(var i = 0; i < this.itemResource.length; i++) {
+          this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+        }
+      } else {
+          this.noItemResourceBoolean = true;
+      }
+      }),
+      err => {
+        console.log('********** Item Resource (user).ts: ', err.error.msg);
+      };
+
+      this.resourceService.getUserVenueResource(this.user.data.user.id).subscribe((res) => {
+      this.venueResource = res.data.venues;
+      if(this.venueResource.length > 0) {
+        this.noVenueResourceBoolean = false;
+        for(var i = 0; i < this.venueResource.length; i++) {
+          if(this.venueResource[i].imgPath.length > 0) {
+              this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+          }
+        }
+      } else {
+          this.noVenueResourceBoolean = true;
+      }
+    
+      }),
+      err => {
+        console.log('********** Venue Resource (user).ts: ', err.error.msg);
+      };
+
+      this.resourceService.getUserManpowerResource(this.user.data.user.id).subscribe((res) => {
+      this.manpowerResource = res.data.manpowers;
+      if(this.manpowerResource.length > 0) {
+        this.noManpowerResourceBoolean = false;
+        for(var i = 0; i < this.manpowerResource.length; i++) {
+          this.manpowerResource[i].imgPath = this.sessionService.getRscPath() + this.manpowerResource[i].imgPath  +'?random+=' + Math.random();
+        }
+      } else {
+          this.noManpowerResourceBoolean = true;
+      }
+    
+      }),
+      err => {
+        console.log('********** Manpower Resource (user).ts: ', err.error.msg);
+      };
+  }
   }
 
   viewResource(resource) {
-    // this.tokenStorage.saveCurrResource(resource);
-    // this.tokenStorage.saveCurrResourceType(this.type);
     this.router.navigateByUrl("/view-resource/" + this.type + "/" + resource.id);
   }
 
