@@ -18,7 +18,7 @@ import { ToastController } from '@ionic/angular';
 
 import { authInterceptorProviders } from './helper/auth.interceptor';
 import { Camera } from '@ionic-native/camera/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
@@ -65,6 +65,7 @@ export function jwtOptionsFactory(storage:Storage) {
     Camera,
     File,
     FileTransfer,
+    FileTransferObject,
     SocialSharing,
     ActionSheetController,
     authInterceptorProviders
