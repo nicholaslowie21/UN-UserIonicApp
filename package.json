@@ -96,7 +96,11 @@
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-actionsheet": {},
       "cordova-plugin-x-socialsharing": {},
+<<<<<<< HEAD
       "integrator-cordova-plugin-downloader": {}
+=======
+      "cordova-plugin-file": {}
+>>>>>>> fbf566afba8fceb742664de06032b63d32f7fc40
     },
     "platforms": [
       "android",

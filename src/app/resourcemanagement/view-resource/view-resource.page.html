@@ -24,7 +24,9 @@
           <img [src]=v onerror="this.src='./assets/img/venue.jpg'" />
         </div>
       </div>
-      <ion-label *ngIf="yourAccountBoolean==true"  style="text-decoration: underline; float:right" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
+      <div *ngIf = "resourceType == 'venue' || resourceType == 'item'">
+        <ion-label *ngIf="yourAccountBoolean==true"  style="text-decoration: underline; float:right" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
+      </div>
       <br>
       <br>
       <ion-card-header>
@@ -60,7 +62,7 @@
       <ion-item-divider *ngIf="resourceType == 'knowledge'">
         <ion-label>Owners</ion-label>
         <ion-buttons *ngIf="yourAccountBoolean==true" style="float: right;" slot="end" >
-        <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp" (click)="toEditOwners($event)"></ion-icon></ion-label>
+        <ion-label style="font-weight: bold;">Edit Owners<ion-icon slot="end" name="create-sharp" (click)="toEditOwners($event)"></ion-icon></ion-label>
       </ion-buttons>
       </ion-item-divider>
       <ion-item lines="none" *ngIf="resourceType == 'knowledge'">
@@ -76,9 +78,9 @@
 
       <ion-item-divider>
         <ion-label>Details</ion-label>
-        <ion-buttons *ngIf="yourAccountBoolean==true" style="float: right;" slot="end" >
+        <!-- <ion-buttons *ngIf="yourAccountBoolean==true" style="float: right;" slot="end" >
           <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp" (click)="toEditResource($event)"></ion-icon></ion-label>
-        </ion-buttons>
+        </ion-buttons> -->
       </ion-item-divider>
       <ion-item *ngIf="resourceType != 'knowledge'" lines="none">
         <p>Country: {{currResource.country}}</p>
@@ -89,9 +91,8 @@
       <ion-item lines="none">
         <p>Description: {{currResource.desc}}</p>
       </ion-item>
-      <ion-item *ngIf="resourceType == 'knowledge'" lines="none">
-        <p>Attachment: {{currResource.title}}</p>
-        <ion-button (click)="download($event, currResource)"> Download</ion-button>
+      <ion-item *ngIf="resourceType == 'knowledge' && filePath != ''" lines="none" >
+        <p>Attachment: <ion-button (click) = "download()">Download</ion-button></p>
       </ion-item>
       
     </ion-card-content>

@@ -5,6 +5,8 @@ import { TokenStorageService } from '../../services/token-storage.service';
 import { Router, ActivatedRoute } from  "@angular/router";
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { File } from "@ionic-native/file/ngx";
 
 @Component({
   selector: 'app-view-resource',
@@ -21,6 +23,7 @@ export class ViewResourcePage implements OnInit {
   venueImage: any[];
   ownerImg: any;
   institutionKnowledgeOwner: boolean;
+  filePath: any;
 
   resultSuccess: boolean;
   error: boolean;
@@ -32,8 +35,9 @@ export class ViewResourcePage implements OnInit {
   data: { name: any; isVerified: any; profilePic: any; };
   institutionOwnersArray: any[];
   ownersArray: any;
+  // fileTransfer: FileTransferObject;
 
-  constructor(private downloader: Downloader, private navCtrl: NavController, private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController) {
+  constructor(private navCtrl: NavController, private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController, private file: File, private transfer: FileTransfer) {
     //See BG update project, for the toast
     this.retrieveResourceError = false;
     this.institutionKnowledgeOwner = false;
@@ -110,33 +114,12 @@ export class ViewResourcePage implements OnInit {
 
         this.ownersArray = this.userOwnersArray.concat(this.institutionOwnersArray);
 
+        if (this.currResource.attachment != "") {
+          this.filePath = this.sessionService.getRscPath() + this.currResource.attachment + '?random+=' + Math.random()
+        } 
         }), err => {
         console.log('********** ViewResource.ts - Knowledge: ', err.error.msg);
       };
-
-      // this.resourceOwner = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
-      //   //Here, resourceOwner is by default the institution Owner. Value can be empty
-      //   this.resourceOwner = res.data.institutionOwner;
-      //   if(this.resourceOwner != null) {
-      //     this.institutionKnowledgeOwner = true;
-      //     this.ownerImg = this.sessionService.getRscPath() + this.resourceOwner[0].ionicImg + '?random+=' + Math.random();
-      //     console.log(this.resourceOwner[0].name);
-      //   }
-      //   }), err => {
-      //   console.log('********** ViewResource.ts - KnowledgeOwner: ', err.error.msg);
-      // };
-
-      // this.knowledgeOwners = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
-      //   this.knowledgeOwners = res.data.userOwner;
-      //   if(this.knowledgeOwners.length > 0) {
-      //     for (var i = 0; i < this.knowledgeOwners.length; i++) {
-      //       this.knowledgeOwners[i].profilePic = this.sessionService.getRscPath() + this.knowledgeOwners[i].ionicImg + '?random+=' + Math.random();
-      //     }
-      //   }
-
-      //   }), err => {
-      //   console.log('********** ViewResource.ts - KnowledgeOwner: ', err.error.msg);
-      // };
 
     } else if (this.resourceType == "item") {
       this.currResource = this.resourceService.viewItemResourceDetail(this.resourceId).subscribe((res) => {
@@ -191,6 +174,28 @@ export class ViewResourcePage implements OnInit {
   upload(event) {
     this.router.navigate(["/upload-resource-pic/" + this.resourceType + "/" + this.resourceId]);
   }
+
+  download() {  
+    //here encoding path as encodeURI() format. This filePath has the math random thing 
+    let url = encodeURI(this.filePath);  
+    let fileName = this.currResource.attachment.substring(this.currResource.attachment.lastIndexOf('/')+1);
+    console.log(url);
+    console.log(fileName);
+
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    fileTransfer.download(url, this.file.externalRootDirectory + "/KoCoSD/" + fileName, true).then((entry) => {  
+        //here logging our success downloaded file path in mobile.  
+        console.log('download completed: ' + entry.toURL());  
+        this.resultSuccess = true;
+        this.downloadSuccessToast();
+    }, (error) => {  
+        //here logging our error its easier to find out what type of error occured.  
+        console.log('download failed: ' + JSON.stringify(error));  
+        this.downloadFailureToast(error);
+        this.error = true;
+        this.errorMessage = error;
+    });  
+} 
 
   pop($event) {
     this.navCtrl.pop();
@@ -291,7 +296,7 @@ export class ViewResourcePage implements OnInit {
     (await toast).present();
   }
 
-  download(ev, att) {
+  /*download(ev, att) {
     console.log("https://192.168.86.250:8080" + att.attachment);
     var request: DownloadRequest = {
       uri: "https://192.168.86.250:8080" + att.attachment,
@@ -309,8 +314,27 @@ export class ViewResourcePage implements OnInit {
   .then((location: string) => console.log('File downloaded at:'+location))
   .catch((error: any) => console.error(error));
 
-  }
+  }*/
 
   
+  async downloadSuccessToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Download successful! The file is in the KoCoSD folder',
+      duration: 2000,
+      position: 'middle',
+      cssClass: "toast-pass"      
+    });
+    (await toast).present();
+  }
+
+  async downloadFailureToast(error) {
+    const toast = this.toastCtrl.create({
+      message: 'Download Unsuccessful: ' + error,
+      duration: 2000,
+      position: 'middle',
+      cssClass: "toast-fail"
+    });
+    (await toast).present();
+  }
 
 }
