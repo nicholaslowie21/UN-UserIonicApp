@@ -23,6 +23,7 @@ export class EditResourcePage implements OnInit {
   file: any;
   isActive: boolean;
   isOriginalActive: boolean;
+  message: any;
 
   countryData: any[];
   resultSuccess: boolean;

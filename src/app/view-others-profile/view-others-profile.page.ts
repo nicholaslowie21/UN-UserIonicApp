@@ -229,7 +229,7 @@ export class ViewOthersProfilePage implements OnInit {
   }
 
   getProjects($event) {
-    this.router.navigate(['/my-projects/' + this.id]);
+    this.router.navigate(['/view-others-projects/' + this.id]);
   }
 
   getResources($event) {

@@ -39,6 +39,7 @@ export class UpdateProfilePage implements OnInit {
   resultError: boolean;
   isLoggedIn: boolean;
   salutationList: string[];
+  salutation: any;
   
   constructor(private  userService:  UserService, 
               private  router:  Router, 
@@ -126,7 +127,8 @@ export class UpdateProfilePage implements OnInit {
     }  
     
     this.sdgs = this.user.SDGs;
-    this.gender = this.user.gender;
+    console.log(this.user.salutation);
+    this.salutation = this.user.salutation;
     }
 
     ionViewDidEnter() {
@@ -163,7 +165,7 @@ export class UpdateProfilePage implements OnInit {
           this.resultSuccess = true;
           this.resultError = false;
           this.successToast();
-          this.router.navigateByUrl('/tabs');
+          this.router.navigateByUrl('/tabs/profile');
         },
         err => {
           this.resultSuccess = false;
@@ -187,7 +189,7 @@ export class UpdateProfilePage implements OnInit {
           this.resultSuccess = true;
           this.resultError = false;
           this.successToast();
-          this.router.navigateByUrl('/tabs');
+          this.router.navigateByUrl('/tabs/profile');
         },
         err => {
           this.resultSuccess = false;

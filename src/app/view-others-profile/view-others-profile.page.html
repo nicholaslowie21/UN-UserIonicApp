@@ -2,7 +2,8 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-buttons slot="start">
-        <ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>
+        <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
+        <ion-back-button></ion-back-button>
       </ion-buttons>
       <ion-title slot="start">{{ username }}</ion-title>
       <ion-icon *ngIf="isVerified == true" name="checkmark-circle" size="big"></ion-icon>
@@ -33,12 +34,12 @@
 </ion-card>
 <ion-item (click)="getProjects($event)" routerDirection="forward">
   <ion-icon name="list" slot="start"></ion-icon>
-  <ion-label>My Projects</ion-label>
+  <ion-label>Projects</ion-label>
 </ion-item>
 
 <ion-item (click)="getResources($event)">
   <ion-icon  name="cube" slot="start"></ion-icon>
-  <ion-label>My Resources</ion-label>
+  <ion-label>Resources</ion-label>
 </ion-item>
 
   <ion-item *ngIf="accountBoolean == true" (click)="getAffiliates($event)">

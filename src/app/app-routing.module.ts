@@ -174,6 +174,10 @@ const routes: Routes = [
   {
     path: 'view-others-resources/:Id',
     loadChildren: () => import('./view-others-resources/view-others-resources.module').then( m => m.ViewOthersResourcesPageModule)
+  },
+  {
+    path: 'view-others-projects/:Id',
+    loadChildren: () => import('./view-others-projects/view-others-projects.module').then( m => m.ViewOthersProjectsPageModule)
   }
 
 
