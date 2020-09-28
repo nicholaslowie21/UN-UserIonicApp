@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>
     </ion-buttons>
-    <ion-title>My Projects</ion-title>
+    <ion-title>{{name}}'s Projects</ion-title>
     <ion-buttons *ngIf="user.data.user.id == id"label="Create" slot="end">
       <ion-icon name="add-circle-outline" slot="end" routerLink="/project-creation">
       </ion-icon>

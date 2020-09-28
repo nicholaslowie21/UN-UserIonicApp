@@ -26,6 +26,7 @@ export class MyProjectsPage implements OnInit {
   error: boolean;
   errorMessage: any;
   id: string;
+  name: any;
 
   constructor(private navCtrl: NavController, private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
         /*this.accountType = this.tokenStorage.getAccountType();
@@ -79,7 +80,13 @@ export class MyProjectsPage implements OnInit {
   initialise() {
     this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     if(this.accountBoolean == true)
-    {
+    {   
+        this.institutionService.viewInstitutionById(this.id).subscribe((res) => {
+          this.name = res.data.targetInstitution.name;
+        },
+        (err) => {
+          console.log("*******************Retrieve User error(My-projects)" + err.error.msg);
+        })
         this.institutionService.getCurrentProjects(this.id).subscribe((res) => {
             this.currProjects = res.data.currProjects;
             if(this.currProjects.length > 0) {
@@ -116,7 +123,11 @@ export class MyProjectsPage implements OnInit {
         };
 
     } else if(this.accountBoolean == false) {
-      console.log("retrieved projects")
+          this.userService.viewUserById(this.id).subscribe((res) => {
+                this.name = res.data.targetUser.name;
+          }, (err) => {
+            console.log("*******************Retrieve User error(My-projects)" + err.error.msg);
+          })
           this.userService.getCurrentProjects(this.id).subscribe((res) => {
           this.currProjects = res.data.currProjects
 

@@ -408,8 +408,8 @@ export class ViewOthersProfilePage implements OnInit {
   }*/
 
   back() {
-    //this.navCtrl.pop();
-    this.router.navigate([this.originPage]);
+    this.navCtrl.pop();
+    //this.router.navigate([this.originPage]);
     this.tokenStorage.saveViewId(this.tokenStorage.getUser().data.user.id);
  }
 
