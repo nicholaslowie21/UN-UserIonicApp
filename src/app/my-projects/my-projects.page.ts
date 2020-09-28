@@ -27,6 +27,10 @@ export class MyProjectsPage implements OnInit {
   errorMessage: any;
   id: string;
   name: any;
+  currProjectsInitial: any[];
+  searchCurrentProjectString = '';
+  currentProjectsList: any[];
+  pastProjectsList: any[];
 
   constructor(private navCtrl: NavController, private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
         /*this.accountType = this.tokenStorage.getAccountType();
@@ -58,6 +62,8 @@ export class MyProjectsPage implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     this.initialise();
+    this.initializeCurr();
+    this.initializePast();
     // Dummy data to be replaced with actual data when the proj endpoints are created. Some attributes not in the dummy data, and some (eg role) are created here.
     /*this.currProjects = [
       {"id": "1", "title": "Project One", "desc": "This is a special project", "SDG": [1, 3], "status": "ongoing", "role": "Contributor"},
@@ -75,6 +81,8 @@ export class MyProjectsPage implements OnInit {
   ionViewDidEnter() {
     console.log(this.noCurrProjectBoolean);
     this.initialise();
+    this.initializeCurr();
+    this.initializePast();
   }
 
   initialise() {
@@ -177,6 +185,43 @@ export class MyProjectsPage implements OnInit {
       this.router.navigateByUrl("/tabs/profile");
     }
  }
+
+ initializeCurr() {
+   this.currentProjectsList = this.currProjects;
+ }
+ initializePast() {
+  this.pastProjectsList = this.pastProjects;
+}
+
+ async filterCurrList(evt) {
+  this.initializeCurr();
+  const searchTerm = evt.srcElement.value;
+
+  if (!searchTerm) {
+    return;
+  }
+
+  this.currentProjectsList = this.currentProjectsList.filter(currentProject => {
+    if (currentProject.title && searchTerm) {
+      return (currentProject.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+    }
+  });
+}
+
+async filterPastList(evt) {
+  this.initializePast();
+  const searchTerm = evt.srcElement.value;
+
+  if (!searchTerm) {
+    return;
+  }
+
+  this.pastProjectsList = this.pastProjectsList.filter(pastProject => {
+    if (pastProject.title && searchTerm) {
+      return (pastProject.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+    }
+  });
+}
   
  
 

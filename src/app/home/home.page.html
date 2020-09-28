@@ -12,4 +12,21 @@
       <ion-title size="large">Home</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-title>News Feed</ion-title>
+
+  <ion-card *ngFor="let n of newsList">
+    <img [src]=n.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
+    <ion-card-title>{{n.title}}</ion-card-title>
+    <div class="aligned">
+      <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
+      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="padding-left: 5px; width: 50px; height: 50px; object-fit: cover;" [src]=n.profPic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+      <ion-label (click)="viewFounderProfile($event, n)">{{n.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+    </div>
+  <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of n.SDGs">SDG {{sdg}}&nbsp;</ion-badge>
+  <div>
+   
+    <ion-card-content>Project Description: {{n.desc}}<br>Country: {{n.country}}<br>Rating: {{n.rating}}</ion-card-content>
+  </div>
+    <ion-card-title></ion-card-title>
+  </ion-card>
 </ion-content>

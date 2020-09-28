@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { InstitutionService } from 'src/app/services/institution.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { UserService } from 'src/app/services/user.service';
 import { isRegExp } from 'util';
 @Component({
   selector: 'app-view-project',
@@ -26,7 +28,7 @@ export class ViewProjectPage implements OnInit {
   contributors: any;
   resourceNeeds: any[];
   country: any;
-  host: any;
+  hostId: any;
   status: any;
   desc: any;
   SDGs: any[];
@@ -37,10 +39,12 @@ export class ViewProjectPage implements OnInit {
   completedBoolean: boolean;
   contributions: any;
   viewId: any;
+  hostType: any;
+  host: any;
   
   
 
-  constructor(private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
+  constructor(private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.initialise();
@@ -95,13 +99,39 @@ export class ViewProjectPage implements OnInit {
       this.desc = this.projectToView.desc;
       this.contributors = this.projectToView.contributors;
       this.country = this.projectToView.country;
-      this.host = this.projectToView.host;
+      this.hostId = this.projectToView.host;
       this.status = this.projectToView.status;
       this.SDGs = this.projectToView.SDGs;
+      this.hostType = this.projectToView.hostType;
   },
   err => {
     console.log('********** View Projects.ts: ', err.error.msg);
   });
+  this.host ={}
+  if(this.hostType == "user") {
+    this.userService.viewUserById(this.hostId).subscribe((res) => {
+      this.host = {
+        "id": res.data.targetUser.id,
+        "name": res.data.targetUser.name,
+        "username": res.data.targetUser.username,
+        "type": "user",
+        "profilePic": this.sessionService.getRscPath() + res.data.targetUser.ionicImg +'?random+=' + Math.random()
+      }
+    }, (err) => {
+      console.log("View Project(get host) error: " + err.error.msg)
+    })
+  } else if (this.hostType ==  "institution") {
+    this.institutionService.viewInstitutionById(this.hostId).subscribe((res) => {
+      this.host = {
+        "id": res.data.targetInstitution.id,
+        "name": res.data.targetInstitution.name,
+        "username": res.data.targetInstitution.username,
+        "type": "institution",
+        "profilePic": this.sessionService.getRscPath() + res.data.targetInstitution.ionicImg +'?random+=' + Math.random()
+      }
+    })
+  }
+  
   this.projectService.getKpi(this.id).subscribe((res)=>{
       this.kpis = res.data.kpis;
   },
@@ -177,6 +207,14 @@ console.log(this.completedBoolean);
       this.router.navigate(['/view-others-profile/' + a.username + "/user" ])
     }
     
+  }
+
+  viewFounderProfile(ev, h) {
+    if(h.id == this.currentUser.data.user.id) {
+      this.router.navigateByUrl("/tabs/profile");
+    } else {
+      this.router.navigate(['/view-others-profile/' + h.username + "/" + h.type ])
+    }
   }
 
   back() {
@@ -290,6 +328,10 @@ console.log(this.completedBoolean);
       cssClass: "toast-fail"
     });
     (await toast).present();
+  }
+
+  remove() {
+    
   }
 
 }

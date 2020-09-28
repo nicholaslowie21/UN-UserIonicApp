@@ -23,7 +23,7 @@
   <ion-list >
     <ion-item *ngFor="let u of users" >
       <img class="card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=u.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-      <ion-title>{{u.name}}</ion-title>
+      <ion-title>{{u.username}}</ion-title>
       {{u.country}}
       <ion-toolbar >
         <ion-button class="add" (click)="presentAlertConfirm(u)" >Add member</ion-button>

@@ -21,6 +21,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 
 
 /*Supply an array of whitelisted Domains
@@ -67,6 +68,7 @@ export function jwtOptionsFactory(storage:Storage) {
     FileTransfer,
     SocialSharing,
     ActionSheetController,
+    Downloader,
     authInterceptorProviders
   ],
   bootstrap: [AppComponent]

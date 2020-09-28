@@ -90,7 +90,8 @@
         <p>Description: {{currResource.desc}}</p>
       </ion-item>
       <ion-item *ngIf="resourceType == 'knowledge'" lines="none">
-        <p>Attachment: {{currResource.attachment}}</p>
+        <p>Attachment: {{currResource.title}}</p>
+        <ion-button (click)="download($event, currResource)"> Download</ion-button>
       </ion-item>
       
     </ion-card-content>

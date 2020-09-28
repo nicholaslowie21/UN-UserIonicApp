@@ -4,6 +4,7 @@ import { SessionService } from '../../services/session.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { Router, ActivatedRoute } from  "@angular/router";
 import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 
 @Component({
   selector: 'app-view-resource',
@@ -32,7 +33,7 @@ export class ViewResourcePage implements OnInit {
   institutionOwnersArray: any[];
   ownersArray: any;
 
-  constructor(private navCtrl: NavController, private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController) {
+  constructor(private downloader: Downloader, private navCtrl: NavController, private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController) {
     //See BG update project, for the toast
     this.retrieveResourceError = false;
     this.institutionKnowledgeOwner = false;
@@ -289,5 +290,27 @@ export class ViewResourcePage implements OnInit {
     });
     (await toast).present();
   }
+
+  download(ev, att) {
+    console.log("https://192.168.86.250:8080" + att.attachment);
+    var request: DownloadRequest = {
+      uri: "https://192.168.86.250:8080" + att.attachment,
+      title: att.name,
+      description: '',
+      mimeType: '',
+      visibleInDownloadsUi: true,
+      notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
+      destinationInExternalFilesDir: {
+          dirType: 'Downloads',
+          subPath: 'MyFile.apk'
+      }
+  };
+  this.downloader.download(request)
+  .then((location: string) => console.log('File downloaded at:'+location))
+  .catch((error: any) => console.error(error));
+
+  }
+
+  
 
 }

@@ -3,6 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
 import { TokenStorageService } from '../services/token-storage.service';
+import { ProjectService } from '../services/project.service';
+import { SessionService } from '../services/session.service';
+import { Router } from '@angular/router';
+import { InstitutionService } from '../services/institution.service';
+import { UserService } from '../services/user.service';
  
 @Component({
   selector: 'app-home',
@@ -14,9 +19,12 @@ export class HomePage implements OnInit {
   data = '';
   accountType: any;
   accountBoolean: boolean;
+  newsList: any;
+  currentUser: any;
  
-  constructor(private authService: AuthService, private storage: Storage, private toastController: ToastController, private tokenStorage: TokenStorageService) { 
+  constructor(private institutionService: InstitutionService, private userService: UserService, private router: Router, private projectService: ProjectService, private storage: Storage, private toastController: ToastController, private tokenStorage: TokenStorageService, private sessionService: SessionService) { 
     this.accountType = this.tokenStorage.getAccountType();
+    this.currentUser = this.tokenStorage.getUser();
     if(this.accountType == "institution") {
       this.accountBoolean = true;
     } else {
@@ -25,32 +33,64 @@ export class HomePage implements OnInit {
   }
   ngOnInit() {
     this.tokenStorage.getUser();
+    this.getNewsFeed();
   }
 
-  test(): void {
-    this.authService.test().subscribe(
-      response => {
-        console.log(response);
-      },
-      err => {
-        console.log(err.error.msg);
+  ionViewDidEnter(){
+    this.currentUser = this.tokenStorage.getUser();
+    this.getNewsFeed();
+  }
+ 
+  getNewsFeed() {
+    this.projectService.getNewsFeed().subscribe((res) => {
+      this.newsList = res.data.newsfeeds;
+      console.log(this.newsList)
+      if(this.newsList != undefined) {
+        for(var i = 0; i < this.newsList.length; i ++) {
+          
+          this.newsList[i].imgPath = this.sessionService.getRscPath() + this.newsList[i].imgPath +'?random+=' + Math.random();
+          var hostType = this.newsList[i].hostType;
+          if(hostType == "institution") {
+              var x = this.newsList[i];
+              this.institutionService.viewInstitutionById(this.newsList[i].host).subscribe((res) => {
+                    x["name"] = res.data.targetInstitution.name;
+                    x["isVerified"] = res.data.targetInstitution.isVerified;
+                    x["profPic"] = this.sessionService.getRscPath() + res.data.targetInstitution.ionicImg +'?random+=' + Math.random();
+              }, (err) => {
+                console.log("Home(Retrieve Institution error): " + err.error.msg)
+              })
+          } else if(hostType == "user") {
+            var x = this.newsList[i];
+            this.userService.viewUserById(this.newsList[i].host).subscribe((res) => {
+                x["name"] = res.data.targetUser.name;
+                x["username"] = res.data.targetUser.username;
+                x["isVerified"] = res.data.targetUser.isVerified;
+                x["profPic"] = this.sessionService.getRscPath() + res.data.targetUser.ionicImg +'?random+=' + Math.random();
+        }, (err) => {
+          console.log("Home(Retrieve user error): " + err.error.msg)
+        })
+
+        this.newsList[i] = x;
+          }
+          
+        }
       }
-    )
+      
+    },
+    (err) => {
+      console.log(err.error.message);
+    })
+
+  }
+
+  viewFounderProfile(ev, h) {
+    if(h.id == this.currentUser.data.user.id) {
+      this.router.navigateByUrl("/tabs/profile");
+    } else {
+      this.router.navigate(['/view-others-profile/' + h.username + "/" + h.hostType ])
+    }
   }
  
-  logout() {
-    this.authService.logout();
-  }
- 
-  clearToken() {
-    // ONLY FOR TESTING!
-    this.storage.remove('access_token');
- 
-    let toast = this.toastController.create({
-      message: 'JWT removed',
-      duration: 3000
-    });
-    toast.then(toast => toast.present());
-  }
+  
  
 }
