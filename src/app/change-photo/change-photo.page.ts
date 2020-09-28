@@ -56,7 +56,7 @@ export class ChangePhotoPage implements OnInit {
       this.institutionService.uploadProfilePicture(formData).subscribe(
         (res) => {
           this.successToast();
-          this.router.navigateByUrl('/tabs/profile');
+          this.router.navigateByUrl('/tabs/home');
         },
         
         (err) => this.failureToast(err)
@@ -65,7 +65,7 @@ export class ChangePhotoPage implements OnInit {
       this.userService.uploadProfilePicture(formData).subscribe(
         (res) => {
         this.successToast();
-        this.router.navigateByUrl('/tabs/profile');
+        this.router.navigateByUrl('/tabs/home');
       },
         (err) => this.failureToast(err.message)
       );

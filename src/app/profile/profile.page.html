@@ -63,7 +63,7 @@
     <div class="centered">
       
       <div >
-        <a style="font-size: 8px;" routerLink="/change-photo" routerDirection="root">Edit Profile Picture</a>
+        <a style="font-size: 8px;" routerLink="/change-photo" routerDirection="forward">Edit Profile Picture</a>
       </div>
       <h3 *ngIf="accountBoolean == false" class="name">{{ currentUser.data.user.name }} | {{currentUser.data.user.salutation}}</h3>
       <h3 *ngIf="accountBoolean == true" class="name">{{ currentUser.data.user.name }}</h3>
