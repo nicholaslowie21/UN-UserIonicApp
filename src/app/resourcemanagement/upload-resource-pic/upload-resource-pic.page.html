@@ -30,7 +30,7 @@
     <ion-card *ngFor = "let v of venueImages">
       <div class="aligned">
         <img class="aligned card-img-top img-fluid d-block" style="width: 150px; height: 150px; object-fit: cover;" [src]=v.imgPath alt="Venue Image">
-        <div>
+        <div style="padding-left: 10px;">
           <p style='font-weight: bold;'>{{v.name}}</p>
           <ion-button style="fill: outline;" (click)="presentAlertConfirm($event, v.index)" >Remove</ion-button>
         </div> 
