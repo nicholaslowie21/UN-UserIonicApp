@@ -382,6 +382,16 @@ export class ResourceService {
     );
   }
 
+  deleteVenuePic(data) {
+    return this.http.post(this.resourceAPI_URL + "/deleteVenuePicture", {
+      "venueId": data.venueId,
+      "indexes": data.indexes,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   uploadKnowledgeAttachment(data) {
     return this.http.post(this.resourceAPI_URL + "/uploadKnowledgeAttachment", data).pipe(
       tap(res => {
@@ -401,6 +411,34 @@ export class ResourceService {
       tap(res => {
     }, error => console.log(error)),
     );
+  }
+
+  searchItem(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/search/item?title=' + data, httpOptions).pipe(
+      tap(res => {
+      }, error => this.handleError(error)),
+      );
+  }
+
+  searchKnowledge(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/search/knowledge?title=' + data, httpOptions).pipe(
+      tap(res => {
+      }, error => this.handleError(error)),
+      );
+  }
+
+  searchManpower(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/search/manpower?title=' + data, httpOptions).pipe(
+      tap(res => {
+      }, error => this.handleError(error)),
+      );
+  }
+
+  searchVenue(data): Observable<any> {
+    return this.http.get(this.resourceAPI_URL + '/search/venue?title=' + data, httpOptions).pipe(
+      tap(res => {
+      }, error => this.handleError(error)),
+      );
   }
 
   private handleError(error: HttpErrorResponse)
