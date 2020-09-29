@@ -235,6 +235,13 @@ export class ProjectService {
   }
 
 
+  removeResourceContribution(data): Observable<any> {
+    return this.http.post(this.API_URL + '/removeContribution', {"contributionId":data}, httpOptions).pipe(
+      tap(res => {
+
+    }, error => console.log(error.msg)));
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

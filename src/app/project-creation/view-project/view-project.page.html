@@ -25,8 +25,12 @@
     <img class="aligned card-img-top rounded-circle img-fluid d-block" style="padding-left: 5px; width: 50px; height: 50px; object-fit: cover;" [src]=host.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <ion-label (click)="viewFounderProfile($event, host)">{{host.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
     </div>
-    <ion-card-content><div style="font-weight: bold;">Project Description:</div>{{desc}} </ion-card-content>
-    <ion-card-content><div style="font-weight: bold;">Status:</div> {{status}}</ion-card-content>
+    <ion-card-content><div style="font-weight: bold;">Project Description: </div>{{desc}} </ion-card-content>
+    <ion-card-content><div style="font-weight: bold;">Status: </div> {{status}}</ion-card-content>
+    <ion-label style="font-weight: bold; padding-left: 15px;"> Progress: {{(totalProgress)}} %</ion-label>
+    <ion-card>
+      <ion-progress-bar value='{{totalProgress/100}}'></ion-progress-bar>
+    </ion-card>
     <ion-card-content><div style="font-weight: bold;">Country: </div> {{country}}</ion-card-content>
   </div>
   <div *ngIf="founderBoolean==true||adminBoolean==true">
@@ -52,8 +56,8 @@
       <ion-segment-button value="contributions">
         <ion-label>Contributions</ion-label>
       </ion-segment-button>
-      <ion-segment-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" value="manage">
-        <ion-label>Manage</ion-label>
+      <ion-segment-button *ngIf="(adminBoolean==true || founderBoolean==true)" value="manage">
+        <ion-label>Details</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -65,20 +69,24 @@
     <ion-card>
       <ion-item-divider>
         <ion-label color=dark>Resource Contributions</ion-label>
+        <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
+          <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp" (click)="viewContri($event)"></ion-icon></ion-label>
+          
+        </ion-buttons>
       </ion-item-divider>
       
       <ion-card *ngFor="let c of contributions" lines="none">
         <ion-badge style="float: right;" class="{{c.resType}}type">{{c.resType}}</ion-badge>
         <ion-card-title>{{c.needTitle}}</ion-card-title>
         <ion-card-content style="font-weight: bolder;">Provided Resource: {{c.resourceTitle}}</ion-card-content>
-        <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="remove($event, c)" >Remove</ion-button>
+        <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="presentAlertConfirm($event, c)" >Remove</ion-button>
         <ion-card-content style="font-weight: bold;">{{c.desc}}</ion-card-content>
-        <ion-card-content style="text-align: left" (click)="viewProfile($event, c)">Provided By: {{c.contributorUsername}}</ion-card-content>
+        <ion-label style="text-align: left" (click)="viewProfile($event, c)">Provided By: {{c.contributorUsername}}</ion-label>
 
       </ion-card>
     </ion-card>
   </ion-item-group>
-  <div *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)">
+  <div>
     <ion-item-group *ngSwitchCase="'manage'" >
       <ion-card>
       <ion-item-divider>

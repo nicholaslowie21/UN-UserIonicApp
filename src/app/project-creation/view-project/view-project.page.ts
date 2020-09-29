@@ -41,6 +41,8 @@ export class ViewProjectPage implements OnInit {
   viewId: any;
   hostType: any;
   host: any;
+  totalCompletion = 0;
+  totalProgress = 0;
   
   
 
@@ -140,6 +142,20 @@ export class ViewProjectPage implements OnInit {
   })
   this.projectService.getResourceNeeds(this.id).subscribe((res)=>{
     this.resourceNeeds = res.data.resourceneeds;
+    if(this.resourceNeeds != undefined) {
+      console.log("im running")
+      this.totalCompletion = 0;
+      this.totalProgress = 0;
+      for(var i = 0; i < this.resourceNeeds.length; i++) {
+          this.totalCompletion += this.resourceNeeds[i].completion
+          console.log(this.resourceNeeds[i].completion);
+          console.log(this.totalCompletion)
+      }
+      if(this.resourceNeeds.length != 0) {
+          this.totalProgress = (this.totalCompletion/((this.resourceNeeds.length)*100))*100
+      }
+    }
+    
 },
 err=> {
   console.log('******* KPI retrieval error: ', err.error.msg);
@@ -198,6 +214,10 @@ console.log(this.completedBoolean);
 
   viewProfile(ev, c) {
     this.router.navigate(['/view-others-profile/' + c.contributorUsername + "/" + c.contributorType ])
+  }
+
+  viewContri(ev) {
+    this.router.navigate(["/contributions-management/" + this.id]);
   }
 
   viewAdminProfile(ev, a) {
@@ -330,8 +350,49 @@ console.log(this.completedBoolean);
     (await toast).present();
   }
 
-  remove() {
-    
+  remove(ev, c) {
+    console.log("test");
+    this.projectService.removeResourceContribution(c.contributionId).subscribe((res)=> {
+      this.successToast();
+      this.projectService.getResourceContributions(this.id).subscribe((res)=>{
+        this.contributions = res.data.contributions;
+        console.log(this.contributions);
+    },
+    (err) => {
+      console.log('******* Contributions retrieval error: ', err.error.msg);
+    })
+
+
+    },
+    err => {
+      console.log(err);
+      this.failureToast(err.error.msg);
+      console.log('********** ViewProjectPage(remove contributors).ts: ', err.error.msg);
+    })
+  }
+
+  async presentAlertConfirm(ev, u) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm',
+      message: 'Are you sure you want to remove this contribution?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.remove(ev, u);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

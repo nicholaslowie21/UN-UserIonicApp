@@ -10,7 +10,7 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./institution-register.page.scss'],
 })
 export class InstitutionRegisterPage implements OnInit {
-    form: FormGroup;
+    form: any={};
     name: string;
     username: string; 
     email: string;
@@ -24,6 +24,8 @@ export class InstitutionRegisterPage implements OnInit {
 
   resultSuccess: boolean;
   resultError: boolean;
+  attachment: any;
+  formData: any;
   constructor(private  authService:  AuthService, private  router:  Router, private toastCtrl: ToastController) { 
     this.resultSuccess = false;
 		this.resultError = false;
@@ -67,9 +69,31 @@ export class InstitutionRegisterPage implements OnInit {
     "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"];
   }
 
+  selectAttachment(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.attachment = file;
+      console.log(this.attachment);
+    }
+  }
+
   register(registerForm:NgForm) {
+    if (this.attachment == null) {
+      var errorMessage = 'Choose a file!';
+      this.failureToast(errorMessage);
+      return;
+    }
     if(this.password == this.confirmPassword){
-      this.authService.instituteRegister(this.name, this.username, this.email, this.password, this.country).subscribe((res) => {
+      const formData = new FormData();
+      formData.append("name", this.name);
+      formData.append("username", this.username);
+      formData.append("email", this.email);
+      formData.append("password", this.password);
+      formData.append("country", this.country);
+      formData.append("verifyDoc", this.attachment);
+      console.log(formData);
+      
+      this.authService.instituteRegister(formData).subscribe((res) => {
         console.log(res);
         this.resultSuccess = true;
         this.resultError = false;
@@ -112,6 +136,8 @@ export class InstitutionRegisterPage implements OnInit {
     });
     (await toast).present();
   }
+
+  
 
 
 }

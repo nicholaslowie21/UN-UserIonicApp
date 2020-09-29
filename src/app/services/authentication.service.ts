@@ -98,15 +98,8 @@ export class AuthService {
     );
   }
 
-  instituteRegister(name: string, username: string, email: string, password: string, country: string): Observable<any> {
-    let createInstitutionReq = {
-      "name": name,
-      "username": username,
-      "email": email,
-      "password": password,
-      "country": country
-    }
-    return this.http.post(this.baseUrl + "/authorization/institution/signup", createInstitutionReq, httpOptions).pipe(
+  instituteRegister(formData): Observable<any> {
+    return this.http.post(this.baseUrl + "/authorization/institution/signup", formData).pipe(
       tap(res => {
         this.tokenStorage.saveUser(res.data.user);
     }, error => this.handleError(error)),
