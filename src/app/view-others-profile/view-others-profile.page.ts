@@ -41,6 +41,7 @@ export class ViewOthersProfilePage implements OnInit {
   id: any;
   viewInfo: {};
   originPage: string;
+  profileFeed: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -195,7 +196,25 @@ export class ViewOthersProfilePage implements OnInit {
       err => {
         console.log('********** Badges(user).ts: ', err.error.msg);
       };
+
+      this.userService.getUserProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
+        this.profileFeed = res.data.feeds;
+        for(var x = 0; x < this.profileFeed.length; x++) {
+          var modifiedCreatedAt = this.profileFeed[x].createdAt
+          this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+          
+        }
+      }, (err) => {
+        console.log('********** View others Profile Feed error(user).ts: ', err.error.msg);
+      })
     }
+  }
+
+  parseDate(d: String) {		
+    let idx = d.indexOf("T");
+    let day = d.substring(0,idx);
+    let t = d.substring(idx + 1, idx + 6)
+    return day + " "  + t;
   }
 
   ionViewDidEnter() {

@@ -114,7 +114,7 @@
     <ion-item-divider>
       <ion-label>Badges</ion-label>
     </ion-item-divider>
-
+    <ion-card-subtitle *ngIf="badges == undefined">Start contributing to earn some badges!!</ion-card-subtitle>
     <ion-item *ngFor="let b of badges" lines="none">
       <div>
       <img [src]=b.imgPath />
@@ -122,6 +122,24 @@
     </div>
       
     </ion-item>
+
+    <ion-item-divider>
+      <ion-card-title>Profile Feed</ion-card-title>
+    </ion-item-divider>
+      <ion-card *ngFor="let pf of profileFeed">
+            <div class="aligned">
+                <div style="padding-top: 5px; padding-left: 5px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 30px; height: 30px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+                <ion-label style="padding-left: 5px; font-weight: bold" >{{currentUser.data.user.name}}</ion-label>
+                <ion-icon *ngIf="isVerified == true" name="checkmark-circle" size="big"></ion-icon>
+              </div>
+            
+            <ion-card-title>{{pf.title}} </ion-card-title>
+          <ion-card-content>{{pf.desc}}</ion-card-content>
+          <div style="text-align: right"><ion-label>{{pf.createdAt}}</ion-label></div>
+          
+
+      </ion-card>
+
 
   </ion-item-group>
 </ion-list>

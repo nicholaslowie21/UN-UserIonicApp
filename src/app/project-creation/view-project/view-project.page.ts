@@ -270,7 +270,7 @@ console.log(this.completedBoolean);
             this.back();
 					},
 					error => {
-            this.failureToast(error);
+            this.failureToast(error.error.msg);
 						this.error = true;
 						this.errorMessage = error;
 					}
