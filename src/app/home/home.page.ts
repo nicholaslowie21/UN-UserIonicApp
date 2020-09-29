@@ -21,6 +21,7 @@ export class HomePage implements OnInit {
   accountBoolean: boolean;
   newsList: any;
   currentUser: any;
+  newsFeedList: any[];
  
   constructor(private institutionService: InstitutionService, private userService: UserService, private router: Router, private projectService: ProjectService, private storage: Storage, private toastController: ToastController, private tokenStorage: TokenStorageService, private sessionService: SessionService) { 
     this.accountType = this.tokenStorage.getAccountType();
@@ -44,23 +45,25 @@ export class HomePage implements OnInit {
   getNewsFeed() {
     this.projectService.getNewsFeed().subscribe((res) => {
       this.newsList = res.data.newsfeeds;
-      console.log(this.newsList)
       if(this.newsList != undefined) {
+        this.newsFeedList =[];
+        console.log(this.newsList.length)
         for(var i = 0; i < this.newsList.length; i ++) {
-          
           this.newsList[i].imgPath = this.sessionService.getRscPath() + this.newsList[i].imgPath +'?random+=' + Math.random();
           var hostType = this.newsList[i].hostType;
+          console.log(hostType);
+          var x = this.newsList[i];
           if(hostType == "institution") {
-              var x = this.newsList[i];
+              
               this.institutionService.viewInstitutionById(this.newsList[i].host).subscribe((res) => {
                     x["name"] = res.data.targetInstitution.name;
+                    x["username"] = res.data.targetInstitution.username;
                     x["isVerified"] = res.data.targetInstitution.isVerified;
                     x["profPic"] = this.sessionService.getRscPath() + res.data.targetInstitution.ionicImg +'?random+=' + Math.random();
               }, (err) => {
                 console.log("Home(Retrieve Institution error): " + err.error.msg)
               })
           } else if(hostType == "user") {
-            var x = this.newsList[i];
             this.userService.viewUserById(this.newsList[i].host).subscribe((res) => {
                 x["name"] = res.data.targetUser.name;
                 x["username"] = res.data.targetUser.username;
@@ -69,11 +72,10 @@ export class HomePage implements OnInit {
         }, (err) => {
           console.log("Home(Retrieve user error): " + err.error.msg)
         })
-
-        this.newsList[i] = x;
           }
-          
+          this.newsFeedList.push(x);
         }
+        console.log(this.newsFeedList);
       }
       
     },

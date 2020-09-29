@@ -126,7 +126,7 @@
     <ion-item-divider>
       <ion-card-title>Profile Feed</ion-card-title>
     </ion-item-divider>
-      <ion-card *ngFor="let pf of profileFeed">
+      <ion-card *ngFor="let pf of reversedProfileFeed">
             <div class="aligned">
                 <div style="padding-top: 5px; padding-left: 5px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 30px; height: 30px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
                 <ion-label style="padding-left: 5px; font-weight: bold" >{{currentUser.data.user.name}}</ion-label>

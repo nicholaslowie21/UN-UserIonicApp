@@ -28,6 +28,7 @@ export class ProfilePage implements OnInit {
   imageForSharing: any;
   isVerified: boolean;
   profileFeed: any;
+  reversedProfileFeed: any[];
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -70,10 +71,13 @@ export class ProfilePage implements OnInit {
 
         this.institutionService.getInstitutionProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
           this.profileFeed = res.data.feeds;
+          this.reversedProfileFeed = [];
+          var end = this.profileFeed.length-1
           for(var x = 0; x < this.profileFeed.length; x++) {
             var modifiedCreatedAt = this.profileFeed[x].createdAt
             this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
-            
+            this.reversedProfileFeed[x] = this.profileFeed[end]
+            end -= 1;
           }
         }, (err) => {
           console.log('********** Profile Feed error(Institution).ts: ', err.error.msg);
@@ -93,9 +97,13 @@ export class ProfilePage implements OnInit {
 
       this.userService.getUserProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
         this.profileFeed = res.data.feeds;
+        this.reversedProfileFeed = [];
+        var end = this.profileFeed.length-1
         for(var x = 0; x < this.profileFeed.length; x++) {
           var modifiedCreatedAt = this.profileFeed[x].createdAt
           this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+          this.reversedProfileFeed[x] = this.profileFeed[end];
+          end -= 1;
           
         }
       }, (err) => {
@@ -136,22 +144,30 @@ parseDate(d: String) {
     if(this.accountType == "institution") {
       this.institutionService.getInstitutionProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
         this.profileFeed = res.data.feeds;
-        for(var x = 0; x < this.profileFeed.length; x++) {
-          var modifiedCreatedAt = this.profileFeed[x].createdAt
-          this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
-          
-        }
+        this.reversedProfileFeed = [];
+          var end = this.profileFeed.length-1
+          for(var x = 0; x < this.profileFeed.length; x++) {
+            var modifiedCreatedAt = this.profileFeed[x].createdAt
+            this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+            this.reversedProfileFeed[x] = this.profileFeed[end]
+            end -= 1;
+          }
       }, (err) => {
         console.log('********** Profile Feed error(Institution).ts: ', err.error.msg);
       })
     } else if(this.accountType == "user") {
       this.userService.getUserProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
         this.profileFeed = res.data.feeds;
+        this.reversedProfileFeed = [];
+        var end = this.profileFeed.length-1
         for(var x = 0; x < this.profileFeed.length; x++) {
           var modifiedCreatedAt = this.profileFeed[x].createdAt
           this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+          this.reversedProfileFeed[x] = this.profileFeed[end];
+          end -= 1;
           
         }
+        console.log(this.reversedProfileFeed);
       }, (err) => {
         console.log('********** Profile Feed error(user).ts: ', err.error.msg);
       })
