@@ -23,6 +23,8 @@ export class MyResourcesPage implements OnInit {
   noItemResourceBoolean: boolean;
   noVenueResourceBoolean: boolean;
   noManpowerResourceBoolean: boolean;
+  isFilterAll : boolean;
+
 
   constructor(private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
     this.accountType = this.tokenStorage.getAccountType();
@@ -34,27 +36,33 @@ export class MyResourcesPage implements OnInit {
           this.accountBoolean = false;
         }
     this.type = "manpower";
-   }
+    this.isFilterAll = true;
+  }
 
   ngOnInit() {
-    this.initialise();
+    this.initialiseAll();
   }
   
   ionViewDidEnter() {
-    this.initialise();
+    if(this.isFilterAll = true) {
+      this.initialiseAll();
+    } else {
+      this.initialiseActiveOnly();
+    }
   }
 
-  initialise() {
+  initialiseAll() {
     if(this.accountBoolean == true)
     {
       this.resourceService.getInstitutionPrivateKnowledgeResource().subscribe((res) => {
-        this.knowledgeResource = res.data.knowledges;
-        if(this.knowledgeResource.length > 0) {
-          this.noKnowledgeResourceBoolean = false;
-        } else {
-            this.noKnowledgeResourceBoolean = true;
-        }
-      }),
+         
+          this.knowledgeResource = res.data.knowledges;
+          if(this.knowledgeResource.length > 0) {
+            this.noKnowledgeResourceBoolean = false;
+          } else {
+              this.noKnowledgeResourceBoolean = true;
+          }
+        }),
       err => {
         console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
       }
@@ -157,7 +165,14 @@ export class MyResourcesPage implements OnInit {
   }
 
   filter() {
-    this.initialiseActiveOnly();
+    if (this.isFilterAll == false) {
+      this.isFilterAll = true;
+      this.initialiseAll();
+
+    } else {
+      this.isFilterAll = false;
+      this.initialiseActiveOnly();
+    }
   }
 
   initialiseActiveOnly() {
