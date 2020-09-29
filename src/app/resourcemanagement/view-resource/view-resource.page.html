@@ -20,8 +20,12 @@
           <ion-label><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
         </ion-button>-->
       <div *ngIf = "resourceType == 'venue'">
-        <div *ngFor ="let v of currResource.imgPath">
-          <img [src]=v onerror="this.src='./assets/img/venue.jpg'" />
+        <div >
+          <ion-slides pager="true" scrollbar=true paginationType="bullets" >
+            <ion-slide *ngFor ="let v of currResource.imgPath">
+              <img [src]=v onerror="this.src='./assets/img/venue.jpg'" />
+            </ion-slide>
+          </ion-slides>
         </div>
       </div>
       <div *ngIf = "resourceType == 'venue' || resourceType == 'item'">

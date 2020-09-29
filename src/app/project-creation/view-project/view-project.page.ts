@@ -43,6 +43,7 @@ export class ViewProjectPage implements OnInit {
   host: any;
   totalCompletion = 0;
   totalProgress = 0;
+  rating: any;
   
   
 
@@ -105,6 +106,7 @@ export class ViewProjectPage implements OnInit {
       this.status = this.projectToView.status;
       this.SDGs = this.projectToView.SDGs;
       this.hostType = this.projectToView.hostType;
+      this.rating = this.projectToView.rating;
   },
   err => {
     console.log('********** View Projects.ts: ', err.error.msg);

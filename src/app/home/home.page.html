@@ -14,7 +14,7 @@
   </ion-header>
   <ion-title>News Feed</ion-title>
 
-  <ion-card *ngFor="let n of newsFeedList">
+  <ion-card (click)="viewProject($event, n)" *ngFor="let n of newsFeedList">
     <img [src]=n.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
     <ion-card-title>{{n.title}}</ion-card-title>
     <div class="aligned">

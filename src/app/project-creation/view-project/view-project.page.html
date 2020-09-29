@@ -27,6 +27,7 @@
     </div>
     <ion-card-content><div style="font-weight: bold;">Project Description: </div>{{desc}} </ion-card-content>
     <ion-card-content><div style="font-weight: bold;">Status: </div> {{status}}</ion-card-content>
+    <ion-card-content><div style="font-weight: bold;">Rating: </div> {{rating}}</ion-card-content>
     <ion-label style="font-weight: bold; padding-left: 15px;"> Progress: {{(totalProgress)}} %</ion-label>
     <ion-card>
       <ion-progress-bar value='{{totalProgress/100}}'></ion-progress-bar>
@@ -56,7 +57,7 @@
       <ion-segment-button value="contributions">
         <ion-label>Contributions</ion-label>
       </ion-segment-button>
-      <ion-segment-button *ngIf="(adminBoolean==true || founderBoolean==true)" value="manage">
+      <ion-segment-button value="manage">
         <ion-label>Details</ion-label>
       </ion-segment-button>
     </ion-segment>
@@ -137,8 +138,7 @@
           <ion-card-content>{{r.desc}}</ion-card-content>
           <ion-card-subtitle *ngIf='(r.type != "money")'>Progress: {{r.completion}} %</ion-card-subtitle>
           <ion-card-subtitle *ngIf='(r.type == "money")'>Progress: {{(r.completion)}} %</ion-card-subtitle>
-          <ion-progress-bar *ngIf='(r.type != "money")' value='{{r.completion/100}}'></ion-progress-bar>
-          <ion-progress-bar *ngIf='(r.type == "money")' value='{{(r.receivedSum/r.total)}}'></ion-progress-bar>
+          <ion-progress-bar value='{{r.completion/100}}'></ion-progress-bar>
           <ion-card-content *ngIf='(r.type == "money")'>Received Sum: {{r.receivedSum}} | Total: {{r.total}}</ion-card-content> 
           <ion-card-subtitle *ngIf='r.type == "money" && (founderBoolean==true ||adminBoolean==true)'>Pending Sum: {{r.pendingSum}} </ion-card-subtitle>
           <br>

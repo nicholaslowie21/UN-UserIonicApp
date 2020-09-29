@@ -42,6 +42,7 @@ export class ViewOthersProfilePage implements OnInit {
   viewInfo: {};
   originPage: string;
   profileFeed: any;
+  reversedProfileFeed: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -139,6 +140,22 @@ export class ViewOthersProfilePage implements OnInit {
         console.log('********** Badges(user).ts: ', err.error.msg);
       };
 
+      this.userService.getUserProfileFeed(this.currentUser.id).subscribe((res) => {
+        this.profileFeed = res.data.feeds;
+        this.reversedProfileFeed = [];
+        var end = this.profileFeed.length-1
+        for(var x = 0; x < this.profileFeed.length; x++) {
+          var modifiedCreatedAt = this.profileFeed[x].createdAt
+          this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+          this.reversedProfileFeed[x] = this.profileFeed[end];
+          end -= 1;
+          
+        }
+        console.log(this.reversedProfileFeed);
+      }, (err) => {
+        console.log('********** Profile Feed error(user).ts: ', err.error.msg);
+      })
+
      
     }
 
@@ -172,9 +189,6 @@ export class ViewOthersProfilePage implements OnInit {
     if(this.currentUser.isVerified == "true") {
       this.isVerified = true;
     }
-
-    if(this.accountBoolean == true)
-    {
         this.institutionService.getBadges(this.currentUser.id).subscribe((res) => {
           this.badges = res.data.badges
           for(var i = 0; i < this.badges.length; i++) {
@@ -185,29 +199,20 @@ export class ViewOthersProfilePage implements OnInit {
           console.log('********** Badges(institution).ts: ', err.error.msg);
         };
 
-    } else if(this.accountBoolean == false) {
+        this.institutionService.getInstitutionProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
+          this.profileFeed = res.data.feeds;
+          this.reversedProfileFeed = [];
+            var end = this.profileFeed.length-1
+            for(var x = 0; x < this.profileFeed.length; x++) {
+              var modifiedCreatedAt = this.profileFeed[x].createdAt
+              this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+              this.reversedProfileFeed[x] = this.profileFeed[end]
+              end -= 1;
+            }
+        }, (err) => {
+          console.log('********** Profile Feed error(Institution).ts: ', err.error.msg);
+        })
 
-      this.userService.getBadges(this.currentUser.id).subscribe((res) => {
-        this.badges = res.data.badges
-        for(var i = 0; i < this.badges.length; i++) {
-          this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
-        }
-      }),
-      err => {
-        console.log('********** Badges(user).ts: ', err.error.msg);
-      };
-
-      this.userService.getUserProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
-        this.profileFeed = res.data.feeds;
-        for(var x = 0; x < this.profileFeed.length; x++) {
-          var modifiedCreatedAt = this.profileFeed[x].createdAt
-          this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
-          
-        }
-      }, (err) => {
-        console.log('********** View others Profile Feed error(user).ts: ', err.error.msg);
-      })
-    }
   }
 
   parseDate(d: String) {		
@@ -228,6 +233,7 @@ export class ViewOthersProfilePage implements OnInit {
       (err) => {
         console.log("Error retrieving Institution: " + err.error.msg);
       })
+      
     } else if(this.accountType == "user") {
       this.accountBoolean = false;
       this.userService.viewUser(this.username).subscribe((res)=> {

@@ -92,6 +92,10 @@ export class HomePage implements OnInit {
       this.router.navigate(['/view-others-profile/' + h.username + "/" + h.hostType ])
     }
   }
+
+  viewProject(ev, p) {
+    this.router.navigate(['/view-project/' + p.id]);
+  }
  
   
  

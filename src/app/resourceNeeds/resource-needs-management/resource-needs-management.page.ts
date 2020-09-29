@@ -66,7 +66,7 @@ export class ResourceNeedsManagementPage implements OnInit {
       "needId": r.id,
       "title": r.title,
       "desc": r.desc,
-      "total": r.total = 0,
+      "total": r.total,
       "completion": r.completion=100
       }
       this.projectService.updateResourceNeed(this.form).subscribe((res) => {
