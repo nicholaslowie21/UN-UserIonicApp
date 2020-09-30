@@ -50,46 +50,43 @@ export class HomePage implements OnInit {
         console.log(this.newsList.length)
         for(var i = 0; i < this.newsList.length; i ++) {
           this.newsList[i].imgPath = this.sessionService.getRscPath() + this.newsList[i].imgPath +'?random+=' + Math.random();
+          this.newsList[i].ionicImg = this.sessionService.getRscPath() + this.newsList[i].ionicImg + '?random+=' + Math.random();
           var hostType = this.newsList[i].hostType;
           console.log(hostType);
           var x = this.newsList[i];
-          if(hostType == "institution") {
-              
-              this.institutionService.viewInstitutionById(this.newsList[i].host).subscribe((res) => {
-                    x["name"] = res.data.targetInstitution.name;
-                    x["username"] = res.data.targetInstitution.username;
-                    x["isVerified"] = res.data.targetInstitution.isVerified;
-                    x["profPic"] = this.sessionService.getRscPath() + res.data.targetInstitution.ionicImg +'?random+=' + Math.random();
-              }, (err) => {
-                console.log("Home(Retrieve Institution error): " + err.error.msg)
-              })
-          } else if(hostType == "user") {
-            this.userService.viewUserById(this.newsList[i].host).subscribe((res) => {
-                x["name"] = res.data.targetUser.name;
-                x["username"] = res.data.targetUser.username;
-                x["isVerified"] = res.data.targetUser.isVerified;
-                x["profPic"] = this.sessionService.getRscPath() + res.data.targetUser.ionicImg +'?random+=' + Math.random();
-        }, (err) => {
-          console.log("Home(Retrieve user error): " + err.error.msg)
-        })
-          }
-          this.newsFeedList.push(x);
+
         }
-        console.log(this.newsFeedList);
       }
       
     },
     (err) => {
-      console.log(err.error.message);
+      console.log(err.error.msg);
     })
 
   }
 
   viewFounderProfile(ev, h) {
+    var username = "";
     if(h.id == this.currentUser.data.user.id) {
       this.router.navigateByUrl("/tabs/profile");
     } else {
-      this.router.navigate(['/view-others-profile/' + h.username + "/" + h.hostType ])
+      
+      if(h.hostType == "institution") {
+          this.institutionService.viewInstitutionById(h.host).subscribe((res) => {
+            username = res.data.targetInstitution.username
+            this.router.navigate(['/view-others-profile/' + username + "/" + h.hostType ])
+          }, (err) => {
+            console.log("View Founder Profile error: " + err.error.msg);
+          })
+      } else if(h.hostType == "user") {
+        this.userService.viewUserById(h.host).subscribe((res) => {
+          username = res.data.targetUser.username
+          this.router.navigate(['/view-others-profile/' + username + "/" + h.hostType ])
+        }, (err) => {
+          console.log("View Founder Profile error: " + err.error.msg);
+        })
+      }
+      
     }
   }
 

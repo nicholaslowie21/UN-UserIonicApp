@@ -225,13 +225,13 @@ export class ProjectService {
     return this.http.get(this.API_URL + '/contributions?projectId=' + data, httpOptions).pipe(
       tap(res => {
 
-    }, error => console.log(error.msg)));
+    }, error => this.handleError(error)));
   }
 
   getNewsFeed(): Observable<any> {
     return this.http.get(this.API_URL + '/accountNewsFeed', httpOptions).pipe(
       tap(res => {
-    }, error => console.log(error.msg)));
+    }, error => this.handleError(error)));
   }
 
 
@@ -239,7 +239,7 @@ export class ProjectService {
     return this.http.post(this.API_URL + '/removeContribution', {"contributionId":data}, httpOptions).pipe(
       tap(res => {
 
-    }, error => console.log(error.msg)));
+    }, error => this.handleError(error)));
   }
 
   private handleError(error: HttpErrorResponse)

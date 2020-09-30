@@ -154,7 +154,7 @@ export class ViewProjectPage implements OnInit {
           console.log(this.totalCompletion)
       }
       if(this.resourceNeeds.length != 0) {
-          this.totalProgress = (this.totalCompletion/((this.resourceNeeds.length)*100))*100
+          this.totalProgress = parseFloat(((this.totalCompletion/((this.resourceNeeds.length)*100))*100).toFixed(2));
       }
     }
     

@@ -63,6 +63,7 @@
         <img src="../../assets/img/knowledge.jpg" className={{k.status}}/>
         <ion-card-header>
           <ion-card-title>{{k.title}}</ion-card-title>
+          <ion-card-subtitle>Status: {{k.status}}</ion-card-subtitle>
           <!-- <ion-div *ngFor="let s of p.SDG">
             <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
           </ion-div> -->
@@ -70,6 +71,7 @@
 
         <ion-card-content>
           <ion-label>{{k.desc}}</ion-label>
+          
         </ion-card-content>
     </ion-card>
     </div>
@@ -85,6 +87,7 @@
         <ion-card-header>
           <ion-card-title>{{i.title}}</ion-card-title>
           <ion-card-subtitle>{{i.region}}</ion-card-subtitle>
+          <ion-card-subtitle>Status: {{i.status}}</ion-card-subtitle>
           <!-- <ion-div *ngFor="let s of p.SDG">
             <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
           </ion-div> -->
@@ -106,6 +109,7 @@
             <img className={{v.status}} [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
           <ion-card-header>
             <ion-card-title>{{v.title}}</ion-card-title>
+            <ion-card-subtitle>Status: {{v.status}}</ion-card-subtitle>
             <ion-card-subtitle>{{v.region}}</ion-card-subtitle>
             <ion-card-subtitle>{{v.address}}</ion-card-subtitle>
             <!-- <ion-div *ngFor="let s of p.SDG">

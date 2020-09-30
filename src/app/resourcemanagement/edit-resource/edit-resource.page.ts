@@ -288,7 +288,7 @@ export class EditResourcePage implements OnInit {
           this.successToast();
         },
         
-        (err) => this.failureToast(err)
+        (err) => this.failureToast(err.error.msg)
       );
   }
 

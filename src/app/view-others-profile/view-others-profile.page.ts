@@ -199,7 +199,7 @@ export class ViewOthersProfilePage implements OnInit {
           console.log('********** Badges(institution).ts: ', err.error.msg);
         };
 
-        this.institutionService.getInstitutionProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
+        this.institutionService.getInstitutionProfileFeed(this.currentUser.id).subscribe((res) => {
           this.profileFeed = res.data.feeds;
           this.reversedProfileFeed = [];
             var end = this.profileFeed.length-1
