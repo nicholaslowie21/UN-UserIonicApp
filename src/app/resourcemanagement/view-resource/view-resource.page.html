@@ -12,7 +12,7 @@
   <ion-card>
       <img *ngIf = "resourceType == 'manpower'" class="card-img-top rounded-circle img-fluid d-block center {{currResource.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
       <img *ngIf = "resourceType == 'knowledge'" class="{{currResource.status}} full" src="../../../assets/img/knowledge.jpg" />
-      <img *ngIf = "resourceType == 'item'" class="{{currResource.status}} " [src]=image  onerror="this.src='./assets/img/item.jpg'" />
+      <img *ngIf = "resourceType == 'item'" class="{{currResource.status}} full " [src]=image  onerror="this.src='./assets/img/item.jpg'" />
       <div *ngIf = "resourceType == 'venue'">
         <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
           <ion-slide *ngFor ="let v of currResource.imgPath">
