@@ -24,6 +24,7 @@ export class ViewResourcePage implements OnInit {
   ownerImg: any;
   institutionKnowledgeOwner: boolean;
   filePath: any;
+  viewEntered = false;
 
   resultSuccess: boolean;
   error: boolean;
@@ -54,6 +55,7 @@ export class ViewResourcePage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.viewEntered = true;
     this.initialise();
   }
 
