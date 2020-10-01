@@ -71,7 +71,7 @@ export class AffiliationManagementPage implements OnInit {
     if(m.id == this.tokenStorage.getUser().data.user.id) {
       this.router.navigateByUrl("/tabs/profile");
     } else {
-      this.router.navigate(["/view-others-profile/" + m.id]);
+      this.router.navigate(["/view-others-profile/" + m.username + "/user"]);
     }
   }
 

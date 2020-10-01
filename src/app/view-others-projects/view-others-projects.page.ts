@@ -25,10 +25,10 @@ export class ViewOthersProjectsPage implements OnInit {
 
   constructor(private navCtrl: NavController, private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
     this.user = this.tokenStorage.getUser();
-    console.log(this.tokenStorage.getViewId());
+    console.log(this.user);
     if(this.tokenStorage.getViewId() != this.user.data.user.id && this.tokenStorage.getViewId()!= undefined ){
         this.accountType = this.tokenStorage.getViewId().accountType;
-    } else {
+    } else if(this.id == this.user.id){
       console.log("elsenran");
       this.accountType = this.tokenStorage.getAccountType();
     

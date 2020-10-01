@@ -44,14 +44,8 @@ export class MyProjectsPage implements OnInit {
         }*/
         this.type = "currProj";
         this.user = this.tokenStorage.getUser();
-        console.log(this.tokenStorage.getViewId());
-        if(this.tokenStorage.getViewId() != this.user.data.user.id && this.tokenStorage.getViewId()!= undefined ){
-            this.accountType = this.tokenStorage.getViewId().accountType;
-        } else {
-          console.log("elsenran");
-          this.accountType = this.tokenStorage.getAccountType();
+        this.accountType = this.tokenStorage.getAccountType();
         
-        }
         console.log(this.accountType);
         if(this.accountType == "institution") {
           this.accountBoolean = true;

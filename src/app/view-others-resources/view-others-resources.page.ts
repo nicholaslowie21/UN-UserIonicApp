@@ -27,6 +27,10 @@ export class ViewOthersResourcesPage implements OnInit {
   noVenueResourceBoolean: boolean;
   noManpowerResourceBoolean: boolean;
   id: string;
+  manpowerResourceList: any[];
+  knowledgeResourceList: any[];
+  itemResourceList: any[];
+  venueResourceList: any[];
 
   constructor(private userService: UserService, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
     this.accountType = this.tokenStorage.getViewId().accountType;
@@ -44,10 +48,19 @@ export class ViewOthersResourcesPage implements OnInit {
 
   ngOnInit() {
     this.initialiseA();
+    this.initialiseData();
   }
   
   ionViewDidEnter() {
     this.initialiseA();
+    this.initialiseData();
+  }
+
+  initialiseData() {
+    this.manpowerResourceList = this.manpowerResource;
+    this.knowledgeResourceList = this.knowledgeResource;
+    this.itemResourceList = this.itemResource;
+    this.venueResourceList = this.venueResource;
   }
 
   initialise() {
@@ -60,6 +73,9 @@ export class ViewOthersResourcesPage implements OnInit {
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
+        this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       err => {
         console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
@@ -75,6 +91,10 @@ export class ViewOthersResourcesPage implements OnInit {
         } else {
             this.noItemResourceBoolean = true;
         }
+
+        this.itemResourceList = this.itemResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }
       ),
       err => {
@@ -93,6 +113,10 @@ export class ViewOthersResourcesPage implements OnInit {
         } else {
             this.noVenueResourceBoolean = true;
         }
+
+        this.venueResourceList = this.venueResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       
       err => {
@@ -107,6 +131,10 @@ export class ViewOthersResourcesPage implements OnInit {
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
+
+        this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       err => {
         console.log('********** Knowledge Resource (user).ts: ', err.error.msg);
@@ -122,6 +150,10 @@ export class ViewOthersResourcesPage implements OnInit {
       } else {
           this.noItemResourceBoolean = true;
       }
+
+      this.itemResourceList = this.itemResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
       }),
       err => {
         console.log('********** Item Resource (user).ts: ', err.error.msg);
@@ -139,6 +171,10 @@ export class ViewOthersResourcesPage implements OnInit {
       } else {
           this.noVenueResourceBoolean = true;
       }
+
+      this.venueResourceList = this.venueResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
     
       }),
       err => {
@@ -154,6 +190,10 @@ export class ViewOthersResourcesPage implements OnInit {
       } else {
           this.noManpowerResourceBoolean = true;
       }
+
+      this.manpowerResourceList = this.manpowerResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
     
       }),
       err => {
@@ -179,6 +219,10 @@ export class ViewOthersResourcesPage implements OnInit {
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
+
+        this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       err => {
         console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
@@ -194,6 +238,10 @@ export class ViewOthersResourcesPage implements OnInit {
         } else {
             this.noItemResourceBoolean = true;
         }
+
+        this.itemResourceList = this.itemResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }
       ),
       err => {
@@ -212,6 +260,10 @@ export class ViewOthersResourcesPage implements OnInit {
         } else {
             this.noVenueResourceBoolean = true;
         }
+
+        this.venueResourceList = this.venueResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       
       err => {
@@ -226,6 +278,10 @@ export class ViewOthersResourcesPage implements OnInit {
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
+
+        this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       err => {
         console.log('********** Knowledge Resource (user).ts: ', err.error.msg);
@@ -241,6 +297,10 @@ export class ViewOthersResourcesPage implements OnInit {
       } else {
           this.noItemResourceBoolean = true;
       }
+
+      this.itemResourceList = this.itemResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
       }),
       err => {
         console.log('********** Item Resource (user).ts: ', err.error.msg);
@@ -258,6 +318,10 @@ export class ViewOthersResourcesPage implements OnInit {
       } else {
           this.noVenueResourceBoolean = true;
       }
+
+      this.venueResourceList = this.venueResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
     
       }),
       err => {
@@ -282,12 +346,47 @@ export class ViewOthersResourcesPage implements OnInit {
       } else {
           this.noManpowerResourceBoolean = true;
       }
+
+      this.manpowerResourceList = this.manpowerResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
     
       }),
       err => {
         console.log('********** Manpower Resource (user).ts: ', err.error.msg);
       };
   }
+  }
+
+  async filterList(evt) {
+    // this.initialiseFilter();
+    this.initialiseData();
+    const searchTerm = evt.srcElement.value;
+    if (!searchTerm) {
+      return;
+    }
+  
+    this.manpowerResourceList = this.manpowerResourceList.filter( manpowerRes => {
+      if (manpowerRes.title && searchTerm) {
+        return (manpowerRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+    this.knowledgeResourceList = this.knowledgeResourceList.filter( knowledgeRes => {
+      if (knowledgeRes.title && searchTerm) {
+        return (knowledgeRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+    this.itemResourceList = this.itemResourceList.filter( itemRes => {
+      if (itemRes.title && searchTerm) {
+        return (itemRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+
+    this.venueResourceList = this.venueResourceList.filter( venueRes => {
+      if (venueRes.title && searchTerm) {
+        return (venueRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
   }
 
   viewResource(resource) {

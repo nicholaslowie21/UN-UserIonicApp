@@ -25,13 +25,14 @@
 </ion-header>
 
 <ion-content>
+  <ion-searchbar (ionInput)="filterList($event)" placeholder="Search"></ion-searchbar>
   <ion-list  [ngSwitch]="type">
     <div *ngIf="accountBoolean==false">
     <div *ngSwitchCase="'manpower'" >
       <div *ngIf="noManpowerResourceBoolean == true" style="padding-left: 15px;">
         <ion-label>You do not have any active manpower resource! Create one now!</ion-label>
       </div>
-      <div *ngFor="let m of manpowerResource" >
+      <div *ngFor="let m of manpowerResourceList" >
       <ion-card (click)= "viewResource(m)">
         <img class="card-img-top rounded-circle img-fluid d-block center {{m.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=manpowerImgPath alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-card-header>
@@ -52,7 +53,7 @@
       <div *ngIf="noKnowledgeResourceBoolean == true" style="padding-left: 15px;">
         <ion-label>You do not have any active knowledge resource! Create one now!</ion-label>
     </div>
-    <div *ngFor="let k of knowledgeResource">
+    <div *ngFor="let k of knowledgeResourceList">
     <ion-card (click)= "viewResource(k)">
         <img src="../../assets/img/knowledge.jpg" className={{k.status}}/>
         <ion-card-header>
@@ -75,7 +76,7 @@
       <div *ngIf="noItemResourceBoolean == true" style="padding-left: 15px;">
         <ion-label>You do not have any active item resource! Create one now!</ion-label>
     </div>
-    <div *ngFor="let i of itemResource">
+    <div *ngFor="let i of itemResourceList">
       <ion-card (click)= "viewResource(i)">
           <img className={{i.status}} [src]=i.imgPath  onerror="this.src='./assets/img/item.jpg'" />
         <ion-card-header>
@@ -98,7 +99,7 @@
       <div *ngIf="noVenueResourceBoolean == true" style="padding-left: 15px;">
         <ion-label>You do not have any active venue resource! Create one now!</ion-label>
     </div>
-      <div *ngFor="let v of venueResource">
+      <div *ngFor="let v of venueResourceList">
         <ion-card (click)= "viewResource(v)">
             <img className={{v.status}} [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
           <ion-card-header>
