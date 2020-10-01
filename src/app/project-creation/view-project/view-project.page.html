@@ -42,7 +42,7 @@
       <ion-fab-list side="start">
         
         <ion-button *ngIf="founderBoolean==true" (click)="delete($event)"><ion-icon slot="end" name="trash" ></ion-icon>Delete</ion-button>
-        <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="update($event)"><ion-icon slot="end" name="create-outline"></ion-icon>Update</ion-button>
+        <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  color="danger" (click)="update($event)"><ion-icon slot="end" name="create-outline"></ion-icon>Update</ion-button>
       </ion-fab-list>
     </ion-fab>
   </div>
@@ -116,9 +116,13 @@
       </ion-item-divider>
       
       <ion-card *ngFor="let k of kpis" lines="none">
-        <ion-card-title>{{k.title}}</ion-card-title>
-        <ion-card-content>{{k.desc}}</ion-card-content>
-        <ion-card-content style="text-align: right">Completion: {{k.completion}} %</ion-card-content>
+        <ion-card-header>
+          <ion-card-title>{{k.title}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>{{k.desc}}</p>
+        <p style="text-align: right">Completion: {{k.completion}} %</p>
+        </ion-card-content>
 
       </ion-card>
     </ion-card>
@@ -133,14 +137,19 @@
         </ion-buttons>
       </ion-item-divider>
       <ion-card *ngFor="let r of resourceNeeds">
-          <ion-card-title>{{r.title}}</ion-card-title>
           <ion-badge style="float: right;" class="{{r.type}}type">{{r.type}}</ion-badge>
-          <ion-card-content>{{r.desc}}</ion-card-content>
-          <ion-card-subtitle *ngIf='(r.type != "money")'>Progress: {{r.completion}} %</ion-card-subtitle>
-          <ion-card-subtitle *ngIf='(r.type == "money")'>Progress: {{(r.completion)}} %</ion-card-subtitle>
-          <ion-progress-bar value='{{r.completion/100}}'></ion-progress-bar>
-          <ion-card-content *ngIf='(r.type == "money")'>Received Sum: {{r.receivedSum}} | Total: {{r.total}}</ion-card-content> 
-          <ion-card-subtitle *ngIf='r.type == "money" && (founderBoolean==true ||adminBoolean==true)'>Pending Sum: {{r.pendingSum}} </ion-card-subtitle>
+          <ion-card-header>
+            <ion-card-title>{{r.title}}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-card-subtitle>{{r.desc}}</ion-card-subtitle>
+            <ion-card-subtitle *ngIf='(r.type != "money")'>Progress: {{r.completion}} %</ion-card-subtitle>
+            <ion-card-subtitle *ngIf='(r.type == "money")'>Progress: {{(r.completion)}} %</ion-card-subtitle>
+            <ion-progress-bar value='{{r.completion/100}}'></ion-progress-bar>
+            <ion-card-subtitle *ngIf='(r.type == "money")'>Received Sum: {{r.receivedSum}} | Total: {{r.total}}</ion-card-subtitle> 
+            <ion-card-subtitle *ngIf='r.type == "money" && (founderBoolean==true ||adminBoolean==true)'>Pending Sum: {{r.pendingSum}} </ion-card-subtitle>
+          </ion-card-content>
           <br>
       </ion-card>  
       </ion-card>
