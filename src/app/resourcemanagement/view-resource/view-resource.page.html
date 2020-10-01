@@ -10,19 +10,15 @@
 
 <ion-content>
   <ion-card>
-
       <img *ngIf = "resourceType == 'manpower'" class="card-img-top rounded-circle img-fluid d-block center {{currResource.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-      <img *ngIf = "resourceType == 'knowledge'" class="{{currResource.status}}" src="../../../assets/img/knowledge.jpg" />
-      <img *ngIf = "resourceType == 'item'" class="{{currResource.status}}" [src]=image  onerror="this.src='./assets/img/item.jpg'" />
-
+      <img *ngIf = "resourceType == 'knowledge'" class="{{currResource.status}} full" src="../../../assets/img/knowledge.jpg" />
+      <img *ngIf = "resourceType == 'item'" class="{{currResource.status}} full " [src]=image  onerror="this.src='./assets/img/item.jpg'" />
       <div *ngIf = "resourceType == 'venue'">
-        <div >
-          <ion-slides [options]="slideOpts" *ngIf="viewEntered" pager=true paginationType=bullets zoom>
-            <ion-slide *ngFor ="let v of currResource.imgPath">
-              <ion-img [src]=v onerror="this.src='./assets/img/venue.jpg'" ></ion-img>
-            </ion-slide>
-          </ion-slides>
-        </div>
+        <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
+          <ion-slide *ngFor ="let v of currResource.imgPath">
+            <ion-img [src]=v onerror="this.src='./assets/img/venue.jpg'" ></ion-img>
+          </ion-slide>
+        </ion-slides>
       </div>
       <div *ngIf = "resourceType == 'venue' || resourceType == 'item'">
         <ion-label *ngIf="yourAccountBoolean==true"  style="text-decoration: underline; float:right" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
@@ -33,9 +29,7 @@
       <ion-card-subtitle>{{formatDate(currResource.updatedAt)}}</ion-card-subtitle>
       <ion-badge class="{{currResource.status}}">{{currResource.status}}</ion-badge>
       <br>
-      <div *ngIf="resourceType !='knowledge'">
-        <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of resourceOwner.SDGs">SDG {{sdg}}&nbsp;</ion-badge>
-      </div>
+
       <ion-item *ngIf ="resourceType !='knowledge'" lines="none">
         <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-title>{{resourceOwner.name}}<ion-icon *ngIf="resourceOwner.isVerified == 'true'" name="checkmark-circle" size="big" style="padding-left: 5px;"></ion-icon> </ion-title>

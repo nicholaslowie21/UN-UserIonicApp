@@ -44,7 +44,7 @@
         <ion-card-header>
           <ion-card-title>{{m.title}}</ion-card-title>
           <ion-card-subtitle>Country: {{m.country}}</ion-card-subtitle>
-          <ion-card-subtitle>Status: {{m.status}}</ion-card-subtitle>
+          <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
         </ion-card-header>
 
         <ion-card-content>
@@ -61,10 +61,10 @@
     </div>
     <div *ngFor="let k of knowledgeResourceList">
     <ion-card (click)= "viewResource(k)">
-        <img src="../../assets/img/knowledge.jpg" className={{k.status}}/>
+        <img src="../../assets/img/knowledge.jpg" class="{{k.status}} full" />
         <ion-card-header>
           <ion-card-title>{{k.title}}</ion-card-title>
-          <ion-card-subtitle>Status: {{k.status}}</ion-card-subtitle>
+          <ion-badge class="{{k.status}}">{{k.status}}</ion-badge>
           <!-- <ion-div *ngFor="let s of p.SDG">
             <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
           </ion-div> -->
@@ -84,11 +84,11 @@
     </div>
     <div *ngFor="let i of itemResourceList">
       <ion-card (click)= "viewResource(i)">
-          <img className={{i.status}} [src]=i.imgPath  onerror="this.src='./assets/img/item.jpg'" />
+          <img class="{{i.status}} full" [src]=i.imgPath  onerror="this.src='./assets/img/item.jpg'" />
         <ion-card-header>
           <ion-card-title>{{i.title}}</ion-card-title>
           <ion-card-subtitle>{{i.region}}</ion-card-subtitle>
-          <ion-card-subtitle>Status: {{i.status}}</ion-card-subtitle>
+          <ion-badge class="{{i.status}}">{{i.status}}</ion-badge>
           <!-- <ion-div *ngFor="let s of p.SDG">
             <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
           </ion-div> -->
@@ -107,10 +107,10 @@
     </div>
       <div *ngFor="let v of venueResourceList">
         <ion-card (click)= "viewResource(v)">
-            <img className={{v.status}} [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
+            <img class="{{v.status}} full" [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
           <ion-card-header>
             <ion-card-title>{{v.title}}</ion-card-title>
-            <ion-card-subtitle>Status: {{v.status}}</ion-card-subtitle>
+            <ion-badge class="{{v.status}}">{{v.status}}</ion-badge>
             <ion-card-subtitle>{{v.region}}</ion-card-subtitle>
             <ion-card-subtitle>{{v.address}}</ion-card-subtitle>
             <!-- <ion-div *ngFor="let s of p.SDG">

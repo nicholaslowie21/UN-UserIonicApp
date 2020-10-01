@@ -85,12 +85,14 @@ export class MyResourcesPage implements OnInit {
       this.resourceService.getInstitutionPrivateKnowledgeResource().subscribe((res) => {
          
           this.knowledgeResource = res.data.knowledges;
-          this.knowledgeResourceList = this.knowledgeResource;
           if(this.knowledgeResource.length > 0) {
             this.noKnowledgeResourceBoolean = false;
           } else {
               this.noKnowledgeResourceBoolean = true;
           }
+          this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+            return a.updatedAt.localeCompare(b.updatedAt);
+          }).reverse();
         }),
       err => {
         console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
@@ -107,6 +109,9 @@ export class MyResourcesPage implements OnInit {
         } else {
             this.noItemResourceBoolean = true;
         }
+        this.itemResourceList = this.itemResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }
       ),
       err => {
@@ -115,7 +120,6 @@ export class MyResourcesPage implements OnInit {
 
       this.resourceService.getInstitutionPrivateVenueResource().subscribe((res) => {
         this.venueResource = res.data.venues
-        this.venueResourceList = this.venueResource;
         if(this.venueResource.length > 0) {
           this.noVenueResourceBoolean = false;
           for(var i = 0; i < this.venueResource.length; i++) {
@@ -126,6 +130,9 @@ export class MyResourcesPage implements OnInit {
         } else {
             this.noVenueResourceBoolean = true;
         }
+        this.venueResourceList = this.venueResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       
       err => {
@@ -141,6 +148,9 @@ export class MyResourcesPage implements OnInit {
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
+        this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       err => {
         console.log('********** Knowledge Resource (user).ts: ', err.error.msg);
@@ -148,7 +158,7 @@ export class MyResourcesPage implements OnInit {
 
       this.resourceService.getUserPrivateItemResource().subscribe((res) => {
       this.itemResource = res.data.items;
-      this.itemResourceList = this.itemResource;
+      
       if(this.itemResource.length > 0) {
         this.noItemResourceBoolean = false;
         for(var i = 0; i < this.itemResource.length; i++) {
@@ -157,14 +167,17 @@ export class MyResourcesPage implements OnInit {
       } else {
           this.noItemResourceBoolean = true;
       }
-      }),
+      this.itemResourceList = this.itemResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
+    }),
       err => {
         console.log('********** Item Resource (user).ts: ', err.error.msg);
       };
 
       this.resourceService.getUserPrivateVenueResource().subscribe((res) => {
       this.venueResource = res.data.venues;
-      this.venueResourceList = this.venueResource;
+
       if(this.venueResource.length > 0) {
         this.noVenueResourceBoolean = false;
         for(var i = 0; i < this.venueResource.length; i++) {
@@ -176,6 +189,9 @@ export class MyResourcesPage implements OnInit {
           this.noVenueResourceBoolean = true;
       }
     
+      this.venueResourceList = this.venueResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
       }),
       err => {
         console.log('********** Venue Resource (user).ts: ', err.error.msg);
@@ -183,7 +199,6 @@ export class MyResourcesPage implements OnInit {
 
       this.resourceService.getUserPrivateManpowerResource().subscribe((res) => {
       this.manpowerResource = res.data.manpowers;
-      this.manpowerResourceList = this.manpowerResource;
       if(this.manpowerResource.length > 0) {
         this.noManpowerResourceBoolean = false;
         this.manpowerImgPath = this.sessionService.getRscPath() + this.user.data.user.ionicImg  +'?random+=' + Math.random();
@@ -192,6 +207,9 @@ export class MyResourcesPage implements OnInit {
           this.noManpowerResourceBoolean = true;
       }
     
+      this.manpowerResourceList = this.manpowerResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
       }),
       err => {
         console.log('********** Manpower Resource (user).ts: ', err.error.msg);
@@ -205,7 +223,6 @@ export class MyResourcesPage implements OnInit {
     {
       this.resourceService.getInstitutionKnowledgeResource(this.user.data.user.id).subscribe((res) => {
         this.knowledgeResource = res.data.knowledges;
-        this.knowledgeResourceList = this.knowledgeResource;
         if(this.knowledgeResource.length > 0) {
           this.noKnowledgeResourceBoolean = false;
           for(var i = 0; i < this.knowledgeResource.length; i++) {
@@ -214,6 +231,10 @@ export class MyResourcesPage implements OnInit {
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
+
+        this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       err => {
         console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
@@ -221,7 +242,6 @@ export class MyResourcesPage implements OnInit {
 
       this.resourceService.getInstitutionItemResource(this.user.data.user.id).subscribe((res) => {
         this.itemResource = res.data.items;
-        this.itemResourceList = this.itemResource;
         if(this.itemResource.length > 0) {
           this.noItemResourceBoolean = false;
           for(var i = 0; i < this.itemResource.length; i++) {
@@ -230,6 +250,10 @@ export class MyResourcesPage implements OnInit {
         } else {
             this.noItemResourceBoolean = true;
         }
+
+        this.itemResourceList = this.itemResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }
       ),
       err => {
@@ -249,6 +273,9 @@ export class MyResourcesPage implements OnInit {
         } else {
             this.noVenueResourceBoolean = true;
         }
+        this.venueResourceList = this.venueResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       
       err => {
@@ -258,12 +285,14 @@ export class MyResourcesPage implements OnInit {
   } else if(this.accountBoolean == false) {
         this.resourceService.getUserKnowledgeResource(this.user.data.user.id).subscribe((res) => {
         this.knowledgeResource = res.data.knowledges
-        this.knowledgeResourceList = this.knowledgeResource;
         if(this.knowledgeResource.length > 0) {
           this.noKnowledgeResourceBoolean = false; 
         } else {
             this.noKnowledgeResourceBoolean = true;
         }
+        this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
       }),
       err => {
         console.log('********** Knowledge Resource (user).ts: ', err.error.msg);
@@ -271,7 +300,6 @@ export class MyResourcesPage implements OnInit {
 
       this.resourceService.getUserItemResource(this.user.data.user.id).subscribe((res) => {
       this.itemResource = res.data.items;
-      this.itemResourceList = this.itemResource;
       if(this.itemResource.length > 0) {
         this.noItemResourceBoolean = false;
         for(var i = 0; i < this.itemResource.length; i++) {
@@ -280,6 +308,9 @@ export class MyResourcesPage implements OnInit {
       } else {
           this.noItemResourceBoolean = true;
       }
+      this.itemResourceList = this.itemResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
       }),
       err => {
         console.log('********** Item Resource (user).ts: ', err.error.msg);
@@ -298,7 +329,9 @@ export class MyResourcesPage implements OnInit {
       } else {
           this.noVenueResourceBoolean = true;
       }
-    
+      this.venueResourceList = this.venueResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
       }),
       err => {
         console.log('********** Venue Resource (user).ts: ', err.error.msg);
@@ -306,7 +339,6 @@ export class MyResourcesPage implements OnInit {
 
       this.resourceService.getUserManpowerResource(this.user.data.user.id).subscribe((res) => {
       this.manpowerResource = res.data.manpowers;
-      this.manpowerResourceList = this.manpowerResource;
       if(this.manpowerResource.length > 0) {
         this.noManpowerResourceBoolean = false;
         for(var i = 0; i < this.manpowerResource.length; i++) {
@@ -316,6 +348,9 @@ export class MyResourcesPage implements OnInit {
           this.noManpowerResourceBoolean = true;
       }
     
+      this.manpowerResourceList = this.manpowerResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
       }),
       err => {
         console.log('********** Manpower Resource (user).ts: ', err.error.msg);
