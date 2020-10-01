@@ -27,7 +27,7 @@
 
   <ion-item *ngIf = "isChosenType == true">
     <ion-label position="floating">Description</ion-label>
-    <ion-input ngModel name="desc" [(ngModel)]="desc" required minlength="3" #indesc="ngModel"></ion-input>
+    <ion-textarea ngModel name="desc" [(ngModel)]="desc" required minlength="3" #indesc="ngModel"></ion-textarea>
     <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
       <div *ngIf="indesc.errors.required">Description is required</div>
       <div *ngIf="indesc.errors.minlength">
