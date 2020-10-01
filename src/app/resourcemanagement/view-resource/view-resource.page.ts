@@ -36,14 +36,16 @@ export class ViewResourcePage implements OnInit {
   data: { name: any; isVerified: any; profilePic: any; };
   institutionOwnersArray: any[];
   ownersArray: any;
-  // fileTransfer: FileTransferObject;
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
 
   constructor(private navCtrl: NavController, private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController, private file: File, private transfer: FileTransfer) {
     //See BG update project, for the toast
     this.retrieveResourceError = false;
     this.institutionKnowledgeOwner = false;
-    
-  
+
    }
 
   ngOnInit() {
@@ -82,7 +84,6 @@ export class ViewResourcePage implements OnInit {
       };
 
     } else if (this.resourceType == "knowledge") {
-      // PLS LOOK AT THIS AGAIN, AND FIX IT SO THAT WE CAN FETCH THE OWNERS
       this.currResource = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.knowledge;
         for(var o = 0; o < res.data.knowledge.owner.length; o++) {
@@ -203,6 +204,11 @@ export class ViewResourcePage implements OnInit {
     this.navCtrl.pop();
   }
 
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
+  
   async delete(event)
 	{
 		const alert = await this.alertController.create({
