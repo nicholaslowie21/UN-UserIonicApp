@@ -10,7 +10,7 @@
     <ion-buttons slot="end">
       <ion-icon name="add-circle-outline" slot="end" routerLink="/create-resource" style="padding-right: 10px"></ion-icon>
     </ion-buttons>
-    <ion-title>My Resources</ion-title>
+    <ion-title>{{user.data.user.name}}'s Resources</ion-title>
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">

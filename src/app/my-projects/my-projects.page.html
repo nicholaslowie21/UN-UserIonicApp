@@ -6,7 +6,7 @@
     </ion-buttons>
     <ion-title>{{name}}'s Projects</ion-title>
     <ion-buttons *ngIf="user.data.user.id == id"label="Create" slot="end">
-      <ion-icon name="add-circle-outline" slot="end" routerLink="/project-creation">
+      <ion-icon name="add-circle-outline" style ="padding-right: 10px" slot="end" routerLink="/project-creation">
       </ion-icon>
     </ion-buttons>
   </ion-toolbar>
@@ -26,11 +26,11 @@
 <ion-content>
   <ion-list [ngSwitch]="type">
     <div *ngSwitchCase="'currProj'">
-    <h2 style="padding-left:10px">Current Projects</h2>
-    <div *ngIf="noCurrProjectBoolean == true">
-        <ion-label style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</ion-label>
-    </div>
+    <!-- <h2 style="padding-left:10px">Current Projects</h2> -->
     <ion-searchbar (ionInput)="filterCurrList($event)" placeholder="Search"></ion-searchbar>
+    <div *ngIf="noCurrProjectBoolean == true">
+      <ion-label style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</ion-label>
+    </div>
     <div *ngFor="let c of currentProjectsList">
       <ion-card (click)="view($event, c)">
         <img [src]=c.imgPath onerror="this.src='./assets/img/projects.jpg'" />
@@ -48,11 +48,11 @@
     </div>
   </div>
     <div *ngSwitchCase="'pastProj'">
-    <h2 style="padding-left:10px">Past Involvements</h2>
+    <!-- <h2 style="padding-left:10px">Past Involvements</h2> -->
+    <ion-searchbar (ionInput)="filterPastList($event)" placeholder="Search"></ion-searchbar>
     <div *ngIf="noPastProjectBoolean == true">
       <ion-label style="padding-left: 15px;">You have no previous projects! Start Creating Projects now!</ion-label>
     </div>
-    <ion-searchbar (ionInput)="filterPastList($event)" placeholder="Search"></ion-searchbar>
     <div *ngFor="let p of pastProjectsList">
     <ion-card (click)="view($event, p)">
         <img [src]=p.imgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />

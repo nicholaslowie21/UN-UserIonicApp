@@ -6,7 +6,7 @@
     </ion-buttons>
     <ion-title>Resource Needs Management</ion-title>
     <ion-buttons label="Create" slot="end">
-      <ion-icon name="add-circle-outline" slot="end" (click)="create($event)">
+      <ion-icon name="add-circle-outline" slot="end" style="padding-right: 10px;" (click)="create($event)">
       </ion-icon>
     </ion-buttons>
   </ion-toolbar>
@@ -14,13 +14,16 @@
 
 <ion-content>
   <ion-card *ngFor = "let r of resourceNeeds">
-    <ion-card-title style="padding-left: 10px;">{{r.title}}</ion-card-title>
     <ion-badge style="float: right;" class="{{r.type}}type">{{r.type}}</ion-badge>
-    <ion-card-content>{{r.desc}}</ion-card-content>
-    <ion-card-content>Completion: {{r.completion}} %</ion-card-content>
-    <ion-card-content *ngIf='(r.type == "money")'>Total: {{r.total}} | Received Sum: {{r.receivedSum}} | Pending Sum: {{r.pendingSum}}</ion-card-content>
-    <div *ngIf="(r.completion != 100)"><ion-button  (click)="markAsComplete($event, r)">Mark as Complete</ion-button></div>
-    
+    <ion-card-header>
+      <ion-card-title>{{r.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{r.desc}}</p>
+      <p>Completion: {{r.completion}} %</p>
+      <p *ngIf='(r.type == "money")'>Total: {{r.total}} | Received Sum: {{r.receivedSum}} | Pending Sum: {{r.pendingSum}}</p>
+      <div *ngIf="(r.completion != 100)"><ion-button  (click)="markAsComplete($event, r)">Mark as Complete</ion-button></div>
+    </ion-card-content>
     <ion-toolbar>
       <ion-buttons slot="end" >
         <ion-icon slot="end" name="create-outline" (click)="update($event, r)"></ion-icon>

@@ -6,7 +6,7 @@
     </ion-buttons>
     <ion-title>KPI Management</ion-title>
     <ion-buttons label="Create" slot="end">
-      <ion-icon name="add-circle-outline" slot="end" (click)="create($event)">
+      <ion-icon name="add-circle-outline" slot="end" style="padding-right: 10px;" (click)="create($event)">
       </ion-icon>
     </ion-buttons>
   </ion-toolbar>
@@ -14,7 +14,9 @@
 
 <ion-content>
   <ion-card *ngFor = "let k of kpis">
-    <ion-card-title style="padding-left: 10px;">{{k.title}}</ion-card-title>
+    <ion-card-header>
+    <ion-card-title >{{k.title}}</ion-card-title>
+    </ion-card-header>
     <ion-card-content>{{k.desc}}</ion-card-content>   
     <ion-card-content>Completion: {{k.completion}} %</ion-card-content>
     <ion-toolbar>
