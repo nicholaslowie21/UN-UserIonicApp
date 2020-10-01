@@ -1,13 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <!--<ion-icon name="arrow-back" slot="start" (click)="pop()" style="padding-left:10px"></ion-icon>-->
+      <!--<ion-icon name="arrow-back" slot="start" routerLink="/tabs/profile" style="padding-left:10px"></ion-icon>-->
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-icon name="filter-outline" slot="end" style="padding-right: 10px" (click)="filter()"></ion-icon>
-    </ion-buttons>
-    <ion-title>My Resources</ion-title>
+    <ion-title>Resources</ion-title>
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
@@ -39,7 +36,8 @@
         <img class="card-img-top rounded-circle img-fluid d-block center {{m.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=manpowerImgPath alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-card-header>
           <ion-card-title>{{m.title}}</ion-card-title>
-          <ion-card-subtitle>{{m.region}}</ion-card-subtitle>
+          <ion-card-subtitle>Country: {{m.country}}</ion-card-subtitle>
+          <ion-card-subtitle>Status: {{m.status}}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
@@ -59,6 +57,7 @@
         <img src="../../assets/img/knowledge.jpg" className={{k.status}}/>
         <ion-card-header>
           <ion-card-title>{{k.title}}</ion-card-title>
+          <ion-card-subtitle>Status: {{k.status}}</ion-card-subtitle>
           <!-- <ion-div *ngFor="let s of p.SDG">
             <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
           </ion-div> -->
@@ -66,6 +65,7 @@
 
         <ion-card-content>
           <ion-label>{{k.desc}}</ion-label>
+          
         </ion-card-content>
     </ion-card>
     </div>
@@ -81,6 +81,7 @@
         <ion-card-header>
           <ion-card-title>{{i.title}}</ion-card-title>
           <ion-card-subtitle>{{i.region}}</ion-card-subtitle>
+          <ion-card-subtitle>Status: {{i.status}}</ion-card-subtitle>
           <!-- <ion-div *ngFor="let s of p.SDG">
             <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
           </ion-div> -->
@@ -102,6 +103,7 @@
             <img className={{v.status}} [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
           <ion-card-header>
             <ion-card-title>{{v.title}}</ion-card-title>
+            <ion-card-subtitle>Status: {{v.status}}</ion-card-subtitle>
             <ion-card-subtitle>{{v.region}}</ion-card-subtitle>
             <ion-card-subtitle>{{v.address}}</ion-card-subtitle>
             <!-- <ion-div *ngFor="let s of p.SDG">

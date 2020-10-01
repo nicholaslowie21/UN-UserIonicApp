@@ -122,6 +122,13 @@ export class UserService {
     );
   }
 
+  getUserProfileFeed(data): Observable<any> {
+    return this.http.get(this.API_URL + '/profileFeed?userId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
 
   private handleError(error: HttpErrorResponse)
 	{

@@ -61,7 +61,7 @@ export class ChangePasswordPage implements OnInit {
           this.resultSuccess = true;
             this.resultError = false;
             this.successToast();
-            this.router.navigateByUrl('/accountsettings');
+            this.router.navigateByUrl('/tabs/profile');
         },
         err => {
             this.resultSuccess = false;
@@ -85,7 +85,7 @@ export class ChangePasswordPage implements OnInit {
             this.resultSuccess = true;
               this.resultError = false;
               this.successToast();
-              this.router.navigateByUrl('tabs');
+              this.router.navigateByUrl('tabs/profile');
           },
           err => {
               this.resultSuccess = false;

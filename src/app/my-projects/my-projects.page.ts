@@ -31,6 +31,7 @@ export class MyProjectsPage implements OnInit {
   searchCurrentProjectString = '';
   currentProjectsList: any[];
   pastProjectsList: any[];
+  type: string;
 
   constructor(private navCtrl: NavController, private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
         /*this.accountType = this.tokenStorage.getAccountType();
@@ -41,6 +42,7 @@ export class MyProjectsPage implements OnInit {
         } else if(this.accountType == "user") {
           this.accountBoolean = false;
         }*/
+        this.type = "currProj";
         this.user = this.tokenStorage.getUser();
         console.log(this.tokenStorage.getViewId());
         if(this.tokenStorage.getViewId() != this.user.data.user.id && this.tokenStorage.getViewId()!= undefined ){
@@ -79,7 +81,7 @@ export class MyProjectsPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    console.log(this.noCurrProjectBoolean);
+    this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     this.initialise();
     this.initializeCurr();
     this.initializePast();
@@ -97,13 +99,13 @@ export class MyProjectsPage implements OnInit {
         })
         this.institutionService.getCurrentProjects(this.id).subscribe((res) => {
             this.currProjects = res.data.currProjects;
+            this.initializeCurr();
             if(this.currProjects.length > 0) {
               this.noCurrProjectBoolean = false;
               for(var i = 0; i < this.currProjects.length; i++) {
                 this.currProjects[i].imgPath = this.sessionService.getRscPath() + this.currProjects[i].imgPath  +'?random+=' + Math.random();
               }
             } else {
-              console.log("else ran");
                 this.noCurrProjectBoolean = true;
             }
             
@@ -115,7 +117,7 @@ export class MyProjectsPage implements OnInit {
 
         this.institutionService.getPastProjects(this.id).subscribe((res) => {
         this.pastProjects = res.data.pastProjects
-        console.log(this.pastProjects.length);
+        this.initializePast();
         if(this.pastProjects.length > 0) {
           this.noPastProjectBoolean = false;
           for(var i = 0; i < this.pastProjects.length; i++) {
@@ -137,16 +139,16 @@ export class MyProjectsPage implements OnInit {
             console.log("*******************Retrieve User error(My-projects)" + err.error.msg);
           })
           this.userService.getCurrentProjects(this.id).subscribe((res) => {
-          this.currProjects = res.data.currProjects
-
-          if(this.currProjects.length > 0) {
-            this.noCurrProjectBoolean = false;
-            for(var i = 0; i < this.currProjects.length; i++) {
-              this.currProjects[i].imgPath = this.sessionService.getRscPath() + this.currProjects[i].imgPath  +'?random+=' + Math.random();
-            }
-          } else {
-              this.noCurrProjectBoolean = true;
-          }
+              this.currProjects = res.data.currProjects
+              this.initializeCurr();
+              if(this.currProjects.length > 0) {
+                this.noCurrProjectBoolean = false;
+                for(var i = 0; i < this.currProjects.length; i++) {
+                  this.currProjects[i].imgPath = this.sessionService.getRscPath() + this.currProjects[i].imgPath  +'?random+=' + Math.random();
+                }
+              } else {
+                  this.noCurrProjectBoolean = true;
+              }
     }),
       err => {
         console.log('********** Current-projects(user).ts: ', err.error.msg);
@@ -154,7 +156,7 @@ export class MyProjectsPage implements OnInit {
       console.log("retrieved projects")
       this.userService.getPastProjects(this.id).subscribe((res) => {
             this.pastProjects = res.data.pastProjects
-
+            this.initializePast();
             if(this.pastProjects.length > 0) {
               this.noPastProjectBoolean = false;
               for(var i = 0; i < this.pastProjects.length; i++) {
@@ -168,6 +170,7 @@ export class MyProjectsPage implements OnInit {
         console.log('********** Past-projects(user).ts: ', err.error.msg);
       };
     }
+    
   }
 
   
@@ -221,6 +224,10 @@ async filterPastList(evt) {
       return (pastProject.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
     }
   });
+}
+
+segmentChanged(ev: any) {
+  console.log('Segment changed', ev);
 }
   
  

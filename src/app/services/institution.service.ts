@@ -158,6 +158,13 @@ export class InstitutionService {
     );
   }
 
+  getInstitutionProfileFeed(data): Observable<any> {
+    return this.http.get(this.API_URL + '/profileFeed?institutionId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

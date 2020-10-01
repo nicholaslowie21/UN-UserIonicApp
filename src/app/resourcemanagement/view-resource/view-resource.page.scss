@@ -33,9 +33,13 @@
   width: 50%;
 }
 
-
 ion-slides.image-slider {
   display: flex;
   justify-content: center;
   align-items: center;
+ion-img {
+  float: left;
+  width:  500px;
+  height: 250px;
+  object-fit: contain;
 }

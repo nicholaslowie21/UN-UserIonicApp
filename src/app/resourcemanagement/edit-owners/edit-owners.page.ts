@@ -25,7 +25,7 @@ export class EditOwnersPage implements OnInit {
   ownersArray: any;
   addData: any;
   removeData: {};
-  data: { name: any; id: any; isVerified: any; type: any, profilePic: string; };
+  data: { name: any; username: any, id: any; isVerified: any; type: any, profilePic: string; };
 
   constructor(private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController, private institutionService : InstitutionService, private userService: UserService) { }
 
@@ -48,6 +48,7 @@ export class EditOwnersPage implements OnInit {
         for(var i = 0; i < res.data.userOwner.length; i++) {
               this.data ={
                 "name": res.data.userOwner[i].name,
+                "username": res.data.userOwner[i].username,
                 "id": res.data.userOwner[i].id,
                 "isVerified": res.data.userOwner[i].isVerified,
                 "type": "user",
@@ -62,6 +63,7 @@ export class EditOwnersPage implements OnInit {
         for(var i = 0; i < res.data.institutionOwner.length; i++) {
               this.data ={
                 "name": res.data.institutionOwner[i].name,
+                "username": res.data.institutionOwner[i].username,
                 "id": res.data.institutionOwner[i].id,
                 "isVerified": res.data.institutionOwner[i].isVerified,
                 "type": "institution",

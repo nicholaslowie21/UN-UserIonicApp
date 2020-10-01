@@ -74,6 +74,21 @@
     </div>
       
     </ion-item>
+    <ion-item-divider>
+      <ion-card-title>Profile Feed</ion-card-title>
+    </ion-item-divider>
+      <ion-card *ngFor="let pf of profileFeed">
+            <div class="aligned">
+                <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                <ion-label >{{currentUser.name}}</ion-label>
+              </div>
+            
+            <ion-card-title>{{pf.title}} </ion-card-title>
+          <ion-card-content>{{pf.desc}}</ion-card-content>
+          <div style="text-align: right"><ion-label>{{pf.createdAt}}</ion-label></div>
+          
+
+      </ion-card>
 
   </ion-item-group>
 </ion-list>

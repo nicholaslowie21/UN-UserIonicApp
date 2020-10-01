@@ -16,11 +16,18 @@
       <img *ngIf = "resourceType == 'item'" class="{{currResource.status}}" [src]=image  onerror="this.src='./assets/img/item.jpg'" />
 
       <div *ngIf = "resourceType == 'venue'">
-        <ion-slides pager="true" scrollbar="true" [options]="slideOpts">
+        <!-- <ion-slides pager="true" scrollbar="true" [options]="slideOpts">
           <ion-slide *ngFor ="let v of currResource.imgPath">
             <img [src]=v onerror="this.src='./assets/img/venue.jpg'" class="{{currResource.status}}" />
           </ion-slide>
         </ion-slides>
+        <div > -->
+          <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
+            <ion-slide *ngFor ="let v of currResource.imgPath">
+              <ion-img [src]=v onerror="this.src='./assets/img/venue.jpg'" ></ion-img>
+            </ion-slide>
+          </ion-slides>
+        </div>
       </div>
       <div *ngIf = "resourceType == 'venue' || resourceType == 'item'">
         <ion-label *ngIf="yourAccountBoolean==true"  style="text-decoration: underline; float:right" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>

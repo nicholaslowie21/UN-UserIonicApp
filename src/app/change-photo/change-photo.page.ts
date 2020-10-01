@@ -59,7 +59,7 @@ export class ChangePhotoPage implements OnInit {
           this.router.navigateByUrl('/tabs/home');
         },
         
-        (err) => this.failureToast(err)
+        (err) => this.failureToast(err.error.msg)
       );
     } else if(this.accountBoolean == false){
       this.userService.uploadProfilePicture(formData).subscribe(
@@ -67,7 +67,7 @@ export class ChangePhotoPage implements OnInit {
         this.successToast();
         this.router.navigateByUrl('/tabs/home');
       },
-        (err) => this.failureToast(err.message)
+        (err) => this.failureToast(err.error.message)
       );
     }
     
@@ -93,7 +93,7 @@ export class ChangePhotoPage implements OnInit {
                 this.successToast();
                 this.router.navigateByUrl('/tabs/home');
               },
-              (err) => this.failureToast(err)
+              (err) => this.failureToast(err.error.msg)
             );
           };
           reader.readAsArrayBuffer(file);
@@ -110,7 +110,7 @@ export class ChangePhotoPage implements OnInit {
                   this.successToast();
                   this.router.navigateByUrl('/tabs/home');
                 },
-                  (err) => this.failureToast(err)
+                  (err) => this.failureToast(err.error.msg)
                 );
               };
               reader.readAsArrayBuffer(file);

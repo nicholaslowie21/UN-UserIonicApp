@@ -27,6 +27,8 @@ export class ProfilePage implements OnInit {
   accountBoolean: boolean;
   imageForSharing: any;
   isVerified: boolean;
+  profileFeed: any;
+  reversedProfileFeed: any[];
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -67,6 +69,20 @@ export class ProfilePage implements OnInit {
           console.log('********** Badges(institution).ts: ', err.error.msg);
         };
 
+        this.institutionService.getInstitutionProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
+          this.profileFeed = res.data.feeds;
+          this.reversedProfileFeed = [];
+          var end = this.profileFeed.length-1
+          for(var x = 0; x < this.profileFeed.length; x++) {
+            var modifiedCreatedAt = this.profileFeed[x].createdAt
+            this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+            this.reversedProfileFeed[x] = this.profileFeed[end]
+            end -= 1;
+          }
+        }, (err) => {
+          console.log('********** Profile Feed error(Institution).ts: ', err.error.msg);
+        })
+
     } else if(this.accountBoolean == false) {
 
       this.userService.getBadges(this.currentUser.data.user.id).subscribe((res) => {
@@ -78,7 +94,29 @@ export class ProfilePage implements OnInit {
       err => {
         console.log('********** Badges(user).ts: ', err.error.msg);
       };
+
+      this.userService.getUserProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
+        this.profileFeed = res.data.feeds;
+        this.reversedProfileFeed = [];
+        var end = this.profileFeed.length-1
+        for(var x = 0; x < this.profileFeed.length; x++) {
+          var modifiedCreatedAt = this.profileFeed[x].createdAt
+          this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+          this.reversedProfileFeed[x] = this.profileFeed[end];
+          end -= 1;
+          
+        }
+      }, (err) => {
+        console.log('********** Profile Feed error(user).ts: ', err.error.msg);
+      })
     }
+}
+
+parseDate(d: String) {		
+  let idx = d.indexOf("T");
+  let day = d.substring(0,idx);
+  let t = d.substring(idx + 1, idx + 6)
+  return day + " "  + t;
 }
 
   toRewards() {
@@ -102,6 +140,39 @@ export class ProfilePage implements OnInit {
     }
     this.sdgs = this.currentUser.data.user.SDGs;
     this.accountType = this.currentUser.data.accountType;
+
+    if(this.accountType == "institution") {
+      this.institutionService.getInstitutionProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
+        this.profileFeed = res.data.feeds;
+        this.reversedProfileFeed = [];
+          var end = this.profileFeed.length-1
+          for(var x = 0; x < this.profileFeed.length; x++) {
+            var modifiedCreatedAt = this.profileFeed[x].createdAt
+            this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+            this.reversedProfileFeed[x] = this.profileFeed[end]
+            end -= 1;
+          }
+      }, (err) => {
+        console.log('********** Profile Feed error(Institution).ts: ', err.error.msg);
+      })
+    } else if(this.accountType == "user") {
+      this.userService.getUserProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
+        this.profileFeed = res.data.feeds;
+        this.reversedProfileFeed = [];
+        var end = this.profileFeed.length-1
+        for(var x = 0; x < this.profileFeed.length; x++) {
+          var modifiedCreatedAt = this.profileFeed[x].createdAt
+          this.profileFeed[x].createdAt = this.parseDate(modifiedCreatedAt);
+          this.reversedProfileFeed[x] = this.profileFeed[end];
+          end -= 1;
+          
+        }
+        console.log(this.reversedProfileFeed);
+      }, (err) => {
+        console.log('********** Profile Feed error(user).ts: ', err.error.msg);
+      })
+    }
+    
     
   }
   

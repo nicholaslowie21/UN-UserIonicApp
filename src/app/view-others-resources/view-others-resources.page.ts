@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { ResourceService } from '../services/resource.service';
 import { SessionService } from '../services/session.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-view-others-resources',
@@ -27,8 +28,8 @@ export class ViewOthersResourcesPage implements OnInit {
   noManpowerResourceBoolean: boolean;
   id: string;
 
-  constructor(private navCtrl: NavController, private activatedRoute: ActivatedRoute, private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
-    this.accountType = this.tokenStorage.getAccountType();
+  constructor(private userService: UserService, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
+    this.accountType = this.tokenStorage.getViewId().accountType;
     this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     this.tokenStorage.saveViewId(this.id);
         this.user = this.tokenStorage.getUser();
@@ -148,7 +149,7 @@ export class ViewOthersResourcesPage implements OnInit {
       this.manpowerResource = res.data.manpowers;
       if(this.manpowerResource.length > 0) {
         this.noManpowerResourceBoolean = false;
-        this.manpowerImgPath = this.sessionService.getRscPath() + this.user.data.user.ionicImg  +'?random+=' + Math.random();
+        this.manpowerImgPath = this.sessionService.getRscPath() + this.tokenStorage.getViewId().ionicImg  +'?random+=' + Math.random();
         console.log(this.manpowerImgPath);
       } else {
           this.noManpowerResourceBoolean = true;
@@ -267,9 +268,17 @@ export class ViewOthersResourcesPage implements OnInit {
       this.manpowerResource = res.data.manpowers;
       if(this.manpowerResource.length > 0) {
         this.noManpowerResourceBoolean = false;
-        for(var i = 0; i < this.manpowerResource.length; i++) {
-          this.manpowerResource[i].imgPath = this.sessionService.getRscPath() + this.manpowerResource[i].imgPath  +'?random+=' + Math.random();
-        }
+        this.userService.viewUserById(this.id).subscribe((res) => {
+          this.manpowerImgPath = this.sessionService.getRscPath() + res.data.targetUser.ionicImg  +'?random+=' + Math.random();
+          console.log(this.manpowerImgPath);
+        }, (err) => {
+          console.log("Retrieve owner error(manpower): " + err.error.msg)
+        })
+        
+        console.log(this.manpowerImgPath);
+        /*for(var i = 0; i < this.manpowerResource.length; i++) {
+          this.manpowerResource[i]['imgPath'] = this.sessionService.getRscPath() + this.tokenStorage.getViewId().ionicImg  +'?random+=' + Math.random();
+        }*/
       } else {
           this.noManpowerResourceBoolean = true;
       }

@@ -73,6 +73,14 @@
         <ion-select-option *ngFor = "let c of countryData">{{c}}</ion-select-option>
       </ion-select>
   </ion-item>
+  <ion-card>
+    <ion-card-header>Upload an attachment for our admins to verify your institution</ion-card-header>
+    <ion-card-content>
+      <div>
+        <input type="file" name="attachment" (change)="selectAttachment($event)" />
+      </div>
+    </ion-card-content>
+  </ion-card>
     <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Register</ion-button>
   </form>
 

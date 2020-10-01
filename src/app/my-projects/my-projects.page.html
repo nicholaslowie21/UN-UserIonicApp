@@ -10,11 +10,22 @@
       </ion-icon>
     </ion-buttons>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="currProj" checked>
+        <ion-label>Current Projects</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="pastProj">
+        <ion-label>Past Projects</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
   
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list [ngSwitch]="type">
+    <div *ngSwitchCase="'currProj'">
     <h2 style="padding-left:10px">Current Projects</h2>
     <div *ngIf="noCurrProjectBoolean == true">
         <ion-label style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</ion-label>
@@ -35,7 +46,8 @@
       
     </ion-card>
     </div>
-
+  </div>
+    <div *ngSwitchCase="'pastProj'">
     <h2 style="padding-left:10px">Past Involvements</h2>
     <div *ngIf="noPastProjectBoolean == true">
       <ion-label style="padding-left: 15px;">You have no previous projects! Start Creating Projects now!</ion-label>
@@ -53,6 +65,7 @@
       <ion-card-content>{{p.desc}}</ion-card-content>
     </ion-card>
     </div>
+  </div>
   </ion-list>
   
 </ion-content>
