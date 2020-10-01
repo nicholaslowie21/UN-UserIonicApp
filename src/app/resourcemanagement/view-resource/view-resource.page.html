@@ -23,8 +23,6 @@
       <div *ngIf = "resourceType == 'venue' || resourceType == 'item'">
         <ion-label *ngIf="yourAccountBoolean==true"  style="text-decoration: underline; float:right" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
       </div>
-
-      <br>
       <br>
       <ion-card-header>
       <ion-card-title>{{currResource.title}}</ion-card-title>
