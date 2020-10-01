@@ -17,6 +17,7 @@
   
 <ion-card>
   <img [src]=image alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
+  
   <ion-label style="float: right; text-decoration: underline ;" *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Project Picture</ion-label>
   <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of SDGs">SDG {{sdg}}&nbsp;</ion-badge>
   <div>
@@ -27,12 +28,13 @@
     </div>
     <ion-card-content><div style="font-weight: bold;">Project Description: </div>{{desc}} </ion-card-content>
     <ion-card-content><div style="font-weight: bold;">Status: </div> {{status}}</ion-card-content>
-    <ion-card-content><div style="font-weight: bold;">Rating: </div> {{rating}}</ion-card-content>
+    <ion-card-content><div style="font-weight: bold;">Project Difficulty: </div> {{rating}}</ion-card-content>
     <ion-label style="font-weight: bold; padding-left: 15px;"> Overall Need Progress: {{(totalProgress)}} %</ion-label>
     <ion-card>
       <ion-progress-bar value='{{totalProgress/100}}'></ion-progress-bar>
     </ion-card>
     <ion-card-content><div style="font-weight: bold;">Country: </div> {{country}}</ion-card-content>
+    <ion-card-content>Last Modified: {{formatDate(updatedAt)}}</ion-card-content>
   </div>
   <div *ngIf="founderBoolean==true||adminBoolean==true">
     <ion-fab *ngIf="completedBoolean == false" vertical="bottom" horizontal="end" slot="fixed">
@@ -41,8 +43,8 @@
       </ion-button>
       <ion-fab-list side="start">
         
-        <ion-button *ngIf="founderBoolean==true" (click)="delete($event)"><ion-icon slot="end" name="trash" ></ion-icon>Delete</ion-button>
-        <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  color="danger" (click)="update($event)"><ion-icon slot="end" name="create-outline"></ion-icon>Update</ion-button>
+        <ion-button *ngIf="founderBoolean==true" color="danger" (click)="delete($event)"><ion-icon slot="end" name="trash" ></ion-icon>Delete</ion-button>
+        <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="update($event)"><ion-icon slot="end" name="create-outline"></ion-icon>Update</ion-button>
       </ion-fab-list>
     </ion-fab>
   </div>
@@ -147,7 +149,8 @@
             <ion-card-subtitle *ngIf='(r.type != "money")'>Progress: {{r.completion}} %</ion-card-subtitle>
             <ion-card-subtitle *ngIf='(r.type == "money")'>Progress: {{(r.completion)}} %</ion-card-subtitle>
             <ion-progress-bar value='{{r.completion/100}}'></ion-progress-bar>
-            <ion-card-subtitle *ngIf='(r.type == "money")'>Received Sum: {{r.receivedSum}} | Total: {{r.total}}</ion-card-subtitle> 
+            <ion-card-subtitle *ngIf='(r.type == "money")'>Received Sum: $ {{r.receivedSum}} | Total: $ {{r.total}}</ion-card-subtitle> 
+            <ion-card-subtitle *ngIf='(r.type == "money") '>Remaining Sum Needed: $ {{r.total - r.receivedSum - r.pendingSum}}</ion-card-subtitle>
             <ion-card-subtitle *ngIf='r.type == "money" && (founderBoolean==true ||adminBoolean==true)'>Pending Sum: {{r.pendingSum}} </ion-card-subtitle>
           </ion-card-content>
           <br>

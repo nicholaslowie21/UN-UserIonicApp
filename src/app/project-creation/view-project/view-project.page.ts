@@ -44,6 +44,7 @@ export class ViewProjectPage implements OnInit {
   totalCompletion = 0;
   totalProgress = 0;
   rating: any;
+  updatedAt: any;
   
   
 
@@ -107,6 +108,7 @@ export class ViewProjectPage implements OnInit {
       this.SDGs = this.projectToView.SDGs;
       this.hostType = this.projectToView.hostType;
       this.rating = this.projectToView.rating;
+      this.updatedAt = this.projectToView.updatedAt;
   },
   err => {
     console.log('********** View Projects.ts: ', err.error.msg);
@@ -150,8 +152,6 @@ export class ViewProjectPage implements OnInit {
       this.totalProgress = 0;
       for(var i = 0; i < this.resourceNeeds.length; i++) {
           this.totalCompletion += this.resourceNeeds[i].completion
-          console.log(this.resourceNeeds[i].completion);
-          console.log(this.totalCompletion)
       }
       if(this.resourceNeeds.length != 0) {
           this.totalProgress = parseFloat(((this.totalCompletion/((this.resourceNeeds.length)*100))*100).toFixed(2));
@@ -395,6 +395,11 @@ console.log(this.completedBoolean);
     });
 
     await alert.present();
+  }
+
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
   }
 
 }

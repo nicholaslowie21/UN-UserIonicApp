@@ -129,13 +129,12 @@ export class EditOwnersPage implements OnInit {
     this.resourceService.delKnowledgeOwner(this.removeData).subscribe((res) => {
       this.successToast();
       this.router.navigateByUrl("/view-resource/knowledge/" + this.resourceId);
-    }
-   ),
+    },
     err => {
       console.log(err);
       this.failureToast(err.error.msg);
       console.log('********** AffiliationManagementPage.ts: ', err.error.msg);
-    };
+    });
   }
 
   async presentAlertConfirm(ev, m) {

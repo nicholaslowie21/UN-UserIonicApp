@@ -38,6 +38,7 @@
         <ion-card-title >{{c.title}}</ion-card-title>
         <ion-card-subtitle>{{c.role}}</ion-card-subtitle>
         <ion-badge *ngFor="let s of c.SDGs" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
+        <ion-card-subtitle>Last Modified: {{formatDate(c.updatedAt)}}</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>

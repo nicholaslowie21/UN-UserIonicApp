@@ -26,7 +26,7 @@
       <br>
       <ion-card-header>
       <ion-card-title>{{currResource.title}}</ion-card-title>
-      <ion-card-subtitle>{{formatDate(currResource.updatedAt)}}</ion-card-subtitle>
+      <ion-card-subtitle>Last Modified: {{formatDate(currResource.updatedAt)}}</ion-card-subtitle>
       <ion-badge class="{{currResource.status}}">{{currResource.status}}</ion-badge>
       <br>
 
@@ -68,7 +68,7 @@
       <ion-item lines="none">
         <p>Description: {{currResource.desc}}</p>
       </ion-item>
-      <ion-item *ngIf="resourceType == 'knowledge' && filePath != ''" lines="none" >
+      <ion-item *ngIf="resourceType == 'knowledge' && currResource.attachment != ''" lines="none" >
         <p>Attachment: <ion-button (click) = "download()">Download</ion-button></p>
       </ion-item>
       

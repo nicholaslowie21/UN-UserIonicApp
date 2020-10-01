@@ -21,7 +21,8 @@
     <ion-card-content>
       <p>{{r.desc}}</p>
       <p>Completion: {{r.completion}} %</p>
-      <p *ngIf='(r.type == "money")'>Total: {{r.total}} | Received Sum: {{r.receivedSum}} | Pending Sum: {{r.pendingSum}}</p>
+      <p *ngIf='(r.type == "money")'>Total: $ {{r.total}} | Received Sum: $ {{r.receivedSum}} | Pending Sum: $ {{r.pendingSum}}</p>
+      <p *ngIf='(r.type == "money")'>Remaining Sum Needed:  $ {{r.total - r.receivedSum - r.pendingSum}}</p>
       <div *ngIf="(r.completion != 100)"><ion-button  (click)="markAsComplete($event, r)">Mark as Complete</ion-button></div>
     </ion-card-content>
     <ion-toolbar>
