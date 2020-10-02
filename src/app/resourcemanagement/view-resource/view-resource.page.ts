@@ -40,6 +40,7 @@ export class ViewResourcePage implements OnInit {
     initialSlide: 1,
     speed: 400
   };
+  noVenuePicBoolean: boolean;
 
   constructor(private navCtrl: NavController, private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController, private file: File, private transfer: FileTransfer) {
     //See BG update project, for the toast
@@ -152,6 +153,9 @@ export class ViewResourcePage implements OnInit {
           for (var i = 0; i < this.currResource.imgPath.length; i++) {
             this.currResource.imgPath[i] = this.sessionService.getRscPath() + this.currResource.imgPath[i] + '?random+=' + Math.random(); 
           }
+          this.noVenuePicBoolean = false;
+        } else {
+          this.noVenuePicBoolean = true;
         }
       }), (err) => {
       console.log('********** ViewResource.ts - Venue: ', err.error.msg);

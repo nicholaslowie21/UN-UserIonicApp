@@ -14,8 +14,11 @@
       <img *ngIf = "resourceType == 'knowledge'" class="{{currResource.status}} full" src="../../../assets/img/knowledge.jpg" />
       <img *ngIf = "resourceType == 'item'" class="{{currResource.status}} full " [src]=image  onerror="this.src='./assets/img/item.jpg'" />
       <div *ngIf = "resourceType == 'venue'">
+        <div *ngIf="noVenuePicBoolean == true">
+          <img src='./assets/img/venue.jpg' />
+        </div>
         <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
-          <ion-slide *ngFor ="let v of currResource.imgPath">
+          <ion-slide *ngFor ="let v of currResource.imgPath" >
             <ion-img [src]=v onerror="this.src='./assets/img/venue.jpg'" ></ion-img>
           </ion-slide>
         </ion-slides>
