@@ -55,6 +55,7 @@ initialise() {
 this.id = this.activatedRoute.snapshot.paramMap.get('Id');
 if(this.accountBoolean == true)
 {   
+    console.log("here");
     this.institutionService.viewInstitutionById(this.id).subscribe((res) => {
       this.name = res.data.targetInstitution.name;
     },

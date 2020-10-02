@@ -11,6 +11,10 @@
 
 <ion-content>
   <ion-list>
+    <h2 style="padding-left:10px">Current Involvements</h2>
+    <div *ngIf="noCurrProjectBoolean == true">
+      <ion-label style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</ion-label>
+    </div>
     <div *ngFor="let c of currProjects">
       <ion-card (click)="view($event, c)">
         <img [src]=c.imgPath onerror="this.src='./assets/img/projects.jpg'" />
