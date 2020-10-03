@@ -22,10 +22,14 @@ export class ViewOthersProjectsPage implements OnInit {
   pastProjects: any;
   noPastProjectBoolean: boolean;
   noCurrProjectBoolean: boolean;
+  currentProjectsList: any;
+  pastProjectsList: any;
+  type: string;
 
   constructor(private navCtrl: NavController, private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
     this.user = this.tokenStorage.getUser();
     console.log(this.user);
+    this.type = "currProj";
     if(this.tokenStorage.getViewId() != this.user.data.user.id && this.tokenStorage.getViewId()!= undefined ){
         this.accountType = this.tokenStorage.getViewId().accountType;
     } else if(this.id == this.user.id){
@@ -45,10 +49,14 @@ export class ViewOthersProjectsPage implements OnInit {
 ngOnInit() {
 this.id = this.activatedRoute.snapshot.paramMap.get('Id');
 this.initialise();
+this.initializeCurr();
+this.initializePast();
 }
 
 ionViewDidEnter() {
 this.initialise();
+this.initializeCurr();
+this.initializePast();
 }
 
 initialise() {
@@ -152,6 +160,46 @@ if(this.user.data.user.id != this.tokenStorage.getViewId() && this.tokenStorage.
 }
 }
 
+initializeCurr() {
+  this.currentProjectsList = this.currProjects;
+}
+initializePast() {
+ this.pastProjectsList = this.pastProjects;
+}
+
+async filterCurrList(evt) {
+ this.initializeCurr();
+ const searchTerm = evt.srcElement.value;
+
+ if (!searchTerm) {
+   return;
+ }
+
+ this.currentProjectsList = this.currentProjectsList.filter(currentProject => {
+   if (currentProject.title && searchTerm) {
+     return (currentProject.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+   }
+ });
+}
+
+async filterPastList(evt) {
+ this.initializePast();
+ const searchTerm = evt.srcElement.value;
+
+ if (!searchTerm) {
+   return;
+ }
+
+ this.pastProjectsList = this.pastProjectsList.filter(pastProject => {
+   if (pastProject.title && searchTerm) {
+     return (pastProject.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+   }
+ });
+}
+
+segmentChanged(ev: any) {
+  console.log('Segment changed', ev);
+}
 
 
 }

@@ -6,16 +6,28 @@
     </ion-buttons>
     <ion-title>{{name}}'s Projects</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="currProj" checked>
+        <ion-label>Current Projects</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="pastProj">
+        <ion-label>Past Projects</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
   
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <h2 style="padding-left:10px">Current Involvements</h2>
+  <ion-list [ngSwitch]="type">
+    <div *ngSwitchCase="'currProj'">
+    <!--<h2 style="padding-left:10px">Current Involvements</h2>-->
+    <ion-searchbar (ionInput)="filterCurrList($event)" placeholder="Search"></ion-searchbar>
     <div *ngIf="noCurrProjectBoolean == true">
       <ion-label style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</ion-label>
     </div>
-    <div *ngFor="let c of currProjects">
+    <div *ngFor="let c of currentProjectsList">
       <ion-card (click)="view($event, c)">
         <img [src]=c.imgPath onerror="this.src='./assets/img/projects.jpg'" />
       <ion-card-header>
@@ -30,12 +42,14 @@
       
     </ion-card>
     </div>
-
-    <h2 style="padding-left:10px">Past Involvements</h2>
+  </div>
+  <div *ngSwitchCase="'pastProj'">
+    <!--<h2 style="padding-left:10px">Past Involvements</h2>-->
+    <ion-searchbar (ionInput)="filterPastList($event)" placeholder="Search"></ion-searchbar>
     <div *ngIf="noPastProjectBoolean == true">
       <ion-label style="padding-left: 15px;">You have no previous projects! Start Creating Projects now!</ion-label>
     </div>
-    <div *ngFor="let p of pastProjects">
+    <div *ngFor="let p of pastProjectsList">
     <ion-card (click)="view($event, p)">
         <img [src]=p.imgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
       <ion-card-header>
@@ -46,6 +60,7 @@
 
       <ion-card-content>{{p.desc}}</ion-card-content>
     </ion-card>
+    </div>
     </div>
   </ion-list>
   
