@@ -43,6 +43,7 @@ export class ViewOthersProfilePage implements OnInit {
   originPage: string;
   profileFeed: any;
   reversedProfileFeed: any;
+  page: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -59,6 +60,7 @@ export class ViewOthersProfilePage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.page = 'feed'
     this.username = this.activatedRoute.snapshot.paramMap.get('username');
     this.accountType = this.activatedRoute.snapshot.paramMap.get('contributorType');
     this.originPage = "/view-project/" + this.tokenStorage.getProjectId();

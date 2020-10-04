@@ -45,6 +45,7 @@
           <ion-card-title>{{m.title}}</ion-card-title>
           <ion-card-subtitle>Country: {{m.country}}</ion-card-subtitle>
           <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
+          <ion-card-subtitle>Last Modified: {{formatDate(m.updatedAt)}}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
@@ -65,9 +66,7 @@
         <ion-card-header>
           <ion-card-title>{{k.title}}</ion-card-title>
           <ion-badge class="{{k.status}}">{{k.status}}</ion-badge>
-          <!-- <ion-div *ngFor="let s of p.SDG">
-            <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
-          </ion-div> -->
+          <ion-card-subtitle>Last Modified: {{formatDate(k.updatedAt)}}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
@@ -89,9 +88,7 @@
           <ion-card-title>{{i.title}}</ion-card-title>
           <ion-card-subtitle>{{i.region}}</ion-card-subtitle>
           <ion-badge class="{{i.status}}">{{i.status}}</ion-badge>
-          <!-- <ion-div *ngFor="let s of p.SDG">
-            <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
-          </ion-div> -->
+          <ion-card-subtitle>Last Modified: {{formatDate(i.updatedAt)}}</ion-card-subtitle>
         </ion-card-header>
   
         <ion-card-content>
@@ -113,9 +110,7 @@
             <ion-badge class="{{v.status}}">{{v.status}}</ion-badge>
             <ion-card-subtitle>{{v.region}}</ion-card-subtitle>
             <ion-card-subtitle>{{v.address}}</ion-card-subtitle>
-            <!-- <ion-div *ngFor="let s of p.SDG">
-              <ion-badge className="sdg{{s}}">{{s}}</ion-badge>
-            </ion-div> -->
+            <ion-card-subtitle>Last Modified: {{formatDate(s.updatedAt)}}</ion-card-subtitle>s
           </ion-card-header>
     
           <ion-card-content>

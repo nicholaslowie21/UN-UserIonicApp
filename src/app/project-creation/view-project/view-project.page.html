@@ -50,7 +50,6 @@
   </div>
 </ion-card>
 
-<!-- <ion-card> -->
   <ion-toolbar>
     <ion-segment [(ngModel)]="page">
       <ion-segment-button value="feed" checked>
@@ -79,13 +78,13 @@
       </ion-item-divider>
       
       <ion-card *ngFor="let c of contributions" lines="none">
-        <ion-card-header>
-            <ion-badge style="float: right;" class="{{c.resType}}type">{{c.resType}}</ion-badge>
+        <ion-badge style="float: right;" class="{{c.resType}}type">{{c.resType}}</ion-badge>
+        <ion-card-header>   
             <ion-card-title>{{c.needTitle}}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
         <p style="font-weight: bolder;">Provided Resource: {{c.resourceTitle}}</p>
-        <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="presentAlertConfirm($event, c)" >Remove</ion-button>
+        <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="presentAlertConfirm($event, c)" ><ion-icon name="trash-outline"></ion-icon></ion-button>
         <p style="font-weight: bold;">{{c.desc}}</p>
         <br>
         <div>
@@ -166,11 +165,4 @@
     </ion-item-group>
   </div>
   </ion-list>
- 
-<!-- </ion-card> -->
- 
-
-
-
-
 </ion-content>
