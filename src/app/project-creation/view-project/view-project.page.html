@@ -23,7 +23,7 @@
   <div>
     <div class="aligned">
     <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
-    <img class="aligned card-img-top rounded-circle img-fluid d-block" style="padding-left: 5px; width: 50px; height: 50px; object-fit: cover;" [src]=host.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+    <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=host.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <ion-label (click)="viewFounderProfile($event, host)">{{host.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
     </div>
     <ion-card-content><div style="font-weight: bold;">Project Description: </div>{{desc}} </ion-card-content>
@@ -79,15 +79,19 @@
       </ion-item-divider>
       
       <ion-card *ngFor="let c of contributions" lines="none">
-        <ion-badge style="float: right;" class="{{c.resType}}type">{{c.resType}}</ion-badge>
-        <ion-card-title>{{c.needTitle}}</ion-card-title>
-        <ion-card-content style="font-weight: bolder;">Provided Resource: {{c.resourceTitle}}</ion-card-content>
+        <ion-card-header>
+            <ion-badge style="float: right;" class="{{c.resType}}type">{{c.resType}}</ion-badge>
+            <ion-card-title>{{c.needTitle}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+        <p style="font-weight: bolder;">Provided Resource: {{c.resourceTitle}}</p>
         <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="presentAlertConfirm($event, c)" >Remove</ion-button>
-        <ion-label style="font-weight: bold; padding-left: 15px">{{c.desc}}</ion-label>
+        <p style="font-weight: bold;">{{c.desc}}</p>
         <br>
         <div>
-        <ion-label style="text-align: left" (click)="viewProfile($event, c)">Provided By: {{c.contributorUsername}}</ion-label>
+        <p style="text-align: left" (click)="viewProfile($event, c)">Provided By: {{c.contributorUsername}}</p>
         </div>
+        </ion-card-content>
       </ion-card>
     </ion-card>
   </ion-item-group>

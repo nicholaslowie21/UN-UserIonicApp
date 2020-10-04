@@ -36,7 +36,7 @@
     <ion-card *ngFor = "let a of admins">
       
       <div class="aligned">
-      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 100px; height: 100px; object-fit: cover;" [src]=a.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 60px; height: 60px; object-fit: cover;" [src]=a.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
       <ion-title (click)="viewAdminProfile($event, a)">{{a.username}}</ion-title>
       <ion-button style="float:right; fill: outline;" (click)="presentAlertConfirm($event, a)" >Remove</ion-button>
       </div>
