@@ -22,13 +22,16 @@
   
     </form>
     <ion-list >
-      <ion-item *ngFor="let u of users" >
-        <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=u.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-        <ion-title (click)="viewAdminProfile($event, u)">{{u.username}}</ion-title>
+      <ion-card *ngFor="let u of users" >
+        <div class="aligned">
+
+        <img class=" aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=u.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <h6 (click)="viewAdminProfile($event, u)">{{u.username}}</h6>
         <ion-toolbar >
-          <ion-button class="add" (click)="add(u)" >Add Admin</ion-button>
-        </ion-toolbar>
-      </ion-item>
+          <ion-button  class="add" (click)="add(u)" >Add Admin</ion-button>
+        </ion-toolbar>           
+      </div>
+      </ion-card>
     </ion-list>
    
   </ion-card>
@@ -37,8 +40,10 @@
       
       <div class="aligned">
       <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 60px; height: 60px; object-fit: cover;" [src]=a.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-      <ion-title (click)="viewAdminProfile($event, a)">{{a.username}}</ion-title>
-      <ion-button style="float:right; fill: outline;" (click)="presentAlertConfirm($event, a)" >Remove</ion-button>
+      <h6 (click)="viewAdminProfile($event, a)">{{a.username}}</h6>
+      <ion-toolbar>
+      <ion-button class="add" (click)="presentAlertConfirm($event, a)" >Remove</ion-button>
+      </ion-toolbar>
       </div>
      
     </ion-card>
