@@ -358,6 +358,11 @@ export class MyResourcesPage implements OnInit {
   }
   }
 
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
+
   async filterList(evt) {
     // this.initialiseFilter();
     this.initialiseData();

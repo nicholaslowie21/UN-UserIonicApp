@@ -57,11 +57,10 @@
     <ion-icon size=large name="share-social-outline" (click)="presentActionSheet()" style="padding-top: 10px;padding-left:10px"></ion-icon>
   </ion-buttons>
   <div class="centered">
-  <ion-label *ngIf="accountBoolean == false" style="font-weight:bold; font-size:14px;">My Wallet: {{currentUser.data.user.wallet}}</ion-label>
-</div>  
-  <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-    <div class="centered">
-      
+    <ion-label *ngIf="accountBoolean == false" style="font-weight:bold; font-size:14px;">My Wallet: {{currentUser.data.user.wallet}}</ion-label>
+  </div>  
+  <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'" />
+    <div class="centered"> 
       <div >
         <a style="font-size: 8px;" routerLink="/change-photo" routerDirection="forward">Edit Profile Picture</a>
       </div>
@@ -76,31 +75,14 @@
 </ion-card>
 
 <ion-card>
-  <ion-item (click)="getProjects($event)" routerDirection="forward">
-    <ion-icon name="list" slot="start"></ion-icon>
-    <ion-label>My Projects</ion-label>
-  </ion-item>
-
-  <ion-item routerLink="/my-resources">
-    <ion-icon  name="cube" slot="start"></ion-icon>
-    <ion-label>My Resources</ion-label>
-  </ion-item>
   <ion-item *ngIf="accountBoolean == true" (click)="getAffiliates($event)">
     <ion-icon name="people-outline" slot="start"></ion-icon>
     <ion-label>Affiliated Users</ion-label>
   </ion-item>
-  <ion-item *ngIf="accountBoolean == false" routerLink="/rewards">
-    <ion-icon name="gift-outline" slot="start"></ion-icon>
-    <ion-label>Rewards</ion-label>
-  </ion-item>
-</ion-card>
-
-<ion-list>
-  <ion-item-group>
-    <ion-item-divider>
+    
+  <ion-item-divider>
       <ion-label>About Me</ion-label>
     </ion-item-divider>
-
     <ion-item *ngIf="accountBoolean == false" lines="none">
       <p>Occupation: {{currentUser.data.user.occupation}}</p>
     </ion-item>
@@ -112,37 +94,57 @@
     </ion-item>
 
     <ion-item-divider>
-      <ion-label>Badges</ion-label>
+      <ion-label>Badge</ion-label>
     </ion-item-divider>
     <ion-card-subtitle *ngIf="badges == undefined">Start contributing to earn some badges!!</ion-card-subtitle>
     <ion-item *ngFor="let b of badges" lines="none">
       <div>
-      <img [src]=b.imgPath />
-      <p style="padding-left: 5px">Tier: {{b.title}}</p>
-    </div>
-      
+        <img [src]=b.imgPath />
+        <p style="padding-left: 5px">Tier: {{b.title}}</p>
+      </div>    
     </ion-item>
+</ion-card>
 
-    <!--<ion-item-divider>
-      <ion-card-title>Profile Feed</ion-card-title>
-    </ion-item-divider>
-      <ion-card *ngFor="let pf of reversedProfileFeed">
-            <div class="aligned">
-                <div style="padding-top: 5px; padding-left: 5px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 30px; height: 30px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
-                <ion-label style="padding-left: 5px; font-weight: bold" >{{currentUser.data.user.name}}</ion-label>
-                <ion-icon *ngIf="isVerified == true" name="checkmark-circle" size="big"></ion-icon>
-              </div>
-            
-            <ion-card-title>{{pf.title}} </ion-card-title>
-          <ion-card-content>{{pf.desc}}</ion-card-content>
-          <div style="text-align: right"><ion-label>{{pf.createdAt}}</ion-label></div>
-          
+<ion-toolbar>
+  <ion-segment [(ngModel)]="page">
+    <ion-segment-button value="feed" checked>
+      <ion-label>Profile Feed</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="manage">
+      <ion-label>Manage</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
 
-      </ion-card>-->
-
-
-  </ion-item-group>
+<ion-list [ngSwitch]="page">
+<ion-item-group *ngSwitchCase="'feed'" >
+  <ion-card *ngFor="let pf of reversedProfileFeed">
+    <div class="aligned">
+      <div style="padding-top: 10px; padding-left: 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+      <ion-label style="padding-left: 5px; font-weight: bold" >{{currentUser.data.user.name}}</ion-label>
+      <ion-icon *ngIf="isVerified == true" name="checkmark-circle" size="big"></ion-icon>
+    </div>  
+    <ion-card-header>
+      <ion-card-title>{{pf.title}} </ion-card-title>
+      <ion-badge>{{pf.createdAt}}</ion-badge>
+    </ion-card-header>
+    <ion-card-content>{{pf.desc}}</ion-card-content>
+    
+  </ion-card>
+</ion-item-group>
+<ion-item-group *ngSwitchCase="'manage'" >
+    <ion-item (click)="getProjects($event)" routerDirection="forward">
+      <ion-icon name="list" slot="start"></ion-icon>
+      <ion-label>My Projects</ion-label>
+    </ion-item>
+    <ion-item routerLink="/my-resources">
+      <ion-icon  name="cube" slot="start"></ion-icon>
+      <ion-label>My Resources</ion-label>
+    </ion-item>
+    <ion-item *ngIf="accountBoolean == false" routerLink="/rewards">
+      <ion-icon name="gift-outline" slot="start"></ion-icon>
+      <ion-label>Rewards</ion-label>
+    </ion-item>
+</ion-item-group>
 </ion-list>
-
-
 </ion-content>

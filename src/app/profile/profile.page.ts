@@ -29,6 +29,7 @@ export class ProfilePage implements OnInit {
   isVerified: boolean;
   profileFeed: any;
   reversedProfileFeed: any[];
+  page: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -43,6 +44,7 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.page="feed";
    this.currentUser = this.tokenStorage.getUser();
    
    this.accountType = this.tokenStorage.getAccountType();
