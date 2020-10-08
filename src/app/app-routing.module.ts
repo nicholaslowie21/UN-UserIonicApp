@@ -182,7 +182,11 @@ const routes: Routes = [
   {
     path: 'view-market-project-details/:Id',
     loadChildren: () => import('./view-market-project-details/view-market-project-details.module').then( m => m.ViewMarketProjectDetailsPageModule)
+  },  {
+    path: 'view-marketplace-resources',
+    loadChildren: () => import('./view-marketplace-resources/view-marketplace-resources.module').then( m => m.ViewMarketplaceResourcesPageModule)
   }
+
 
 
 ];
