@@ -182,6 +182,10 @@ const routes: Routes = [
   {
     path: 'view-market-project-details/:Id',
     loadChildren: () => import('./view-market-project-details/view-market-project-details.module').then( m => m.ViewMarketProjectDetailsPageModule)
+  },
+  {
+    path: 'create-project-request/:Id',
+    loadChildren: () => import('./create-project-request/create-project-request.module').then( m => m.CreateProjectRequestPageModule)
   }
 
 

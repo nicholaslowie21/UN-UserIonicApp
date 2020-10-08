@@ -1,0 +1,256 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ProjectService } from '../services/project.service';
+import { ResourceService } from '../services/resource.service';
+import { SessionService } from '../services/session.service';
+import { TokenStorageService } from '../services/token-storage.service';
+
+@Component({
+  selector: 'app-create-project-request',
+  templateUrl: './create-project-request.page.html',
+  styleUrls: ['./create-project-request.page.scss'],
+})
+export class CreateProjectRequestPage implements OnInit {
+  user: any;
+  type: string;
+  accountType: any;
+  id: any;
+  accountBoolean: boolean;
+  manpowerResourceList: any;
+  manpowerResource: any;
+  knowledgeResourceList: any;
+  knowledgeResource: any;
+  itemResourceList: any;
+  itemResource: any;
+  venueResourceList: any;
+  venueResource: any;
+  noKnowledgeResourceBoolean: boolean;
+  noItemResourceBoolean: boolean;
+  noVenueResourceBoolean: boolean;
+  noManpowerResourceBoolean: boolean;
+  manpowerImgPath: string;
+  isFilterAll: boolean;
+  needId: string;
+
+  constructor(private activatedRoute: ActivatedRoute, private sessionService: SessionService, private tokenStorage: TokenStorageService, private resourceService: ResourceService) { }
+
+  ngOnInit() {
+    this.needId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.user = this.tokenStorage.getUser();
+    console.log(this.user);
+    this.type = "manpower";
+    if(this.tokenStorage.getViewId() != this.user.data.user.id && this.tokenStorage.getViewId()!= undefined ){
+        this.accountType = this.tokenStorage.getViewId().accountType;
+    } else if(this.id == this.user.id){
+      console.log("elsenran");
+      this.accountType = this.tokenStorage.getAccountType();
+    
+    }
+    console.log(this.accountType);
+    if(this.accountType == "institution") {
+      this.accountBoolean = true;
+    } else if(this.accountType == "user") {
+      this.accountBoolean = false;
+    }
+    console.log(this.accountBoolean);
+  }
+
+  ionViewDidEnter() {
+    this.initialiseFilter();
+  }
+  
+  initialiseFilter() {
+      this.initialiseActiveOnly();
+  }
+
+  initialiseData() {
+    this.manpowerResourceList = this.manpowerResource;
+    this.knowledgeResourceList = this.knowledgeResource;
+    this.itemResourceList = this.itemResource;
+    this.venueResourceList = this.venueResource;
+  }
+
+
+  initialiseActiveOnly() {
+    console.log("I am at active only");
+    if(this.accountBoolean == true)
+    {
+      this.resourceService.getInstitutionKnowledgeResource(this.user.data.user.id).subscribe((res) => {
+        this.knowledgeResource = res.data.knowledges;
+        if(this.knowledgeResource.length > 0) {
+          this.noKnowledgeResourceBoolean = false;
+          for(var i = 0; i < this.knowledgeResource.length; i++) {
+            this.knowledgeResource[i].imgPath = this.sessionService.getRscPath() + this.knowledgeResource[i].imgPath  +'?random+=' + Math.random();
+          }
+        } else {
+            this.noKnowledgeResourceBoolean = true;
+        }
+
+        this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
+      }),
+      err => {
+        console.log('********** Knowledge Resource (institution).ts: ', err.error.msg);
+      }
+
+      this.resourceService.getInstitutionItemResource(this.user.data.user.id).subscribe((res) => {
+        this.itemResource = res.data.items;
+        if(this.itemResource.length > 0) {
+          this.noItemResourceBoolean = false;
+          for(var i = 0; i < this.itemResource.length; i++) {
+            this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+          }
+        } else {
+            this.noItemResourceBoolean = true;
+        }
+
+        this.itemResourceList = this.itemResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
+      }
+      ),
+      err => {
+        console.log('********** Item Resource (institution).ts: ', err.error.msg);
+      };
+
+      this.resourceService.getInstitutionVenueResource(this.user.data.user.id).subscribe((res) => {
+        this.venueResource = res.data.venues
+        this.venueResourceList = this.venueResource;
+        if(this.venueResource.length > 0) {
+          this.noVenueResourceBoolean = false;
+          for(var i = 0; i < this.venueResource.length; i++) {
+            if(this.venueResource[i].imgPath.length > 0) {
+                this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+            }
+          }
+        } else {
+            this.noVenueResourceBoolean = true;
+        }
+        this.venueResourceList = this.venueResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
+      }),
+      
+      err => {
+        console.log('********** Venue Resource (institution).ts: ', err.error.msg);
+      };
+
+  } else if(this.accountBoolean == false) {
+        this.resourceService.getUserKnowledgeResource(this.user.data.user.id).subscribe((res) => {
+        this.knowledgeResource = res.data.knowledges
+        if(this.knowledgeResource.length > 0) {
+          this.noKnowledgeResourceBoolean = false; 
+        } else {
+            this.noKnowledgeResourceBoolean = true;
+        }
+        this.knowledgeResourceList = this.knowledgeResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
+      }),
+      err => {
+        console.log('********** Knowledge Resource (user).ts: ', err.error.msg);
+      }
+
+      this.resourceService.getUserItemResource(this.user.data.user.id).subscribe((res) => {
+      this.itemResource = res.data.items;
+      if(this.itemResource.length > 0) {
+        this.noItemResourceBoolean = false;
+        for(var i = 0; i < this.itemResource.length; i++) {
+          this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+        }
+      } else {
+          this.noItemResourceBoolean = true;
+      }
+      this.itemResourceList = this.itemResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
+      }),
+      err => {
+        console.log('********** Item Resource (user).ts: ', err.error.msg);
+      };
+
+      this.resourceService.getUserVenueResource(this.user.data.user.id).subscribe((res) => {
+      this.venueResource = res.data.venues;
+      this.venueResourceList = this.venueResource;
+      if(this.venueResource.length > 0) {
+        this.noVenueResourceBoolean = false;
+        for(var i = 0; i < this.venueResource.length; i++) {
+          if(this.venueResource[i].imgPath.length > 0) {
+              this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+          }
+        }
+      } else {
+          this.noVenueResourceBoolean = true;
+      }
+      this.venueResourceList = this.venueResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
+      }),
+      err => {
+        console.log('********** Venue Resource (user).ts: ', err.error.msg);
+      };
+
+      this.resourceService.getUserManpowerResource(this.user.data.user.id).subscribe((res) => {
+      this.manpowerResource = res.data.manpowers;
+      if(this.manpowerResource.length > 0) {
+        this.noManpowerResourceBoolean = false;
+        for(var i = 0; i < this.manpowerResource.length; i++) {
+          this.manpowerResource[i].imgPath = this.sessionService.getRscPath() + this.manpowerResource[i].imgPath  +'?random+=' + Math.random();
+          this.manpowerImgPath = this.sessionService.getRscPath() + this.user.data.user.ionicImg  +'?random+=' + Math.random();
+        }
+      } else {
+          this.noManpowerResourceBoolean = true;
+      }
+    
+      this.manpowerResourceList = this.manpowerResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
+      }),
+      err => {
+        console.log('********** Manpower Resource (user).ts: ', err.error.msg);
+      };
+  }
+  }
+
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
+
+  async filterList(evt) {
+    // this.initialiseFilter();
+    this.initialiseData();
+    const searchTerm = evt.srcElement.value;
+    if (!searchTerm) {
+      return;
+    }
+  
+    this.manpowerResourceList = this.manpowerResourceList.filter( manpowerRes => {
+      if (manpowerRes.title && searchTerm) {
+        return (manpowerRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+    this.knowledgeResourceList = this.knowledgeResourceList.filter( knowledgeRes => {
+      if (knowledgeRes.title && searchTerm) {
+        return (knowledgeRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+    this.itemResourceList = this.itemResourceList.filter( itemRes => {
+      if (itemRes.title && searchTerm) {
+        return (itemRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+
+    this.venueResourceList = this.venueResourceList.filter( venueRes => {
+      if (venueRes.title && searchTerm) {
+        return (venueRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+  }
+
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
+
+}
