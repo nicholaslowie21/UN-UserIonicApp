@@ -184,6 +184,11 @@ export class ViewMarketplaceResourcesPage implements OnInit {
     }
   }
 
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
+
   viewResource(resource) {
     this.router.navigateByUrl("/view-resource/" + this.type + "/" + resource.id);
   }
