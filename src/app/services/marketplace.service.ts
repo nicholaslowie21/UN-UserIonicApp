@@ -50,6 +50,87 @@ export class MarketplaceService {
     );
   }
 
+  getManpowerOffer(): Observable<any> {
+    return this.http.get(this.API_URL + '/resources/manpower', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getItemOffer(): Observable<any> {
+    return this.http.get(this.API_URL + '/resources/item', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getVenueOffer(): Observable<any> {
+    return this.http.get(this.API_URL + '/resources/venue', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getKnowledgeOffer(): Observable<any> {
+    return this.http.get(this.API_URL + '/resources/knowledge', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createNonKnowledgeResReq(data): Observable<any> {
+    return this.http.post(this.API_URL + '/requestResource', {
+      "needId": data.needId,
+      "resourceId": data.resourceId,
+      "resType": data.resType,
+      "desc": data.desc
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createAutoNonKnowledgeResReq(data): Observable<any> {
+    return this.http.post(this.API_URL + '/auto/requestResource', {
+      "resourceId": data.resourceId,
+      "projectId": data.projectId,
+      "resType": data.resType,
+      "desc": data.desc
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createKnowledgeResReq(data): Observable<any> {
+    return this.http.post(this.API_URL + '/useKnowledgeResource', {
+      "resourceId": data.resourceId,
+      "needId": data.needId,
+      "desc": data.desc
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  createAutoKnowledgeResReq(data): Observable<any> {
+    return this.http.post(this.API_URL + '/auto/useKnowledgeResource', {
+      "resourceId": data.resourceId,
+      "projectId": data.projectId,
+      "desc": data.desc
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getAccountProjects(data): Observable<any> {
+    return this.http.get(this.API_URL + '/accProjects?accountId=' + data.id + "&accountType=" + data.type, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

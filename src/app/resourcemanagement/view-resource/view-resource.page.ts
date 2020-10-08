@@ -182,6 +182,11 @@ export class ViewResourcePage implements OnInit {
     this.router.navigate(["/upload-resource-pic/" + this.resourceType + "/" + this.resourceId]);
   }
 
+  requestResource(event) {
+    this.tokenStorageService.saveCurrResourceName(this.currResource.title);
+    this.router.navigate(["/request-resource/" + this.resourceType + "/" + this.resourceId]);
+  }
+
   download() {  
     //here encoding path as encodeURI() format. This filePath has the math random thing 
     let url = encodeURI(this.filePath);  

@@ -190,6 +190,10 @@ const routes: Routes = [
   {
     path: 'view-marketplace-resources',
     loadChildren: () => import('./view-marketplace-resources/view-marketplace-resources.module').then( m => m.ViewMarketplaceResourcesPageModule)
+  },
+  {
+    path: 'request-resource/:type/:id',
+    loadChildren: () => import('./request-resource/request-resource.module').then( m => m.RequestResourcePageModule)
   }
 
 

@@ -1,9 +1,127 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>viewMarketplaceResources</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-icon name="arrow-back" slot="start" routerLink="/tabs/profile" style="padding-left:10px"></ion-icon>-->
+      <ion-back-button></ion-back-button>
+    </ion-buttons>  
+    <ion-title>Resource Marketplace</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="manpower" checked>
+        <ion-label>Manpower</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="knowledge">
+        <ion-label>Knowledge</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="item">
+        <ion-label>Item</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="venue">
+        <ion-label>Venue</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-searchbar (ionInput)="filterList($event)" placeholder="Search"></ion-searchbar>
+  <ion-list  [ngSwitch]="type">
+    <div *ngSwitchCase="'manpower'" >
+      <div *ngIf="noManpowerResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>There are no active manpower resource available!</ion-label>
+      </div>
+      <div *ngFor="let m of manpowerResourceList" >
+      <ion-card (click)= "viewResource(m)">
+        <img class="card-img-top rounded-circle img-fluid d-block center {{m.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=m.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <ion-card-header>
+          <ion-card-title>{{m.title}}</ion-card-title>
+          <div class="aligned">
+            <img (click)="viewFounderProfile($event, m)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=m.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+            <ion-label (click)="viewFounderProfile($event, m)">{{m.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+          </div>
+          <ion-card-subtitle>{{m.country}}</ion-card-subtitle>
+          <!-- <ion-card-subtitle>Last Modified: {{formatDate(m.updatedAt)}}</ion-card-subtitle> -->
+        </ion-card-header>
 
+        <!-- <ion-card-content>
+          <ion-label>{{m.desc}}</ion-label>
+        </ion-card-content> -->
+      </ion-card>
+      </div>
+    </div>
+
+
+    <div *ngSwitchCase="'knowledge'">
+      <div *ngIf="noKnowledgeResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>There are no active knowledge resource available!</ion-label>
+    </div>
+    <div *ngFor="let k of knowledgeResourceList">
+    <ion-card (click)= "viewResource(k)">
+        <img src="../../assets/img/knowledge.jpg" class="{{k.status}} full" />
+        <ion-card-header>
+          <ion-card-title>{{k.title}}</ion-card-title>
+          <div class="aligned">
+            <img (click)="viewFounderProfile($event, k)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=k.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+            <ion-label (click)="viewFounderProfile($event, k)">{{k.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+          </div>
+          <!-- <ion-card-subtitle>Last Modified: {{formatDate(k.updatedAt)}}</ion-card-subtitle> -->
+        </ion-card-header>
+
+        <!-- <ion-card-content>
+          <ion-label>{{k.desc}}</ion-label>
+        </ion-card-content> -->
+    </ion-card>
+    </div>
+  </div>
+
+    <div *ngSwitchCase="'item'">
+      <div *ngIf="noItemResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>There are no active item resource available!</ion-label>
+    </div>
+    <div *ngFor="let i of itemResourceList">
+      <ion-card (click)= "viewResource(i)">
+          <img class="{{i.status}} full" [src]=i.imgPath  onerror="this.src='./assets/img/item.jpg'" />
+        <ion-card-header>
+          <ion-card-title>{{i.title}}</ion-card-title>
+          <div class="aligned">
+            <img (click)="viewFounderProfile($event, i)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=i.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+            <ion-label (click)="viewFounderProfile($event, i)">{{i.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+          </div>
+          <ion-card-subtitle>{{i.country}}</ion-card-subtitle>
+          <!-- <ion-card-subtitle>Last Modified: {{formatDate(i.updatedAt)}}</ion-card-subtitle> -->
+        </ion-card-header>
+  
+        <!-- <ion-card-content>
+          <ion-label>{{i.desc}}</ion-label>
+        </ion-card-content> -->
+      </ion-card>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'venue'">
+      <div *ngIf="noVenueResourceBoolean == true" style="padding-left: 15px;">
+        <ion-label>There are no active venue resource available!</ion-label>
+    </div>
+      <div *ngFor="let v of venueResourceList">
+        <ion-card (click)= "viewResource(v)">
+            <img class="{{v.status}} full" [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
+          <ion-card-header>
+            <ion-card-title>{{v.title}}</ion-card-title>
+            <div class="aligned">
+              <img (click)="viewFounderProfile($event, v)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=v.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+              <ion-label (click)="viewFounderProfile($event, v)">{{v.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+            </div>
+            <ion-card-subtitle>{{v.country}}</ion-card-subtitle>
+            <ion-card-subtitle>{{v.address}}</ion-card-subtitle>
+            <!-- <ion-card-subtitle>Last Modified: {{formatDate(v.updatedAt)}}</ion-card-subtitle>s -->
+          </ion-card-header>
+    
+          <!-- <ion-card-content>
+            <ion-label>{{v.desc}}</ion-label>
+          </ion-card-content> -->
+        </ion-card>
+      </div>
+      </div>
+  </ion-list>
 </ion-content>

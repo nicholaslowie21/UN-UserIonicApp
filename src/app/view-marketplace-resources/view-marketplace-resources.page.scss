@@ -1,0 +1,41 @@
+
+.card-img,
+.card-img-top,
+.card-img-bottom {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+  }
+
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .mx-auto {
+    margin-left: auto !important;
+  }
+
+  .d-block {
+    display: block !important;
+  }
+
+  .centered {
+    text-align: center;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.aligned { 
+  display: flex; 
+  align-items: center;
+
+} 
