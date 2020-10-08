@@ -1,9 +1,169 @@
-<ion-header>
+<ion-header style="color: primary;">
   <ion-toolbar>
-    <ion-title>view-market-project-details</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+    <div slot="end">
+    <ion-button slot="end" color="danger" *ngIf="founderBoolean==true && completedBoolean == false" (click)="complete($event)">Project<br>Completed</ion-button>
+  </div>
   </ion-toolbar>
+
+  
 </ion-header>
 
 <ion-content>
+  
+<ion-card>
+  <img [src]=image alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
+  
+  <ion-label style="float: right; text-decoration: underline ;" *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Project Picture</ion-label>
+  <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of SDGs">SDG {{sdg}}&nbsp;</ion-badge>
+  <div>
+    <div class="aligned">
+    <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
+    <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=host.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+    <ion-label (click)="viewFounderProfile($event, host)">{{host.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+    </div>
+    <ion-card-content><div style="font-weight: bold;">Project Description: </div>{{desc}} </ion-card-content>
+    <ion-card-content><div style="font-weight: bold;">Status: </div> {{status}}</ion-card-content>
+    <ion-card-content><div style="font-weight: bold;">Project Difficulty: </div> {{rating}}</ion-card-content>
+    <ion-label style="font-weight: bold; padding-left: 15px;"> Overall Need Progress: {{(totalProgress)}} %</ion-label>
+    <ion-card>
+      <ion-progress-bar value='{{totalProgress/100}}'></ion-progress-bar>
+    </ion-card>
+    <ion-card-content><div style="font-weight: bold;">Country: </div> {{country}}</ion-card-content>
+    <ion-card-content>Last Modified: {{formatDate(updatedAt)}}</ion-card-content>
+  </div>
+  <div *ngIf="founderBoolean==true||adminBoolean==true">
+    <ion-fab *ngIf="completedBoolean == false" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-button>
+        <ion-icon name="arrow-back-circle">More</ion-icon>
+      </ion-button>
+      <ion-fab-list side="start">
+        
+        <ion-button *ngIf="founderBoolean==true" color="danger" (click)="delete($event)"><ion-icon slot="end" name="trash" ></ion-icon>Delete</ion-button>
+        <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="update($event)"><ion-icon slot="end" name="create-outline"></ion-icon>Update</ion-button>
+      </ion-fab-list>
+    </ion-fab>
+  </div>
+</ion-card>
 
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="page">
+      <ion-segment-button value="feed" checked>
+        <ion-label>Project Feed</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="contributions">
+        <ion-label>Contributions</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="manage">
+        <ion-label>Details</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-list [ngSwitch]="page">
+    <ion-item-group>
+
+    </ion-item-group>
+    <ion-item-group *ngSwitchCase="'contributions'" >
+    <ion-card>
+      <ion-item-divider>
+        <ion-label color=dark>Resource Obtained</ion-label>
+        <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
+          <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp" (click)="viewContri($event)"></ion-icon></ion-label>
+          
+        </ion-buttons>
+      </ion-item-divider>
+      
+      <ion-card *ngFor="let c of contributions" lines="none">
+        <ion-badge style="float: right;" class="{{c.resType}}type">{{c.resType}}</ion-badge>
+        <ion-card-header>   
+            <ion-card-title>{{c.needTitle}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+        <p style="font-weight: bolder;">Provided Resource: {{c.resourceTitle}}</p>
+        <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="presentAlertConfirm($event, c)" ><ion-icon name="trash-outline"></ion-icon></ion-button>
+        <p style="font-weight: bold;">{{c.desc}}</p>
+        <br>
+        <div>
+        <p style="text-align: left" (click)="viewProfile($event, c)">Provided By: {{c.contributorUsername}}</p>
+        </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-card>
+  </ion-item-group>
+  <div>
+    <ion-item-group *ngSwitchCase="'manage'" >
+      <ion-card>
+      <ion-item-divider>
+        <ion-label color=dark>Admins</ion-label>
+        <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
+          <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp" (click)="view($event)"></ion-icon></ion-label>
+          
+        </ion-buttons>
+      </ion-item-divider>
+  
+      <ion-item (click)="viewAdminProfile($event, a)" *ngFor="let a of admins">
+        <div class="aligned">
+          <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=a.ionicImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+          <ion-label >{{a.name}}</ion-label>
+          </div>
+      </ion-item>
+    </ion-card>
+      <br>
+      <ion-card>
+      <ion-item-divider>
+        <ion-label color=dark>Key Performance Indicators</ion-label>
+        <ion-buttons *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float: right;" slot="end" >
+          <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp" (click)="manageKpi($event)"></ion-icon></ion-label>
+            
+        </ion-buttons>
+      </ion-item-divider>
+      
+      <ion-card *ngFor="let k of kpis" lines="none">
+        <ion-card-header>
+          <ion-card-title>{{k.title}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>{{k.desc}}</p>
+        <p style="text-align: right">Completion: {{k.completion}} %</p>
+        </ion-card-content>
+
+      </ion-card>
+    </ion-card>
+
+      <br>
+      <ion-card>
+      <ion-item-divider>
+        <ion-label color=dark>Resource Needs</ion-label>
+        <ion-buttons *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float: right;" slot="end" >
+          <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp" (click)="manageNeeds($event)"></ion-icon></ion-label>
+          
+        </ion-buttons>
+      </ion-item-divider>
+      <ion-card *ngFor="let r of resourceNeeds">
+          <ion-badge style="float: right;" class="{{r.type}}type">{{r.type}}</ion-badge>
+          <ion-card-header>
+            <ion-card-title>{{r.title}}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-card-subtitle>{{r.desc}}</ion-card-subtitle>
+            <ion-card-subtitle *ngIf='(r.type != "money")'>Progress: {{r.completion}} %</ion-card-subtitle>
+            <ion-card-subtitle *ngIf='(r.type == "money")'>Progress: {{(r.completion)}} %</ion-card-subtitle>
+            <ion-progress-bar value='{{r.completion/100}}'></ion-progress-bar>
+            <ion-card-subtitle *ngIf='(r.type == "money")'>Received Sum: $ {{r.receivedSum}} | Total: $ {{r.total}}</ion-card-subtitle> 
+            <ion-card-subtitle *ngIf='(r.type == "money") '>Remaining Sum Needed: $ {{r.total - r.receivedSum - r.pendingSum}}</ion-card-subtitle>
+            <ion-card-subtitle *ngIf='r.type == "money" && (founderBoolean==true ||adminBoolean==true)'>Pending Sum: {{r.pendingSum}} </ion-card-subtitle>
+            <ion-button *ngIf='(r.type != "money")' (click)="contribute(r)">Contribute</ion-button> 
+          </ion-card-content>
+          <br>
+      </ion-card>  
+      </ion-card>
+  
+    </ion-item-group>
+  </div>
+  </ion-list>
 </ion-content>

@@ -245,6 +245,17 @@ formatDate(date): any {
   return formattedDate.substring(5, formattedDate.length-13);
 }
   
+checkRole(project): string {
+  if(project.host == this.id) {
+    return 'Founder';
+  }
+  for(var i=0; i<project.admins.length; i++) {
+    if(project.admins[i] == this.id) {
+      return 'Admin';
+    }
+  }
+  return 'Contributor';
+}
  
 
 }

@@ -59,23 +59,6 @@ export class ViewProjectPage implements OnInit {
     
     this.page = "feed";
 
-    /*this.contributions = [
-      {
-        "projectId": "5f6b11ada7e36f1445610166",
-        "needId": "5f6b1538a054134644039654",
-        "requestId": "5f6c6b3d0db3cd871b3e2b44",
-        "requestType": "project",
-        "resType": "manpower",
-        "rating": 0,
-        "contributor": "5f63fa7876e51a95bde86666",
-        "contributorType": "institution",
-        "needTitle": "50 Coats for dogs",
-        "resourceTitle": "Software Engineer",
-        "resourceId": "5f6c6c2c0be9cf4628b40b5e",
-        "desc": "Backend Software Engineer (Part-Time)",
-        "contributorUsername": "wtoilet"
-      }
-    ]*/
   }
 
   ionViewDidEnter() {
