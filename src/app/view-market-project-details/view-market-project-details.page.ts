@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NavController, ToastController, AlertController } from '@ionic/angular';
+import { NavController, ToastController, AlertController, ModalController } from '@ionic/angular';
+import { CreateMoneyRequestPage } from '../funding/create-money-request/create-money-request.page';
 import { InstitutionService } from '../services/institution.service';
 import { ProjectService } from '../services/project.service';
 import { SessionService } from '../services/session.service';
@@ -45,7 +46,8 @@ export class ViewMarketProjectDetailsPage implements OnInit {
   totalProgress = 0;
   rating: any;
   updatedAt: any;
-  constructor(private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
+  modal: any;
+  constructor(private modalController: ModalController, private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.initialise();
@@ -372,7 +374,19 @@ console.log(this.completedBoolean);
   }
 
   contribute(rn) {
-    this.router.navigate(["/create-project-request/" + rn.id])
+    console.log(rn.id);
+    this.router.navigate(["/create-project-request/" + rn.id]);
+  }
+
+  async contributeMoney(resource) {
+    this.modal = await this.modalController.create({
+      component: CreateMoneyRequestPage,
+      componentProps: {"resource": {"fundingTitle": resource.title, "fundingDesc": resource.desc}, "needId": resource.id}
+      
+    });
+    this.modal.onWillDismiss().then((data) => {
+  });
+    return await this.modal.present();
   }
 
 }

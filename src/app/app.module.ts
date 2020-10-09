@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { PopoverController } from '@ionic/angular';
 import { FormGroup, NgForm, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -70,6 +71,7 @@ export function jwtOptionsFactory(storage:Storage) {
     SocialSharing,
     ActionSheetController,
     Downloader,
+    ModalController,
     authInterceptorProviders
   ],
   bootstrap: [AppComponent]

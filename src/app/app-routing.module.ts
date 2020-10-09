@@ -186,6 +186,18 @@ const routes: Routes = [
   {
     path: 'create-project-request/:Id',
     loadChildren: () => import('./create-project-request/create-project-request.module').then( m => m.CreateProjectRequestPageModule)
+  },
+  {
+    path: 'projrequest-modal',
+    loadChildren: () => import('./projrequest-modal/projrequest-modal.module').then( m => m.ProjrequestModalPageModule)
+  },
+  {
+    path: 'view-funding-needs',
+    loadChildren: () => import('./funding/view-funding-needs/view-funding-needs.module').then( m => m.ViewFundingNeedsPageModule)
+  },
+  {
+    path: 'create-money-request',
+    loadChildren: () => import('./funding/create-money-request/create-money-request.module').then( m => m.CreateMoneyRequestPageModule)
   }
 
 

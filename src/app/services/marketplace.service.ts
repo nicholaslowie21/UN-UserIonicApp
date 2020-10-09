@@ -50,6 +50,24 @@ export class MarketplaceService {
     );
   }
 
+  viewFundingNeeds(): Observable<any> {
+    return this.http.get(this.API_URL + '/fundingNeeds', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  contributeMoney(data): Observable<any> {
+    return this.http.post(this.API_URL + '/contributeMoney', {
+      "needId": data.needId,
+      "desc": data.desc,
+      "moneySum": data.moneySum
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

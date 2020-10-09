@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="dismiss()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Create Money Request</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="createRes(form)">
+    <ion-item>
+      <ion-label style="font-weight:bold;" position="floating">Funding Need</ion-label>
+      <p>{{resource.fundingTitle}}</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label style="font-weight:bold;" position="floating">Description</ion-label>
+      <ion-textarea ngModel name="desc" [(ngModel)]="resource.fundingDesc" required minlength="3" #indesc="ngModel"></ion-textarea>
+      <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
+        <div *ngIf="indesc.errors.required">Description is required</div>
+        <div *ngIf="indesc.errors.minlength">
+          Description must be at least 3 characters
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-label style="font-weight:bold;" position="floating">Amount</ion-label>
+      <ion-input type="number" ngModel name="amt" [(ngModel)]="moneySum" min=0 required #inamt="ngModel"></ion-input>
+      <div class="alert-danger" *ngIf="form.submitted && inamt.invalid">
+        <div *ngIf="inamt.errors.required">Amount is required</div>
+        <div *ngIf="indesc.errors.min">
+          Amount must be greater than zero
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Offer Resource</ion-button>
+  </form>
+  
+  <ion-content>
+    <div *ngIf="resultSuccess == true" style="color: blue;">
+      {{message}}
+    </div>
+    
+    <div *ngIf="resultError == true" style="color: red;">
+      {{message}}
+    </div>
+  </ion-content>
+</ion-content>

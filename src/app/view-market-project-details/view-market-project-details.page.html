@@ -158,6 +158,7 @@
             <ion-card-subtitle *ngIf='(r.type == "money") '>Remaining Sum Needed: $ {{r.total - r.receivedSum - r.pendingSum}}</ion-card-subtitle>
             <ion-card-subtitle *ngIf='r.type == "money" && (founderBoolean==true ||adminBoolean==true)'>Pending Sum: {{r.pendingSum}} </ion-card-subtitle>
             <ion-button *ngIf='(r.type != "money")' (click)="contribute(r)">Contribute</ion-button> 
+            <ion-button *ngIf='(r.type == "money")' (click)="contributeMoney(r)">Contribute</ion-button> 
           </ion-card-content>
           <br>
       </ion-card>  

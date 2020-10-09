@@ -4,7 +4,7 @@
       <!--<ion-icon name="arrow-back" slot="start" routerLink="/tabs/profile" style="padding-left:10px"></ion-icon>-->
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{user.data.user.name}}'s Resources</ion-title>
+    <h6>Choose a Resource to contribute</h6>
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
@@ -44,6 +44,11 @@
 
         <ion-card-content>
           <ion-label>{{m.desc}}</ion-label>
+          <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+            <ion-button (click)="contribute(m, 'manpower')">
+              Contribute!
+            </ion-button>
+          </ion-fab>
         </ion-card-content>
       </ion-card>
       </div>
@@ -65,7 +70,11 @@
 
         <ion-card-content>
           <ion-label>{{k.desc}}</ion-label>
-          
+          <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+            <ion-button (click)="contribute(k, 'knowledge')">
+              Contribute!
+            </ion-button>
+          </ion-fab>
         </ion-card-content>
     </ion-card>
     </div>
@@ -87,6 +96,11 @@
   
         <ion-card-content>
           <ion-label>{{i.desc}}</ion-label>
+          <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+            <ion-button (click)="contribute(i, 'item')">
+              Contribute!
+            </ion-button>
+          </ion-fab>
         </ion-card-content>
       </ion-card>
       </div>
@@ -109,6 +123,11 @@
     
           <ion-card-content>
             <ion-label>{{v.desc}}</ion-label>
+            <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+              <ion-button (click)="contribute(v, 'venue')">
+                Contribute!
+              </ion-button>
+            </ion-fab>
           </ion-card-content>
         </ion-card>
       </div>

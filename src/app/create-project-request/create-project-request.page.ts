@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { RequestVerificationPage } from '../accountmanagement/request-verification/request-verification.page';
+import { ProjrequestModalPage } from '../projrequest-modal/projrequest-modal.page';
 import { ProjectService } from '../services/project.service';
 import { ResourceService } from '../services/resource.service';
 import { SessionService } from '../services/session.service';
@@ -24,6 +27,7 @@ export class CreateProjectRequestPage implements OnInit {
   itemResource: any;
   venueResourceList: any;
   venueResource: any;
+  
   noKnowledgeResourceBoolean: boolean;
   noItemResourceBoolean: boolean;
   noVenueResourceBoolean: boolean;
@@ -31,28 +35,20 @@ export class CreateProjectRequestPage implements OnInit {
   manpowerImgPath: string;
   isFilterAll: boolean;
   needId: string;
+  modal: HTMLIonModalElement;
 
-  constructor(private activatedRoute: ActivatedRoute, private sessionService: SessionService, private tokenStorage: TokenStorageService, private resourceService: ResourceService) { }
+  constructor(private router: Router, private modalController: ModalController, private activatedRoute: ActivatedRoute, private sessionService: SessionService, private tokenStorage: TokenStorageService, private resourceService: ResourceService) { }
 
   ngOnInit() {
-    this.needId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.user = this.tokenStorage.getUser();
-    console.log(this.user);
+    this.needId = this.activatedRoute.snapshot.paramMap.get('Id');
     this.type = "manpower";
-    if(this.tokenStorage.getViewId() != this.user.data.user.id && this.tokenStorage.getViewId()!= undefined ){
-        this.accountType = this.tokenStorage.getViewId().accountType;
-    } else if(this.id == this.user.id){
-      console.log("elsenran");
-      this.accountType = this.tokenStorage.getAccountType();
-    
-    }
-    console.log(this.accountType);
+    this.accountType = this.tokenStorage.getAccountType();
+    this.user = this.tokenStorage.getUser();
     if(this.accountType == "institution") {
       this.accountBoolean = true;
-    } else if(this.accountType == "user") {
+    } else {
       this.accountBoolean = false;
     }
-    console.log(this.accountBoolean);
   }
 
   ionViewDidEnter() {
@@ -251,6 +247,19 @@ export class CreateProjectRequestPage implements OnInit {
 
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
+  }
+
+  async contribute(resource, type) {
+    console.log(this.needId);
+    this.modal = await this.modalController.create({
+      component: ProjrequestModalPage,
+      componentProps: {"resource": resource, "resType": type, "needId": this.needId}
+    });
+    return await this.modal.present();
+  }
+
+  viewResource(resource) {
+    this.router.navigateByUrl("/view-resource/" + this.type + "/" + resource.id);
   }
 
 }
