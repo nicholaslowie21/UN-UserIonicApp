@@ -198,7 +198,16 @@ const routes: Routes = [
   {
     path: 'create-money-request',
     loadChildren: () => import('./funding/create-money-request/create-money-request.module').then( m => m.CreateMoneyRequestPageModule)
+  }, 
+  {
+    path: 'view-marketplace-resources',
+    loadChildren: () => import('./view-marketplace-resources/view-marketplace-resources.module').then( m => m.ViewMarketplaceResourcesPageModule)
+  },
+  {
+    path: 'request-resource/:type/:id',
+    loadChildren: () => import('./request-resource/request-resource.module').then( m => m.RequestResourcePageModule)
   }
+
 
 
 ];

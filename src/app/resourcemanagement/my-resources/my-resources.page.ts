@@ -79,7 +79,6 @@ export class MyResourcesPage implements OnInit {
   }
 
   initialiseAll() {
-    console.log("I am initialise ALl");
     if(this.accountBoolean == true)
     {
       this.resourceService.getInstitutionPrivateKnowledgeResource().subscribe((res) => {
