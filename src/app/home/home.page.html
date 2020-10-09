@@ -3,9 +3,6 @@
     <ion-title>
       Home
     </ion-title>
-    <ion-button routerLink="/view-marketplace-projects"></ion-button>
-    <ion-button routerLink="/view-funding-needs"></ion-button>
-    <ion-button routerLink="/view-marketplace-resources">Resources</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -28,9 +25,9 @@
     </div>
       <ion-badge style="padding-left: 5px" className="sdg{{sdg}}" *ngFor= "let sdg of n.SDGs">SDG {{sdg}}&nbsp;</ion-badge>
     </ion-card-header>
-  <div>
-    <ion-card-content>Project Description: {{n.desc}}<br>Country: {{n.country}}<br>Rating: {{n.rating}}</ion-card-content>
-  </div>
+    <div>
+      <ion-card-content>Project Description: {{n.desc}}<br>Country: {{n.country}}<br>Rating: {{n.rating}}</ion-card-content>
+    </div>
     <ion-card-title></ion-card-title>
   </ion-card>
 </ion-content>

@@ -4,6 +4,60 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content fullscreen>
+  <ion-grid fixed = "true">
+    <ion-row>
+      <ion-col class="col-center">
+        <ion-button shape="round" fill="outline" size="large" class ="round-btn" routerLink="/view-marketplace-projects">
+        <ion-icon name="list-sharp"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col class="col-center">
+        <ion-button shape="round" fill="outline" size="large" class="round-btn" routerLink="/view-funding-needs">
+        <ion-icon name="wallet-sharp"></ion-icon>
+      </ion-button>
+      </ion-col>
+      <ion-col class="col-center">
+        <ion-button shape="round" fill="outline" size="large" class="round-btn" routerLink="/view-marketplace-resources">
+        <ion-icon name="cube-sharp"></ion-icon>
+      </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="col-center">
+        <ion-label>Projects</ion-label>
+      </ion-col>
+      <ion-col class="col-center">
+        <ion-label>Funding</ion-label>
+      </ion-col>
+      <ion-col class="col-center">
+        <ion-label>Resources</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <h4 style="text-align: center;">These projects need your donations! DONATE NOW!</h4>
+  <ion-card *ngFor="let m of fundingNeedsList">
+    <ion-card-header>
+      <img [src]=m.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
+      <ion-card-title (click)="viewProject($event, m)">{{m.title}}</ion-card-title>
+      <div class="aligned">
+        <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
+        <img (click)="viewFounderProfile($event, m)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=m.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <ion-label (click)="viewFounderProfile($event, m)">{{m.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+      </div>
+      <ion-badge style="padding-left: 5px" className="sdg{{sdg}}" *ngFor= "let sdg of m.SDGs">SDG {{sdg}}&nbsp;</ion-badge>
+    </ion-card-header>
+    <ion-card-content>
+      <p style="font-weight: bold">{{m.fundingTitle}}</p>
+      <p>{{m.fundingDesc}}</p>
+      <p>Total: {{m.total}}</p>
+      <p>Received Sum: {{m.receivedSum}}</p>
+      <p>Pending Sum: {{m.pendingSum}}</p>
+      <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-button (click)="contribute(m)">
+          Donate
+        </ion-button>
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
