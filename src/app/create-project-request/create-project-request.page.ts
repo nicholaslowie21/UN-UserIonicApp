@@ -36,12 +36,14 @@ export class CreateProjectRequestPage implements OnInit {
   isFilterAll: boolean;
   needId: string;
   modal: HTMLIonModalElement;
+  needType: string;
 
   constructor(private router: Router, private modalController: ModalController, private activatedRoute: ActivatedRoute, private sessionService: SessionService, private tokenStorage: TokenStorageService, private resourceService: ResourceService) { }
 
   ngOnInit() {
     this.needId = this.activatedRoute.snapshot.paramMap.get('Id');
-    this.type = "manpower";
+    this.needType = this.activatedRoute.snapshot.paramMap.get('type');
+    this.type = this.needType;
     this.accountType = this.tokenStorage.getAccountType();
     this.user = this.tokenStorage.getUser();
     if(this.accountType == "institution") {

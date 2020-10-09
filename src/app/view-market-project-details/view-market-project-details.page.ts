@@ -375,7 +375,7 @@ console.log(this.completedBoolean);
 
   contribute(rn) {
     console.log(rn.id);
-    this.router.navigate(["/create-project-request/" + rn.id]);
+    this.router.navigate(["/create-project-request/" + rn.id + "/" + rn.type]);
   }
 
   async contributeMoney(resource) {

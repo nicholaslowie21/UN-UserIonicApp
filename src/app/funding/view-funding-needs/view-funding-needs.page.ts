@@ -39,8 +39,6 @@ export class ViewFundingNeedsPage implements OnInit {
     } else {
       this.accountBoolean = false;
     }
-    this.initialise();
-    this.initializeLists();
    }
 
   ngOnInit() {
@@ -52,28 +50,26 @@ export class ViewFundingNeedsPage implements OnInit {
     {"id":16},{"id":17}]
     this.initialise();
     this.initializeLists();
+    console.log("onInit: " + JSON.stringify(this.fundingNeedsList));
   }
 
   ionViewDidEnter() {
     this.initialise();
     this.initializeLists();
-  }
-
-  ionModalDidDismiss() {
-    console.log("help");
-    this.initialise();
-    this.initializeLists();
+    console.log("didEnter: " + JSON.stringify(this.fundingNeedsList));
   }
 
   initialise() {
     this.marketplaceService.viewFundingNeeds().subscribe((res) => {
       this.fundingNeeds = res.data.fundings;
+      console.log("res" + JSON.stringify(res.data.fundings));
       if(this.fundingNeeds != undefined) {
         for(var i = 0; i < this.fundingNeeds.length; i ++) {
           this.fundingNeeds[i].imgPath = this.sessionService.getRscPath() + this.fundingNeeds[i].imgPath +'?random+=' + Math.random();
           this.fundingNeeds[i].ownerImg = this.sessionService.getRscPath() + this.fundingNeeds[i].ownerImg + '?random+=' + Math.random();
 
         }
+        this.initializeLists();
       }
     }, (err) => {
       console.log("******************View Funding needs(Retrieve funding needs error: " + err.error.msg);
@@ -154,10 +150,8 @@ export class ViewFundingNeedsPage implements OnInit {
       componentProps: {"resource": resource, "needId": resource.needId}
       
     });
-    this.modal.onWillDismiss().then((data) => {
-      console.log("i ranned");
+    this.modal.onDidDismiss().then((data) => {
       this.initialise();
-      this.initializeLists();
   });
     return await this.modal.present();
   }

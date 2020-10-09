@@ -8,16 +8,16 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
-      <ion-segment-button *ngIf="accountBoolean==false" value="manpower" checked>
+      <ion-segment-button *ngIf="accountBoolean==false&&needType=='manpower'" value="manpower" checked>
         <ion-label>Manpower</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="knowledge">
+      <ion-segment-button *ngIf="needType=='knowledge'" value="knowledge">
         <ion-label>Knowledge</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="item">
+      <ion-segment-button *ngIf="needType=='item'" value="item">
         <ion-label>Item</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="venue">
+      <ion-segment-button *ngIf="needType=='venue'" value="venue">
         <ion-label>Venue</ion-label>
       </ion-segment-button>
     </ion-segment>
@@ -27,6 +27,16 @@
 <ion-content>
   <ion-searchbar (ionInput)="filterList($event)" placeholder="Search"></ion-searchbar>
   <ion-list  [ngSwitch]="type">
+    <div *ngIf="accountBoolean==true">
+      <ion-card>
+        <ion-card-header>
+            <ion-card-title>This is an institution account! Contribute other resources!</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-img src="./assets/img/owl_wave.png"></ion-img>
+        </ion-card-content>
+      </ion-card>
+    </div>
     <div *ngIf="accountBoolean==false">
     <div *ngSwitchCase="'manpower'" >
       <div *ngIf="noManpowerResourceBoolean == true" style="padding-left: 15px;">
