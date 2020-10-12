@@ -366,6 +366,10 @@ parseDate(d: String) {
     });
     await actionSheet.present();
   }
-
+  
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
 
 }

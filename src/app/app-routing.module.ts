@@ -206,7 +206,21 @@ const routes: Routes = [
   {
     path: 'request-resource/:type/:id',
     loadChildren: () => import('./request-resource/request-resource.module').then( m => m.RequestResourcePageModule)
+  },
+  {
+    path: 'create-post/:id',
+    loadChildren: () => import('./projUpdates/create-post/create-post.module').then( m => m.CreatePostPageModule)
+  },
+  {
+    path: 'create-comment/:id',
+    loadChildren: () => import('./projUpdates/create-comment/create-comment.module').then( m => m.CreateCommentPageModule)
+  },
+  {
+    path: 'edit-post/:id',
+    loadChildren: () => import('./projUpdates/edit-post/edit-post.module').then( m => m.EditPostPageModule)
   }
+
+
 
 
 

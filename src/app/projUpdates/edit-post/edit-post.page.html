@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Project Post</ion-title>
+  </ion-toolbar>
+</ion-header>
+<form #form="ngForm" (ngSubmit)="update()">
+  <ion-item>
+    <ion-label position="floating">Title</ion-label>
+    <ion-input ngModel name="title" [(ngModel)]="currPost.title" required minlength="3" #intitle="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
+      <div *ngIf="intitle.errors.required">Title is required</div>
+      <div *ngIf="intitle.errors.minlength">
+        Title must be at least 3 characters
+      </div>
+    </div>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Content</ion-label>
+    <ion-textarea ngModel name="content" [(ngModel)]="currPost.desc" required minlength="3" #incontent="ngModel"></ion-textarea>
+    <div class="alert-danger" *ngIf="form.submitted && incontent.invalid">
+      <div *ngIf="incontent.errors.required">Content is required</div>
+      <div *ngIf="incontent.errors.minlength">
+          Content must be at least 3 characters
+      </div>
+    </div>
+  </ion-item>
+  <ion-card>
+    <ion-card-header *ngIf ="originalImg != ''">
+      <ion-card-title>Replace original picture</ion-card-title>
+        <div class="aligned">
+          <img class="aligned card-img-top img-fluid d-block" style="width: 150px; height: 150px; object-fit: cover;" [src]=originalImg alt="Project Post Image">
+          <div style="padding-left: 10px;">
+            <p style='font-weight: bold;'>Original Picture</p>
+            <ion-button style="fill: outline;" (click)="removePic($event)" >Remove</ion-button>
+          </div> 
+        </div>
+      </ion-card-header>
+      
+      <ion-card-header *ngIf="originalImg !=''">
+        <ion-card-title>Upload new picture</ion-card-title>
+      </ion-card-header>
+    
+    <ion-card-content>
+      <div>
+        <input type="file" name="image" (change)="selectImage($event)" />
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-button type="submit" color="primary" expand="block" style="margin: 0px 10px;">Post</ion-button>
+</form>
+<ion-content>
+  <div *ngIf="resultSuccess == true" style="color: blue;">
+    {{message}}
+  </div>
+  
+  <div *ngIf="resultError == true" style="color: red;">
+    {{message}}
+  </div>
+</ion-content>

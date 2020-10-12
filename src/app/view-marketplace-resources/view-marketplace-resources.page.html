@@ -39,6 +39,7 @@
           <div class="aligned">
             <img (click)="viewFounderProfile($event, m)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=m.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
             <ion-label (click)="viewFounderProfile($event, m)">{{m.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+            <ion-icon *ngIf="m.ownerIsVerified == 'true'" name="checkmark-circle" size="big"></ion-icon>
           </div>
           <ion-card-subtitle>{{m.country}}</ion-card-subtitle>
           <ion-card-subtitle>Last Modified: {{formatDate(m.updatedAt)}}</ion-card-subtitle>
@@ -64,6 +65,7 @@
           <div class="aligned">
             <img (click)="viewFounderProfile($event, k)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=k.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
             <ion-label (click)="viewFounderProfile($event, k)">{{k.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+            <ion-icon *ngIf="k.ownerIsVerified == 'true'" name="checkmark-circle" size="big"></ion-icon>
           </div>
           <ion-card-subtitle>Last Modified: {{formatDate(k.updatedAt)}}</ion-card-subtitle>
         </ion-card-header>
@@ -87,6 +89,7 @@
           <div class="aligned">
             <img (click)="viewFounderProfile($event, i)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=i.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
             <ion-label (click)="viewFounderProfile($event, i)">{{i.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+            <ion-icon *ngIf="i.ownerIsVerified == 'true'" name="checkmark-circle" size="big"></ion-icon>
           </div>
           <ion-card-subtitle>{{i.country}}</ion-card-subtitle>
           <ion-card-subtitle>Last Modified: {{formatDate(i.updatedAt)}}</ion-card-subtitle>
@@ -111,6 +114,7 @@
             <div class="aligned">
               <img (click)="viewFounderProfile($event, v)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=v.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
               <ion-label (click)="viewFounderProfile($event, v)">{{v.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+              <ion-icon *ngIf="v.ownerIsVerified == 'true'" name="checkmark-circle" size="big"></ion-icon>
             </div>
             <ion-card-subtitle>{{v.country}}</ion-card-subtitle>
             <ion-card-subtitle>{{v.address}}</ion-card-subtitle>
