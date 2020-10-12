@@ -7,6 +7,8 @@ import { SessionService } from 'src/app/services/session.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { isRegExp } from 'util';
+import { FormGroup, NgForm } from '@angular/forms';
+
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.page.html',
@@ -14,7 +16,6 @@ import { isRegExp } from 'util';
 })
 export class ViewProjectPage implements OnInit {
   id: any;
-  
   projectToView: any;
   currentUser: any;
   founderBoolean: boolean;
@@ -46,7 +47,6 @@ export class ViewProjectPage implements OnInit {
   rating: any;
   updatedAt: any;
   posts: any[];
-  
 
   constructor(private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
 
@@ -235,6 +235,10 @@ console.log(this.completedBoolean);
 
   editPost(ev, postId) {
     this.router.navigate(["/edit-post/" + postId]);
+  }
+
+  viewComments(ev, postId) {
+    this.router.navigate(['/view-comments/' + postId]);
   }
 
   back() {

@@ -39,13 +39,13 @@
         </div>
       </ion-card-header>
       
-      <ion-card-header *ngIf="originalImg !=''">
+      <ion-card-header *ngIf="originalImg ==''">
         <ion-card-title>Upload new picture</ion-card-title>
       </ion-card-header>
     
     <ion-card-content>
       <div>
-        <input type="file" name="image" (change)="selectImage($event)" />
+        <input type="file" (change)="selectImage($event)" />
       </div>
     </ion-card-content>
   </ion-card>

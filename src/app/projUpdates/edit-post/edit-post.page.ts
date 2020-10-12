@@ -67,8 +67,7 @@ export class EditPostPage implements OnInit {
           this.resultSuccess = true;
           this.resultError = false;
           this.successToast();
-          // this.router.navigateByUrl("/view-project/" + this.postId);
-          this.router.navigateByUrl('/tabs/profile');
+          this.router.navigateByUrl("/view-project/" + this.currPost.projectId);
         },
         
         (err) => {

@@ -218,7 +218,12 @@ const routes: Routes = [
   {
     path: 'edit-post/:id',
     loadChildren: () => import('./projUpdates/edit-post/edit-post.module').then( m => m.EditPostPageModule)
+  },
+  {
+    path: 'view-comments/:id',
+    loadChildren: () => import('./projUpdates/view-comments/view-comments.module').then( m => m.ViewCommentsPageModule)
   }
+
 
 
 
