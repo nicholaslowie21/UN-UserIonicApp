@@ -7,6 +7,8 @@ import { SessionService } from 'src/app/services/session.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { isRegExp } from 'util';
+import { FormGroup, NgForm } from '@angular/forms';
+
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.page.html',
@@ -14,7 +16,6 @@ import { isRegExp } from 'util';
 })
 export class ViewProjectPage implements OnInit {
   id: any;
-  
   projectToView: any;
   currentUser: any;
   founderBoolean: boolean;
@@ -45,8 +46,7 @@ export class ViewProjectPage implements OnInit {
   totalProgress = 0;
   rating: any;
   updatedAt: any;
-  
-  
+  posts: any[];
 
   constructor(private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
 
@@ -168,6 +168,13 @@ this.projectService.getResourceContributions(this.id).subscribe((res)=>{
   console.log('******* Contributions retrieval error: ', err.error.msg);
 })
 
+this.projectService.getProjPost(this.id).subscribe((res) =>{
+  this.posts = res.data.projectPosts;
+},
+(err) => {
+  console.log('******* Contributions retrieval error: ', err.error.msg);
+})
+
 if(this.status == "completed") {
   this.completedBoolean = true;
 } else {
@@ -222,6 +229,18 @@ console.log(this.completedBoolean);
     }
   }
 
+  createPost(ev) {
+    this.router.navigate(["/create-post/" + this.id]);
+  }
+
+  editPost(ev, postId) {
+    this.router.navigate(["/edit-post/" + postId]);
+  }
+
+  viewComments(ev, postId) {
+    this.router.navigate(['/view-comments/' + postId]);
+  }
+
   back() {
     if(this.currentUser.data.user.id != this.tokenStorage.getViewId() && this.tokenStorage.getViewId() != undefined) {
       this.router.navigate(["/my-projects/" + this.tokenStorage.getViewId().id]);
@@ -249,6 +268,78 @@ console.log(this.completedBoolean);
 			  text: 'Okay',
 			  handler: () => {
 				this.projectService.deleteProject(this.id).subscribe(
+					response => {
+            this.resultSuccess = true;
+            this.successToast();
+            this.back();
+					},
+					error => {
+            this.failureToast(error.error.msg);
+						this.error = true;
+						this.errorMessage = error;
+					}
+				);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async delPost(event, postId)
+	{
+		const alert = await this.alertController.create({
+			header: 'Confirm Delete Project Post',
+			message: 'Confirm delete Post?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.projectService.deletePost(postId).subscribe(
+					response => {
+            this.resultSuccess = true;
+            this.successToast();
+            this.back();
+					},
+					error => {
+            this.failureToast(error.error.msg);
+						this.error = true;
+						this.errorMessage = error;
+					}
+				);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async delComment(event, commentId)
+	{
+		const alert = await this.alertController.create({
+			header: 'Confirm Delete Project Post',
+			message: 'Confirm delete Post?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.projectService.deleteComment(commentId).subscribe(
 					response => {
             this.resultSuccess = true;
             this.successToast();
@@ -385,4 +476,15 @@ console.log(this.completedBoolean);
     return formattedDate.substring(5, formattedDate.length-13);
   }
 
+  isCreator(username): boolean {
+    if (username == this.currentUser.data.user.username) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  renderImg(imgPath): any {
+    return this.sessionService.getRscPath() + imgPath;
+  }
 }

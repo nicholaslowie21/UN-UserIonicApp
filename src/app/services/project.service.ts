@@ -242,6 +242,69 @@ export class ProjectService {
     }, error => this.handleError(error)));
   }
 
+  getProjPost(data): Observable<any> {
+    return this.http.get(this.API_URL + '/posts?projectId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)));
+  }
+
+  getPostDetails(data): Observable<any> {
+    return this.http.get(this.API_URL + '/postDetail?postId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)));
+  }
+  
+  createPost(data): Observable<any> {
+    return this.http.post(this.API_URL + '/createPost', data).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updatePost(data): Observable<any> {
+    return this.http.post(this.API_URL + '/updatePost', data).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deletePost(data): Observable<any> {
+    return this.http.post(this.API_URL + '/deletePost', {"postId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deletePostPic(data): Observable<any> {
+    return this.http.post(this.API_URL + '/deletePostPic', {"postId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getComments(data): Observable<any> {
+    return this.http.get(this.API_URL + '/comments?postId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)));
+  }
+
+  createComment(data): Observable<any> {
+    return this.http.post(this.API_URL + '/createPostComment', {
+      "postId": data.postId,
+      "comment": data.comment
+     }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deleteComment(data): Observable<any> {
+    return this.http.post(this.API_URL + '/deletePostComment', {"commentId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

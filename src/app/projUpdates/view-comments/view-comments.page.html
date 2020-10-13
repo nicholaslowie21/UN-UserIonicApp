@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Comments</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <!-- SHOULD I ALLOW IT HERE ALSO -->
+    <!-- <div *ngIf="completedBoolean == false && (adminBoolean == true || founderBoolean == true)">
+      <ion-fab vertical="top" horizontal="end" slot="fixed">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        <ion-fab-list side="start">
+          <ion-button color="danger" (click)="delPost($event, currPost.id)" ><ion-icon slot="end" name="trash"></ion-icon>Delete</ion-button>
+          <ion-button (click)="editPost($event, currPost.id)"><ion-icon slot="end" name="create-outline"></ion-icon>Edit</ion-button>
+        </ion-fab-list>
+      </ion-fab>
+    </div> -->
+    <!-- <div class="aligned">
+      <div style="padding-top: 10px; padding-left: 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=currPost.accountPic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+      <div>
+        <ion-label style="padding-left: 5px; font-style:italic;">Last modified by</ion-label>
+        <div class = "aligned">
+          <ion-label style="padding-left: 5px; font-weight: bold" >{{currPost.accountName}}</ion-label>
+          <ion-icon *ngIf="currPost.isVerified == 'true'" name="checkmark-circle" size="big"></ion-icon>
+        </div>
+      </div> 
+    </div>   -->
+    <img *ngIf="currPost.imgPath != ''" [src]=currPost.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'" style="margin-top: 10px;">
+    <ion-card-header>
+      <ion-badge>{{formatDate(currPost.createdAt)}}</ion-badge>
+      <ion-card-title>{{currPost.title}} </ion-card-title>
+      <ion-card-subtitle>{{currPost.desc}}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  <ion-title>Comments</ion-title>
+    <ion-list *ngFor ="let c of comments">
+      <ion-item lines="none">
+      <div class="aligned">
+        <div style="padding-top: 5px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=c.accountPic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+        <div style="padding-left: 5px">
+          <div class="aligned">
+            <ion-label style="font-weight: bold" >{{c.accountName}}</ion-label>
+            <ion-icon *ngIf="c.isVerified == 'true'" name="checkmark-circle" size="big"></ion-icon>
+          </div>
+          <ion-label style="float: right;">{{formatDate(c.createdAt)}}</ion-label>
+        </div>
+      </div> 
+      
+      <ion-buttons *ngIf="isCreator(c.accountUsername)==true" style="float: right;" slot="end">
+        <ion-icon slot="end" name="trash-outline" (click)="delete($event, c.id)" ></ion-icon>
+      </ion-buttons>
+    </ion-item>
+      <ion-item>
+        <h6>{{c.comment}}</h6>
+      </ion-item>
+    </ion-list>
+    <form #form="ngForm" (ngSubmit)="comment(form)">
+    <ion-item>
+      <div class="aligned">
+        <div style="padding-top: 5px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=userImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+        <ion-textarea style="padding-left: 5px;" auto-grow="true" ngModel name="currComment" [(ngModel)]="currComment" required placeholder="Add a comment..."></ion-textarea>
+      </div>
+      <ion-buttons type="submit" fill="clear" style="float: right;" slot="end"><ion-icon slot="end" name="send-sharp"></ion-icon></ion-buttons>
+    </ion-item>
+  </form>
+</ion-content>

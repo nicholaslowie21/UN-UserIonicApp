@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Project Post</ion-title>
+  </ion-toolbar>
+</ion-header>
+<form #form="ngForm" (ngSubmit)="createPost(form)">
+  <ion-item>
+    <ion-label position="floating">Title</ion-label>
+    <ion-input ngModel name="title" [(ngModel)]="title" required minlength="3" #intitle="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
+      <div *ngIf="intitle.errors.required">Title is required</div>
+      <div *ngIf="intitle.errors.minlength">
+        Title must be at least 3 characters
+      </div>
+    </div>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Content</ion-label>
+    <ion-textarea ngModel name="content" [(ngModel)]="content" required minlength="3" #incontent="ngModel"></ion-textarea>
+    <div class="alert-danger" *ngIf="form.submitted && incontent.invalid">
+      <div *ngIf="incontent.errors.required">Content is required</div>
+      <div *ngIf="incontent.errors.minlength">
+          Content must be at least 3 characters
+      </div>
+    </div>
+  </ion-item>
+  <ion-card>
+    <ion-card-header>Upload a picture for your post</ion-card-header>
+    <ion-card-content>
+      <div>
+        <input type="file" name="image" (change)="selectImage($event)" />
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-button type="submit" color="primary" expand="block" style="margin: 0px 10px;">Post</ion-button>
+</form>
+<ion-content>
+  <div *ngIf="resultSuccess == true" style="color: blue;">
+    {{message}}
+  </div>
+  
+  <div *ngIf="resultError == true" style="color: red;">
+    {{message}}
+  </div>
+</ion-content>
