@@ -36,7 +36,7 @@
     </ion-row>
   </ion-grid>
   <h4 style="text-align: center;">These projects need your donations! DONATE NOW!</h4>
-  <ion-card *ngFor="let m of fundingNeedsList">
+  <ion-card *ngFor="let m of fundingNeeds">
     <ion-card-header>
       <img [src]=m.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
       <ion-card-title (click)="viewProject($event, m)">{{m.title}}</ion-card-title>

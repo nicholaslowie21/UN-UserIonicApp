@@ -57,6 +57,13 @@ export class MarketplaceService {
     );
   }
 
+  getFilteredFundingNeeds(data): Observable<any> {
+    return this.http.post(this.API_URL + '/filter/fundingNeeds', {"filterSDGs": data.filterSDGs}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   getManpowerOffer(): Observable<any> {
     return this.http.get(this.API_URL + '/resources/manpower', httpOptions).pipe(
       tap(res => {
@@ -146,6 +153,186 @@ export class MarketplaceService {
     }, error => this.handleError(error)),
     );
   }
+  //incoming Pending resource request
+  viewPendingResourceResourceRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/resource/detail/resourceReq?reqStatus=pending&resourceId=' + data.id + "&resType=" + data.resType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+  //incoming Accepted resource request
+  viewAcceptedResourceResourceRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/resource/detail/resourceReq?reqStatus=accepted&resourceId=' + data.id + "&resType=" + data.resType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //incoming Accepted resource request
+  viewDeclinedResourceResourceRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/resource/detail/resourceReq?reqStatus=declined&resourceId=' + data.id + "&resType=" + data.resType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //incoming Accepted resource request
+  viewCancelledResourceResourceRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/resource/detail/resourceReq?reqStatus=cancelled&resourceId=' + data.id + "&resType=" + data.resType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //outgoing pending resource request
+  viewPendingResourceProjectRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/resource/detail/projectReq?reqStatus=pending&resourceId=' + data.id + "&resType=" + data.resType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //outgoing accepted resource request
+  viewAcceptedResourceProjectRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/resource/detail/projectReq?reqStatus=accepted&resourceId=' + data.id + "&resType=" + data.resType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+  //outgoing declined resource request
+  viewDeclinedResourceProjectRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/resource/detail/projectReq?reqStatus=declined&resourceId=' + data.id + "&resType=" + data.resType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //outgoing cancelled resource request
+  viewCancelledResourceProjectRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/resource/detail/projectReq?reqStatus=cancelled&resourceId=' + data.id + "&resType=" + data.resType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+  //incoming pending project request
+  viewPendingProjectResourceRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/project/resourceReq?reqStatus=pending&projectId=' + data.id , httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+   //incoming accepted project request
+   viewAcceptedProjectResourceRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/project/resourceReq?reqStatus=accepted&projectId=' + data.id , httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //incoming declined project request
+  viewDeclinedProjectResourceRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/project/resourceReq?reqStatus=declined&projectId=' + data.id , httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //incoming cancelled project request
+  viewCancelledProjectResourceRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/project/resourceReq?reqStatus=cancelled&projectId=' + data.id , httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //outgoing pending project request
+  viewPendingProjectProjectRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/project/projectReq?reqStatus=pending&projectId=' + data.id, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //outgoing accepted project request
+  viewAcceptedProjectProjectRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/project/projectReq?reqStatus=accepted&projectId=' + data.id, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+   //outgoing declined project request
+   viewDeclinedProjectProjectRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/project/projectReq?reqStatus=declined&projectId=' + data.id, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+   //outgoing accepted project request
+   viewCancelledProjectProjectRequest(data): Observable<any> {
+    return this.http.get(this.API_URL + '/project/projectReq?reqStatus=cancelled&projectId=' + data.id, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  acceptProjectRequest(data): Observable<any> {
+    return this.http.post(this.API_URL + '/accept/projectReq', {"projectReqId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  declineProjectRequest(data): Observable<any> {
+    return this.http.post(this.API_URL + '/decline/projectReq', {"projectReqId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  completeProjectRequest(data): Observable<any> {
+    return this.http.post(this.API_URL + '/complete/projectReq', {"projectReqId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  cancelProjectRequest(data): Observable<any> {
+    return this.http.post(this.API_URL + '/cancel/projectReq', {"projectReqId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  acceptResourceRequest(data): Observable<any> {
+    return this.http.post(this.API_URL + '/accept/resourceReq', {"resourceReqId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  declineResourceRequest(data): Observable<any> {
+    return this.http.post(this.API_URL + '/decline/resourceReq', {"resourceReqId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  completeResourceRequest(data): Observable<any> {
+    return this.http.post(this.API_URL + '/complete/resourceReq', {"resourceReqId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  cancelResourceRequest(data): Observable<any> {
+    return this.http.post(this.API_URL + '/cancel/resourceReq' , {"resourceReqId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
 
   private handleError(error: HttpErrorResponse)
 	{

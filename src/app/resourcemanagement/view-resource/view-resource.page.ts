@@ -7,6 +7,7 @@ import { AlertController, NavController, ToastController } from '@ionic/angular'
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from "@ionic-native/file/ngx";
+import { MarketplaceService } from 'src/app/services/marketplace.service';
 
 @Component({
   selector: 'app-view-resource',
@@ -41,25 +42,67 @@ export class ViewResourcePage implements OnInit {
     speed: 400
   };
   noVenuePicBoolean: boolean;
+  noIncomingRequestBoolean: boolean;
+  noOutgoingRequestBoolean: boolean;
+  requestType: any;
+  reqData: any;
+  incomingResourceRequestList: any;
+  outgoingResourceRequestList: any;
+  inStatus: string;
+  outStatus: string;
+  outgoingPendingResourceRequestList: any;
+  noOutgoingPendingRequestBoolean: boolean;
+  outgoingAcceptedResourceRequestList: any;
+  noOutgoingAcceptedRequestBoolean: boolean;
+  outgoingDeclinedResourceRequestList: any;
+  noOutgoingDeclinedRequestBoolean: boolean;
+  outgoingCancelledResourceRequestList: any;
+  noOutgoingCancelledRequestBoolean: boolean;
+  incomingPendingResourceRequestList: any;
+  noIncomingPendingRequestBoolean: boolean;
+  incomingAcceptedResourceRequestList: any;
+  noIncomingAcceptedRequestBoolean: boolean;
+  incomingDeclinedResourceRequestList: any;
+  noIncomingDeclinedRequestBoolean: boolean;
+  incomingCancelledResourceRequestList: any;
+  noIncomingCancelledRequestBoolean: boolean;
+  currentUser: any;
+  id: string;
 
-  constructor(private navCtrl: NavController, private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private alertController: AlertController, private toastCtrl: ToastController, private file: File, private transfer: FileTransfer) {
+  constructor(private navCtrl: NavController, 
+    private resourceService: ResourceService, 
+    private sessionService: SessionService, 
+    private tokenStorageService: TokenStorageService, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute, 
+    private alertController: AlertController, 
+    private toastCtrl: ToastController, 
+    private file: File, 
+    private transfer: FileTransfer,
+    private marketplaceService: MarketplaceService, private tokenStorage: TokenStorageService) {
     //See BG update project, for the toast
     this.retrieveResourceError = false;
     this.institutionKnowledgeOwner = false;
+    this.requestType = "incoming";
+    this.inStatus = "pending";
+    this.outStatus = "pending";
 
    }
 
   ngOnInit() {
     this.resourceId = this.activatedRoute.snapshot.paramMap.get('id');
     this.resourceType = this.activatedRoute.snapshot.paramMap.get('type');
+    this.currentUser = this.tokenStorage.getUser();
+    this.id = this.currentUser.data.user.id;
     console.log(this.resourceType + " " + this.resourceId);
-
     this.initialise();
+    this.initialiseRequests();
   }
 
   ionViewDidEnter() {
     this.viewEntered = true;
     this.initialise();
+    this.initialiseRequests();
   }
 
   initialise() {
@@ -354,4 +397,333 @@ export class ViewResourcePage implements OnInit {
     (await toast).present();
   }
 
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
+
+  initialiseRequests() {
+    this.reqData = {
+      "id": this.resourceId,
+      "resType": this.resourceType
+    }
+    this.marketplaceService.viewPendingResourceProjectRequest(this.reqData).subscribe((res) => {
+      this.outgoingPendingResourceRequestList = res.data.resourceProjectReqs;
+      console.log(this.outgoingPendingResourceRequestList);
+    
+      
+    }, (err) => {
+      console.log("***************Outgoing Resource Request error(Pending): " + err.error.msg);
+    })
+   
+
+    this.marketplaceService.viewAcceptedResourceProjectRequest(this.reqData).subscribe((res) => {
+      this.outgoingAcceptedResourceRequestList = res.data.resourceProjectReqs;
+      console.log(this.outgoingAcceptedResourceRequestList);
+      
+    }, (err) => {
+      console.log("***************Outgoing Resource Request error(Accepted): " + err.error.msg);
+    })
+
+    console.log(this.noOutgoingAcceptedRequestBoolean);
+    
+    this.marketplaceService.viewDeclinedResourceProjectRequest(this.reqData).subscribe((res) => {
+      this.outgoingDeclinedResourceRequestList = res.data.resourceProjectReqs;
+      console.log(this.outgoingDeclinedResourceRequestList);
+      
+    }, (err) => {
+      console.log("***************Outgoing Resource Request error(Declined): " + err.error.msg);
+    })
+
+    this.marketplaceService.viewCancelledResourceProjectRequest(this.reqData).subscribe((res) => {
+      this.outgoingCancelledResourceRequestList = res.data.resourceProjectReqs;
+      console.log(this.outgoingCancelledResourceRequestList);
+      
+    }, (err) => {
+      console.log("***************Outgoing Resource Request error(Cancelled): " + err.error.msg);
+    })
+
+    this.marketplaceService.viewPendingResourceResourceRequest(this.reqData).subscribe((res) => {
+      this.incomingPendingResourceRequestList = res.data.resourceResourceReqs;
+      console.log(this.incomingPendingResourceRequestList);
+      
+    }, (err) => {
+      console.log("***************Incoming Resource Request error(Pending): " + err.error.msg);
+    })
+
+    this.marketplaceService.viewAcceptedResourceResourceRequest(this.reqData).subscribe((res) => {
+      this.incomingAcceptedResourceRequestList = res.data.resourceResourceReqs;
+      console.log(this.incomingAcceptedResourceRequestList);
+      
+    }, (err) => {
+      console.log("***************Incoming Resource Request error(Accepted): " + err.error.msg);
+    })
+
+    this.marketplaceService.viewDeclinedResourceResourceRequest(this.reqData).subscribe((res) => {
+      this.incomingDeclinedResourceRequestList = res.data.resourceResourceReqs;
+      console.log(this.incomingDeclinedResourceRequestList);
+      
+    }, (err) => {
+      console.log("***************Incoming Resource Request error(Declined): " + err.error.msg);
+    })
+
+    this.marketplaceService.viewCancelledResourceResourceRequest(this.reqData).subscribe((res) => {
+      this.incomingCancelledResourceRequestList = res.data.resourceResourceReqs;
+      console.log(this.incomingCancelledResourceRequestList);
+      
+    }, (err) => {
+      console.log("***************Incoming Resource Request error(Cancelled): " + err.error.msg);
+    })
+  
+  }
+
+  acceptResourceRequest(request) {
+    this.marketplaceService.acceptResourceRequest(request.id).subscribe((res) => {
+        this.acceptSuccessToast();
+    }, (err) => {
+      this.acceptFailureToast(err.error.msg);
+    })
+    this.router.navigateByUrl("/my-resources");
+  }
+
+  completeResourceRequest(request) {
+    this.marketplaceService.completeResourceRequest(request.id).subscribe((res) => {
+      this.completeSuccessToast();
+  }, (err) => {
+    this.completeFailureToast(err.error.msg);
+  })
+  this.router.navigateByUrl("/my-resources");
+}
+
+declineResourceRequest(request) {
+  this.marketplaceService.declineResourceRequest(request.id).subscribe((res) => {
+    this.declineSuccessToast();
+}, (err) => {
+  this.declineFailureToast(err.error.msg);
+})
+this.router.navigateByUrl("/my-resources");
+}
+
+cancelResourceRequest(request) {
+  console.log(request.id);
+  this.marketplaceService.cancelResourceRequest(request.id).subscribe((res) => {
+    this.cancelSuccessToast();
+}, (err) => {
+  this.cancelFailureToast(err.error.msg);
+})
+this.router.navigateByUrl("/my-resources");
+}
+
+cancelProjectRequest(request) {
+  this.marketplaceService.cancelProjectRequest(request.id).subscribe((res) => {
+    this.cancelSuccessToast();
+}, (err) => {
+  this.cancelFailureToast(err.error.msg);
+})
+this.router.navigateByUrl("/my-resources");
+}
+
+async acceptSuccessToast() {
+  let toast = this.toastCtrl.create({
+    message: 'Accepted successfully!',
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-pass"      
+  });
+  (await toast).present();
+}
+
+async acceptFailureToast(error) {
+  const toast = this.toastCtrl.create({
+    message: 'Accepted Unsuccessfully: ' + error,
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-fail"
+  });
+  (await toast).present();
+}
+
+async declineSuccessToast() {
+  let toast = this.toastCtrl.create({
+    message: 'Declined successfully!',
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-pass"      
+  });
+  (await toast).present();
+}
+
+async declineFailureToast(error) {
+  const toast = this.toastCtrl.create({
+    message: 'Declined Unsuccessfully: ' + error,
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-fail"
+  });
+  (await toast).present();
+}
+
+async cancelSuccessToast() {
+  let toast = this.toastCtrl.create({
+    message: 'Cancelled successfully!',
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-pass"      
+  });
+  (await toast).present();
+}
+
+async cancelFailureToast(error) {
+  const toast = this.toastCtrl.create({
+    message: 'Cancelled Unsuccessfully: ' + error,
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-fail"
+  });
+  (await toast).present();
+}
+
+async completeSuccessToast() {
+  let toast = this.toastCtrl.create({
+    message: 'Completed successfully!',
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-pass"      
+  });
+  (await toast).present();
+}
+
+async completeFailureToast(error) {
+  const toast = this.toastCtrl.create({
+    message: 'Completed Unsuccessfully: ' + error,
+    duration: 2000,
+    position: 'middle',
+    cssClass: "toast-fail"
+  });
+  (await toast).present();
+}
+
+async cancelResRequest(event, resource)
+	{
+		const alert = await this.alertController.create({
+			header: 'Are you sure you want to cancel this request',
+			message: 'Confirm delete Resource request?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.cancelResourceRequest(resource);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async cancelProjRequest(event, resource)
+	{
+		const alert = await this.alertController.create({
+			header: 'Are you sure you want to cancel this request',
+			message: 'Confirm cancel project request?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.cancelProjectRequest(resource);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async acceptResRequest(event, resource)
+	{
+		const alert = await this.alertController.create({
+			header: 'Are you sure you want to accept this request',
+			message: 'Confirm accept project request?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.acceptResourceRequest(resource);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async declineResRequest(event, resource)
+	{
+		const alert = await this.alertController.create({
+			header: 'Are you sure you want to decline this request',
+			message: 'Confirm decline project request?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.declineResourceRequest(resource);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async completeResRequest(event, resource)
+	{
+		const alert = await this.alertController.create({
+			header: 'Are you sure you want to complete this request',
+			message: 'Mark this request as completed only if the resource has been delivered! Has this resource been delivered?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.completeResourceRequest(resource);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
 }

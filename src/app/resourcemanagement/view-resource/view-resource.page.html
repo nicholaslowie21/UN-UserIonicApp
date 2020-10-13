@@ -92,9 +92,256 @@
     <ion-item-divider>
       <ion-label>Requests for this resource</ion-label>
     </ion-item-divider>
-    <ion-item lines="none">
-      <ion-label>Here is where you accept/reject resource requests </ion-label>
-    </ion-item>
+    <ion-header>
+      <ion-toolbar>
+      <ion-segment  [(ngModel)]="requestType" >
+        <ion-segment-button value="incoming" checked>
+          <ion-label>Incoming Request</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="outgoing">
+          <ion-label>Outgoing Request</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+    </ion-header>
+      <ion-list  [ngSwitch]="requestType">
+        <div *ngSwitchCase="'incoming'" >
+          <ion-item-divider>
+          <ion-header>
+            <ion-toolbar>
+              <ion-segment [(ngModel)]="inStatus" (ionChange)="segmentChanged($event)">
+                <ion-segment-button value="pending" checked>
+                  <ion-label>Pending</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="accepted">
+                  <ion-label>Accepted</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="declined">
+                  <ion-label>Declined</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="cancelled">
+                  <ion-label>Cancelled</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+            </ion-toolbar>
+          </ion-header>
+        </ion-item-divider>
+          <ion-list [ngSwitch]="inStatus">
+          <div *ngSwitchCase="'pending'">
+            <ion-title>Pending Requests(Incoming)</ion-title>
+            <div style="padding-left: 15px" *ngIf="(incomingPendingResourceRequestList.length==0) == true">
+              You do not have any pending incoming requests!
+              </div>
+            <div *ngFor="let m of incomingPendingResourceRequestList" >
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>{{m.needTitle}}</ion-card-title>
+                <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
+                
+              </ion-card-header>
+      
+              <ion-card-content>
+                <p>Need description: {{m.needDesc}}</p>
+                <p>Project: {{m.projectTitle}}</p>
+                <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+                <ion-grid fixed=true>
+                  <ion-row size="4">
+                    <ion-col>
+                      <ion-button *ngIf="m.status != 'accepted'" (click)="acceptResRequest($event, m)" expand="full">Accept</ion-button>
+                    </ion-col>
+                    <ion-col>
+                      <ion-button *ngIf="m.status != 'accepted'" (click)="declineResRequest($event,m)" expand="full">Decline</ion-button>
+                    </ion-col>
+                  </ion-row>
+              </ion-grid>
+              </ion-card-content>
+            </ion-card>
+            </div>
+        </div>
+        <div *ngSwitchCase="'accepted'">
+          <ion-title>Accepted Requests(Incoming)</ion-title>
+          <div style="padding-left: 15px" *ngIf="(incomingAcceptedResourceRequestList.length==0) == true">
+            You do not have any accepted incoming requests!
+            </div>
+          <div *ngFor="let m of incomingAcceptedResourceRequestList" >
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{m.needTitle}}</ion-card-title>
+              <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
+              
+            </ion-card-header>
+    
+            <ion-card-content>
+              <p>Need description: {{m.needDesc}}</p>
+              <p>Project: {{m.projectTitle}}</p>
+              <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+
+                    <ion-button *ngIf="m.status == 'accepted'" (click)="cancelResRequest($event, m)" expand="full">Cancel</ion-button>
+            </ion-card-content>
+          </ion-card>
+          </div>
+      </div>
+      <div *ngSwitchCase="'declined'">
+        <ion-title>Declined Requests(Incoming)</ion-title>
+        <div style="padding-left: 15px" *ngIf="(incomingDeclinedResourceRequestList.length==0) == true">
+          You do not have any declined incoming requests!
+          </div>
+        <div *ngFor="let m of incomingDeclinedResourceRequestList" >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{m.needTitle}}</ion-card-title>
+            <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
+            
+          </ion-card-header>
+  
+          <ion-card-content>
+            <p>Need description: {{m.needDesc}}</p>
+            <p>Project: {{m.projectTitle}}</p>
+            <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+          </ion-card-content>
+        </ion-card>
+        </div>
+    </div>
+    <div *ngSwitchCase="'cancelled'">
+      <ion-title>Cancelled Requests(Incoming)</ion-title>
+      <div style="padding-left: 15px" *ngIf="(incomingCancelledResourceRequestList.length==0) == true">
+        You do not have any cancelled incoming requests!
+        </div>
+      <div *ngFor="let m of incomingCancelledResourceRequestList" >
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{m.needTitle}}</ion-card-title>
+          <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
+          
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>Need description: {{m.needDesc}}</p>
+          <p>Project: {{m.projectTitle}}</p>
+          <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+      </div>
+    </div>
+        </ion-list>
+        </div>
+    
+        <div *ngSwitchCase="'outgoing'">
+
+            <ion-header>
+              <ion-toolbar>
+                <ion-segment [(ngModel)]="outStatus" (ionChange)="segmentChanged($event)">
+                  <ion-segment-button value="pending" checked>
+                    <ion-label>Pending</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="accepted">
+                    <ion-label>Accepted</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="declined">
+                    <ion-label>Declined</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="cancelled">
+                    <ion-label>Cancelled</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+              </ion-toolbar>
+            </ion-header>
+          <!--<ion-content>-->
+            <ion-list [ngSwitch]="outStatus">
+              <div *ngSwitchCase="'pending'">
+                
+                <ion-title>Pending Requests(Outgoing)</ion-title>
+                <div style="padding-left: 15px" *ngIf="(outgoingPendingResourceRequestList.length==0) == true">
+                  You do not have any pending outgoing requests!
+                  </div>
+              <div *ngFor="let k of outgoingPendingResourceRequestList">
+                <ion-card>
+                  <ion-card-header>
+                    <ion-card-title>{{k.needTitle}}</ion-card-title>
+                    <ion-badge class="{{k.status}}">{{k.status}}</ion-badge>
+                    
+                  </ion-card-header>
+          
+                  <ion-card-content>
+                    <p>Need description: {{k.needDesc}}</p>
+                    <p>Project: {{k.projectTitle}}</p>
+                    <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
+                    <ion-button  (click)="cancelProjRequest($event, k)" expand="full">Cancel</ion-button>
+                  </ion-card-content>
+                </ion-card>
+              </div>
+            </div>
+
+      <div *ngSwitchCase="'accepted'">
+        <ion-title>Accepted Requests(Outgoing)</ion-title>
+        <div style="padding-left: 15px" *ngIf="(outgoingAcceptedResourceRequestList.length==0) == true">
+          You do not have any accepted outgoing requests!
+          </div>
+      <div *ngFor="let k of outgoingAcceptedResourceRequestList">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{k.needTitle}}</ion-card-title>
+            <ion-badge class="{{k.status}}">{{k.status}}</ion-badge>
+            
+          </ion-card-header>
+  
+          <ion-card-content>
+            <p>Need description: {{k.needDesc}}</p>
+            <p>Project: {{k.projectTitle}}</p>
+            <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
+            <ion-button  (click)="cancelProjRequest($event, k)" expand="full">Cancel</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'declined'">
+      <ion-title>Declined Requests(Outgoing)</ion-title>
+      <div style="padding-left: 15px" *ngIf="(outgoingDeclinedResourceRequestList.length==0) == true">
+        You do not have any declined outgoing requests!
+        </div>
+    <div *ngFor="let k of outgoingDeclinedResourceRequestList">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{k.needTitle}}</ion-card-title>
+          <ion-badge class="{{k.status}}">{{k.status}}</ion-badge>
+          
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>Need description: {{k.needDesc}}</p>
+          <p>Project: {{k.projectTitle}}</p>
+          <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'cancelled'">
+    <ion-title>Cancelled Requests(Outgoing)</ion-title>
+    <div style="padding-left: 15px" *ngIf="(outgoingCancelledResourceRequestList.length==0) == true">
+      You do not have any cancelled outgoing requests!
+      </div>
+  <div *ngFor="let k of outgoingCancelledResourceRequestList">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{k.needTitle}}</ion-card-title>
+        <ion-badge class="{{k.status}}">{{k.status}}</ion-badge>
+        
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>Need description: {{k.needDesc}}</p>
+        <p>Project: {{k.projectTitle}}</p>
+        <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</div>
+      </ion-list>
+      <!--</ion-content>-->
+      </div>
+      </ion-list>
   </div>
   <div *ngIf="yourAccountBoolean==true">
     <ion-item-divider>

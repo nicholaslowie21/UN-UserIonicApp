@@ -223,28 +223,32 @@ export class CreateProjectRequestPage implements OnInit {
     if (!searchTerm) {
       return;
     }
-  
-    this.manpowerResourceList = this.manpowerResourceList.filter( manpowerRes => {
-      if (manpowerRes.title && searchTerm) {
-        return (manpowerRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-      }
-    });
-    this.knowledgeResourceList = this.knowledgeResourceList.filter( knowledgeRes => {
-      if (knowledgeRes.title && searchTerm) {
-        return (knowledgeRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-      }
-    });
-    this.itemResourceList = this.itemResourceList.filter( itemRes => {
-      if (itemRes.title && searchTerm) {
-        return (itemRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-      }
-    });
-
-    this.venueResourceList = this.venueResourceList.filter( venueRes => {
-      if (venueRes.title && searchTerm) {
-        return (venueRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-      }
-    });
+    console.log(this.needType);
+    if(this.needType == "manpower") {
+          this.manpowerResourceList = this.manpowerResourceList.filter( manpowerRes => {
+            if (manpowerRes.title && searchTerm) {
+              return (manpowerRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+            }
+          });
+    } else if(this.needType == "knowledge") {
+          this.knowledgeResourceList = this.knowledgeResourceList.filter( knowledgeRes => {
+            if (knowledgeRes.title && searchTerm) {
+              return (knowledgeRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+            }
+          });
+    } else if(this.needType == "item") {
+          this.itemResourceList = this.itemResourceList.filter( itemRes => {
+            if (itemRes.title && searchTerm) {
+              return (itemRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+            }
+          });
+    } else if(this.needType == "venue") {
+          this.venueResourceList = this.venueResourceList.filter( venueRes => {
+            if (venueRes.title && searchTerm) {
+              return (venueRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+            }
+          });
+    }
   }
 
   segmentChanged(ev: any) {

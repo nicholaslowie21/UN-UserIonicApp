@@ -71,7 +71,7 @@ export class ViewMarketplaceResourcesPage implements OnInit {
 
     this.marketplaceService.getKnowledgeOffer().subscribe((res) =>{
       this.knowledgeResource = res.data.knowledges;
-      console.log(this.knowledgeResource);
+      console.log(res.data.knowledges);
       if(this.knowledgeResource != undefined) {
         this.noKnowledgeResourceBoolean = false;
         for(var i = 0; i < this.knowledgeResource.length; i++) {
@@ -86,6 +86,7 @@ export class ViewMarketplaceResourcesPage implements OnInit {
     err => {
       console.log('****** View Marketplace Knowledge.ts: ', err.error.msg);
     }
+    
 
     this.marketplaceService.getItemOffer().subscribe((res) =>{
       this.itemResource = res.data.items;
@@ -105,6 +106,7 @@ export class ViewMarketplaceResourcesPage implements OnInit {
       console.log('****** View Marketplace Item.ts: ', err.error.msg);
     }
 
+    
     this.marketplaceService.getVenueOffer().subscribe((res) =>{
       this.venueResource = res.data.venues;
       if(this.venueResource != undefined) {

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { MarketplaceService } from '../services/marketplace.service';
 
@@ -15,7 +16,7 @@ export class ProjrequestModalPage implements OnInit {
   resultSuccess: any;
   resultError: any;
   message: any;
-  constructor(private toastCtrl: ToastController, private modalCtrl: ModalController, private marketplaceService: MarketplaceService) { }
+  constructor(private router: Router, private toastCtrl: ToastController, private modalCtrl: ModalController, private marketplaceService: MarketplaceService) { }
 
   ngOnInit() {
   }
@@ -38,6 +39,8 @@ export class ProjrequestModalPage implements OnInit {
 
     this.marketplaceService.createProjectRequest(this.data).subscribe((res)=> {
           this.successToast();
+          this.dismiss();
+          this.router.navigate(["/create-project-request/" + this.needId + "/" + this.resType]);
     }, (err) => {
       this.failureToast(err.error.msg);
       console.log("*************Create Project Request modal error: " + err.error.msg);

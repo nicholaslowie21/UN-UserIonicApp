@@ -24,6 +24,7 @@ export class ViewFundingNeedsPage implements OnInit {
   user: any;
   modal: HTMLIonModalElement;
   needId: any;
+  filterData: { filterSDGs: any; };
 
   constructor(private marketplaceService: MarketplaceService, 
     private sessionService: SessionService,
@@ -50,13 +51,11 @@ export class ViewFundingNeedsPage implements OnInit {
     {"id":16},{"id":17}]
     this.initialise();
     this.initializeLists();
-    console.log("onInit: " + JSON.stringify(this.fundingNeedsList));
   }
 
   ionViewDidEnter() {
     this.initialise();
     this.initializeLists();
-    console.log("didEnter: " + JSON.stringify(this.fundingNeedsList));
   }
 
   initialise() {
@@ -133,15 +132,15 @@ export class ViewFundingNeedsPage implements OnInit {
   }
 
   filterSDGS(sdgs) {
-    /*this.sdgFilterBoolean = true;
-    this.data = {
+    this.sdgFilterBoolean = true;
+    this.filterData = {
       "filterSDGs": sdgs
     }
-    this.marketplaceService.getFilteredOngoingProjects(this.data).subscribe((res) => {
-      this.filterList = res.data.projects;
+    this.marketplaceService.getFilteredOngoingProjects(this.filterData).subscribe((res) => {
+      this.fundingNeedsList = res.data.projects;
     }, (err) => {
       console.log("****************View Marketplace Projects(filterSDGs).page.ts error: " + err.error.msg);
-    })*/
+    })
   }
 
   async contribute(resource) {

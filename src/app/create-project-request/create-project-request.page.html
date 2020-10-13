@@ -27,18 +27,19 @@
 <ion-content>
   <ion-searchbar (ionInput)="filterList($event)" placeholder="Search"></ion-searchbar>
   <ion-list  [ngSwitch]="type">
-    <div *ngIf="accountBoolean==true">
-      <ion-card>
-        <ion-card-header>
-            <ion-card-title>This is an institution account! Contribute other resources!</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <ion-img src="./assets/img/owl_wave.png"></ion-img>
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <div *ngIf="accountBoolean==false">
+    
     <div *ngSwitchCase="'manpower'" >
+      <div *ngIf="accountBoolean==true">
+        <ion-card>
+          <ion-card-header>
+              <ion-card-title>This is an institution account! Contribute other resources!</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+              <ion-img src="./assets/img/owl_wave.png"></ion-img>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <div *ngIf="accountBoolean==false">
       <div *ngIf="noManpowerResourceBoolean == true" style="padding-left: 15px;">
         <ion-label>You do not have any active manpower resource! Create one now!</ion-label>
       </div>
