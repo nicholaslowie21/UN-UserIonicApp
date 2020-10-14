@@ -23,7 +23,8 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ng
 import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+// import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 /*Supply an array of whitelisted Domains
 let system know where we store the token
@@ -72,7 +73,9 @@ export function jwtOptionsFactory(storage:Storage) {
     ActionSheetController,
     Downloader,
     ModalController,
-    authInterceptorProviders
+    authInterceptorProviders,
+    BarcodeScanner,
+    // QRScanner
   ],
   bootstrap: [AppComponent]
 })

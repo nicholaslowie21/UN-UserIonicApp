@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mobile Contact</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="createQR()" fill="outline">
+      My QR
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="scanQR()">
+      <ion-icon name="camera-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-card>
+    <img class="background" src="assets/img/KoCoSD circle.png">
+    <!-- <div class="aligned"> -->
+    <div class="section">Overlap my words here</div>
+    <!-- <div class="section">Second set of overlap</div> -->
+    <!-- </div> -->
+  </ion-card>
+  <div *ngIf="scannedData">
+    <p>
+      Scanned Code Text : <b>{{ scannedData["text"] }}</b>
+    </p>
+    <p>
+      Scanned Code Format : <b>{{ scannedData["format"] }}</b>
+    </p>
+  </div>
+</ion-content>

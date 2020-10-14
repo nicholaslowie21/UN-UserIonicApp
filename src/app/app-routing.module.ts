@@ -222,7 +222,11 @@ const routes: Routes = [
   {
     path: 'view-comments/:id',
     loadChildren: () => import('./projUpdates/view-comments/view-comments.module').then( m => m.ViewCommentsPageModule)
+  },  {
+    path: 'contact-page',
+    loadChildren: () => import('./contact-page/contact-page.module').then( m => m.ContactPagePageModule)
   }
+
 
 
 
