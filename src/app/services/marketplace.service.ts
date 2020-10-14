@@ -333,6 +333,34 @@ export class MarketplaceService {
     );
   }
 
+  getResourceSuggestionForResourceNeed(data): Observable<any> {
+    return this.http.get(this.API_URL + '/suggestion/resource?needId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getResourceNeedSuggestionForResource(data): Observable<any> {
+    return this.http.get(this.API_URL + '/suggestion/resourceneed?resourceId=' + data.id + "&resourceType=" + data.resType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  discoverWeekly(): Observable<any> {
+    return this.http.get(this.API_URL + '/discoverWeekly', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  triggerDiscoverWeekly(): Observable<any> {
+    return this.http.post(this.API_URL + '/triggerDiscoverWeekly', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
 
   private handleError(error: HttpErrorResponse)
 	{

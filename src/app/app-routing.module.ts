@@ -222,6 +222,10 @@ const routes: Routes = [
   {
     path: 'view-comments/:id',
     loadChildren: () => import('./projUpdates/view-comments/view-comments.module').then( m => m.ViewCommentsPageModule)
+  },
+  {
+    path: 'resource-suggestions/:Id/:type',
+    loadChildren: () => import('./resourceNeeds/resource-suggestions/resource-suggestions.module').then( m => m.ResourceSuggestionsPageModule)
   }
 
 

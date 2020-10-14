@@ -7,13 +7,19 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Home</ion-title>
+      <ion-segment [(ngModel)]="page" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="feed" checked>
+          <ion-label>Feed</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="discover">
+          <ion-label>Discover</ion-label>
+        </ion-segment-button>
+      </ion-segment>
     </ion-toolbar>
-  </ion-header>
-  <!-- <ion-title>News Feed</ion-title> -->
 
+  <ion-list [ngSwitch]="page">
+  <div *ngSwitchCase="'feed'">
   <ion-card  *ngFor="let n of newsList">
     <ion-card-header>
     <img [src]=n.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
@@ -30,4 +36,30 @@
     </div>
     <ion-card-title></ion-card-title>
   </ion-card>
+  </div>
+  <div *ngSwitchCase="'discover'">
+    <ion-refresher  pullFactor="0.2" slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content style="position: relative;" pullingIcon="chevron-down-circle-outline"
+    pullingText="Pull to refresh"
+    refreshingText="Refreshing..." refreshingSpinner="dots">
+    <ion-card *ngFor="let d of discoverList">
+      <ion-card-header>
+      <img [src]=d.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
+      <ion-card-title (click)="viewProject($event, d)">{{d.title}}</ion-card-title>
+      <div class="aligned">
+        <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
+        <img (click)="viewFounderProfile($event, d)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=d.ionicImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <ion-label (click)="viewFounderProfile($event, d)">{{d.hostName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+      </div>
+        <ion-badge style="padding-left: 5px" className="sdg{{sdg}}" *ngFor= "let sdg of d.SDGs">SDG {{sdg}}&nbsp;</ion-badge>
+      </ion-card-header>
+      <div>
+        <ion-card-content>Project Description: {{d.desc}}<br>Country: {{d.country}}<br>Rating: {{d.rating}}</ion-card-content>
+      </div>
+      <ion-card-title></ion-card-title>
+    </ion-card>
+    </ion-refresher-content>
+  </ion-refresher>
+</div>
+</ion-list>
 </ion-content>

@@ -68,6 +68,8 @@ export class ViewResourcePage implements OnInit {
   noIncomingCancelledRequestBoolean: boolean;
   currentUser: any;
   id: string;
+  suggestions: any;
+  suggest: any;
 
   constructor(private navCtrl: NavController, 
     private resourceService: ResourceService, 
@@ -97,12 +99,14 @@ export class ViewResourcePage implements OnInit {
     console.log(this.resourceType + " " + this.resourceId);
     this.initialise();
     this.initialiseRequests();
+    this.initialiseSuggestions();
   }
 
   ionViewDidEnter() {
     this.viewEntered = true;
     this.initialise();
     this.initialiseRequests();
+    this.initialiseSuggestions();
   }
 
   initialise() {
@@ -213,6 +217,28 @@ export class ViewResourcePage implements OnInit {
     }
   }
 
+  initialiseSuggestions() {
+    this.suggest = {
+      "id": this.resourceId,
+      "resType": this.resourceType
+    }
+    this.marketplaceService.getResourceNeedSuggestionForResource(this.suggest).subscribe((res)=>{
+      this.suggestions = res.data.resourceneedSuggestion
+      if(this.suggestions.length > 0) {
+        for(var i = 0; i < this.suggestions.length; i++) {
+          this.suggestions[i].projectImg = this.sessionService.getRscPath() + this.suggestions[i].projectImg  +'?random+=' + Math.random();
+        }
+      }
+    }, (err) => {
+      console.log("***************************Resource Need Suggestion Error: " + err.error.msg);
+    })
+  }
+
+  contribute(rn) {
+    console.log(rn.id);
+    this.router.navigate(["/create-project-request/" + rn.id + "/" + rn.type]);
+  }
+
   toEditResource(event) {
     this.router.navigate(["/edit-resource/" + this.resourceType + "/" + this.resourceId]);
   }
@@ -259,6 +285,10 @@ export class ViewResourcePage implements OnInit {
   formatDate(date): any {
     let formattedDate = new Date(date).toUTCString();
     return formattedDate.substring(5, formattedDate.length-13);
+  }
+
+  viewProject(p) {
+    this.router.navigate(['/view-market-project-details/' + p.projectId]);
   }
   
   async delete(event)

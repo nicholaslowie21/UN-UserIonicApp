@@ -28,6 +28,7 @@
 <ion-content>
   <ion-list [ngSwitch]="segment">
     <div *ngSwitchCase="'needs'">
+      
         <ion-card *ngFor = "let r of resourceNeeds">
           <ion-badge style="float: right;" class="{{r.type}}type">{{r.type}}</ion-badge>
           <ion-card-header>
@@ -38,7 +39,17 @@
             <p>Completion: {{r.completion}} %</p>
             <p *ngIf='(r.type == "money")'>Total: $ {{r.total}} | Received Sum: $ {{r.receivedSum}} | Pending Sum: $ {{r.pendingSum}}</p>
             <p *ngIf='(r.type == "money")'>Remaining Sum Needed:  $ {{r.total - r.receivedSum - r.pendingSum}}</p>
-            <div *ngIf="(r.completion != 100)"><ion-button  (click)="markAsComplete($event, r)">Mark as Complete</ion-button></div>
+            
+            <ion-grid fixed=true>
+              <ion-row >
+                <ion-col>
+                  <ion-button expand="full" (click)="viewSuggestions(r)">Resource Suggestions</ion-button>
+                </ion-col>
+                <ion-col>
+                  <div *ngIf="(r.completion != 100)"><ion-button expand="full" (click)="markAsComplete($event, r)">Mark as Complete</ion-button></div>
+                </ion-col>
+              </ion-row>
+          </ion-grid>
           </ion-card-content>
           <ion-toolbar>
             <ion-buttons slot="end" >

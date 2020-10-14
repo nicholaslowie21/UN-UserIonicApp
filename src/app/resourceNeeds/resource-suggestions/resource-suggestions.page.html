@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Resource Suggestions</ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="((suggestions != undefined) == false || (suggestions.length == 0))" style="padding-left: 15px;">
+    <ion-card-title>There are currently no suggested resource needs for this resource</ion-card-title>
+</div>
+<div *ngIf="((suggestions != undefined && suggestions.length != 0) == true)">
+  <ion-card-title style="padding-left: 15px">Here are some resource suggestions to request for</ion-card-title>
+  <ion-card *ngFor="let s of suggestions">
+    <ion-card-header>
+        <ion-card-title>Resource Need: {{s.title}}</ion-card-title>
+        <div class="aligned">
+          <img (click)="viewProfile($event, s)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=s.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+          <ion-label (click)="viewProfile($event, s)">{{s.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+          </div>
+        <ion-card-subtitle>Country: {{s.country}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Resource Description: {{s.desc}}</p>
+      <p>Requested on: <ion-badge>{{formatDate(s.updatedAt)}}</ion-badge></p>
+      
+      <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-button (click)="viewResource(s)">View</ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+</div>
+</ion-content>

@@ -340,6 +340,10 @@ export class ResourceNeedsManagementPage implements OnInit {
     this.router.navigateByUrl("/view-resource/" + resource.resType + "/" + resource.resourceId);
   }
 
+  viewSuggestions(r) {
+    this.router.navigateByUrl("/resource-suggestions/" + r.id + "/" + r.type);
+  }
+
   acceptProjectRequest(request) {
     this.marketplaceService.acceptProjectRequest(request.id).subscribe((res) => {
         this.acceptSuccessToast();
