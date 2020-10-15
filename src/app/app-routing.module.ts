@@ -226,7 +226,12 @@ const routes: Routes = [
   {
     path: 'resource-suggestions/:Id/:type',
     loadChildren: () => import('./resourceNeeds/resource-suggestions/resource-suggestions.module').then( m => m.ResourceSuggestionsPageModule)
+  },
+  {
+    path: 'contact-page',
+    loadChildren: () => import('./contact-page/contact-page.module').then( m => m.ContactPagePageModule)
   }
+
 
 
 

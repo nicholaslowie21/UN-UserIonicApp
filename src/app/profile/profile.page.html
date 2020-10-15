@@ -55,6 +55,7 @@
 <ion-card>
   <ion-buttons>
     <ion-icon size=large name="share-social-outline" (click)="presentActionSheet()" style="padding-top: 10px;padding-left:10px"></ion-icon>
+    <ion-icon size=large name="qr-code" style="padding-top: 10px; padding-left: 10px;" routerLink="/contact-page"></ion-icon>
   </ion-buttons>
   <div class="centered">
     <ion-label *ngIf="accountBoolean == false" style="font-weight:bold; font-size:14px;">My Wallet: {{currentUser.data.user.wallet}}</ion-label>
