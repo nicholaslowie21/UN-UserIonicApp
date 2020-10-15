@@ -14,18 +14,37 @@ export class ContactPagePage implements OnInit {
   currentUser: any;
   accountType: any;
   userId: any;
+  cards: any[];
+  data: {institution: any; name: any; occupation: any; email: any; website: any; country: any; address: any; SDGs: any[]; profilePic: any;}
 
   scannedData: any;
   // encodedData: '';
   encodeData: any;
   inputData: any;
   
-  constructor(private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router, private barcodeScanner: BarcodeScanner) { }
+  constructor(private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router, private barcodeScanner: BarcodeScanner) {
+    // Possible to fetch info from institution and individual?? Need to add the id and user type SIANZ
+    this.cards = []; 
+    this.data = {
+      "institution": "Ashoka or super long title",
+      "name": "John Doe",
+      "occupation": "Software Developer",
+      "email": "john@gmail.com",
+      "website": "www.ashoka.com",
+      "country": "America",
+      "address": "American Way New Jersey",
+      "SDGs": [1, 3, 4],
+      "profilePic": "",
+    }
+
+    this.cards.push(this.data);
+   }
 
   ngOnInit() {
     this.currentUser = this.tokenStorage.getUser();
     this.accountType = this.tokenStorage.getAccountType();
     this.inputData = this.currentUser.data.user.id + ";" + this.accountType;
+
   }
 
   scanQR() {
