@@ -8,7 +8,7 @@
 
 <ion-content [fullscreen]="true">
     <ion-toolbar>
-      <ion-segment [(ngModel)]="page" (ionChange)="segmentChanged($event)">
+      <ion-segment [(ngModel)]="pages" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="feed" checked>
           <ion-label>Feed</ion-label>
         </ion-segment-button>
@@ -18,7 +18,7 @@
       </ion-segment>
     </ion-toolbar>
 
-  <ion-list [ngSwitch]="page">
+  <ion-list [ngSwitch]="pages">
   <div *ngSwitchCase="'feed'">
   <ion-card  *ngFor="let n of newsList">
     <ion-card-header>
@@ -38,10 +38,7 @@
   </ion-card>
   </div>
   <div *ngSwitchCase="'discover'">
-    <ion-refresher  pullFactor="0.2" slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content style="position: relative;" pullingIcon="chevron-down-circle-outline"
-    pullingText="Pull to refresh"
-    refreshingText="Refreshing..." refreshingSpinner="dots">
+  <ion-list>
     <ion-card *ngFor="let d of discoverList">
       <ion-card-header>
       <img [src]=d.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
@@ -58,8 +55,7 @@
       </div>
       <ion-card-title></ion-card-title>
     </ion-card>
-    </ion-refresher-content>
-  </ion-refresher>
+  </ion-list>
 </div>
 </ion-list>
 </ion-content>

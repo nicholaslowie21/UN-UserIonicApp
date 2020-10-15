@@ -23,8 +23,8 @@ export class HomePage implements OnInit {
   newsList: any;
   currentUser: any;
   newsFeedList: any[];
-  page: string;
-  discoverList: any;
+  pages: string;
+  discoverList: any[];
  
   constructor(private marketplaceService: MarketplaceService,
     private institutionService: InstitutionService, 
@@ -42,7 +42,7 @@ export class HomePage implements OnInit {
     } else {
       this.accountBoolean = false;
     }
-    this.page = "feed";
+    this.pages = "feed";
   }
   ngOnInit() {
     this.tokenStorage.getUser();
@@ -83,7 +83,6 @@ export class HomePage implements OnInit {
     this.marketplaceService.discoverWeekly().subscribe((res) => {
       this.discoverList = res.data.discoverweekly;
       if(this.discoverList != undefined) {
-        this.discoverList =[];
         for(var i = 0; i < this.discoverList.length; i ++) {
           this.discoverList[i].imgPath = this.sessionService.getRscPath() + this.newsList[i].imgPath +'?random+=' + Math.random();
           this.discoverList[i].hostImg = this.sessionService.getRscPath() + this.newsList[i].hostImg + '?random+=' + Math.random();
@@ -96,31 +95,35 @@ export class HomePage implements OnInit {
     (err) => {
       console.log(err.error.msg);
     })
+    console.log(this.discoverList);
   }
 
-  doRefresh(event) {
+  /*doRefresh(event) {
     console.log('Begin async operation');
-    this.marketplaceService.triggerDiscoverWeekly().subscribe((res) => {
-      this.discoverList = res.data.discoverweekly;
-      if(this.discoverList != undefined) {
-        this.discoverList =[];
-        for(var i = 0; i < this.discoverList.length; i ++) {
-          this.discoverList[i].imgPath = this.sessionService.getRscPath() + this.newsList[i].imgPath +'?random+=' + Math.random();
-          this.discoverList[i].hostImg = this.sessionService.getRscPath() + this.newsList[i].hostImg + '?random+=' + Math.random();
-          var hostType = this.newsList[i].hostType;
-
-        }
-      }
-      
-    },
-    (err) => {
-      console.log(err.error.msg);
-    })
     setTimeout(() => {
+      this.marketplaceService.discoverWeekly().subscribe((res) => {
+        this.discoverList = res.data.discoverweekly;
+        if(this.discoverList != undefined) {
+          for(var i = 0; i < this.discoverList.length; i ++) {
+            this.discoverList[i].imgPath = this.sessionService.getRscPath() + this.newsList[i].imgPath +'?random+=' + Math.random();
+            this.discoverList[i].hostImg = this.sessionService.getRscPath() + this.newsList[i].hostImg + '?random+=' + Math.random();
+            var hostType = this.newsList[i].hostType;
+  
+          }
+        }
+        
+      },
+      (err) => {
+        console.log(err.error.msg);
+      })
+
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
-  }
+
+    console.log(this.discoverList);
+    
+  }*/
 
   viewFounderProfile(ev, h) {
     var username = "";
