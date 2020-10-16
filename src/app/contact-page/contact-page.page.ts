@@ -3,6 +3,7 @@ import { TokenStorageService } from '../services/token-storage.service';
 import { SessionService } from '../services/session.service';
 import { Router } from  "@angular/router";
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
+import { InstitutionService } from '../services/institution.service';
 // import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 
 @Component({
@@ -21,8 +22,10 @@ export class ContactPagePage implements OnInit {
   // encodedData: '';
   encodeData: any;
   inputData: any;
+  institutions: any;
+  institutionsList: any;
   
-  constructor(private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router, private barcodeScanner: BarcodeScanner) {
+  constructor(private institutionService: InstitutionService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router, private barcodeScanner: BarcodeScanner) {
     // Possible to fetch info from institution and individual?? Need to add the id and user type SIANZ
     this.cards = []; 
     this.data = {
@@ -44,6 +47,21 @@ export class ContactPagePage implements OnInit {
     this.currentUser = this.tokenStorage.getUser();
     this.accountType = this.tokenStorage.getAccountType();
     this.inputData = this.currentUser.data.user.id + ";" + this.accountType;
+    this.institutions = this.currentUser.data.user.institutionIds
+    if(this.institutions != undefined) {
+      this.institutionsList = [];
+      for(var i = 0; i < this.institutions.length; i++) {
+        this.institutionService.viewInstitutionById(this.institutions[i]).subscribe((res)=> {
+          var x = res.data.targetInstitution;
+          x.ionicImg = this.sessionService.getRscPath() + res.data.targetInstitution.ionicImg +'?random+=' + Math.random();
+          this.institutionsList.push(x);
+          
+        }, (err) => {
+          console.log("********Institution retrieval error: " + err.error.msg)
+        })
+      }
+    }
+    console.log(this.institutionsList);
 
   }
 
@@ -77,5 +95,9 @@ export class ContactPagePage implements OnInit {
     }, (err) => {
       console.log('Error occurred : ' + err);
     });
+  }
+
+  chooseInstitution() {
+    this.router.navigateByUrl("/change-card-institution")
   }
 }

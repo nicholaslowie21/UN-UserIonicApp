@@ -230,7 +230,11 @@ const routes: Routes = [
   {
     path: 'contact-page',
     loadChildren: () => import('./contact-page/contact-page.module').then( m => m.ContactPagePageModule)
+  },  {
+    path: 'change-card-institution',
+    loadChildren: () => import('./change-card-institution/change-card-institution.module').then( m => m.ChangeCardInstitutionPageModule)
   }
+
 
 
 

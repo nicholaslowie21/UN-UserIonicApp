@@ -16,7 +16,7 @@
   <ion-card-title style="padding-left: 15px">Here are some resource suggestions to request for</ion-card-title>
   <ion-card *ngFor="let s of suggestions">
     <ion-card-header>
-        <ion-card-title>Resource Need: {{s.title}}</ion-card-title>
+        <ion-card-title>Resource: {{s.title}}</ion-card-title>
         <div class="aligned">
           <img (click)="viewProfile($event, s)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=s.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
           <ion-label (click)="viewProfile($event, s)">{{s.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
