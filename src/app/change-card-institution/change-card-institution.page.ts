@@ -87,6 +87,16 @@ export class ChangeCardInstitutionPage implements OnInit {
 
   }
 
+  removeInstitution() {
+    this.mobileService.removeInstitutionChoice().subscribe((res) => {
+      this.successDelToast();
+      this.router.navigateByUrl("/contact-page");
+    }, err => {
+      this.failureDelToast(err.error.msg);
+      console.log(err.error.msg);
+    })
+  }
+
   async successToast() {
     const toast = this.toastCtrl.create({
       message: 'Institution Changed Successfully!',
@@ -100,6 +110,26 @@ export class ChangeCardInstitutionPage implements OnInit {
   async failureToast(error) {
     const toast = this.toastCtrl.create({
       message: 'Institution Changed unsuccessfully: ' + error,
+      duration: 1000,
+      position: 'middle',
+      cssClass: "toast-fail"
+    });
+    (await toast).present();
+  }
+
+  async successDelToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Institution of Choice Removed Successfully!',
+      duration: 1000,
+      position: 'middle',
+      cssClass: "toast-pass"
+    });
+    (await toast).present();
+  }
+ 
+  async failureDelToast(error) {
+    const toast = this.toastCtrl.create({
+      message: 'Institution of Choice Removed unsuccessfully: ' + error,
       duration: 1000,
       position: 'middle',
       cssClass: "toast-fail"

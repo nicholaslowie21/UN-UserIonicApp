@@ -26,7 +26,7 @@ export class MobileService {
     );
   }
 
-  removeInstitutionChoice(data): Observable<any> {
+  removeInstitutionChoice(): Observable<any> {
     return this.http.delete(this.API_URL + '/institutionChoice', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
@@ -35,7 +35,7 @@ export class MobileService {
 
   addContact(data): Observable<any> {
     return this.http.post(this.API_URL + '/addContact', {
-      "qrhash": data.qrhash
+      "qrhash": data
     }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
@@ -44,7 +44,7 @@ export class MobileService {
 
   deleteContact(data): Observable<any> {
     return this.http.post(this.API_URL + '/deleteContact', {
-      "cardId": data.cardId
+      "cardId": data
     }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
@@ -52,7 +52,7 @@ export class MobileService {
   }
   
 
-  getContactList(data): Observable<any> {
+  getContactList(): Observable<any> {
     return this.http.get(this.API_URL + '/contactList', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),

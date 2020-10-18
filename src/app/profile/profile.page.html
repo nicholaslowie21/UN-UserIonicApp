@@ -67,10 +67,10 @@
       </div>
       <h3 *ngIf="accountBoolean == false" class="name">{{ currentUser.data.user.name }} | {{currentUser.data.user.salutation}}</h3>
       <h3 *ngIf="accountBoolean == true" class="name">{{ currentUser.data.user.name }}</h3>
-      <h6 *ngIf="accountBoolean == true">{{currentUser.data.user.address}}</h6>
-      <h6>{{ currentUser.data.user.country }}</h6>
-      <h6 *ngIf="accountBoolean == false"><a href={{currentUser.data.user.website}}>{{ currentUser.data.user.website }}</a></h6>
-      <h6 *ngIf="accountBoolean == true"><a href={{currentUser.data.user.website}}>{{ currentUser.data.user.website }}</a> | {{currentUser.data.user.phone}}</h6>
+      <h5 *ngIf="accountBoolean == true">{{currentUser.data.user.address}}</h5>
+      <h5 style="margin-top: 0px;">{{ currentUser.data.user.country }}</h5>
+      <h6><a href={{currentUser.data.user.website}}>{{ currentUser.data.user.website }}</a></h6>
+      <h6 style="margin-top: 0px;" *ngIf="accountBoolean == true">{{currentUser.data.user.phone}}</h6>
       <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of sdgs">SDG {{sdg}}&nbsp;</ion-badge>
     </div>
 </ion-card>
@@ -81,20 +81,31 @@
     <ion-label>Affiliated Users</ion-label>
   </ion-item>
     
-  <ion-item-divider>
+  <div *ngIf="accountBoolean == true">
+    <ion-item-divider>
+      <ion-label>About Us</ion-label>
+    </ion-item-divider>
+    <ion-item lines="none">
+      <p>{{currentUser.data.user.bio}}</p>
+    </ion-item>
+  </div>
+
+  <div *ngIf="accountBoolean == false">
+    <ion-item-divider>
       <ion-label>About Me</ion-label>
     </ion-item-divider>
-    <ion-item *ngIf="accountBoolean == false" lines="none">
+    <ion-item lines="none">
       <p>Occupation: {{currentUser.data.user.occupation}}</p>
     </ion-item>
-    <ion-item *ngIf="accountBoolean == false" lines="none">
+    <ion-item lines="none">
       <p>Skills: {{currentUser.data.user.skills}}</p>
     </ion-item>
     <ion-item lines="none">
       <p>Bio: {{currentUser.data.user.bio}}</p>
     </ion-item>
+  </div>
 
-    <ion-item-divider>
+    <ion-item-divider *ngIf="accountBoolean == false">
       <ion-label>Badge</ion-label>
     </ion-item-divider>
     <ion-card-subtitle *ngIf="badges == undefined">Start contributing to earn some badges!!</ion-card-subtitle>

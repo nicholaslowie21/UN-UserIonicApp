@@ -51,13 +51,16 @@ export class ProfilePage implements OnInit {
    console.log(this.accountType);
     if(this.accountType == "institution") {
       this.accountBoolean = true;
+      if(this.currentUser.data.user.isVerified == true) {
+        this.isVerified = true;
+      }
     } else if(this.accountType == "user") {
+      if(this.currentUser.data.user.isVerified == "true") {
+        this.isVerified = true;
+      }
       this.accountBoolean = false;
     }
     console.log(this.accountBoolean);
-    if(this.currentUser.data.user.isVerified == "true") {
-      this.isVerified = true;
-    }
 
     if(this.accountBoolean == true)
     {

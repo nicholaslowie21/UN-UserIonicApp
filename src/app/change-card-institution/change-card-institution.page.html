@@ -9,7 +9,10 @@
 
 <ion-content>
   <ion-card>
+    <ion-card-header>
     <ion-card-title>Current Institution selected: {{institutionChoiceName}}</ion-card-title>
+    <ion-button (click)="removeInstitution()" color="danger" fill="outline"><ion-icon name="trash-outline"></ion-icon>Remove</ion-button>
+    </ion-card-header>
   </ion-card>
   <form #form="ngForm" (ngSubmit)="chooseInstitute()">
   <ion-item>
