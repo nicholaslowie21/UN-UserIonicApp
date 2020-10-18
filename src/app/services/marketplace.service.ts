@@ -292,7 +292,7 @@ export class MarketplaceService {
   }
 
   completeProjectRequest(data): Observable<any> {
-    return this.http.post(this.API_URL + '/complete/projectReq', {"projectReqId": data}, httpOptions).pipe(
+    return this.http.post(this.API_URL + '/complete/projectReq', {"projectReqId": data.id, "theRating": data.rating}, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

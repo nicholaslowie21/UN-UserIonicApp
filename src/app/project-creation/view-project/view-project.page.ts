@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { InstitutionService } from 'src/app/services/institution.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { SessionService } from 'src/app/services/session.service';
@@ -8,6 +8,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { isRegExp } from 'util';
 import { FormGroup, NgForm } from '@angular/forms';
+import { EditRatingPage } from 'src/app/resourceNeeds/edit-rating/edit-rating.page';
 
 @Component({
   selector: 'app-view-project',
@@ -47,8 +48,9 @@ export class ViewProjectPage implements OnInit {
   rating: any;
   updatedAt: any;
   posts: any[];
+  modal: HTMLIonModalElement;
 
-  constructor(private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
+  constructor(private modalCtrl: ModalController, private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.initialise();
@@ -445,6 +447,26 @@ console.log(this.completedBoolean);
       this.failureToast(err.error.msg);
       console.log('********** ViewProjectPage(remove contributors).ts: ', err.error.msg);
     })
+  }
+
+  async editRating(c) {
+    console.log(this.id);
+    this.modal = await this.modalCtrl.create({
+      component: EditRatingPage,
+      componentProps: {"contribution": {"contributionId": c.contributionId, "contributorName": c.contributorName, "contributorImgPath": c.contributorImgPath, "rating": c.rating}, 
+      "resId": c.resourceId,
+      "contributorId": c.contributor,
+      "contributorType": c.contributorType,
+    "resource": {
+      "resourceId": c.resourceId,
+      "resourceTitle": c.resourceTitle
+    }}
+      
+    });
+    this.modal.onDidDismiss().then((data) => {
+      this.initialise();
+  });
+    return await this.modal.present();
   }
 
   async presentAlertConfirm(ev, u) {

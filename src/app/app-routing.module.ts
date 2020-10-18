@@ -230,10 +230,19 @@ const routes: Routes = [
   {
     path: 'contact-page',
     loadChildren: () => import('./contact-page/contact-page.module').then( m => m.ContactPagePageModule)
-  },  {
+  },
+  {
     path: 'change-card-institution',
     loadChildren: () => import('./change-card-institution/change-card-institution.module').then( m => m.ChangeCardInstitutionPageModule)
+  },
+  {
+    path: 'rate-contributors',
+    loadChildren: () => import('./resourceNeeds/rate-contributors/rate-contributors.module').then( m => m.RateContributorsPageModule)
+  },  {
+    path: 'edit-rating',
+    loadChildren: () => import('./resourceNeeds/edit-rating/edit-rating.module').then( m => m.EditRatingPageModule)
   }
+
 
 
 

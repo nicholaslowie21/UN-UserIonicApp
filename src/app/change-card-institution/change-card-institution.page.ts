@@ -26,7 +26,9 @@ export class ChangeCardInstitutionPage implements OnInit {
   constructor(private router: Router, private userService: UserService, private toastCtrl: ToastController, private mobileService: MobileService, private sessionService: SessionService, private tokenStorage: TokenStorageService, private institutionService: InstitutionService) { }
 
   ngOnInit() {
+    
     this.currentUser = this.tokenStorage.getUser();
+    console.log(this.currentUser)
     this.accountType = this.tokenStorage.getAccountType();
     //get institution of choice name
     this.institutionChoice = this.currentUser.data.user.institutionChoice;
@@ -56,18 +58,18 @@ export class ChangeCardInstitutionPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    /*this.currentUser = this.tokenStorage.getUser();
+    this.currentUser = this.tokenStorage.getUser();
     this.userService.viewUserById(this.currentUser.data.user.id).subscribe((res)=> {
       this.institutionChoice = res.data.targetUser.institutionChoice;
+      this.institutionService.viewInstitutionById(this.institutionChoice).subscribe((res)=> {
+        this.institutionChoiceName = res.data.targetInstitution.name;
+      }, (err) => {
+        console.log("********Institution retrieval error: " + err.error.msg)
+      })
       console.log(res.data.targetUser);
     }, (err) => {
       console.log("error retrieving user: " + err.error.msg)
     })
-    this.institutionService.viewInstitutionById(this.institutionChoice).subscribe((res)=> {
-      this.institutionChoiceName = res.data.targetInstitution.name;
-    }, (err) => {
-      console.log("institution choice error: " + err.error.msg);
-    })*/
   }
 
   chooseInstitute() {

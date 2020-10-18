@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { InstitutionService } from 'src/app/services/institution.service';
 import { MarketplaceService } from 'src/app/services/marketplace.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { SessionService } from 'src/app/services/session.service';
 import { UserService } from 'src/app/services/user.service';
+import { RateContributorsPage } from '../rate-contributors/rate-contributors.page';
 
 @Component({
   selector: 'app-resource-needs-management',
@@ -49,8 +50,9 @@ export class ResourceNeedsManagementPage implements OnInit {
   noOutgoingDeclinedRequestBoolean: boolean;
   outgoingCancelledResourceRequestList: any;
   noOutgoingCancelledRequestBoolean: boolean;
+  modal: HTMLIonModalElement;
 
-  constructor(private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private marketplaceService: MarketplaceService, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private activatedRoute: ActivatedRoute, private projectService: ProjectService, ) { }
+  constructor(private modalCtrl: ModalController, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private marketplaceService: MarketplaceService, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private activatedRoute: ActivatedRoute, private projectService: ProjectService, ) { }
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('Id');
@@ -353,13 +355,30 @@ export class ResourceNeedsManagementPage implements OnInit {
     this.router.navigate(["/view-project/" + this.id]);
   }
 
-  completeProjectRequest(request) {
+  /*completeProjectRequest(request) {
     this.marketplaceService.completeProjectRequest(request.id).subscribe((res) => {
       this.completeSuccessToast();
   }, (err) => {
     this.completeFailureToast(err.error.msg);
   })
   this.router.navigate(["/view-project/" + this.id]);
+}*/
+
+async completeProjectRequest(resource) {
+  this.completeSuccessToast();
+  console.log(this.id);
+  this.modal = await this.modalCtrl.create({
+    component: RateContributorsPage,
+    componentProps: {"resource": {"resourceTitle": resource.resourceTitle, "requesterUsername": resource.requesterUsername, "requesterImg": resource.requesterImg}, 
+    "projectId": this.id, 
+    "reqId": resource.id,
+    "ownerId": resource.ownerId,
+    "ownerType": resource.ownerType }
+    
+  });
+  this.modal.onWillDismiss().then((data) => {
+});
+  return await this.modal.present();
 }
 
 declineProjectRequest(request) {

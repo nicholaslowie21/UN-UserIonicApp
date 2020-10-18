@@ -305,6 +305,16 @@ export class ProjectService {
     );
   }
 
+  updateContributionRating(data): Observable<any> {
+    return this.http.post(this.API_URL + '/updateContributionRating', {
+      "contributionId": data.contributionId,
+      "theRating": data.rating
+     }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

@@ -99,10 +99,10 @@
     <ion-card>
       <ion-item-divider>
         <ion-label color=dark>Resource Obtained</ion-label>
-        <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
+        <!--<ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
           <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp" (click)="viewContri($event)"></ion-icon></ion-label>
           
-        </ion-buttons>
+        </ion-buttons>-->
       </ion-item-divider>
       
       <ion-card *ngFor="let c of contributions" lines="none">
@@ -112,7 +112,9 @@
         </ion-card-header>
         <ion-card-content>
         <p style="font-weight: bolder;">Provided Resource: {{c.resourceTitle}}</p>
+        <p *ngIf="adminBoolean==true || founderBoolean==true" style="font-weight: bolder;">Rating: {{c.rating}}</p>
         <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="presentAlertConfirm($event, c)" ><ion-icon name="trash-outline"></ion-icon></ion-button>
+        <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="editRating(c)" ><ion-icon name="star-half"></ion-icon>Rate</ion-button>
         <p style="font-weight: bold;">{{c.desc}}</p>
         <br>
         <div>
