@@ -26,7 +26,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label style="font-weight:bold;" position="floating">Amount</ion-label>
+      <ion-label style="font-weight:bold;" position="floating">Amount($)</ion-label>
       <ion-input type="number" ngModel name="amt" [(ngModel)]="moneySum" min=0 required #inamt="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inamt.invalid">
         <div *ngIf="inamt.errors.required">Amount is required</div>

@@ -55,6 +55,8 @@ export class ContactPagePage implements OnInit {
 
     this.initialise();
     this.institutionChoice = this.currentUser.data.user.institutionChoice;
+    console.log(this.institutionChoice != "");
+    if(this.institutionChoice != "") {
     this.institutionService.viewInstitutionById(this.currentUser.data.user.institutionChoice).subscribe((res)=> {
       this.institutionChoiceName = res.data.targetInstitution.name;
       
@@ -62,6 +64,7 @@ export class ContactPagePage implements OnInit {
     }, (err) => {
       console.log("institution choice error: " + err.error.msg);
     })
+  }
 
     this.institutions = this.currentUser.data.user.institutionIds;
     if(this.institutions != undefined) {
@@ -84,11 +87,13 @@ export class ContactPagePage implements OnInit {
   ionViewDidEnter() {
     this.userService.viewUserById(this.currentUser.data.user.id).subscribe((res)=> {
       this.institutionChoice = res.data.targetUser.institutionChoice;
+      if(this.institutionChoice != "") {
       this.institutionService.viewInstitutionById(this.institutionChoice).subscribe((res)=> {
         this.institutionChoiceName = res.data.targetInstitution.name;
       }, (err) => {
         console.log("********Institution retrieval error: " + err.error.msg)
       })
+    }
       console.log(res.data.targetUser);
     }, (err) => {
       console.log("error retrieving user: " + err.error.msg)

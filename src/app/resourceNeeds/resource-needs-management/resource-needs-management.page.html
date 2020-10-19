@@ -207,6 +207,7 @@
           </div>
           <p (click)="viewResource(m)">Resource Title: {{m.resourceTitle}}</p>
           <p>Resource description: {{m.desc}}</p>
+          <ion-card-subtitle>Cancelled By: {{m.cancelType}}</ion-card-subtitle>
           <ion-card-subtitle>Requested at: <ion-badge>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
           <ion-card-subtitle>Cancelled on: <ion-badge>{{formatDate(m.updatedAt)}}</ion-badge></ion-card-subtitle>
         </ion-card-content>
@@ -252,7 +253,7 @@
         <ion-card-content>
           <p>Resource title: {{k.resourceTitle}}</p>
           <p>Resource Requested: {{k.needDesc}}</p>
-          <p>Resource owner: {{k.resourceOwner}}</p>
+          <p>Resource owner: {{k.resourceOwnerName}}</p>
           <p>Resource Description: {{k.desc}}</p>
           <ion-card-subtitle>Requested at: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
           <ion-button  (click)="cancelResRequests($event, k)" expand="full">Cancel</ion-button>
@@ -276,11 +277,22 @@
       <ion-card-content>
         <p>Resource title: {{k.resourceTitle}}</p>
         <p>Resource Requested: {{k.needDesc}}</p>
-        <p>Resource owner: {{k.resourceOwner}}</p>
+        <p>Resource owner: {{k.resourceOwnerName}}</p>
         <p>Resource Description: {{k.desc}}</p>
         <ion-card-subtitle>Requested at: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
         <ion-card-subtitle>Accepted on: <ion-badge>{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
-        <ion-button  (click)="cancelResRequests($event, k)" expand="full">Cancel</ion-button>
+
+        <ion-grid fixed=true>
+          <ion-row size="4">
+            <ion-col>
+              <ion-button *ngIf="k.status == 'accepted'" (click)="completeResRequest($event, k)" expand="full">Complete</ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button  (click)="cancelResRequests($event, k)" expand="full">Cancel</ion-button>
+            </ion-col>
+          </ion-row>
+      </ion-grid>
+        
       </ion-card-content>
     </ion-card>
   </div>
@@ -302,7 +314,7 @@
     <ion-card-content>
       <p>Resource title: {{k.resourceTitle}}</p>
       <p>Resource Requested: {{k.needDesc}}</p>
-      <p>Resource owner: {{k.resourceOwner}}</p>
+      <p>Resource owner: {{k.resourceOwnerName}}</p>
       <p>Resource Description: {{k.desc}}</p>
       <ion-card-subtitle>Requested at: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
       <ion-card-subtitle>Declined on: <ion-badge>{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
@@ -327,8 +339,9 @@
     <ion-card-content>
       <p>Resource title: {{k.resourceTitle}}</p>
       <p>Resource Requested: {{k.needDesc}}</p>
-      <p>Resource owner: {{k.resourceOwner}}</p>
+      <p>Resource owner: {{k.resourceOwnerName}}</p>
       <p>Resource Description: {{k.desc}}</p>
+      <ion-card-subtitle>Cancelled By: {{k.cancelType}}</ion-card-subtitle>
       <ion-card-subtitle>Requested at: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
       <ion-card-subtitle>Cancelled on: <ion-badge>{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
     </ion-card-content>
