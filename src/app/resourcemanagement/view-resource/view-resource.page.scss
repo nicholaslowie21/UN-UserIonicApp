@@ -59,3 +59,12 @@ ion-img {
 .segment-button.segment-activated{
   border: 2px dashed black !important;
 }
+
+ion-segment-button {
+  height: 40px;
+  min-height: 40px;
+  }
+  
+  ion-segment-button.segment-button-checked {
+  border-bottom: 2px solid;
+  }
