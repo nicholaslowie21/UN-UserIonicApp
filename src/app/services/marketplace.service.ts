@@ -320,7 +320,7 @@ export class MarketplaceService {
   }
 
   completeResourceRequest(data): Observable<any> {
-    return this.http.post(this.API_URL + '/complete/resourceReq', {"resourceReqId": data}, httpOptions).pipe(
+    return this.http.post(this.API_URL + '/complete/resourceReq', {"resourceReqId": data.id, "theRating": data.rating}, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

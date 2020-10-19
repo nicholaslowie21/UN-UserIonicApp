@@ -17,6 +17,7 @@ export class RateContributorsPage implements OnInit {
   @Input("reqId") reqId
   @Input("ownerId") ownerId
   @Input("ownerType") ownerType
+  @Input("requestType") requestType
   rating: any;
   image: any;
   data: { id: any; rating: any; };
@@ -37,6 +38,7 @@ export class RateContributorsPage implements OnInit {
   }
 
   rate() {
+    if(this.requestType == "project") {
     this.data = {
       "id": this.reqId,
       "rating": this.rating
@@ -48,6 +50,20 @@ export class RateContributorsPage implements OnInit {
   })
   this.dismiss();
   this.router.navigate(["/view-project/" + this.projectId]);
+  }
+   else if(this.requestType == "resource") {
+     this.data = {
+       "id": this.reqId,
+       "rating": this.rating
+     }
+     this.marketplaceService.completeResourceRequest(this.data).subscribe((res) => {
+      this.completeSuccessToast();
+  }, (err) => {
+    this.completeFailureToast(err.error.msg);
+  })
+  this.dismiss();
+  this.router.navigate(["/view-project/" + this.projectId]);
+   }
   }
 
   viewProfile() {

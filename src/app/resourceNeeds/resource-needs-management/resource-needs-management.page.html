@@ -271,9 +271,8 @@
         <p>Resource Requested: {{k.needDesc}}</p>
         <p>Resource owner: {{k.resourceOwnerName}}</p>
         <p>Resource Description: {{k.desc}}</p>
-<<<<<<< HEAD
-        <ion-card-subtitle>Requested at: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
-        <ion-card-subtitle>Accepted on: <ion-badge>{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
+        <ion-card-subtitle>Requested at: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
+        <ion-card-subtitle>Accepted on: <ion-badge color="primary">{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
 
         <ion-grid fixed=true>
           <ion-row size="4">
@@ -281,16 +280,11 @@
               <ion-button *ngIf="k.status == 'accepted'" (click)="completeResRequest($event, k)" expand="full">Complete</ion-button>
             </ion-col>
             <ion-col>
-              <ion-button  (click)="cancelResRequests($event, k)" expand="full">Cancel</ion-button>
+              <ion-button  (click)="cancelResRequests($event, k)" color="danger" expand="full">Cancel</ion-button>
             </ion-col>
           </ion-row>
       </ion-grid>
         
-=======
-        <ion-card-subtitle>Requested at: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
-        <ion-card-subtitle>Accepted on: <ion-badge color="primary">{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
-        <ion-button  (click)="cancelResRequests($event, k)" expand="full" color="danger">Cancel</ion-button>
->>>>>>> ee964a53d241158208e1061e0f21167e1ee5c622
       </ion-card-content>
     </ion-card>
   </div>
@@ -339,14 +333,9 @@
       <p>Resource Requested: {{k.needDesc}}</p>
       <p>Resource owner: {{k.resourceOwnerName}}</p>
       <p>Resource Description: {{k.desc}}</p>
-<<<<<<< HEAD
       <ion-card-subtitle>Cancelled By: {{k.cancelType}}</ion-card-subtitle>
-      <ion-card-subtitle>Requested at: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
-      <ion-card-subtitle>Cancelled on: <ion-badge>{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
-=======
       <ion-card-subtitle>Requested at: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
       <ion-card-subtitle>Cancelled on: <ion-badge color="danger">{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
->>>>>>> ee964a53d241158208e1061e0f21167e1ee5c622
     </ion-card-content>
   </ion-card>
 </div>

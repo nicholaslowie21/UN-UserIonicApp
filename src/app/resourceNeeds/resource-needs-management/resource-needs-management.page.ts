@@ -373,7 +373,9 @@ async completeProjectRequest(resource) {
     "projectId": this.id, 
     "reqId": resource.id,
     "ownerId": resource.ownerId,
-    "ownerType": resource.ownerType }
+    "ownerType": resource.ownerType,
+    "requestType": "project"
+  }
     
   });
   this.modal.onWillDismiss().then((data) => {
@@ -392,7 +394,8 @@ async completeResourceRequest(resource) {
     "projectId": this.id, 
     "reqId": resource.id,
     "ownerId": resource.resourceOwnerId,
-    "ownerType": resource.resourceOwnerType }
+    "ownerType": resource.resourceOwnerType,
+    "requestType": "resource"}
     
   });
   this.modal.onWillDismiss().then((data) => {
