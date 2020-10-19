@@ -16,12 +16,8 @@ export class SessionService {
 		
 		if(this.platform.is('hybrid'))
 		{
-<<<<<<< HEAD
-			return "https://192.168.43.215:8080/api";
-=======
 			// return "https://192.168.86.250:8080/api";
-			return "https://172.31.61.217:8080/api";
->>>>>>> c4ee8a101cb3b9b5cbe186f80322817458cb8162
+			return "https://192.168.100.76:8080/api";
 		}
 		else
 		{
@@ -35,12 +31,8 @@ export class SessionService {
 		
 		if(this.platform.is('hybrid'))
 		{
-<<<<<<< HEAD
-			return "http://192.168.43.215:8081";
-=======
 			// return "http://192.168.86.250:8081";
-			return "https://172.31.61.217:8081";
->>>>>>> c4ee8a101cb3b9b5cbe186f80322817458cb8162
+			return "https://192.168.100.76:8081";
 		}
 		else
 		{
