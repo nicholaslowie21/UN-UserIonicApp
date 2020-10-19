@@ -166,4 +166,9 @@ export class MarketplacePage implements OnInit {
   viewProject(ev, p) {
     this.router.navigate(['/view-market-project-details/' + p.id]);
   }
+
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
 }

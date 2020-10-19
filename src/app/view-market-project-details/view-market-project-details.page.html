@@ -64,8 +64,27 @@
     </ion-segment>
   </ion-toolbar>
   <ion-list [ngSwitch]="page">
-    <ion-item-group>
-
+    <ion-item-group *ngSwitchCase="'feed'">
+      <div style="padding: 0px 10px;" *ngIf="posts == undefined">There are no posts yet!</div>
+      <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="createPost($event)" expand="block" style="margin: 0px 10px;"><ion-icon name="pencil-outline"></ion-icon>Create New Post</ion-button>
+      <ion-card *ngFor="let p of posts">
+        <img *ngIf="p.imgPath != ''" [src]=renderImg(p.imgPath) alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'" style="margin-top: 10px;">
+        <ion-card-header>
+          <div *ngIf="completedBoolean == false && (founderBoolean == true || adminBoolean == true)">
+            <ion-fab vertical="top" horizontal="end" slot="fixed">
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+              <ion-fab-list side="start">
+                <ion-button color="danger" (click)="delPost($event, p.id)" ><ion-icon slot="end" name="trash"></ion-icon>Delete</ion-button>
+                <ion-button (click)="editPost($event, p.id)"><ion-icon slot="end" name="create-outline"></ion-icon>Edit</ion-button>
+              </ion-fab-list>
+            </ion-fab>
+          </div>
+          <ion-badge>{{formatDate(p.createdAt)}}</ion-badge>
+          <ion-card-title>{{p.title}} </ion-card-title>
+          <ion-card-subtitle>{{p.desc}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-button fill="clear" (click)="viewComments($event, p.id)">View Comments</ion-button>
+      </ion-card>
     </ion-item-group>
     <ion-item-group *ngSwitchCase="'contributions'" >
     <ion-card>

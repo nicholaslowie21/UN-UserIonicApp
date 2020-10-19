@@ -21,18 +21,23 @@
   <ion-list [ngSwitch]="pages">
   <div *ngSwitchCase="'feed'">
   <ion-card  *ngFor="let n of newsList">
-    <ion-card-header>
-    <img [src]=n.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
-    <ion-card-title (click)="viewProject($event, n)">{{n.title}}</ion-card-title>
     <div class="aligned">
-      <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
-      <img (click)="viewFounderProfile($event, n)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=n.ionicImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-      <ion-label (click)="viewFounderProfile($event, n)">{{n.hostName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-    </div>
+      <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewFounderProfile($event, n)" style="width: 40px; height: 40px; object-fit: cover;" [src]=n.ionicImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+      <div>
+        <div class = "aligned">
+          <ion-label style="font-weight: bold" (click)="viewFounderProfile($event, n)">{{n.hostName}}</ion-label>
+          <ion-icon name="checkmark-circle" size="big"></ion-icon>
+        </div>
+        <ion-label>Project Founder</ion-label>
+      </div> 
+    </div> 
+    <img [src]=n.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
+    <ion-card-header>
+    <ion-card-title (click)="viewProject($event, n)">{{n.title}}</ion-card-title>
       <ion-badge style="padding-left: 5px" className="sdg{{sdg}}" *ngFor= "let sdg of n.SDGs">SDG {{sdg}}&nbsp;</ion-badge>
     </ion-card-header>
     <div>
-      <ion-card-content>Project Description: {{n.desc}}<br>Country: {{n.country}}<br>Rating: {{n.rating}}</ion-card-content>
+      <ion-card-content>Project Description: {{n.desc}}<br>Country: {{n.country}}<br>Rating: {{n.rating}}<br>Created at: <ion-badge color="dark">{{formatDate(n.createdAt)}}</ion-badge></ion-card-content>
     </div>
     <ion-card-title></ion-card-title>
   </ion-card>
@@ -40,18 +45,23 @@
   <div *ngSwitchCase="'discover'">
   <ion-list>
     <ion-card *ngFor="let d of discoverList">
-      <ion-card-header>
-      <img [src]=d.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
-      <ion-card-title (click)="viewProject($event, d)">{{d.title}}</ion-card-title>
       <div class="aligned">
-        <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
-        <img (click)="viewFounderProfile($event, d)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=d.ionicImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-        <ion-label (click)="viewFounderProfile($event, d)">{{d.hostName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+        <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewFounderProfile($event, d)" style="width: 40px; height: 40px; object-fit: cover;" [src]=d.ionicImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+        <div>
+          <div class = "aligned">
+            <ion-label style="font-weight: bold" (click)="viewFounderProfile($event, d)">{{d.hostName}}</ion-label>
+            <ion-icon name="checkmark-circle" size="big"></ion-icon>
+          </div>
+          <ion-label>Project Founder</ion-label>
+        </div> 
       </div>
+      <img [src]=d.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
+      <ion-card-header>
+      <ion-card-title (click)="viewProject($event, d)">{{d.title}}</ion-card-title>
         <ion-badge style="padding-left: 5px" className="sdg{{sdg}}" *ngFor= "let sdg of d.SDGs">SDG {{sdg}}&nbsp;</ion-badge>
       </ion-card-header>
       <div>
-        <ion-card-content>Project Description: {{d.desc}}<br>Country: {{d.country}}<br>Rating: {{d.rating}}</ion-card-content>
+        <ion-card-content>Project Description: {{d.desc}}<br>Country: {{d.country}}<br>Rating: {{d.rating}}<br>Created at: <ion-badge color="dark">{{formatDate(d.createdAt)}}</ion-badge></ion-card-content>
       </div>
       <ion-card-title></ion-card-title>
     </ion-card>

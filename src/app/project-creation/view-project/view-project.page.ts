@@ -325,42 +325,6 @@ console.log(this.completedBoolean);
 		await alert.present(); 
   }
 
-  async delComment(event, commentId)
-	{
-		const alert = await this.alertController.create({
-			header: 'Confirm Delete Project Post',
-			message: 'Confirm delete Post?',
-			buttons: [
-			{
-			  text: 'Cancel',
-			  role: 'cancel',
-			  cssClass: 'secondary',
-			  handler: (blah) => {
-				
-			  }
-			}, {
-			  text: 'Okay',
-			  handler: () => {
-				this.projectService.deleteComment(commentId).subscribe(
-					response => {
-            this.resultSuccess = true;
-            this.successToast();
-            this.back();
-					},
-					error => {
-            this.failureToast(error.error.msg);
-						this.error = true;
-						this.errorMessage = error;
-					}
-				);
-			  }
-			}
-			]
-		});
-
-		await alert.present(); 
-  }
-
   async complete(event, project)
 	{
 		const alert = await this.alertController.create({

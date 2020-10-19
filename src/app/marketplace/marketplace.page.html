@@ -37,14 +37,19 @@
   </ion-grid>
   <h4 style="text-align: center;">These projects need your donations! DONATE NOW!</h4>
   <ion-card *ngFor="let m of fundingNeeds">
+    <div class="aligned">
+      <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewFounderProfile($event, m)" style="width: 40px; height: 40px; object-fit: cover;" [src]=m.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+      <div>
+        <div class = "aligned">
+          <ion-label style="font-weight: bold" (click)="viewFounderProfile($event, m)">{{m.ownerName}}</ion-label>
+          <ion-icon name="checkmark-circle" size="big"></ion-icon>
+        </div>
+        <ion-label>Project Founder</ion-label>
+      </div> 
+    </div>  
+    <img [src]=m.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
     <ion-card-header>
-      <img [src]=m.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
       <ion-card-title (click)="viewProject($event, m)">{{m.title}}</ion-card-title>
-      <div class="aligned">
-        <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
-        <img (click)="viewFounderProfile($event, m)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=m.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-        <ion-label (click)="viewFounderProfile($event, m)">{{m.ownerName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-      </div>
       <ion-badge style="padding-left: 5px" className="sdg{{sdg}}" *ngFor= "let sdg of m.SDGs">SDG {{sdg}}&nbsp;</ion-badge>
     </ion-card-header>
     <ion-card-content>
@@ -53,6 +58,7 @@
       <p>Total: {{m.total}}</p>
       <p>Received Sum: {{m.receivedSum}}</p>
       <p>Pending Sum: {{m.pendingSum}}</p>
+      <ion-card-subtitle>Created at: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
       <ion-fab horizontal="end" vertical="bottom" slot="fixed">
         <ion-button (click)="contribute(m)">
           Donate

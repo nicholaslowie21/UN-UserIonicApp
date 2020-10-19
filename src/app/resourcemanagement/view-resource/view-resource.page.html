@@ -35,7 +35,7 @@
         <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-title>{{resourceOwner.name}}<ion-icon *ngIf="resourceOwner.isVerified == 'true'" name="checkmark-circle" size="big" style="padding-left: 5px;"></ion-icon> </ion-title>
       </div>
-      <ion-card-subtitle>Last Modified: {{formatDate(currResource.updatedAt)}}</ion-card-subtitle>
+      <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(currResource.updatedAt)}}</ion-badge></ion-card-subtitle>
       <ion-badge class="{{currResource.status}}">{{currResource.status}}</ion-badge>
     </ion-card-header>
     <ion-card-content>
@@ -89,12 +89,10 @@
   </ion-card>
 
   <div *ngIf="yourAccountBoolean==true">
-    <ion-item-divider>
-      <ion-label>Requests for this resource</ion-label>
+    <ion-item-divider color="primary">
+      <ion-title style="color: white;">Requests for this resource</ion-title>
     </ion-item-divider>
-    <ion-header>
-      <ion-toolbar>
-      <ion-segment  [(ngModel)]="requestType" >
+      <ion-segment  [(ngModel)]="requestType" color="primary">
         <ion-segment-button value="incoming" checked>
           <ion-label>Incoming Request</ion-label>
         </ion-segment-button>
@@ -102,29 +100,23 @@
           <ion-label>Outgoing Request</ion-label>
         </ion-segment-button>
       </ion-segment>
-    </ion-toolbar>
-    </ion-header>
       <ion-list  [ngSwitch]="requestType">
         <div *ngSwitchCase="'incoming'" >
           <ion-item-divider>
-          <ion-header>
-            <ion-toolbar>
-              <ion-segment [(ngModel)]="inStatus" (ionChange)="segmentChanged($event)">
+              <ion-segment [(ngModel)]="inStatus" (ionChange)="segmentChanged($event)" color="secondary">
                 <ion-segment-button value="pending" checked>
-                  <ion-label>Pending</ion-label>
+                  Pending
                 </ion-segment-button>
                 <ion-segment-button value="accepted">
-                  <ion-label>Accepted</ion-label>
+                  Accepted
                 </ion-segment-button>
                 <ion-segment-button value="declined">
-                  <ion-label>Declined</ion-label>
+                  Declined
                 </ion-segment-button>
                 <ion-segment-button value="cancelled">
-                  <ion-label>Cancelled</ion-label>
+                  Cancelled
                 </ion-segment-button>
               </ion-segment>
-            </ion-toolbar>
-          </ion-header>
         </ion-item-divider>
           <ion-list [ngSwitch]="inStatus">
           <div *ngSwitchCase="'pending'">
@@ -136,21 +128,21 @@
             <ion-card>
               <ion-card-header>
                 <ion-card-title>{{m.needTitle}}</ion-card-title>
-                <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
+                <ion-badge class={{m.status}}>{{m.status}}</ion-badge>
                 
               </ion-card-header>
       
               <ion-card-content>
                 <p>Need description: {{m.needDesc}}</p>
                 <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
-                <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+                <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
                 <ion-grid fixed=true>
                   <ion-row size="4">
                     <ion-col>
                       <ion-button *ngIf="m.status != 'accepted'" (click)="acceptResRequest($event, m)" expand="full">Accept</ion-button>
                     </ion-col>
                     <ion-col>
-                      <ion-button *ngIf="m.status != 'accepted'" (click)="declineResRequest($event,m)" expand="full">Decline</ion-button>
+                      <ion-button *ngIf="m.status != 'accepted'" (click)="declineResRequest($event,m)" expand="full" color="danger">Decline</ion-button>
                     </ion-col>
                   </ion-row>
               </ion-grid>
@@ -167,16 +159,16 @@
           <ion-card>
             <ion-card-header>
               <ion-card-title>{{m.needTitle}}</ion-card-title>
-              <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
+              <ion-badge class={{m.status}}>{{m.status}}</ion-badge>
               
             </ion-card-header>
     
             <ion-card-content>
               <p>Need description: {{m.needDesc}}</p>
               <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
-              <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+              <ion-card-subtitle>Requested on: <ion-badge color='dark'>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
 
-                    <ion-button *ngIf="m.status == 'accepted'" (click)="cancelResRequest($event, m)" expand="full">Cancel</ion-button>
+              <ion-button *ngIf="m.status == 'accepted'" (click)="cancelResRequest($event, m)" expand="full" color="danger">Cancel</ion-button>
             </ion-card-content>
           </ion-card>
           </div>
@@ -190,14 +182,14 @@
         <ion-card>
           <ion-card-header>
             <ion-card-title>{{m.needTitle}}</ion-card-title>
-            <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
+            <ion-badge class={{m.status}}>{{m.status}}</ion-badge>
             
           </ion-card-header>
   
           <ion-card-content>
             <p>Need description: {{m.needDesc}}</p>
             <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
-            <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+            <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
           </ion-card-content>
         </ion-card>
         </div>
@@ -211,7 +203,7 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title>{{m.needTitle}}</ion-card-title>
-          <ion-badge class="{{m.status}}">{{m.status}}</ion-badge>
+          <ion-badge class={{m.status}}>{{m.status}}</ion-badge>
           
         </ion-card-header>
 
@@ -219,8 +211,8 @@
           <p>Need description: {{m.needDesc}}</p>
           <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
           <ion-card-subtitle>Cancelled By: {{m.cancelType}}</ion-card-subtitle>
-          <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
-          <ion-card-subtitle>Cancelled on: <ion-badge>{{formatDate(m.updatedAt)}}</ion-badge></ion-card-subtitle>
+          <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+          <ion-card-subtitle>Cancelled on: <ion-badge color="dark">{{formatDate(m.updatedAt)}}</ion-badge></ion-card-subtitle>
         </ion-card-content>
       </ion-card>
       </div>
@@ -229,10 +221,7 @@
         </div>
     
         <div *ngSwitchCase="'outgoing'">
-
-            <ion-header>
-              <ion-toolbar>
-                <ion-segment [(ngModel)]="outStatus" (ionChange)="segmentChanged($event)">
+                <ion-segment [(ngModel)]="outStatus" (ionChange)="segmentChanged($event)" color="secondary">
                   <ion-segment-button value="pending" checked>
                     <ion-label>Pending</ion-label>
                   </ion-segment-button>
@@ -246,9 +235,7 @@
                     <ion-label>Cancelled</ion-label>
                   </ion-segment-button>
                 </ion-segment>
-              </ion-toolbar>
-            </ion-header>
-          <!--<ion-content>-->
+          <!-- <ion-content> -->
             <ion-list [ngSwitch]="outStatus">
               <div *ngSwitchCase="'pending'">
                 
@@ -267,8 +254,8 @@
                   <ion-card-content>
                     <p>Need description: {{k.needDesc}}</p>
                     <p (click)="viewProject(k)">Project: {{k.projectTitle}}</p>
-                    <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
-                    <ion-button  (click)="cancelProjRequest($event, k)" expand="full">Cancel</ion-button>
+                    <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
+                    <ion-button  (click)="cancelProjRequest($event, k)" expand="full" color="danger">Cancel</ion-button>
                   </ion-card-content>
                 </ion-card>
               </div>
@@ -290,8 +277,8 @@
           <ion-card-content>
             <p>Need description: {{k.needDesc}}</p>
             <p (click)="viewProject(k)">Project: {{k.projectTitle}}</p>
-            <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
-            <ion-button  (click)="cancelProjRequest($event, k)" expand="full">Cancel</ion-button>
+            <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
+            <ion-button  (click)="cancelProjRequest($event, k)" expand="full" color='danger'>Cancel</ion-button>
           </ion-card-content>
         </ion-card>
       </div>
@@ -313,7 +300,7 @@
         <ion-card-content>
           <p>Need description: {{k.needDesc}}</p>
           <p (click)="viewProject(k)">Project: {{k.projectTitle}}</p>
-          <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
+          <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
         </ion-card-content>
       </ion-card>
     </div>
@@ -336,8 +323,8 @@
         <p>Need description: {{k.needDesc}}</p>
         <p (click)="viewProject(k)">Project: {{k.projectTitle}}</p>
         <ion-card-subtitle>Cancelled By: {{k.cancelType}}</ion-card-subtitle>
-        <ion-card-subtitle>Requested on: <ion-badge>{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
-        <ion-card-subtitle>Cancelled on: <ion-badge>{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
+        <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
+        <ion-card-subtitle>Cancelled on: <ion-badge color="dark">{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
       </ion-card-content>
     </ion-card>
   </div>
@@ -348,14 +335,14 @@
       </ion-list>
   </div>
   <div *ngIf="yourAccountBoolean==true">
-    <ion-item-divider>
-      <ion-label>Project Suggestions</ion-label>
+    <ion-item-divider color="primary">
+      <ion-title style="color: white;">Resource Need Suggestions</ion-title>
     </ion-item-divider>
     <div *ngIf="((suggestions != undefined) == false)|| (suggestions.length == 0)" style="padding-left: 15px;">
-        <ion-card-title>There are currently no suggested resource needs for this resource</ion-card-title>
+        <h6>There are currently no suggested project resource needs for this resource</h6>
     </div>
     <div *ngIf="((suggestions != undefined && suggestions.length != 0) == true)">
-      <ion-card-title style="padding-left: 15px">Here are some resource need suggestions to contribute to</ion-card-title>
+      <!-- <ion-card-title style="padding-left: 15px">Here are some resource need suggestions to contribute to</ion-card-title> -->
       <ion-card *ngFor="let s of suggestions">
         <img [src]=s.projectImg onerror="this.src='./assets/img/projects.jpg'" />
         <ion-card-header>
@@ -366,7 +353,7 @@
         </ion-card-header>
         <ion-card-content>
           <p>Resource Need Description: {{s.desc}}</p>
-          <p>Requested on: <ion-badge>{{formatDate(s.updatedAt)}}</ion-badge></p>
+          <p>Requested on: <ion-badge color="dark">{{formatDate(s.updatedAt)}}</ion-badge></p>
           
           <ion-fab horizontal="end" vertical="bottom" slot="fixed">
             <ion-button (click)="contribute(s)">Contribute</ion-button> 

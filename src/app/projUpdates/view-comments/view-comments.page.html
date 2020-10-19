@@ -36,7 +36,9 @@
       <ion-card-subtitle>{{currPost.desc}}</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
-  <ion-title>Comments</ion-title>
+  <ion-item-divider>
+    <ion-title style="color: black;">Comments</ion-title>
+  </ion-item-divider>
     <ion-list *ngFor ="let c of comments">
       <ion-item lines="none">
       <div class="aligned">
@@ -64,7 +66,9 @@
         <div style="padding-top: 5px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=userImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
         <ion-textarea style="padding-left: 5px;" auto-grow="true" ngModel name="currComment" [(ngModel)]="currComment" required placeholder="Add a comment..."></ion-textarea>
       </div>
-      <ion-buttons type="submit" fill="clear" style="float: right;" slot="end"><ion-icon slot="end" name="send-sharp"></ion-icon></ion-buttons>
+      <!-- <ion-buttons fill="clear" style="float: right;" slot="end"> -->
+        <ion-button type="submit" fill="clear" style="float: right;" slot="end"><ion-icon slot="end" name="send-sharp"></ion-icon></ion-button>
+      <!-- </ion-buttons> -->
     </ion-item>
   </form>
 </ion-content>

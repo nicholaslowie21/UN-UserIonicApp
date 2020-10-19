@@ -23,6 +23,7 @@ export class ViewMarketProjectDetailsPage implements OnInit {
   userBoolean: boolean;
   image: string;
   page: any;
+  posts: any[];
 
   title: any;
   admins: any;
@@ -166,6 +167,13 @@ this.projectService.getResourceContributions(this.id).subscribe((res)=>{
   console.log('******* Contributions retrieval error: ', err.error.msg);
 })
 
+this.projectService.getProjPost(this.id).subscribe((res) =>{
+  this.posts = res.data.projectPosts;
+},
+(err) => {
+  console.log('******* Contributions retrieval error: ', err.error.msg);
+})
+
 if(this.status == "completed") {
   this.completedBoolean = true;
 } else {
@@ -201,6 +209,10 @@ console.log(this.completedBoolean);
 
   viewContri(ev) {
     this.router.navigate(["/contributions-management/" + this.id]);
+  }
+
+  viewComments(ev, postId) {
+    this.router.navigate(['/view-comments/' + postId]);
   }
 
   viewAdminProfile(ev, a) {
@@ -387,6 +399,10 @@ console.log(this.completedBoolean);
     this.modal.onWillDismiss().then((data) => {
   });
     return await this.modal.present();
+  }
+
+  renderImg(imgPath): any {
+    return this.sessionService.getRscPath() + imgPath;
   }
 
 }
