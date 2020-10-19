@@ -99,6 +99,10 @@ export class MyProjectsPage implements OnInit {
               for(var i = 0; i < this.currProjects.length; i++) {
                 this.currProjects[i].imgPath = this.sessionService.getRscPath() + this.currProjects[i].imgPath  +'?random+=' + Math.random();
               }
+
+              this.currentProjectsList = this.currProjects.sort(function (a, b) {
+                return a.updatedAt.localeCompare(b.updatedAt);
+              }).reverse();
             } else {
                 this.noCurrProjectBoolean = true;
             }
@@ -117,6 +121,10 @@ export class MyProjectsPage implements OnInit {
           for(var i = 0; i < this.pastProjects.length; i++) {
             this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
           }
+
+          this.pastProjectsList = this.pastProjects.sort(function (a, b) {
+                return a.updatedAt.localeCompare(b.updatedAt);
+              }).reverse();
         } else {
             this.noPastProjectBoolean = true;
         }
@@ -140,6 +148,10 @@ export class MyProjectsPage implements OnInit {
                 for(var i = 0; i < this.currProjects.length; i++) {
                   this.currProjects[i].imgPath = this.sessionService.getRscPath() + this.currProjects[i].imgPath  +'?random+=' + Math.random();
                 }
+
+                this.currentProjectsList = this.currProjects.sort(function (a, b) {
+                  return a.updatedAt.localeCompare(b.updatedAt);
+                }).reverse();
               } else {
                   this.noCurrProjectBoolean = true;
               }
@@ -156,6 +168,10 @@ export class MyProjectsPage implements OnInit {
               for(var i = 0; i < this.pastProjects.length; i++) {
                 this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
               }
+
+              this.pastProjectsList = this.pastProjects.sort(function (a, b) {
+                return a.updatedAt.localeCompare(b.updatedAt);
+              }).reverse();
             } else {
                 this.noPastProjectBoolean = true;
             }
@@ -229,6 +245,17 @@ formatDate(date): any {
   return formattedDate.substring(5, formattedDate.length-13);
 }
   
+checkRole(project): string {
+  if(project.host == this.id) {
+    return 'Founder';
+  }
+  for(var i=0; i<project.admins.length; i++) {
+    if(project.admins[i] == this.id) {
+      return 'Admin';
+    }
+  }
+  return 'Contributor';
+}
  
 
 }

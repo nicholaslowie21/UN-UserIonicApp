@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { InstitutionService } from 'src/app/services/institution.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { isRegExp } from 'util';
+import { FormGroup, NgForm } from '@angular/forms';
+import { EditRatingPage } from 'src/app/resourceNeeds/edit-rating/edit-rating.page';
+
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.page.html',
@@ -14,7 +17,6 @@ import { isRegExp } from 'util';
 })
 export class ViewProjectPage implements OnInit {
   id: any;
-  
   projectToView: any;
   currentUser: any;
   founderBoolean: boolean;
@@ -45,10 +47,10 @@ export class ViewProjectPage implements OnInit {
   totalProgress = 0;
   rating: any;
   updatedAt: any;
-  
-  
+  posts: any[];
+  modal: HTMLIonModalElement;
 
-  constructor(private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
+  constructor(private modalCtrl: ModalController, private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.initialise();
@@ -59,23 +61,6 @@ export class ViewProjectPage implements OnInit {
     
     this.page = "feed";
 
-    /*this.contributions = [
-      {
-        "projectId": "5f6b11ada7e36f1445610166",
-        "needId": "5f6b1538a054134644039654",
-        "requestId": "5f6c6b3d0db3cd871b3e2b44",
-        "requestType": "project",
-        "resType": "manpower",
-        "rating": 0,
-        "contributor": "5f63fa7876e51a95bde86666",
-        "contributorType": "institution",
-        "needTitle": "50 Coats for dogs",
-        "resourceTitle": "Software Engineer",
-        "resourceId": "5f6c6c2c0be9cf4628b40b5e",
-        "desc": "Backend Software Engineer (Part-Time)",
-        "contributorUsername": "wtoilet"
-      }
-    ]*/
   }
 
   ionViewDidEnter() {
@@ -185,6 +170,13 @@ this.projectService.getResourceContributions(this.id).subscribe((res)=>{
   console.log('******* Contributions retrieval error: ', err.error.msg);
 })
 
+this.projectService.getProjPost(this.id).subscribe((res) =>{
+  this.posts = res.data.projectPosts;
+},
+(err) => {
+  console.log('******* Contributions retrieval error: ', err.error.msg);
+})
+
 if(this.status == "completed") {
   this.completedBoolean = true;
 } else {
@@ -239,6 +231,18 @@ console.log(this.completedBoolean);
     }
   }
 
+  createPost(ev) {
+    this.router.navigate(["/create-post/" + this.id]);
+  }
+
+  editPost(ev, postId) {
+    this.router.navigate(["/edit-post/" + postId]);
+  }
+
+  viewComments(ev, postId) {
+    this.router.navigate(['/view-comments/' + postId]);
+  }
+
   back() {
     if(this.currentUser.data.user.id != this.tokenStorage.getViewId() && this.tokenStorage.getViewId() != undefined) {
       this.router.navigate(["/my-projects/" + this.tokenStorage.getViewId().id]);
@@ -266,6 +270,78 @@ console.log(this.completedBoolean);
 			  text: 'Okay',
 			  handler: () => {
 				this.projectService.deleteProject(this.id).subscribe(
+					response => {
+            this.resultSuccess = true;
+            this.successToast();
+            this.back();
+					},
+					error => {
+            this.failureToast(error.error.msg);
+						this.error = true;
+						this.errorMessage = error;
+					}
+				);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async delPost(event, postId)
+	{
+		const alert = await this.alertController.create({
+			header: 'Confirm Delete Project Post',
+			message: 'Confirm delete Post?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.projectService.deletePost(postId).subscribe(
+					response => {
+            this.resultSuccess = true;
+            this.successToast();
+            this.back();
+					},
+					error => {
+            this.failureToast(error.error.msg);
+						this.error = true;
+						this.errorMessage = error;
+					}
+				);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async delComment(event, commentId)
+	{
+		const alert = await this.alertController.create({
+			header: 'Confirm Delete Project Post',
+			message: 'Confirm delete Post?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.projectService.deleteComment(commentId).subscribe(
 					response => {
             this.resultSuccess = true;
             this.successToast();
@@ -373,6 +449,26 @@ console.log(this.completedBoolean);
     })
   }
 
+  async editRating(c) {
+    console.log(this.id);
+    this.modal = await this.modalCtrl.create({
+      component: EditRatingPage,
+      componentProps: {"contribution": {"contributionId": c.contributionId, "contributorName": c.contributorName, "contributorImgPath": c.contributorImgPath, "rating": c.rating}, 
+      "resId": c.resourceId,
+      "contributorId": c.contributor,
+      "contributorType": c.contributorType,
+    "resource": {
+      "resourceId": c.resourceId,
+      "resourceTitle": c.resourceTitle
+    }}
+      
+    });
+    this.modal.onDidDismiss().then((data) => {
+      this.initialise();
+  });
+    return await this.modal.present();
+  }
+
   async presentAlertConfirm(ev, u) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -402,4 +498,15 @@ console.log(this.completedBoolean);
     return formattedDate.substring(5, formattedDate.length-13);
   }
 
+  isCreator(username): boolean {
+    if (username == this.currentUser.data.user.username) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  renderImg(imgPath): any {
+    return this.sessionService.getRscPath() + imgPath;
+  }
 }

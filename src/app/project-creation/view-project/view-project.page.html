@@ -23,7 +23,7 @@
   <div>
     <div class="aligned">
     <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
-    <img class="aligned card-img-top rounded-circle img-fluid d-block" style="padding-left: 5px; width: 50px; height: 50px; object-fit: cover;" [src]=host.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+    <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=host.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <ion-label (click)="viewFounderProfile($event, host)">{{host.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
     </div>
     <ion-card-content><div style="font-weight: bold;">Project Description: </div>{{desc}} </ion-card-content>
@@ -45,12 +45,12 @@
         
         <ion-button *ngIf="founderBoolean==true" color="danger" (click)="delete($event)"><ion-icon slot="end" name="trash" ></ion-icon>Delete</ion-button>
         <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="update($event)"><ion-icon slot="end" name="create-outline"></ion-icon>Update</ion-button>
+        <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="createPost($event)"><ion-icon slot="end" name="pencil-outline"></ion-icon>Create Post</ion-button>
       </ion-fab-list>
     </ion-fab>
   </div>
 </ion-card>
 
-<!-- <ion-card> -->
   <ion-toolbar>
     <ion-segment [(ngModel)]="page">
       <ion-segment-button value="feed" checked>
@@ -65,29 +65,62 @@
     </ion-segment>
   </ion-toolbar>
   <ion-list [ngSwitch]="page">
-    <ion-item-group>
-
+    <ion-item-group *ngSwitchCase="'feed'">
+      <ion-card *ngFor="let p of posts">
+        <!-- <div class="aligned">
+          <div style="padding-top: 10px; padding-left: 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=renderImg(p.accountPic) alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+          <div>
+            <ion-label style="padding-left: 5px; font-style:italic;">Last modified by</ion-label>
+            <div class = "aligned">
+              <ion-label style="padding-left: 5px; font-weight: bold" >{{p.accountName}}</ion-label>
+              <ion-icon *ngIf="p.isVerified == 'true'" name="checkmark-circle" size="big"></ion-icon>
+            </div>
+          </div> 
+        </div>   -->
+        <img *ngIf="p.imgPath != ''" [src]=renderImg(p.imgPath) alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'" style="margin-top: 10px;">
+        <ion-card-header>
+          <div *ngIf="completedBoolean == false && (founderBoolean == true || adminBoolean == true)">
+            <ion-fab vertical="top" horizontal="end" slot="fixed">
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+              <ion-fab-list side="start">
+                <ion-button color="danger" (click)="delPost($event, p.id)" ><ion-icon slot="end" name="trash"></ion-icon>Delete</ion-button>
+                <ion-button (click)="editPost($event, p.id)"><ion-icon slot="end" name="create-outline"></ion-icon>Edit</ion-button>
+              </ion-fab-list>
+            </ion-fab>
+          </div>
+          <ion-badge>{{formatDate(p.createdAt)}}</ion-badge>
+          <ion-card-title>{{p.title}} </ion-card-title>
+          <ion-card-subtitle>{{p.desc}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-button fill="clear" (click)="viewComments($event, p.id)">View Comments</ion-button>
+      </ion-card>
     </ion-item-group>
     <ion-item-group *ngSwitchCase="'contributions'" >
     <ion-card>
       <ion-item-divider>
         <ion-label color=dark>Resource Obtained</ion-label>
-        <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
+        <!--<ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
           <ion-label style="font-weight: bold;">Edit<ion-icon slot="end" name="create-sharp" (click)="viewContri($event)"></ion-icon></ion-label>
           
-        </ion-buttons>
+        </ion-buttons>-->
       </ion-item-divider>
       
       <ion-card *ngFor="let c of contributions" lines="none">
         <ion-badge style="float: right;" class="{{c.resType}}type">{{c.resType}}</ion-badge>
-        <ion-card-title>{{c.needTitle}}</ion-card-title>
-        <ion-card-content style="font-weight: bolder;">Provided Resource: {{c.resourceTitle}}</ion-card-content>
-        <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="presentAlertConfirm($event, c)" >Remove</ion-button>
-        <ion-label style="font-weight: bold; padding-left: 15px">{{c.desc}}</ion-label>
+        <ion-card-header>   
+            <ion-card-title>{{c.needTitle}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+        <p style="font-weight: bolder;">Provided Resource: {{c.resourceTitle}}</p>
+        <p *ngIf="adminBoolean==true || founderBoolean==true" style="font-weight: bolder;">Rating: {{c.rating}}</p>
+        <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="presentAlertConfirm($event, c)" ><ion-icon name="trash-outline"></ion-icon></ion-button>
+        <ion-button *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" style="float:right; fill: outline;" (click)="editRating(c)" ><ion-icon name="star-half"></ion-icon>Rate</ion-button>
+        <p style="font-weight: bold;">{{c.desc}}</p>
         <br>
         <div>
-        <ion-label style="text-align: left" (click)="viewProfile($event, c)">Provided By: {{c.contributorUsername}}</ion-label>
+        <p style="text-align: left" (click)="viewProfile($event, c)">Provided By: {{c.contributorUsername}}</p>
         </div>
+        </ion-card-content>
       </ion-card>
     </ion-card>
   </ion-item-group>
@@ -162,11 +195,4 @@
     </ion-item-group>
   </div>
   </ion-list>
- 
-<!-- </ion-card> -->
- 
-
-
-
-
 </ion-content>

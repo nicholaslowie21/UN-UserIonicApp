@@ -174,7 +174,81 @@ const routes: Routes = [
   {
     path: 'view-others-projects/:Id',
     loadChildren: () => import('./view-others-projects/view-others-projects.module').then( m => m.ViewOthersProjectsPageModule)
+  },
+  {
+    path: 'view-marketplace-projects',
+    loadChildren: () => import('./view-marketplace-projects/view-marketplace-projects.module').then( m => m.ViewMarketplaceProjectsPageModule)
+  },
+  {
+    path: 'view-market-project-details/:Id',
+    loadChildren: () => import('./view-market-project-details/view-market-project-details.module').then( m => m.ViewMarketProjectDetailsPageModule)
+  },
+  {
+    path: 'create-project-request/:Id/:type',
+    loadChildren: () => import('./create-project-request/create-project-request.module').then( m => m.CreateProjectRequestPageModule)
+  },
+  {
+    path: 'projrequest-modal',
+    loadChildren: () => import('./projrequest-modal/projrequest-modal.module').then( m => m.ProjrequestModalPageModule)
+  },
+  {
+    path: 'view-funding-needs',
+    loadChildren: () => import('./funding/view-funding-needs/view-funding-needs.module').then( m => m.ViewFundingNeedsPageModule)
+  },
+  {
+    path: 'create-money-request',
+    loadChildren: () => import('./funding/create-money-request/create-money-request.module').then( m => m.CreateMoneyRequestPageModule)
+  }, 
+  {
+    path: 'view-marketplace-resources',
+    loadChildren: () => import('./view-marketplace-resources/view-marketplace-resources.module').then( m => m.ViewMarketplaceResourcesPageModule)
+  },
+  {
+    path: 'request-resource/:type/:id',
+    loadChildren: () => import('./request-resource/request-resource.module').then( m => m.RequestResourcePageModule)
+  },
+  {
+    path: 'create-post/:id',
+    loadChildren: () => import('./projUpdates/create-post/create-post.module').then( m => m.CreatePostPageModule)
+  },
+  {
+    path: 'create-comment/:id',
+    loadChildren: () => import('./projUpdates/create-comment/create-comment.module').then( m => m.CreateCommentPageModule)
+  },
+  {
+    path: 'edit-post/:id',
+    loadChildren: () => import('./projUpdates/edit-post/edit-post.module').then( m => m.EditPostPageModule)
+  },
+  {
+    path: 'view-comments/:id',
+    loadChildren: () => import('./projUpdates/view-comments/view-comments.module').then( m => m.ViewCommentsPageModule)
+  },
+  {
+    path: 'resource-suggestions/:Id/:type',
+    loadChildren: () => import('./resourceNeeds/resource-suggestions/resource-suggestions.module').then( m => m.ResourceSuggestionsPageModule)
+  },
+  {
+    path: 'contact-page',
+    loadChildren: () => import('./contact-page/contact-page.module').then( m => m.ContactPagePageModule)
+  },
+  {
+    path: 'change-card-institution',
+    loadChildren: () => import('./change-card-institution/change-card-institution.module').then( m => m.ChangeCardInstitutionPageModule)
+  },
+  {
+    path: 'rate-contributors',
+    loadChildren: () => import('./resourceNeeds/rate-contributors/rate-contributors.module').then( m => m.RateContributorsPageModule)
+  },  {
+    path: 'edit-rating',
+    loadChildren: () => import('./resourceNeeds/edit-rating/edit-rating.module').then( m => m.EditRatingPageModule)
   }
+
+
+
+
+
+
+
 
 
 ];

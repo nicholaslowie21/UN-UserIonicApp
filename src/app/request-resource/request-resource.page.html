@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf= "this.resourceType != 'knowledge'">Request Resource for Project</ion-title>
+    <ion-title *ngIf="this.resourceType == 'knowledge'">Use Knowledge</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="create()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{resourceName}} <ion-badge style="float: right;" class="{{resourceType}}type">{{resourceType}}</ion-badge></ion-card-title>
+      </ion-card-header>
+    </ion-card>
+    <ion-item>
+      <ion-label>Project Title</ion-label>
+      <ion-select ngModel name="currProject" [(ngModel)] = "currProject" #incurrProject="ngModel" (ngModelChange)="renderResourceNeed(currProject)">
+        <ion-select-option value={{p.id}} *ngFor = "let p of projectList">{{p.title}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Related Resource Need</ion-label>
+        <ion-select ngModel name="resourceNeed" [(ngModel)]="resourceNeed" #inresourceNeed="ngModel">
+          <ion-select-option value={{n.id}} *ngFor = "let n of resourceNeedOption">{{n.title}}</ion-select-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea ngModel name="desc" [(ngModel)]="desc" required minlength="3" #indesc="ngModel"></ion-textarea>
+      <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
+        <div *ngIf="indesc.errors.minlength">
+          Desc must be at least 3 characters
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-button *ngIf= "this.resourceType != 'knowledge'" type="submit" color="primary" expand="block" style="margin: 0px 10px;">Request</ion-button>
+    <ion-button *ngIf= "this.resourceType == 'knowledge'" type="submit" color="primary" expand="block" style="margin: 0px 10px;">Use</ion-button>
+  </form>
+</ion-content>

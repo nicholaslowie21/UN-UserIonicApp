@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Change Institution on Card</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+    <ion-card-title>Current Institution selected: {{institutionChoiceName}}</ion-card-title>
+    <ion-button (click)="removeInstitution()" color="danger" fill="outline"><ion-icon name="trash-outline"></ion-icon>Remove</ion-button>
+    </ion-card-header>
+  </ion-card>
+  <form #form="ngForm" (ngSubmit)="chooseInstitute()">
+  <ion-item>
+    <ion-label>Institution on Card</ion-label>
+    <ion-select placeholder="Select One" id="i" name="i" [(ngModel)]="institutionChoice">
+      <ion-select-option *ngFor="let i of institutionsList" [value]="i.id">{{i.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-button type="submit" color="danger" expand="block" style = "margin-left: 10px; margin-right:10px;">Select</ion-button>
+</form>
+</ion-content>

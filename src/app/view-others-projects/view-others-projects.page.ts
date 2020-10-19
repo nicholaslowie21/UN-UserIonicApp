@@ -201,5 +201,17 @@ segmentChanged(ev: any) {
   console.log('Segment changed', ev);
 }
 
+checkRole(project): string {
+  if(project.host == this.id) {
+    return 'Founder';
+  }
+  for(var i=0; i<project.admins.length; i++) {
+    if(project.admins[i] == this.id) {
+      return 'Admin';
+    }
+  }
+  return 'Contributor';
+}
+
 
 }

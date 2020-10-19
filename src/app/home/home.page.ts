@@ -8,6 +8,7 @@ import { SessionService } from '../services/session.service';
 import { Router } from '@angular/router';
 import { InstitutionService } from '../services/institution.service';
 import { UserService } from '../services/user.service';
+import { MarketplaceService } from '../services/marketplace.service';
  
 @Component({
   selector: 'app-home',
@@ -22,8 +23,18 @@ export class HomePage implements OnInit {
   newsList: any;
   currentUser: any;
   newsFeedList: any[];
+  pages: string;
+  discoverList: any[];
  
-  constructor(private institutionService: InstitutionService, private userService: UserService, private router: Router, private projectService: ProjectService, private storage: Storage, private toastController: ToastController, private tokenStorage: TokenStorageService, private sessionService: SessionService) { 
+  constructor(private marketplaceService: MarketplaceService,
+    private institutionService: InstitutionService, 
+    private userService: UserService, 
+    private router: Router, 
+    private projectService: ProjectService, 
+    private storage: Storage, 
+    private toastController: ToastController, 
+    private tokenStorage: TokenStorageService, 
+    private sessionService: SessionService) { 
     this.accountType = this.tokenStorage.getAccountType();
     this.currentUser = this.tokenStorage.getUser();
     if(this.accountType == "institution") {
@@ -31,15 +42,18 @@ export class HomePage implements OnInit {
     } else {
       this.accountBoolean = false;
     }
+    this.pages = "feed";
   }
   ngOnInit() {
     this.tokenStorage.getUser();
     this.getNewsFeed();
+    this.getDiscover();
   }
 
   ionViewDidEnter(){
     this.currentUser = this.tokenStorage.getUser();
     this.getNewsFeed();
+    this.getDiscover();
   }
  
   getNewsFeed() {
@@ -64,6 +78,52 @@ export class HomePage implements OnInit {
     })
 
   }
+
+  getDiscover() {
+    this.marketplaceService.discoverWeekly().subscribe((res) => {
+      this.discoverList = res.data.discoverweekly;
+      if(this.discoverList != undefined) {
+        for(var i = 0; i < this.discoverList.length; i ++) {
+          this.discoverList[i].imgPath = this.sessionService.getRscPath() + this.newsList[i].imgPath +'?random+=' + Math.random();
+          this.discoverList[i].hostImg = this.sessionService.getRscPath() + this.newsList[i].hostImg + '?random+=' + Math.random();
+          var hostType = this.newsList[i].hostType;
+
+        }
+      }
+      
+    },
+    (err) => {
+      console.log(err.error.msg);
+    })
+    console.log(this.discoverList);
+  }
+
+  /*doRefresh(event) {
+    console.log('Begin async operation');
+    setTimeout(() => {
+      this.marketplaceService.discoverWeekly().subscribe((res) => {
+        this.discoverList = res.data.discoverweekly;
+        if(this.discoverList != undefined) {
+          for(var i = 0; i < this.discoverList.length; i ++) {
+            this.discoverList[i].imgPath = this.sessionService.getRscPath() + this.newsList[i].imgPath +'?random+=' + Math.random();
+            this.discoverList[i].hostImg = this.sessionService.getRscPath() + this.newsList[i].hostImg + '?random+=' + Math.random();
+            var hostType = this.newsList[i].hostType;
+  
+          }
+        }
+        
+      },
+      (err) => {
+        console.log(err.error.msg);
+      })
+
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+
+    console.log(this.discoverList);
+    
+  }*/
 
   viewFounderProfile(ev, h) {
     var username = "";
@@ -94,6 +154,8 @@ export class HomePage implements OnInit {
     this.router.navigate(['/view-project/' + p.id]);
   }
  
-  
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
  
 }

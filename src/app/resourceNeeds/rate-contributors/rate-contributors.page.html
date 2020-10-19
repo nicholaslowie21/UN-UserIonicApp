@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="dismiss()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Rate your contributor!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Resource Contributed: {{resource.resourceTitle}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-card-subtitle>Contributor: </ion-card-subtitle>
+        <div class="aligned">
+          <img (click)="viewProfile()" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=resource.requesterImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+          <ion-label (click)="viewProfile()">{{resource.requesterUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+          </div>
+          <form #form="ngForm" (ngSubmit)="rate()">
+            <ion-item>
+              <ion-label position="floating">Rating</ion-label>
+              <ion-range pin=true snaps=true step=1 ticks=true min="0" max="5" ngModel name="rating" [(ngModel)]="rating" #inrating="ngModel"></ion-range>
+            </ion-item>
+        
+            <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Rate</ion-button>
+          </form>
+      </ion-card-content>
+    </ion-card>
+</ion-content>

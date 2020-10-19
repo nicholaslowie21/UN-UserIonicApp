@@ -79,7 +79,6 @@ export class MyResourcesPage implements OnInit {
   }
 
   initialiseAll() {
-    console.log("I am initialise ALl");
     if(this.accountBoolean == true)
     {
       this.resourceService.getInstitutionPrivateKnowledgeResource().subscribe((res) => {
@@ -356,6 +355,11 @@ export class MyResourcesPage implements OnInit {
         console.log('********** Manpower Resource (user).ts: ', err.error.msg);
       };
   }
+  }
+
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
   }
 
   async filterList(evt) {

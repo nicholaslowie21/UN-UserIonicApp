@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mobile Contact</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="createQR()" fill="outline" style="padding-right: 10px;">
+      My QR
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngIf="accountType == 'user'">
+    <h5 style="font-weight:bold;">Current Institution selected: {{institutionChoiceName}}</h5>
+  </ion-item>
+  <ion-item *ngIf="accountType == 'user'" (click)="chooseInstitution()">
+    <ion-icon name="people-outline" slot="start"></ion-icon>
+    <ion-label>Choose Institution on Card</ion-label>
+  </ion-item>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="scanQR()">
+      <ion-icon name="camera-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <h5 *ngIf="haveCardBoolean == false" style="padding: 0px 10px;">You do not have any mobile contacts yet. Start scanning other KoCoSD user's QR code!</h5>
+  <ion-card *ngFor="let c of cards">
+    <div>
+      <div *ngIf="c.accountImg != ''">
+        <img class="background" src="assets/img/card 3.png">
+        <img class="img rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" [src]=c.accountImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'" />
+      </div>
+      <img *ngIf="c.accountImg == ''" class="background" src="assets/img/card 2.png">
+      <div class="section">
+      <ion-card-title style="color: black;">{{c.institutionName}}</ion-card-title>
+      <ion-card-subtitle style="font-weight: bold; color: white;">{{c.accountName}}</ion-card-subtitle>
+      <ion-card-subtitle style="color: white;">{{c.accountOccupation}}</ion-card-subtitle>
+      <h6>{{c.accountEmail}}</h6>
+      <h6>{{c.accountWebsite}}</h6>
+      <h6>
+        {{c.accountCountry}} | {{c.institutionAddress}}
+      </h6>
+      <ion-badge *ngFor="let sdg of c.accountSDGs" className="sdg{{sdg}}">SDG{{sdg}}</ion-badge> 
+      </div>
+    </div>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button slot="start" fill="clear" color=primary (click)="viewProfile(c.accountUsername, c.targetType)">View Profile</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button slot="end" fill="outline" color="danger" (click)="delete($event, c.id)"><ion-icon name="trash-outline"></ion-icon> Delete</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-card>
+  <div *ngIf="scannedData">
+    <p>
+      Scanned Code Text : <b>{{ scannedData["text"] }}</b>
+    </p>
+    <p>
+      Scanned Code Format : <b>{{ scannedData["format"] }}</b>
+    </p>
+  </div>
+</ion-content>

@@ -1,0 +1,53 @@
+
+.card-img,
+.card-img-top,
+.card-img-bottom {
+  flex-shrink: 0;
+  width: 100%;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+  }
+
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .mx-auto {
+    margin-left: auto !important;
+  }
+
+  .d-block {
+    display: block !important;
+  }
+
+  .centered {
+    //text-align: center;
+    padding-left: auto;
+    text-justify: auto;
+    text-align: right; 
+}
+
+.center {
+  display: block;
+  float: left;
+  width: 50%;
+}
+
+ion-title.five {
+  span {
+    background: black;
+    padding: 1px 8px;
+    &::before {
+      content: "";
+      display: block;
+    }
+  }
+}
+
+.aligned { 
+  display: flex; 
+  align-items: center;
+
+} 

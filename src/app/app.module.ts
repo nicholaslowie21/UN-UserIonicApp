@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { PopoverController } from '@ionic/angular';
 import { FormGroup, NgForm, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,7 +23,8 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ng
 import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+// import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 /*Supply an array of whitelisted Domains
 let system know where we store the token
@@ -70,7 +72,10 @@ export function jwtOptionsFactory(storage:Storage) {
     SocialSharing,
     ActionSheetController,
     Downloader,
-    authInterceptorProviders
+    ModalController,
+    authInterceptorProviders,
+    BarcodeScanner,
+    // QRScanner
   ],
   bootstrap: [AppComponent]
 })

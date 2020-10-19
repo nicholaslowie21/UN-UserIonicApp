@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="dismiss()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Create outgoing request</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="createRes(form)">
+    <ion-item>
+      <ion-label style="font-weight:bold;" position="floating">Resource</ion-label>
+      <p>{{resource.title}}</p>
+    </ion-item>
+    <ion-item>
+      <ion-label style="font-weight:bold;" position="floating">Resource Type<br></ion-label>
+      <p>{{resType}}</p>
+    </ion-item>
+   
+   
+  
+    <ion-item>
+      <ion-label style="font-weight:bold;" position="floating">Description</ion-label>
+      <ion-textarea ngModel name="desc" [(ngModel)]="resource.desc" required minlength="3" #indesc="ngModel"></ion-textarea>
+      <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
+        <div *ngIf="indesc.errors.required">Description is required</div>
+        <div *ngIf="indesc.errors.minlength">
+          Description must be at least 3 characters
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Offer Resource</ion-button>
+  </form>
+  
+  <ion-content>
+    <div *ngIf="resultSuccess == true" style="color: blue;">
+      {{message}}
+    </div>
+    
+    <div *ngIf="resultError == true" style="color: red;">
+      {{message}}
+    </div>
+  </ion-content>
+</ion-content>

@@ -32,23 +32,13 @@
       <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of sdgs">SDG {{sdg}}&nbsp;</ion-badge>
     </div>
 </ion-card>
-<ion-item (click)="getProjects($event)" routerDirection="forward">
-  <ion-icon name="list" slot="start"></ion-icon>
-  <ion-label>Projects</ion-label>
-</ion-item>
 
-<ion-item (click)="getResources($event)">
-  <ion-icon  name="cube" slot="start"></ion-icon>
-  <ion-label>Resources</ion-label>
-</ion-item>
-
+<ion-card>
   <ion-item *ngIf="accountBoolean == true" (click)="getAffiliates($event)">
     <ion-icon name="people-outline" slot="start"></ion-icon>
     <ion-label>Affiliated Users</ion-label>
   </ion-item>
 
-<ion-list>
-  <ion-item-group>
     <ion-item-divider>
       <ion-label>About Me</ion-label>
     </ion-item-divider>
@@ -64,7 +54,7 @@
     </ion-item>
 
     <ion-item-divider>
-      <ion-label>Badges</ion-label>
+      <ion-label>Badge</ion-label>
     </ion-item-divider>
 
     <ion-item *ngFor="let b of badges" lines="none">
@@ -74,24 +64,45 @@
     </div>
       
     </ion-item>
-    <ion-item-divider>
-      <ion-card-title>Profile Feed</ion-card-title>
-    </ion-item-divider>
-      <ion-card *ngFor="let pf of profileFeed">
-            <div class="aligned">
-                <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-                <ion-label >{{currentUser.name}}</ion-label>
-              </div>
-            
-            <ion-card-title>{{pf.title}} </ion-card-title>
-          <ion-card-content>{{pf.desc}}</ion-card-content>
-          <div style="text-align: right"><ion-label>{{pf.createdAt}}</ion-label></div>
-          
+</ion-card>
 
-      </ion-card>
-
+<ion-toolbar>
+  <ion-segment [(ngModel)]="page">
+    <ion-segment-button value="feed" checked>
+      <ion-label>Profile Feed</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="involvement">
+      <ion-label>Involvement</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+  <ion-list [ngSwitch]="page">
+    <ion-item-group *ngSwitchCase="'feed'" >
+    <ion-card *ngFor="let pf of profileFeed">
+      <div class="aligned">
+        <div style="padding-top: 10px; padding-left: 15px;">  
+          <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">    
+        </div>  
+        <ion-label  style="padding-left: 5px; font-weight: bold" >{{currentUser.name}}</ion-label>
+        <ion-icon *ngIf="isVerified == true" name="checkmark-circle" size="big"></ion-icon>
+      </div>
+      <ion-card-header>
+        <ion-card-title>{{pf.title}} </ion-card-title>
+        <ion-badge>{{pf.createdAt}}</ion-badge>
+      </ion-card-header>
+        <ion-card-content>{{pf.desc}}</ion-card-content> 
+    </ion-card>
   </ion-item-group>
-</ion-list>
-
-
+  <ion-item-group *ngSwitchCase="'involvement'" >
+    <ion-item (click)="getProjects($event)" routerDirection="forward">
+      <ion-icon name="list" slot="start"></ion-icon>
+      <ion-label>Projects</ion-label>
+    </ion-item>
+    
+    <ion-item (click)="getResources($event)">
+      <ion-icon  name="cube" slot="start"></ion-icon>
+      <ion-label>Resources</ion-label>
+    </ion-item>
+  </ion-item-group>
+  </ion-list>
 </ion-content>

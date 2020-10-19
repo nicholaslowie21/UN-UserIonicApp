@@ -29,6 +29,7 @@ export class ProfilePage implements OnInit {
   isVerified: boolean;
   profileFeed: any;
   reversedProfileFeed: any[];
+  page: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -43,19 +44,23 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.page="feed";
    this.currentUser = this.tokenStorage.getUser();
    
    this.accountType = this.tokenStorage.getAccountType();
    console.log(this.accountType);
     if(this.accountType == "institution") {
       this.accountBoolean = true;
+      if(this.currentUser.data.user.isVerified == true) {
+        this.isVerified = true;
+      }
     } else if(this.accountType == "user") {
+      if(this.currentUser.data.user.isVerified == "true") {
+        this.isVerified = true;
+      }
       this.accountBoolean = false;
     }
     console.log(this.accountBoolean);
-    if(this.currentUser.data.user.isVerified == "true") {
-      this.isVerified = true;
-    }
 
     if(this.accountBoolean == true)
     {
@@ -364,6 +369,10 @@ parseDate(d: String) {
     });
     await actionSheet.present();
   }
-
+  
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
 
 }
