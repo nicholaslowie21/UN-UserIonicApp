@@ -42,7 +42,7 @@
           <p>Need description: {{m.needDesc}}</p>
           <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
           <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
-          <ion-button *ngIf="m.status == 'accepted'" (click)="cancelProjRequest($event, m)" expand="full" color="danger">Cancel</ion-button>
+          <ion-button (click)="cancelProjRequest($event, m)" expand="full" color="danger">Cancel</ion-button>
         </ion-card-content>
       </ion-card>
       </div>
@@ -65,7 +65,7 @@
         <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
         <ion-card-subtitle>Requested on: <ion-badge color='dark'>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
 
-        <ion-button *ngIf="m.status == 'accepted'" (click)="cancelProjRequest($event, m)" expand="full" color="danger">Cancel</ion-button>
+        <ion-button (click)="cancelProjRequest($event, m)" expand="full" color="danger">Cancel</ion-button>
       </ion-card-content>
     </ion-card>
     </div>
