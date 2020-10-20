@@ -13,6 +13,7 @@
     <ion-title>{{user.data.user.name}}'s Resources</ion-title>
   </ion-toolbar>
   <ion-toolbar>
+    <ion-button routerLink="/my-project-requests" expand=full>My Outgoing Requests</ion-button>
     <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
       <ion-segment-button *ngIf="accountBoolean==false" value="manpower" checked>
         <ion-label>Manpower</ion-label>

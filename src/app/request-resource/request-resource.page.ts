@@ -17,7 +17,7 @@ export class RequestResourcePage implements OnInit {
   resourceId: any;
   resourceType: any;
   resourceName: any;
-  desc: any;
+  desc: string = "";
   address: any;
   projectList: any;
   currProject: any;

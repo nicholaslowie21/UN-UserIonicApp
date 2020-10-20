@@ -83,10 +83,12 @@ export class HomePage implements OnInit {
     this.marketplaceService.discoverWeekly().subscribe((res) => {
       this.discoverList = res.data.discoverweekly;
       if(this.discoverList != undefined) {
+        console.log(this.discoverList);
         for(var i = 0; i < this.discoverList.length; i ++) {
-          this.discoverList[i].imgPath = this.sessionService.getRscPath() + this.newsList[i].imgPath +'?random+=' + Math.random();
-          this.discoverList[i].hostImg = this.sessionService.getRscPath() + this.newsList[i].hostImg + '?random+=' + Math.random();
-          var hostType = this.newsList[i].hostType;
+          this.discoverList[i].imgPath = this.sessionService.getRscPath() + this.discoverList[i].imgPath +'?random+=' + Math.random();
+          console.log(this.discoverList[i].imgPath);
+          this.discoverList[i].hostImg = this.sessionService.getRscPath() + this.discoverList[i].hostImg + '?random+=' + Math.random();
+          var hostType = this.discoverList[i].hostType;
 
         }
       }

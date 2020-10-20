@@ -241,6 +241,10 @@ const routes: Routes = [
   },  {
     path: 'edit-rating',
     loadChildren: () => import('./resourceNeeds/edit-rating/edit-rating.module').then( m => m.EditRatingPageModule)
+  },
+  {
+    path: 'my-project-requests',
+    loadChildren: () => import('./resourcemanagement/my-project-requests/my-project-requests.module').then( m => m.MyProjectRequestsPageModule)
   }
 
 

@@ -30,11 +30,8 @@
 
     <ion-item>
       <ion-label position="floating">Description</ion-label>
-      <ion-textarea ngModel name="desc" [(ngModel)]="desc" required minlength="3" #indesc="ngModel"></ion-textarea>
+      <ion-textarea ngModel name="desc" [(ngModel)]="desc" #indesc="ngModel"></ion-textarea>
       <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
-        <div *ngIf="indesc.errors.minlength">
-          Desc must be at least 3 characters
-        </div>
       </div>
     </ion-item>
 

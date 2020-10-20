@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Outgoing Requests</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-divider>
+    <ion-segment [(ngModel)]="inStatus" (ionChange)="segmentChanged($event)" color="secondary">
+      <ion-segment-button value="pending" checked>
+        Pending
+      </ion-segment-button>
+      <ion-segment-button value="accepted">
+        Accepted
+      </ion-segment-button>
+      <ion-segment-button value="declined">
+        Declined
+      </ion-segment-button>
+      <ion-segment-button value="cancelled">
+        Cancelled
+      </ion-segment-button>
+    </ion-segment>
+  </ion-item-divider>
+  <ion-list [ngSwitch]="inStatus">
+    <div *ngSwitchCase="'pending'">
+      <ion-title>Pending Requests(Incoming)</ion-title>
+      <div style="padding-left: 15px" *ngIf="(pendingProjectReqList == undefined || pendingProjectReqList.length == 0) == true">
+        You do not have any pending incoming requests!
+        </div>
+      <div *ngFor="let m of pendingProjectReqList" >
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{m.needTitle}}</ion-card-title>
+          <ion-badge class={{m.status}}>{{m.status}}</ion-badge>
+          
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>Need description: {{m.needDesc}}</p>
+          <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
+          <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+          <ion-button (click)="cancelProjRequest($event, m)" expand="full" color="danger">Cancel</ion-button>
+        </ion-card-content>
+      </ion-card>
+      </div>
+  </div>
+  <div *ngSwitchCase="'accepted'">
+    <ion-title>Accepted Requests(Incoming)</ion-title>
+    <div style="padding-left: 15px" *ngIf="( acceptedProjectReqList == undefined|| acceptedProjectReqList.length == 0) == true">
+      You do not have any accepted incoming requests!
+      </div>
+    <div *ngFor="let m of acceptedProjectReqList" >
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{m.needTitle}}</ion-card-title>
+        <ion-badge class={{m.status}}>{{m.status}}</ion-badge>
+        
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>Need description: {{m.needDesc}}</p>
+        <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
+        <ion-card-subtitle>Requested on: <ion-badge color='dark'>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+
+        <ion-button (click)="cancelProjRequest($event, m)" expand="full" color="danger">Cancel</ion-button>
+      </ion-card-content>
+    </ion-card>
+    </div>
+</div>
+<div *ngSwitchCase="'declined'">
+  <ion-title>Declined Requests(Incoming)</ion-title>
+  <div style="padding-left: 15px" *ngIf="(declinedProjectReqList == undefined|| declinedProjectReqList.length == 0) == true">
+    You do not have any declined incoming requests!
+    </div>
+  <div *ngFor="let m of declinedProjectReqList" >
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{m.needTitle}}</ion-card-title>
+      <ion-badge class={{m.status}}>{{m.status}}</ion-badge>
+      
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>Need description: {{m.needDesc}}</p>
+      <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
+      <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
+  </div>
+</div>
+<div *ngSwitchCase="'cancelled'">
+<ion-title>Cancelled Requests(Incoming)</ion-title>
+<div style="padding-left: 15px" *ngIf="(cancelledProjectReqList == undefined||cancelledProjectReqList.length == 0) == true">
+  You do not have any cancelled incoming requests!
+  </div>
+<div *ngFor="let m of cancelledProjectReqList" >
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{m.needTitle}}</ion-card-title>
+    <ion-badge class={{m.status}}>{{m.status}}</ion-badge>
+    
+  </ion-card-header>
+
+  <ion-card-content>
+    <p>Need description: {{m.needDesc}}</p>
+    <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
+    <ion-card-subtitle>Cancelled By: {{m.cancelType}}</ion-card-subtitle>
+    <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
+    <ion-card-subtitle>Cancelled on: <ion-badge color="dark">{{formatDate(m.updatedAt)}}</ion-badge></ion-card-subtitle>
+  </ion-card-content>
+</ion-card>
+</div>
+</div>
+  </ion-list>
+</ion-content>

@@ -1,31 +1,37 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons>
+    <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Resource Suggestions</ion-title>
-    
   </ion-toolbar>
+  <div style="padding: 0px 0px 0px 50px; font-style:italic;">Relevant resource suggestions you can request for</div>
 </ion-header>
 
 <ion-content>
   <div *ngIf="((suggestions != undefined) == false || (suggestions.length == 0))" style="padding-left: 15px;">
-    <ion-card-title>There are currently no suggested resource for this resource need</ion-card-title>
+    <div style="padding: 0px 10px;">There are currently no suggested resource for this resource need</div>
 </div>
 <div *ngIf="((suggestions != undefined && suggestions.length != 0) == true)">
-  <ion-card-title style="padding-left: 15px">Here are some resource suggestions to request for</ion-card-title>
+  
   <ion-card *ngFor="let s of suggestions">
+    <div class="aligned">
+      <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewProfile($event, s)" style="width: 40px; height: 40px; object-fit: cover;" [src]=s.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+      <div>
+        <ion-label>Resource Offering By</ion-label>
+        <div class = "aligned">
+          <ion-label style="font-weight: bold" (click)="viewProfile($event, s)">{{s.ownerName}}</ion-label>
+          <ion-icon name="checkmark-circle" *ngIf="s.ownerIsVerified == 'true'" size="big"></ion-icon>
+        </div>
+      </div> 
+    </div>  
     <ion-card-header>
         <ion-card-title>Resource: {{s.title}}</ion-card-title>
-        <div class="aligned">
-          <img (click)="viewProfile($event, s)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=s.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-          <ion-label (click)="viewProfile($event, s)">{{s.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-          </div>
-        <ion-card-subtitle>Country: {{s.country}}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
+      <p>Country: {{s.country}}</p>
       <p>Resource Description: {{s.desc}}</p>
-      <p>Requested on: <ion-badge>{{formatDate(s.updatedAt)}}</ion-badge></p>
+      <p>Last Modified on: <ion-badge color="dark">{{formatDate(s.updatedAt)}}</ion-badge></p>
       
       <ion-fab horizontal="end" vertical="bottom" slot="fixed">
         <ion-button (click)="viewResource(s)">View</ion-button> 
