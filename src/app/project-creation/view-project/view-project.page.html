@@ -42,10 +42,8 @@
         <ion-icon name="arrow-back-circle">More</ion-icon>
       </ion-button>
       <ion-fab-list side="start">
-        
         <ion-button *ngIf="founderBoolean==true" color="danger" (click)="delete($event)"><ion-icon slot="end" name="trash" ></ion-icon>Delete</ion-button>
         <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="update($event)"><ion-icon slot="end" name="create-outline"></ion-icon>Update</ion-button>
-        <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="createPost($event)"><ion-icon slot="end" name="pencil-outline"></ion-icon>Create Post</ion-button>
       </ion-fab-list>
     </ion-fab>
   </div>
@@ -66,6 +64,7 @@
   </ion-toolbar>
   <ion-list [ngSwitch]="page">
     <ion-item-group *ngSwitchCase="'feed'">
+      <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="createPost($event)" expand="block" style="margin: 0px 10px;"><ion-icon name="pencil-outline"></ion-icon>Create New Post</ion-button>
       <ion-card *ngFor="let p of posts">
         <!-- <div class="aligned">
           <div style="padding-top: 10px; padding-left: 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=renderImg(p.accountPic) alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>

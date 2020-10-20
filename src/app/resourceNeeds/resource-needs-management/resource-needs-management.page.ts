@@ -373,7 +373,29 @@ async completeProjectRequest(resource) {
     "projectId": this.id, 
     "reqId": resource.id,
     "ownerId": resource.ownerId,
-    "ownerType": resource.ownerType }
+    "ownerType": resource.ownerType,
+    "requestType": "project"
+  }
+    
+  });
+  this.modal.onWillDismiss().then((data) => {
+});
+  return await this.modal.present();
+}
+
+async completeResourceRequest(resource) {
+  this.completeSuccessToast();
+  console.log(this.id);
+  this.modal = await this.modalCtrl.create({
+    component: RateContributorsPage,
+    componentProps: {"resource": {"resourceTitle": resource.resourceTitle, 
+    "requesterUsername": resource.resourceOwnerUsername, 
+    "requesterImg": this.sessionService.getRscPath() + resource.resourceOwnerImg +'?random+=' + Math.random()}, 
+    "projectId": this.id, 
+    "reqId": resource.id,
+    "ownerId": resource.resourceOwnerId,
+    "ownerType": resource.resourceOwnerType,
+    "requestType": "resource"}
     
   });
   this.modal.onWillDismiss().then((data) => {
@@ -607,6 +629,31 @@ this.router.navigate(["/view-project/" + this.id]);
 			  text: 'Okay',
 			  handler: () => {
 				this.completeProjectRequest(resource);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async completeResRequest(event, resource)
+	{
+		const alert = await this.alertController.create({
+			header: 'Are you sure you want to complete this request',
+			message: 'Mark this request as completed only if the resource has been delivered! Has this resource been delivered?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.completeResourceRequest(resource);
 			  }
 			}
 			]

@@ -157,5 +157,10 @@ export class HomePage implements OnInit {
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
   }
+
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
  
 }

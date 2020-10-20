@@ -32,6 +32,7 @@ export class ChangeCardInstitutionPage implements OnInit {
     this.accountType = this.tokenStorage.getAccountType();
     //get institution of choice name
     this.institutionChoice = this.currentUser.data.user.institutionChoice;
+    if(this.institutionChoice != "") {
     this.institutionService.viewInstitutionById(this.currentUser.data.user.institutionChoice).subscribe((res)=> {
       this.institutionChoiceName = res.data.targetInstitution.name;
       
@@ -39,6 +40,7 @@ export class ChangeCardInstitutionPage implements OnInit {
     }, (err) => {
       console.log("institution choice error: " + err.error.msg);
     })
+  }
 
     this.institutions = this.currentUser.data.user.institutionIds
     console.log(this.currentUser);
@@ -61,11 +63,13 @@ export class ChangeCardInstitutionPage implements OnInit {
     this.currentUser = this.tokenStorage.getUser();
     this.userService.viewUserById(this.currentUser.data.user.id).subscribe((res)=> {
       this.institutionChoice = res.data.targetUser.institutionChoice;
+      if(this.institutionChoice != "") {
       this.institutionService.viewInstitutionById(this.institutionChoice).subscribe((res)=> {
         this.institutionChoiceName = res.data.targetInstitution.name;
       }, (err) => {
         console.log("********Institution retrieval error: " + err.error.msg)
       })
+    }
       console.log(res.data.targetUser);
     }, (err) => {
       console.log("error retrieving user: " + err.error.msg)
