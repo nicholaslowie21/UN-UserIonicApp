@@ -361,6 +361,35 @@ export class MarketplaceService {
     );
   }
 
+  viewConsolidatedPendingProjectReq(): Observable<any> {
+    return this.http.get(this.API_URL + '/myConsolidatedProjectReq?reqStatus=pending', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewConsolidatedAcceptedProjectReq(): Observable<any> {
+    return this.http.get(this.API_URL + '/myConsolidatedProjectReq?reqStatus=accepted', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewConsolidatedDeclinedProjectReq(): Observable<any> {
+    return this.http.get(this.API_URL + '/myConsolidatedProjectReq?reqStatus=declined', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  viewConsolidatedCancelledProjectReq(): Observable<any> {
+    return this.http.get(this.API_URL + '/myConsolidatedProjectReq?reqStatus=cancelled', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+
 
   private handleError(error: HttpErrorResponse)
 	{
