@@ -207,7 +207,11 @@ console.log(this.completedBoolean);
   }
 
   viewProfile(ev, c) {
-    this.router.navigate(['/view-others-profile/' + c.contributorUsername + "/" + c.contributorType ])
+    if(c.contributor == this.currentUser.data.user.id) {
+      this.router.navigateByUrl("/tabs/profile");
+    } else {
+      this.router.navigate(['/view-others-profile/' + c.contributorUsername + "/" + c.contributorType ])
+    }
   }
 
   viewContri(ev) {

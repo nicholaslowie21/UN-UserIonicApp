@@ -16,11 +16,11 @@
   
   <ion-card *ngFor="let s of suggestions">
     <div class="aligned">
-      <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewFounderProfile($event, s)" style="width: 40px; height: 40px; object-fit: cover;" [src]=s.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+      <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewProfile($event, s)" style="width: 40px; height: 40px; object-fit: cover;" [src]=s.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
       <div>
         <ion-label>Resource Offering By</ion-label>
         <div class = "aligned">
-          <ion-label style="font-weight: bold" (click)="viewFounderProfile($event, s)">{{s.ownerName}}</ion-label>
+          <ion-label style="font-weight: bold" (click)="viewProfile($event, s)">{{s.ownerName}}</ion-label>
           <ion-icon name="checkmark-circle" *ngIf="s.ownerIsVerified == 'true'" size="big"></ion-icon>
         </div>
       </div> 

@@ -73,6 +73,7 @@
       <ion-item *ngIf="resourceType == 'knowledge' && currResource.attachment != ''" lines="none" >
         <p>Attachment: <ion-button (click) = "download()">Download</ion-button></p>
       </ion-item>
+      <br>
       
       <div *ngIf="yourAccountBoolean==true">
         <ion-fab *ngIf="yourAccountBoolean==true" vertical="bottom" horizontal="end" slot="fixed">
