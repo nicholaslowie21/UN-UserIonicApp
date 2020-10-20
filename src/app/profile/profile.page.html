@@ -130,6 +130,9 @@
 
 <ion-list [ngSwitch]="page">
 <ion-item-group *ngSwitchCase="'feed'" >
+  <div style="text-align: center;" *ngIf="(reversedProfileFeed == undefined||reversedProfileFeed.length == 0) == true">
+    <h4>There are no updates on your Profile Feed!</h4>
+  </div>
   <ion-card *ngFor="let pf of reversedProfileFeed">
     <div class="aligned">
       <div style="padding-top: 10px; padding-left: 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>

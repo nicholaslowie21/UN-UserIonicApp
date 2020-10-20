@@ -65,6 +65,9 @@
   <ion-list [ngSwitch]="page">
     <ion-item-group *ngSwitchCase="'feed'">
       <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="createPost($event)" expand="block" style="margin: 0px 10px;"><ion-icon name="pencil-outline"></ion-icon>Create New Post</ion-button>
+      <div style="padding-left: 15px" *ngIf="(posts == undefined||posts.length == 0) == true">
+          There is no feed for this project currently.
+      </div>
       <ion-card *ngFor="let p of posts">
         <!-- <div class="aligned">
           <div style="padding-top: 10px; padding-left: 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=renderImg(p.accountPic) alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>

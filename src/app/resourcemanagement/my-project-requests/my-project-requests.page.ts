@@ -13,13 +13,19 @@ export class MyProjectRequestsPage implements OnInit {
   acceptedProjectReqList: any;
   cancelledProjectReqList: any;
   declinedProjectReqList: any;
-  inStatus: any;
+  status: string;
 
-  constructor(private alertController: AlertController, private toastCtrl: ToastController, private marketplaceService: MarketplaceService, private router: Router) { }
+  constructor(private alertController: AlertController, private toastCtrl: ToastController, private marketplaceService: MarketplaceService, private router: Router) { 
+    this.status = "pending";
+  }
 
   ngOnInit() {
     this.initialiseRequests();
-    this.inStatus = "pending";
+    
+  }
+
+  ionViewDidEnter() {
+    this.initialiseRequests();
   }
 
   initialiseRequests() {
