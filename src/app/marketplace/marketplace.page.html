@@ -35,7 +35,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <h4 style="text-align: center;">These projects need your donations! DONATE NOW!</h4>
+  <h4 style="text-align: center;" *ngIf="(fundingNeeds == undefined||fundingNeeds.length == 0) == false">These projects need your donations! DONATE NOW!</h4>
+  <div style="text-align: center;" *ngIf="(fundingNeeds == undefined||fundingNeeds.length == 0) == true">
+    <h4>There are no projects that require funding!</h4>
+  </div>
   <ion-card *ngFor="let m of fundingNeeds">
     <div class="aligned">
       <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewFounderProfile($event, m)" style="width: 40px; height: 40px; object-fit: cover;" [src]=m.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
