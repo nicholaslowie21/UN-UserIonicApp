@@ -90,7 +90,8 @@
     <div *ngSwitchCase="'item'">
       <div *ngIf="noItemResourceBoolean == true" style="padding-left: 15px;">
         <ion-label>There are no active item resource available!</ion-label>
-    </div>
+      </div>
+
     <div *ngFor="let i of itemResourceList">
       <ion-card (click)= "viewResource(i)">
         <div class="aligned">
@@ -109,10 +110,6 @@
           <ion-card-subtitle>{{i.country}}</ion-card-subtitle>
           <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(i.updatedAt)}}</ion-badge></ion-card-subtitle>
         </ion-card-header>
-  
-        <!-- <ion-card-content>
-          <ion-label>{{i.desc}}</ion-label>
-        </ion-card-content> -->
       </ion-card>
       </div>
     </div>

@@ -46,7 +46,7 @@
   <ion-list>
     <ion-card *ngFor="let d of discoverList">
       <div class="aligned">
-        <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewFounderProfile($event, d)" style="width: 40px; height: 40px; object-fit: cover;" [src]=d.ionicImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+        <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewFounderProfile($event, d)" style="width: 40px; height: 40px; object-fit: cover;" [src]=d.hostImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
         <div>
           <div class = "aligned">
             <ion-label style="font-weight: bold" (click)="viewFounderProfile($event, d)">{{d.hostName}}</ion-label>
