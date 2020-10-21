@@ -163,4 +163,11 @@ export class ViewFundingNeedsPage implements OnInit {
     let formattedDate = new Date(date).toUTCString();
     return formattedDate.substring(5, formattedDate.length-13);
   }
+
+  calculateProgress(total,received) {
+    if(received == 0) {
+      return 0;
+    }
+    return parseFloat((received*100/total).toFixed(2));
+  }
 }

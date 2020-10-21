@@ -243,10 +243,9 @@
         </ion-card-header>
 
         <ion-card-content>
+          <p>Request Description: {{k.desc}}</p>
           <p>Resource title: {{k.resourceTitle}}</p>
-          <p>Resource Requested: {{k.needDesc}}</p>
           <p>Resource owner: {{k.resourceOwnerName}}</p>
-          <p>Resource Description: {{k.desc}}</p>
           <ion-card-subtitle>Requested at: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
           <ion-button  (click)="cancelResRequests($event, k)" expand="full" color="danger">Cancel</ion-button>
         </ion-card-content>
@@ -267,10 +266,9 @@
       </ion-card-header>
 
       <ion-card-content>
+        <p>Request Description: {{k.desc}}</p>
         <p>Resource title: {{k.resourceTitle}}</p>
-        <p>Resource Requested: {{k.needDesc}}</p>
         <p>Resource owner: {{k.resourceOwnerName}}</p>
-        <p>Resource Description: {{k.desc}}</p>
         <ion-card-subtitle>Requested at: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
         <ion-card-subtitle>Accepted on: <ion-badge color="primary">{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
 
@@ -304,10 +302,9 @@
     </ion-card-header>
 
     <ion-card-content>
+      <p>Request Description: {{k.desc}}</p>
       <p>Resource title: {{k.resourceTitle}}</p>
-      <p>Resource Requested: {{k.needDesc}}</p>
       <p>Resource owner: {{k.resourceOwnerName}}</p>
-      <p>Resource Description: {{k.desc}}</p>
       <ion-card-subtitle>Requested at: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
       <ion-card-subtitle>Declined on: <ion-badge color="primary">{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
     </ion-card-content>
@@ -329,10 +326,9 @@
     </ion-card-header>
 
     <ion-card-content>
+      <p>Request Description: {{k.desc}}</p>
       <p>Resource title: {{k.resourceTitle}}</p>
-      <p>Resource Requested: {{k.needDesc}}</p>
       <p>Resource owner: {{k.resourceOwnerName}}</p>
-      <p>Resource Description: {{k.desc}}</p>
       <ion-card-subtitle>Cancelled By: {{k.cancelType}}</ion-card-subtitle>
       <ion-card-subtitle>Requested at: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
       <ion-card-subtitle>Cancelled on: <ion-badge color="danger">{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>

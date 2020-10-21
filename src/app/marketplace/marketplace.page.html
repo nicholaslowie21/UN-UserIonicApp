@@ -58,9 +58,12 @@
     <ion-card-content>
       <p style="font-weight: bold">{{m.fundingTitle}}</p>
       <p>{{m.fundingDesc}}</p>
-      <p>Total: {{m.total}}</p>
-      <p>Received Sum: {{m.receivedSum}}</p>
-      <p>Pending Sum: {{m.pendingSum}}</p>
+      <p>Total: ${{m.total}}</p>
+      <p style="float: left">${{m.receivedSum}} raised</p>
+      <p style="float: right">{{calculateProgress(m.total, m.receivedSum)}}%</p>
+      <ion-progress-bar [value]="calculateProgress(m.total, m.receivedSum)/100"></ion-progress-bar>
+      <p>Remaining Sum: ${{m.total - m.receivedSum - m.pendingSum}}</p>
+      <p>Pending Sum: ${{m.pendingSum}}</p>
       <ion-card-subtitle>Created at: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
       <ion-fab horizontal="end" vertical="bottom" slot="fixed">
         <ion-button (click)="contribute(m)">

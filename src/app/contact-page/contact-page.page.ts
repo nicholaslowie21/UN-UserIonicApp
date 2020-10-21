@@ -105,7 +105,9 @@ export class ContactPagePage implements OnInit {
   initialise() {
     this.cards=[];
     this.mobileService.getContactList().subscribe((res) => {
+      console.log(res);
       this.card = res.data.cards;
+      
       if (this.card.length > 0) {
         this.haveCardBoolean = true;
 

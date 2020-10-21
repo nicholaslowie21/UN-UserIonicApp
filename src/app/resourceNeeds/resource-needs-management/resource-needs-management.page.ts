@@ -212,6 +212,9 @@ export class ResourceNeedsManagementPage implements OnInit {
         this.noIncomingPendingRequestBoolean = false;
         for(var i = 0; i < this.incomingPendingResourceRequestList.length; i ++) {
           this.incomingPendingResourceRequestList[i].requesterImg = this.sessionService.getRscPath() + this.incomingPendingResourceRequestList[i].requesterImg +'?random+=' + Math.random();
+          if(this.incomingPendingResourceRequestList[i].desc == "") {
+            this.incomingPendingResourceRequestList[i].desc = "-";
+          }
         }
       }
     }, (err) => {
@@ -224,6 +227,9 @@ export class ResourceNeedsManagementPage implements OnInit {
         this.noIncomingAcceptedRequestBoolean = false;
         for(var i = 0; i < this.incomingAcceptedResourceRequestList.length; i ++) {
           this.incomingAcceptedResourceRequestList[i].requesterImg = this.sessionService.getRscPath() + this.incomingAcceptedResourceRequestList[i].requesterImg +'?random+=' + Math.random();
+          if(this.incomingAcceptedResourceRequestList[i].desc == "") {
+            this.incomingAcceptedResourceRequestList[i].desc = "-";
+          }
         }
       }
     }, (err) => {
@@ -236,6 +242,9 @@ export class ResourceNeedsManagementPage implements OnInit {
         this.noIncomingDeclinedRequestBoolean = false;
         for(var i = 0; i < this.incomingDeclinedResourceRequestList.length; i ++) {
           this.incomingDeclinedResourceRequestList[i].requesterImg = this.sessionService.getRscPath() + this.incomingDeclinedResourceRequestList[i].requesterImg +'?random+=' + Math.random();
+          if(this.incomingDeclinedResourceRequestList[i].desc == "") {
+            this.incomingDeclinedResourceRequestList[i].desc = "-";
+          }
         }
       }
     }, (err) => {
@@ -248,6 +257,9 @@ export class ResourceNeedsManagementPage implements OnInit {
         this.noIncomingCancelledRequestBoolean = false;
         for(var i = 0; i < this.incomingCancelledResourceRequestList.length; i ++) {
           this.incomingCancelledResourceRequestList[i].requesterImg = this.sessionService.getRscPath() + this.incomingCancelledResourceRequestList[i].requesterImg +'?random+=' + Math.random();
+          if(this.incomingCancelledResourceRequestList[i].desc == "") {
+            this.incomingCancelledResourceRequestList[i].desc = "-";
+          }
         }
       }
     }, (err) => {
@@ -263,6 +275,9 @@ export class ResourceNeedsManagementPage implements OnInit {
         this.noOutgoingPendingRequestBoolean = false;
         for(var i = 0; i < this.outgoingPendingResourceRequestList.length; i ++) {
           this.outgoingPendingResourceRequestList[i].requesterImg = this.sessionService.getRscPath() + this.outgoingPendingResourceRequestList[i].requesterImg +'?random+=' + Math.random();
+          if(this.outgoingPendingResourceRequestList[i].desc == "") {
+            this.outgoingPendingResourceRequestList[i].desc = "-";
+          }
         }
       }
     }, (err) => {
@@ -277,6 +292,9 @@ export class ResourceNeedsManagementPage implements OnInit {
         this.noOutgoingAcceptedRequestBoolean = false;
         for(var i = 0; i < this.outgoingAcceptedResourceRequestList.length; i ++) {
           this.outgoingAcceptedResourceRequestList[i].requesterImg = this.sessionService.getRscPath() + this.outgoingAcceptedResourceRequestList[i].requesterImg +'?random+=' + Math.random();
+          if(this.outgoingAcceptedResourceRequestList[i].desc == "") {
+            this.outgoingAcceptedResourceRequestList[i].desc = "-";
+          }
         }
       }
     }, (err) => {
@@ -291,6 +309,9 @@ export class ResourceNeedsManagementPage implements OnInit {
         this.noOutgoingDeclinedRequestBoolean = false;
         for(var i = 0; i < this.outgoingDeclinedResourceRequestList.length; i ++) {
           this.outgoingDeclinedResourceRequestList[i].requesterImg = this.sessionService.getRscPath() + this.outgoingDeclinedResourceRequestList[i].requesterImg +'?random+=' + Math.random();
+          if(this.outgoingDeclinedResourceRequestList[i].desc == "") {
+            this.outgoingDeclinedResourceRequestList[i].desc = "-";
+          }
         }
       }
     }, (err) => {
@@ -305,6 +326,9 @@ export class ResourceNeedsManagementPage implements OnInit {
         this.noOutgoingCancelledRequestBoolean = false;
         for(var i = 0; i < this.outgoingCancelledResourceRequestList.length; i ++) {
           this.outgoingCancelledResourceRequestList[i].requesterImg = this.sessionService.getRscPath() + this.outgoingCancelledResourceRequestList[i].requesterImg +'?random+=' + Math.random();
+          if(this.outgoingCancelledResourceRequestList[i].desc == "") {
+            this.outgoingCancelledResourceRequestList[i].desc = "-";
+          }
         }
       }
     }, (err) => {
