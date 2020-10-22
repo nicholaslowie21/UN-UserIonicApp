@@ -134,7 +134,7 @@
               </ion-card-header>
       
               <ion-card-content>
-                <p>Need description: {{m.needDesc}}</p>
+                <p>Request Description: {{m.desc}}</p>
                 <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
                 <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
                 <ion-grid fixed=true>
@@ -165,7 +165,7 @@
             </ion-card-header>
     
             <ion-card-content>
-              <p>Need description: {{m.needDesc}}</p>
+              <p>Request description: {{m.desc}}</p>
               <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
               <ion-card-subtitle>Requested on: <ion-badge color='dark'>{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
 
@@ -188,7 +188,7 @@
           </ion-card-header>
   
           <ion-card-content>
-            <p>Need description: {{m.needDesc}}</p>
+            <p>Request description: {{m.desc}}</p>
             <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
             <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
           </ion-card-content>
@@ -209,7 +209,7 @@
         </ion-card-header>
 
         <ion-card-content>
-          <p>Need description: {{m.needDesc}}</p>
+          <p>Request description: {{m.desc}}</p>
           <p (click)="viewProject(m)">Project: {{m.projectTitle}}</p>
           <ion-card-subtitle>Cancelled By: {{m.cancelType}}</ion-card-subtitle>
           <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(m.createdAt)}}</ion-badge></ion-card-subtitle>
@@ -253,7 +253,7 @@
                   </ion-card-header>
           
                   <ion-card-content>
-                    <p>Need description: {{k.needDesc}}</p>
+                    <p>Request description: {{k.desc}}</p>
                     <p (click)="viewProject(k)">Project: {{k.projectTitle}}</p>
                     <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
                     <ion-button  (click)="cancelProjRequest($event, k)" expand="full" color="danger">Cancel</ion-button>
@@ -276,7 +276,7 @@
           </ion-card-header>
   
           <ion-card-content>
-            <p>Need description: {{k.needDesc}}</p>
+            <p>Request description: {{k.desc}}</p>
             <p (click)="viewProject(k)">Project: {{k.projectTitle}}</p>
             <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
             <ion-button  (click)="cancelProjRequest($event, k)" expand="full" color='danger'>Cancel</ion-button>
@@ -299,7 +299,7 @@
         </ion-card-header>
 
         <ion-card-content>
-          <p>Need description: {{k.needDesc}}</p>
+          <p>Request description: {{k.desc}}</p>
           <p (click)="viewProject(k)">Project: {{k.projectTitle}}</p>
           <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
         </ion-card-content>
@@ -321,7 +321,7 @@
       </ion-card-header>
 
       <ion-card-content>
-        <p>Need description: {{k.needDesc}}</p>
+        <p>Request description: {{k.desc}}</p>
         <p (click)="viewProject(k)">Project: {{k.projectTitle}}</p>
         <ion-card-subtitle>Cancelled By: {{k.cancelType}}</ion-card-subtitle>
         <ion-card-subtitle>Requested on: <ion-badge color="dark">{{formatDate(k.createdAt)}}</ion-badge></ion-card-subtitle>
@@ -355,7 +355,7 @@
         <ion-card-content>
           <p>Resource Need Description: {{s.desc}}</p>
           <p>Requested on: <ion-badge color="dark">{{formatDate(s.updatedAt)}}</ion-badge></p>
-          
+          <br>
           <ion-fab horizontal="end" vertical="bottom" slot="fixed">
             <ion-button (click)="contribute(s)">Contribute</ion-button> 
           </ion-fab>
