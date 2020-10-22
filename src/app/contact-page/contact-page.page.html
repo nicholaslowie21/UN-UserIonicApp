@@ -27,21 +27,55 @@
   </ion-fab>
   <h5 *ngIf="haveCardBoolean == false" style="padding: 0px 10px;">You do not have any mobile contacts yet. Start scanning other KoCoSD user's QR code!</h5>
   <ion-card *ngFor="let c of cards">
-    <div>
+    <div *ngIf="c.targetType == 'institution'">
       <div *ngIf="c.accountImg != ''">
-        <img class="background" src="assets/img/card 3.png">
+        <img class="background" src="assets/img/card 4.png">
+        <img class="img rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" [src]=c.accountImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'" />
+      </div>
+      <img *ngIf="c.accountImg == ''" class="background" src="assets/img/card 2.png">
+      <div class ="title">
+        <ion-card-title style="color: black; font-weight:bold;">{{c.accountName}}</ion-card-title>
+      </div>
+      <div class="section">
+      <h6><ion-icon name='mail' size="small" style="color:white;"></ion-icon>{{c.accountEmail}}</h6>
+      <div *ngIf="c.accountWebsite !=''"><h6><ion-icon name="globe" size='small' style="color:white;"></ion-icon>{{c.accountWebsite}}</h6></div>
+      <h6><ion-icon name="earth" size='small' style="color:white;"></ion-icon>{{c.accountCountry}}</h6>
+      <div *ngIf="c.accountAddress !=''"><h6><ion-icon name="location" size='small' style="color:white;"></ion-icon>{{c.accountAddress}}</h6></div>
+      <ion-badge *ngFor="let sdg of c.accountSDGs" className="sdg{{sdg}}">SDG{{sdg}}</ion-badge> 
+      </div>
+    </div>
+    <div *ngIf="c.targetType == 'user' && c.institutionName !=''">
+      <div *ngIf="c.institutionImg != ''">
+        <img class="background" src="assets/img/card 4.png">
+        <img class="img rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" [src]=c.institutionImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'" />
+      </div>
+      <img *ngIf="c.institutionImg == ''" class="background" src="assets/img/card 2.png">
+      <div class ="title">
+        <ion-card-title style="color: black; font-weight: bold;">{{c.institutionName}}</ion-card-title>
+        <ion-card-subtitle>{{c.institutionWebsite}}</ion-card-subtitle>
+      </div>
+      <div class="section">
+        <ion-card-title style="font-weight: bold; color: white;">{{c.accountName}}</ion-card-title>
+        <ion-card-title style="color: white;">{{c.accountOccupation}}</ion-card-title>
+        <h6><ion-icon name='mail' size="small" style="color:white;"></ion-icon>{{c.accountEmail}}</h6>
+        <div *ngIf="c.accountWebsite !=''"><h6><ion-icon name="globe" size='small' style="color:white;"></ion-icon>{{c.accountWebsite}}</h6></div>
+        <h6><ion-icon name="earth" size='small' style="color:white;"></ion-icon>{{c.accountCountry}}</h6>
+        <div *ngIf="c.institutionAddress !=''"><h6><ion-icon name="location" size='small' style="color:white;"></ion-icon>{{c.institutionAddress}}</h6></div>
+        <ion-badge *ngFor="let sdg of c.accountSDGs" className="sdg{{sdg}}">SDG{{sdg}}</ion-badge> 
+      </div>
+    </div>
+    <div *ngIf="c.targetType == 'user' && c.institutionName ==''">
+      <div *ngIf="c.accountImg != ''" class="img">
+        <img class="background" src="assets/img/card 4.png">
         <img class="img rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" [src]=c.accountImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'" />
       </div>
       <img *ngIf="c.accountImg == ''" class="background" src="assets/img/card 2.png">
       <div class="section">
-      <ion-card-title style="color: black;">{{c.institutionName}}</ion-card-title>
-      <ion-card-subtitle style="font-weight: bold; color: white;">{{c.accountName}}</ion-card-subtitle>
-      <ion-card-subtitle style="color: white;">{{c.accountOccupation}}</ion-card-subtitle>
-      <h6>{{c.accountEmail}}</h6>
-      <h6>{{c.accountWebsite}}</h6>
-      <h6>
-        {{c.accountCountry}} | {{c.institutionAddress}}
-      </h6>
+      <ion-card-title style="font-weight: bold; color: white;">{{c.accountName}}</ion-card-title>
+      <ion-card-title style="color: white;">{{c.accountOccupation}}</ion-card-title>
+      <h6><ion-icon name='mail' size="small" style="color:white;"></ion-icon>{{c.accountEmail}}</h6>
+      <div *ngIf="c.accountWebsite !=''"><h6><ion-icon name="globe" size='small' style="color:white;"></ion-icon>{{c.accountWebsite}}</h6></div>
+      <h6><ion-icon name="earth" size='small' style="color:white;"></ion-icon>{{c.accountCountry}}</h6>
       <ion-badge *ngFor="let sdg of c.accountSDGs" className="sdg{{sdg}}">SDG{{sdg}}</ion-badge> 
       </div>
     </div>
@@ -54,12 +88,12 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-card>
-  <div *ngIf="scannedData">
+  <!-- <div *ngIf="scannedData">
     <p>
       Scanned Code Text : <b>{{ scannedData["text"] }}</b>
     </p>
     <p>
       Scanned Code Format : <b>{{ scannedData["format"] }}</b>
     </p>
-  </div>
+  </div> -->
 </ion-content>

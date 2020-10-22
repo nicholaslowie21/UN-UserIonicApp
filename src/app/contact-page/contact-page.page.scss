@@ -1,27 +1,21 @@
 ion-card {
     position: relative;
-    text-align: center;
+    // text-align: center;
   }
-
-//   .aligned { 
-//     display: flex; 
-//     align-items: center;
-//     background-color: #4c8dff;
-//   }
   
 .section {
     position: absolute;
     // align-items: center;
     // width: 100%;
-    top: 10%;
+    top: 12%;
     left: 50%;
     color: black;
-    width: 40%
+    width: 50%
     // transform: translate(-50%, -50%);
   }
 
 h6 {
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 0px;
     margin-bottom:5px;
 
@@ -35,10 +29,20 @@ h6 {
   position: absolute;
   // align-items: center;
   // width: 100%;
-  top: 10%;
-  left: 15%;
+  top: 20%;
+  left: 10%;
   color: black;
   width: 30%
+}
+
+.title{
+  position: absolute;
+  // align-items: center;
+  // width: 100%;
+  top: 60%;
+  left: 12%;
+  color: black;
+  width: 35%
 }
 
 .card-img,

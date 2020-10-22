@@ -32,7 +32,7 @@ export class SessionService {
 		if(this.platform.is('hybrid'))
 		{
 			// return "http://192.168.86.250:8081";
-			return "https://172.31.61.217:8081";
+			return "http://172.31.61.217:8081";
 		}
 		else
 		{
