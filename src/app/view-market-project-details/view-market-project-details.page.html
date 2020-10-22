@@ -67,6 +67,9 @@
     <ion-item-group *ngSwitchCase="'feed'">
       <div style="padding: 0px 10px;" *ngIf="posts == undefined">There are no posts yet!</div>
       <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="createPost($event)" expand="block" style="margin: 0px 10px;"><ion-icon name="pencil-outline"></ion-icon>Create New Post</ion-button>
+      <div style="padding-left: 15px" *ngIf="(posts == undefined||posts.length == 0) == true">
+        There is no feed for this project currently.
+    </div>
       <ion-card *ngFor="let p of posts">
         <img *ngIf="p.imgPath != ''" [src]=renderImg(p.imgPath) alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'" style="margin-top: 10px;">
         <ion-card-header>

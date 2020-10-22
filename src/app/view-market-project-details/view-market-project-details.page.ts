@@ -380,6 +380,50 @@ console.log(this.completedBoolean);
     await alert.present();
   }
 
+  async delPost(event, postId)
+	{
+		const alert = await this.alertController.create({
+			header: 'Confirm Delete Project Post',
+			message: 'Confirm delete Post?',
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+				this.projectService.deletePost(postId).subscribe(
+					response => {
+            this.resultSuccess = true;
+            this.successToast();
+            this.router.navigateByUrl("/view-marketplace-projects");
+					},
+					error => {
+            this.failureToast(error.error.msg);
+						this.error = true;
+						this.errorMessage = error;
+					}
+				);
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  createPost(ev) {
+    this.router.navigate(["/create-post/" + this.id]);
+  }
+
+  editPost(ev, postId) {
+    this.router.navigate(["/edit-post/" + postId]);
+  }
+
   formatDate(date): any {
     let formattedDate = new Date(date).toUTCString();
     return formattedDate.substring(5, formattedDate.length-13);

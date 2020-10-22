@@ -313,7 +313,7 @@ console.log(this.completedBoolean);
 					response => {
             this.resultSuccess = true;
             this.successToast();
-            this.back();
+            this.router.navigate(["/my-projects/" + this.currentUser.data.user.id]);
 					},
 					error => {
             this.failureToast(error.error.msg);

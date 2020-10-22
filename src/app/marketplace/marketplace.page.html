@@ -52,11 +52,12 @@
     </div>  
     <img [src]=m.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
     <ion-card-header>
-      <ion-card-title (click)="viewProject($event, m)">{{m.title}}</ion-card-title>
+      <ion-card-title >{{m.fundingTitle}}</ion-card-title>
+      <p style="font-weight: bold" (click)="viewProject($event, m)">{{m.title}}</p>
       <ion-badge style="padding-left: 5px" className="sdg{{sdg}}" *ngFor= "let sdg of m.SDGs">SDG {{sdg}}&nbsp;</ion-badge>
     </ion-card-header>
     <ion-card-content>
-      <p style="font-weight: bold">{{m.fundingTitle}}</p>
+      
       <p>{{m.fundingDesc}}</p>
       <p>Total: ${{m.total}}</p>
       <p style="float: left">${{m.receivedSum}} raised</p>
