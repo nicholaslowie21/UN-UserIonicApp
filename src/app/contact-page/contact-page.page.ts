@@ -167,6 +167,7 @@ export class ContactPagePage implements OnInit {
     this.mobileService.addContact(qrhash).subscribe((res) => {
       console.log(qrhash);
       this.successAddToast();
+      this.initialise();
     }, err => {
       this.failureAddToast(err);
       console.log("********Contact Page.ts (Add Contact) - error: " + err.error.msg)
