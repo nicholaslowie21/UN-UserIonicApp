@@ -123,28 +123,15 @@ export class ResourceService {
     );
   }
 
-  createItemResource(title: string, desc: string, country: string): Observable<any> {
-    let createItemReq = {
-      "title": title,
-      "desc": desc, 
-      "country": country,
-    }
-
-    return this.http.post(this.resourceAPI_URL + "/createItem", createItemReq, httpOptions).pipe(
+  createItemResource(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/createItem", data).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
   }
 
-  createVenueResource(title: string, desc: string, address: string, country: string): Observable<any> {
-    let createVenueReq = {
-      "title": title,
-      "desc": desc,
-      "address": address,
-      "country": country,
-    }
-
-    return this.http.post(this.resourceAPI_URL + "/createVenue", createVenueReq, httpOptions).pipe(
+  createVenueResource(data): Observable<any> {
+    return this.http.post(this.resourceAPI_URL + "/createVenue", data).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
@@ -370,6 +357,16 @@ export class ResourceService {
 
   uploadItemPic(data) {
     return this.http.post(this.resourceAPI_URL + "/uploadItemPicture", data).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  deleteItemPic(data) {
+    return this.http.post(this.resourceAPI_URL + "/deleteItemPicture", {
+      "itemId": data.itemId,
+      "indexes": data.indexes,
+    }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

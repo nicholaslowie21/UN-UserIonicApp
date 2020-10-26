@@ -43,6 +43,11 @@
     </ion-select>
   </ion-item>
 
+  <ion-item *ngIf="isVenueType == true || isItemType == true">
+    <ion-label>Images</ion-label>
+    <ion-input type="file" multiple name="image1" (change)="selectImage($event)" ></ion-input>
+  </ion-item>
+
   <ion-item *ngIf="isVenueType == true">
     <ion-label position="floating">Address</ion-label>
     <ion-input ngModel name="address" [(ngModel)]="address" required minlength="3" #inaddress="ngModel"></ion-input>
