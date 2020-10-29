@@ -65,11 +65,11 @@
       </div>
     </div>
     <div *ngIf="c.targetType == 'user' && c.institutionName ==''">
-      <div *ngIf="c.accountImg != ''" class="img">
+      <div *ngIf="c.accountImg != ''">
         <img class="background" src="assets/img/card 4.png">
         <img class="img rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" [src]=c.accountImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'" />
       </div>
-      <img *ngIf="c.accountImg == ''" class="background" src="assets/img/card 2.png">
+      <img *ngIf="c.accountImg == ''" class="background" src="assets/img/card 2.png"> 
       <div class="section">
       <ion-card-title style="font-weight: bold; color: white;">{{c.accountName}}</ion-card-title>
       <ion-card-title style="color: white;">{{c.accountOccupation}}</ion-card-title>
