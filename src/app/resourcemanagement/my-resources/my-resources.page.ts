@@ -28,6 +28,9 @@ export class MyResourcesPage implements OnInit {
   knowledgeResourceList : any[]
   itemResourceList : any[];
   venueResourceList : any[];
+  viewEntered: boolean = false;
+  noVenuePicBoolean: boolean;
+  noItemPicBoolean: boolean;
 
 
   constructor(private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
@@ -49,6 +52,7 @@ export class MyResourcesPage implements OnInit {
   
   ionViewDidEnter() {
     this.initialiseFilter();
+    this.viewEntered = true;
   }
   
   initialiseFilter() {
@@ -161,8 +165,17 @@ export class MyResourcesPage implements OnInit {
       if(this.itemResource.length > 0) {
         this.noItemResourceBoolean = false;
         for(var i = 0; i < this.itemResource.length; i++) {
-          this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+          if(this.itemResource[i].imgPath.length > 0) {
+            for (var j = 0; j < this.itemResource[i].imgPath.length; j++) {
+              this.itemResource[i].imgPath[j] = this.sessionService.getRscPath() + this.itemResource[i].imgPath[j] + '?random+=' + Math.random(); 
+              console.log(1);
+            }
+            this.noItemPicBoolean = false;
+          } else {
+            this.noItemPicBoolean = true;
+          }
         }
+        console.log(this.noItemPicBoolean);
       } else {
           this.noItemResourceBoolean = true;
       }
@@ -176,12 +189,18 @@ export class MyResourcesPage implements OnInit {
 
       this.resourceService.getUserPrivateVenueResource().subscribe((res) => {
       this.venueResource = res.data.venues;
-
+        console.log(this.venueResource);
       if(this.venueResource.length > 0) {
         this.noVenueResourceBoolean = false;
         for(var i = 0; i < this.venueResource.length; i++) {
           if(this.venueResource[i].imgPath.length > 0) {
-              this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+            for (var j = 0; j < this.venueResource[i].imgPath.length; j++) {
+              this.venueResource[i].imgPath[j] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[j] + '?random+=' + Math.random(); 
+              console.log(1);
+            }
+            this.noVenuePicBoolean = false;
+          } else {
+            this.noVenuePicBoolean = true;
           }
         }
       } else {
@@ -244,7 +263,15 @@ export class MyResourcesPage implements OnInit {
         if(this.itemResource.length > 0) {
           this.noItemResourceBoolean = false;
           for(var i = 0; i < this.itemResource.length; i++) {
-            this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+            if(this.itemResource[i].imgPath.length > 0) {
+              for (var j = 0; j < this.itemResource[i].imgPath.length; j++) {
+                this.itemResource[i].imgPath[j] = this.sessionService.getRscPath() + this.itemResource[i].imgPath[j] + '?random+=' + Math.random(); 
+                console.log(1);
+              }
+              this.noItemPicBoolean = false;
+            } else {
+              this.noItemPicBoolean = true;
+            }
           }
         } else {
             this.noItemResourceBoolean = true;
@@ -266,7 +293,13 @@ export class MyResourcesPage implements OnInit {
           this.noVenueResourceBoolean = false;
           for(var i = 0; i < this.venueResource.length; i++) {
             if(this.venueResource[i].imgPath.length > 0) {
-                this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+              for (var j = 0; j < this.venueResource[i].imgPath.length; j++) {
+                this.venueResource[i].imgPath[j] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[j] + '?random+=' + Math.random(); 
+                console.log(1);
+              }
+              this.noVenuePicBoolean = false;
+            } else {
+              this.noVenuePicBoolean = true;
             }
           }
         } else {

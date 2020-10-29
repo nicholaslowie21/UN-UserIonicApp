@@ -42,6 +42,7 @@ export class ViewResourcePage implements OnInit {
     speed: 400
   };
   noVenuePicBoolean: boolean;
+  noItemPicBoolean: boolean;
   noIncomingRequestBoolean: boolean;
   noOutgoingRequestBoolean: boolean;
   requestType: any;
@@ -174,11 +175,19 @@ export class ViewResourcePage implements OnInit {
 
     } else if (this.resourceType == "item") {
       this.currResource = this.resourceService.viewItemResourceDetail(this.resourceId).subscribe((res) => {
+        console.log(res);
         this.currResource = res.data.item;
         if(res.data.item.owner == this.tokenStorageService.getUser().data.user.id) {
           this.yourAccountBoolean = true;
         }
-        this.image = this.sessionService.getRscPath() + this.currResource.imgPath + '?random+=' + Math.random(); 
+        if (this.currResource.imgPath.length > 0) {
+          for (var i = 0; i < this.currResource.imgPath.length; i++) {
+            this.currResource.imgPath[i] = this.sessionService.getRscPath() + this.currResource.imgPath[i] + '?random+=' + Math.random(); 
+          }
+          this.noItemPicBoolean = false;
+        } else {
+          this.noItemPicBoolean = true;
+        }
         }), err => {
         console.log('********** ViewResource.ts - Item: ', err.error.msg);
       };

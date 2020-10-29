@@ -44,7 +44,7 @@
       <ion-badge *ngFor="let sdg of c.accountSDGs" className="sdg{{sdg}}">SDG{{sdg}}</ion-badge> 
       </div>
     </div>
-    <div *ngIf="c.targetType == 'user' && c.institutionName !=''">
+    <div *ngIf="c.targetType == 'user' && c.institutionName != ''">
       <div *ngIf="c.institutionImg != ''">
         <img class="background" src="assets/img/card 4.png">
         <img class="img rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" [src]=c.institutionImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'" />
@@ -64,7 +64,11 @@
         <ion-badge *ngFor="let sdg of c.accountSDGs" className="sdg{{sdg}}">SDG{{sdg}}</ion-badge> 
       </div>
     </div>
+<<<<<<< HEAD
     <div *ngIf="c.targetType == 'user' && c.institutionName ==''">
+=======
+    <div *ngIf="c.targetType == 'user' && c.institutionName==''">
+>>>>>>> 5e423228a99c6b610789562bf2a1a677fc57f7b4
       <div *ngIf="c.accountImg != ''">
         <img class="background" src="assets/img/card 4.png">
         <img class="img rounded-circle" style="width: 100px; height: 100px; object-fit: cover;" [src]=c.accountImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'" />

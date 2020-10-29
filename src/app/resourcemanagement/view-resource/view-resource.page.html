@@ -14,13 +14,23 @@
   <ion-card>
       <img *ngIf = "resourceType == 'manpower'" class="card-img-top rounded-circle img-fluid d-block center {{currResource.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
       <img *ngIf = "resourceType == 'knowledge'" class="{{currResource.status}} full" src="../../../assets/img/knowledge.jpg" />
-      <img *ngIf = "resourceType == 'item'" class="{{currResource.status}} full " [src]=image  onerror="this.src='./assets/img/item.jpg'" />
+      <!--<img *ngIf = "resourceType == 'item'" class="{{currResource.status}} full " [src]=image  onerror="this.src='./assets/img/item.jpg'" />-->
+      <div *ngIf = "resourceType == 'item'">
+        <div *ngIf="noItemPicBoolean == true">
+          <img src='./assets/img/item.jpg' />
+        </div>
+        <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
+          <ion-slide class="{{currResource.status}}" *ngFor ="let i of currResource.imgPath" >
+            <ion-img [src]=i onerror="this.src='./assets/img/item.jpg'" ></ion-img>
+          </ion-slide>
+        </ion-slides>
+      </div>
       <div *ngIf = "resourceType == 'venue'">
         <div *ngIf="noVenuePicBoolean == true">
           <img src='./assets/img/venue.jpg' />
         </div>
         <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
-          <ion-slide *ngFor ="let v of currResource.imgPath" >
+          <ion-slide class="{{currResource.status}}" *ngFor ="let v of currResource.imgPath" >
             <ion-img [src]=v onerror="this.src='./assets/img/venue.jpg'" ></ion-img>
           </ion-slide>
         </ion-slides>

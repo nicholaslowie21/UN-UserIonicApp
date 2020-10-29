@@ -68,3 +68,7 @@ ion-segment-button {
   ion-segment-button.segment-button-checked {
   border-bottom: 2px solid;
   }
+
+  .inactive {
+    opacity: 0.5
+  }

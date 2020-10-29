@@ -36,3 +36,24 @@
 .full {
   width:100%
 }
+
+ion-img {
+  float: left;
+  width:  500px;
+  height: 250px;
+  object-fit: contain;
+}
+
+ion-slide {
+  background-color: white !important;
+  }
+
+  ion-slides.image-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .inactive {
+    opacity: 0.5
+  }

@@ -26,6 +26,8 @@ export class CreateResourcePage implements OnInit {
   isVenueType: boolean;
   resultSuccess: boolean;
   resultError: boolean;
+  image1: any;
+  images: any;
 
   constructor(private resourceService: ResourceService, private toastCtrl: ToastController, private router: Router, private tokenStorage: TokenStorageService) {
     this.resultSuccess = false;
@@ -92,6 +94,7 @@ export class CreateResourcePage implements OnInit {
   }
 
   createRes(resourceForm:NgForm) {
+    const formData = new FormData();
     if (this.type == "Manpower") {
       this.resourceService.createManpowerResource(this.title, this.desc).subscribe((res) => {
         console.log(res);
@@ -123,7 +126,17 @@ export class CreateResourcePage implements OnInit {
         console.log('********** CreateResourcePage.ts - Knowledge: ', err.error.msg);
       });
     } else if(this.type == "Item"){
-      this.resourceService.createItemResource(this.title, this.desc, this.country).subscribe((res) => {
+     
+      formData.append("title", this.title);
+      formData.append("desc", this.desc);
+      formData.append("country", this.country);
+      if(this.images != undefined) {
+          for (let i = 0; i < this.images.length; i++) {
+            formData.append("itemPics", this.images[i]);
+          }
+      }
+
+      this.resourceService.createItemResource(formData).subscribe((res) => {
         console.log(res);
         this.resultSuccess = true;
         this.resultError = false;
@@ -138,7 +151,16 @@ export class CreateResourcePage implements OnInit {
         console.log('********** CreateResourcePage.ts - Item: ', err.error.msg);
       });
     } else if(this.type == "Venue") {
-      this.resourceService.createVenueResource(this.title, this.desc, this.address, this.country).subscribe((res) => {
+      formData.append("title", this.title);
+      formData.append("desc", this.desc);
+      formData.append("country", this.country);
+      formData.append("address", this.address);
+      if(this.images != undefined) {
+          for (let i = 0; i < this.images.length; i++) {
+            formData.append("venuePics", this.images[i]);
+          }
+      }
+      this.resourceService.createVenueResource(formData).subscribe((res) => {
         console.log(res);
         this.resultSuccess = true;
         this.resultError = false;
@@ -152,6 +174,14 @@ export class CreateResourcePage implements OnInit {
         this.failureToast(err.error.msg);
         console.log('********** CreateResourcePage.ts - Venue: ', err.error.msg);
       });
+    }
+  }
+
+  selectImage(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files;
+      this.images = file;
+      console.log(this.images);
     }
   }
 

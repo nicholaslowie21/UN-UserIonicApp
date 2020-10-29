@@ -16,14 +16,31 @@
     <ion-card-header>Upload a picture to serve as your resource picture!</ion-card-header>
     <ion-card-content>
       <form>
-      <div>
+      <div *ngIf = "resourceType != 'item' && resourceType != 'venue' ">
         <input type="file" name="image1" (change)="selectImage($event)" />
+        <ion-button type="submit" expand="block" (click)="onSubmit()">Upload</ion-button>
+      </div>
+      <div *ngIf = "resourceType == 'item' || resourceType == 'venue' ">
+        <input type="file" multiple name="image1" (change)="selectImage($event)" />
         <ion-button type="submit" expand="block" (click)="onSubmit()">Upload</ion-button>
       </div>
     </form>
     </ion-card-content>
   </ion-card>
-
+  <div *ngIf = "resourceType == 'item'">
+    <h4>Current Item Images (Max. 10)</h4>
+    <p *ngIf = "itemImages == undefined || itemImages.length ==0">You don't have any item images yet. Start uploading now!</p>
+    <ion-card *ngFor = "let i of itemImages">
+      <div class="aligned">
+        <img class="aligned card-img-top img-fluid d-block" style="width: 150px; height: 150px; object-fit: cover;" [src]=i.imgPath alt="Item Image">
+        <div style="padding-left: 10px;">
+          <p style='font-weight: bold;'>{{i.name}}</p>
+          <ion-button style="fill: outline;" (click)="presentItemAlertConfirm($event, i.index)" >Remove</ion-button>
+        </div> 
+      </div>
+    
+    </ion-card>
+  </div>
   <div *ngIf = "resourceType == 'venue'">
     <h4>Current Venue Images (Max. 10)</h4>
     <p *ngIf = "venueImages == undefined || venueImages.length ==0">You don't have any venue images yet. Start uploading now!</p>
