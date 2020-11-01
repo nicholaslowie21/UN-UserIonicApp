@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+    <ion-title>Reward Details</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card  > 
+    <img [src]=imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
+    <ion-card-header>
+      <ion-card-title style="text-align: center" >{{reward.title}}</ion-card-title>
+      <div class="aligned">
+        <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=accountImgPath  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <ion-title>{{reward.accountName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-title>
+      </div>
+        <div>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+                Points
+            </ion-col>
+            <ion-col>
+                Valid Date
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+                {{reward.point}}
+            </ion-col>
+            <ion-col>
+              <ion-card-subtitle>{{formatDate(reward.createdAt)}}-{{formatDate(reward.endDate)}}</ion-card-subtitle>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      
+    </ion-card-header>
+    <ion-card-content>
+    <p class="customStyle">Reward Description: {{reward.desc}}<br></p>
+    <p>Country: {{reward.country}}<br></p>
+    <p>Minimum Tier: {{reward.minTier}}</p>
+    <ion-button expand="full" (click)="redeem()">Redeem</ion-button>
+  </ion-card-content>
+  </ion-card>
+</ion-content>

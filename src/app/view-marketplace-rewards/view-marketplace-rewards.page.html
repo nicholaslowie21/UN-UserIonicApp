@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-title>Rewards Marketplace</ion-title>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="filterRewardsList($event)" placeholder="Search"></ion-searchbar>
+  
+  <ion-item>
+    <ion-label position="floating">Tiers</ion-label>
+    <ion-select placeholder="Filter by Tier" id="s" name="s" [(ngModel)]="tier" (ionChange)= "filterTiers(tier)">
+      <ion-select-option *ngFor="let t of tierList" [value]="t.tier">{{t.tier}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-label style="text-decoration: underline; float: right; padding-right: 5px" (click)="reset()">Reset</ion-label><br>
+  <div style="text-align: center" *ngIf="(filterList == undefined||filterList.length == 0) == true">
+      <h4>No Records of Rewards could be found!</h4>
+  </div>
+  <ion-card  *ngFor="let n of filterList">
+    <div class="aligned">
+      <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewSponsorProfile($event, n)" style="width: 40px; height: 40px; object-fit: cover;" [src]=n.accountImgPath alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+      <div>
+        <div class = "aligned">
+          <ion-label style="font-weight: bold" (click)="viewSponsorProfile($event, n)">{{n.accountName}}</ion-label>
+          <ion-icon name="checkmark-circle" size="big"></ion-icon>
+        </div>
+      </div> 
+    </div>  
+    <img [src]=n.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
+    <ion-card-header>
+      <ion-card-title (click)="viewDetails(n)">{{n.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+    <p class="customStyle">Reward Description: {{n.desc}}<br></p>
+    <p>Country: {{n.country}}<br></p>
+    <p>Points: {{n.point}}</p>
+    <p>Minimum Tier: {{n.minTier}}</p>
+    <ion-card-subtitle>Start Date: <ion-badge color="dark">{{formatDate(n.createdAt)}}</ion-badge></ion-card-subtitle>
+    <ion-card-subtitle>End Date: <ion-badge color="dark">{{formatDate(n.endDate)}}</ion-badge></ion-card-subtitle>
+  </ion-card-content>
+  </ion-card>
+</ion-content>
+

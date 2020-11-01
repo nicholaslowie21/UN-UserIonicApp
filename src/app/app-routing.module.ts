@@ -238,14 +238,32 @@ const routes: Routes = [
   {
     path: 'rate-contributors',
     loadChildren: () => import('./resourceNeeds/rate-contributors/rate-contributors.module').then( m => m.RateContributorsPageModule)
-  },  {
+  },
+  {
     path: 'edit-rating',
     loadChildren: () => import('./resourceNeeds/edit-rating/edit-rating.module').then( m => m.EditRatingPageModule)
   },
   {
     path: 'my-project-requests',
     loadChildren: () => import('./resourcemanagement/my-project-requests/my-project-requests.module').then( m => m.MyProjectRequestsPageModule)
+  },
+  {
+    path: 'view-marketplace-rewards',
+    loadChildren: () => import('./view-marketplace-rewards/view-marketplace-rewards.module').then( m => m.ViewMarketplaceRewardsPageModule)
+  },
+  {
+    path: 'view-marketplace-reward-details/:Id',
+    loadChildren: () => import('./view-marketplace-reward-details/view-marketplace-reward-details.module').then( m => m.ViewMarketplaceRewardDetailsPageModule)
+  },
+  {
+    path: 'redeem-reward/:Id',
+    loadChildren: () => import('./redeem-reward/redeem-reward.module').then( m => m.RedeemRewardPageModule)
+  },  {
+    path: 'reward-confirmation',
+    loadChildren: () => import('./reward-confirmation/reward-confirmation.module').then( m => m.RewardConfirmationPageModule)
   }
+
+
 
 
 
