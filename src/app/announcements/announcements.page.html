@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Announcements</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let a of announcements">
+    <ion-card-header>
+      <ion-card-title>{{a.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{a.desc}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

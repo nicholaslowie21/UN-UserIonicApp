@@ -258,20 +258,19 @@ const routes: Routes = [
   {
     path: 'redeem-reward/:Id',
     loadChildren: () => import('./redeem-reward/redeem-reward.module').then( m => m.RedeemRewardPageModule)
-  },  {
+  },
+  {
     path: 'reward-confirmation',
     loadChildren: () => import('./reward-confirmation/reward-confirmation.module').then( m => m.RewardConfirmationPageModule)
+  },
+  {
+    path: 'transfer-rewards',
+    loadChildren: () => import('./transfer-rewards/transfer-rewards.module').then( m => m.TransferRewardsPageModule)
+  },
+  {
+    path: 'announcements',
+    loadChildren: () => import('./announcements/announcements.module').then( m => m.AnnouncementsPageModule)
   }
-
-
-
-
-
-
-
-
-
-
 
 ];
 @NgModule({

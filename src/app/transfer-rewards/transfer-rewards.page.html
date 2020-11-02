@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="dismiss()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Transfer Rewards</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <img [src]=voucherImg alt="Reward Picture" onerror="this.src='./assets/img/projects.jpg'">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-card-title>{{voucherTitle}}</ion-card-title>
+          </ion-col>
+          <ion-col>
+            <ion-card-subtitle style="text-align: right">{{code}}</ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+        <ion-row size="3">
+            <ion-col>
+              <ion-card-subtitle>{{voucherDesc}}</ion-card-subtitle>
+            </ion-col>
+        </ion-row>
+      
+      
+    </ion-grid>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col><p>Validity: <ion-card-subtitle>{{formatDate(claimedAt)}}-{{formatDate(endDate)}}</ion-card-subtitle></p></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <h1 style="padding-left: 15px">You can provide the transfer code to your friend as well!</h1>
+  <form name="form" (ngSubmit)="search(words)" novalidate>
+    <ion-item transparent>
+        <div class="form-group">
+          <ion-input type="text" placeholder="Search" name="words" [(ngModel)]="words" required></ion-input>
+        </div>
+    </ion-item>
+    <div class="form-group">
+      <ion-button expand="block" style = "margin-left: 10px; margin-right:10px;" (click)="search(words)">Search</ion-button>
+    </div>
+
+  </form>
+  <ion-list >
+    <ion-card *ngFor="let u of users">
+      <div class="aligned">
+      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=u.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+      &nbsp;
+      <h6><div style="font-weight:bolder">{{u.username}}</div><br>{{u.country}}</h6>
+      <ion-toolbar >
+        <ion-button class="add" (click)="presentAlertConfirm(u)" >Transfer</ion-button>
+      </ion-toolbar>
+      </div>
+    </ion-card>
+  </ion-list>
+</ion-content>

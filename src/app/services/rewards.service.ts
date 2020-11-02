@@ -45,6 +45,27 @@ export class RewardsService {
     );
   }
 
+  getVouchers(): Observable<any> {
+    return this.http.get(this.API_URL + '/voucher?status=active', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+  
+
+  transferReward(data) {
+    return this.http.post(this.API_URL + '/transfer/voucher', {"voucherId": data.voucherId, "targetId": data.targetId}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  claimVoucher(data) {
+    return this.http.post(this.API_URL + '/claim/voucher', {"voucherId": data}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
 
   private handleError(error: HttpErrorResponse)
 	{
