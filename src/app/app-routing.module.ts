@@ -270,7 +270,11 @@ const routes: Routes = [
   {
     path: 'announcements',
     loadChildren: () => import('./announcements/announcements.module').then( m => m.AnnouncementsPageModule)
+  },  {
+    path: 'view-announcement-details',
+    loadChildren: () => import('./view-announcement-details/view-announcement-details.module').then( m => m.ViewAnnouncementDetailsPageModule)
   }
+
 
 ];
 @NgModule({

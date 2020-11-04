@@ -45,8 +45,22 @@ export class RewardsService {
     );
   }
 
-  getVouchers(): Observable<any> {
+  getActiveVouchers(): Observable<any> {
     return this.http.get(this.API_URL + '/voucher?status=active', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getClaimedVouchers(): Observable<any> {
+    return this.http.get(this.API_URL + '/voucher?status=claimed', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getExpiredVouchers(): Observable<any> {
+    return this.http.get(this.API_URL + '/voucher?status=expired', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

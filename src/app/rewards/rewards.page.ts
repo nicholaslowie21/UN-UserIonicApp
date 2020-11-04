@@ -19,6 +19,10 @@ export class RewardsPage implements OnInit {
   accountBoolean: boolean;
   vouchers: any;
   modal: any;
+  activeVouchers: any;
+  type: any;
+  claimedVouchers: any;
+  expiredVouchers: any;
 
   constructor(private router: Router, 
     private sessionService: SessionService, 
@@ -37,6 +41,7 @@ export class RewardsPage implements OnInit {
     } else {
       this.accountBoolean = false;
     }
+    this.type = "active";
    }
 
   ngOnInit() {
@@ -49,16 +54,39 @@ export class RewardsPage implements OnInit {
   }
 
   initialise() {
-    this.rewardsService.getVouchers().subscribe((res)=> {
-        this.vouchers = res.data.vouchers
-        if(this.vouchers != undefined) {
-          for(var i = 0; i < this.vouchers.length; i ++) {
-            this.vouchers[i].rewardImgPath = this.sessionService.getRscPath() + this.vouchers[i].rewardImgPath +'?random+=' + Math.random();
+    this.rewardsService.getActiveVouchers().subscribe((res)=> {
+        this.activeVouchers = res.data.vouchers
+        if(this.activeVouchers != undefined) {
+          for(var i = 0; i < this.activeVouchers.length; i ++) {
+            this.activeVouchers[i].rewardImgPath = this.sessionService.getRscPath() + this.activeVouchers[i].rewardImgPath +'?random+=' + Math.random();
           }
         }
     }, (err) => {
       console.log("*********Retrieve Voucher error: " + err.error.msg)
     })
+
+    this.rewardsService.getClaimedVouchers().subscribe((res)=> {
+      this.claimedVouchers = res.data.vouchers
+      if(this.claimedVouchers != undefined) {
+        for(var i = 0; i < this.claimedVouchers.length; i ++) {
+          this.claimedVouchers[i].rewardImgPath = this.sessionService.getRscPath() + this.claimedVouchers[i].rewardImgPath +'?random+=' + Math.random();
+        }
+      }
+  }, (err) => {
+    console.log("*********Retrieve Voucher error: " + err.error.msg)
+  })
+
+  this.rewardsService.getExpiredVouchers().subscribe((res)=> {
+    this.expiredVouchers = res.data.vouchers
+    if(this.expiredVouchers != undefined) {
+      for(var i = 0; i < this.expiredVouchers.length; i ++) {
+        this.expiredVouchers[i].rewardImgPath = this.sessionService.getRscPath() + this.expiredVouchers[i].rewardImgPath +'?random+=' + Math.random();
+      }
+    }
+}, (err) => {
+  console.log("*********Retrieve Voucher error: " + err.error.msg)
+})
+  
   }
 
   formatDate(date): any {
@@ -136,5 +164,9 @@ export class RewardsPage implements OnInit {
     this.modal.onWillDismiss().then((data) => {
   });
     return await this.modal.present();
+  }
+
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
   }
 }
