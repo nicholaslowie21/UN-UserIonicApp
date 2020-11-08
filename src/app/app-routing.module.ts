@@ -273,6 +273,14 @@ const routes: Routes = [
   },  {
     path: 'view-announcement-details',
     loadChildren: () => import('./view-announcement-details/view-announcement-details.module').then( m => m.ViewAnnouncementDetailsPageModule)
+  },
+  {
+    path: 'create-report',
+    loadChildren: () => import('./report/create-report/create-report.module').then( m => m.CreateReportPageModule)
+  },
+  {
+    path: 'my-reports',
+    loadChildren: () => import('./report/my-reports/my-reports.module').then( m => m.MyReportsPageModule)
   }
 
 

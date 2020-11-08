@@ -8,6 +8,9 @@
     <div slot="end">
     <ion-button slot="end" color="danger" *ngIf="founderBoolean==true && completedBoolean == false" (click)="complete($event)">Project<br>Completed</ion-button>
   </div>
+  <div *ngIf="founderBoolean != true" slot="end">
+    <ion-button  color="danger" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon>Report</ion-button>
+  </div>
   </ion-toolbar>
 
   

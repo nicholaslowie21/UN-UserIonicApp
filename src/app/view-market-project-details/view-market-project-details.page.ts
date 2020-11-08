@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavController, ToastController, AlertController, ModalController } from '@ionic/angular';
 import { CreateMoneyRequestPage } from '../funding/create-money-request/create-money-request.page';
+import { CreateReportPage } from '../report/create-report/create-report.page';
 import { InstitutionService } from '../services/institution.service';
 import { ProjectService } from '../services/project.service';
 import { SessionService } from '../services/session.service';
@@ -447,6 +448,14 @@ console.log(this.completedBoolean);
 
   renderImg(imgPath): any {
     return this.sessionService.getRscPath() + imgPath;
+  }
+
+  async report() {
+    this.modal = await this.modalController.create({
+      component: CreateReportPage,
+      componentProps: {"targetId": this.id, "type": "project", "name": this.projectToView.title}
+    });
+    return await this.modal.present();
   }
 
 }

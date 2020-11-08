@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { CreateReportPage } from '../report/create-report/create-report.page';
 import { InstitutionService } from '../services/institution.service';
 import { RewardsService } from '../services/rewards.service';
 import { SessionService } from '../services/session.service';
@@ -20,13 +22,16 @@ export class ViewMarketplaceRewardDetailsPage implements OnInit {
   reward: any;
   imgPath: string;
   accountImgPath: string;
+  modal: any;
 
   constructor(private router: Router, 
     private sessionService: SessionService, 
     private tokenStorage: TokenStorageService,
     private rewardsService: RewardsService,
     private userService: UserService,
-    private institutionService: InstitutionService, private activatedRoute: ActivatedRoute) {
+    private institutionService: InstitutionService, 
+    private activatedRoute: ActivatedRoute,
+    private modalController: ModalController) {
 
       this.accountType = this.tokenStorage.getAccountType();
     this.currentUser = this.tokenStorage.getUser();
@@ -63,5 +68,12 @@ export class ViewMarketplaceRewardDetailsPage implements OnInit {
     this.router.navigate(["/redeem-reward/" + this.reward.id]);
   }
 
+  async report() {
+    this.modal = await this.modalController.create({
+      component: CreateReportPage,
+      componentProps: {"targetId": this.rewardId, "type": "reward", "name": this.reward.title}
+    });
+    return await this.modal.present();
+  }
 
 }

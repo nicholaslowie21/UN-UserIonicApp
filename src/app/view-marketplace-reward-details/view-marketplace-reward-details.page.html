@@ -4,6 +4,9 @@
     <ion-back-button></ion-back-button>
     <ion-title>Reward Details</ion-title>
     </ion-buttons>
+    <div *ngIf="id != reward.sponsorId" slot="end">
+      <ion-button  color="danger" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon>Report</ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
 
