@@ -20,6 +20,7 @@ export class ViewResourcePage implements OnInit {
   resourceId: any;
   resourceOwner: any;
   knowledgeOwners: any;
+  knowType: any;
   image: any;
   venueImage: any[];
   ownerImg: any;
@@ -135,6 +136,7 @@ export class ViewResourcePage implements OnInit {
     } else if (this.resourceType == "knowledge") {
       this.currResource = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.knowledge;
+        this.knowType = this.currResource.knowType;
         for(var o = 0; o < res.data.knowledge.owner.length; o++) {
           this.ownerIds[o] = res.data.knowledge.owner[o].theId;
         }

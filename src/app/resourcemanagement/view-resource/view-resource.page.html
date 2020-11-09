@@ -50,32 +50,45 @@
     </ion-card-header>
     <ion-card-content>
       <div *ngIf="resourceType == 'knowledge'">
-      <ion-item-divider>
-        <ion-label>Owners</ion-label>
-        <ion-buttons *ngIf="yourAccountBoolean==true" style="float: right;" slot="end" >
-        <ion-label style="font-weight: bold;">Edit Owners<ion-icon slot="end" name="create-sharp" (click)="toEditOwners($event)"></ion-icon></ion-label>
-      </ion-buttons>
-      </ion-item-divider>
-      <ion-item lines="none">
-          <div *ngIf="institutionKnowledgeOwner == true">
-          <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-          <ion-card-subtitle>{{resourceOwner.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-card-subtitle>
-        </div>
-        <div *ngFor="let o of ownersArray" >
-          <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=o.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-          <ion-card-subtitle>{{o.name}}<ion-icon *ngIf="o.isVerified == 'true'" name="checkmark-circle" size="big"></ion-icon> </ion-card-subtitle>
-        </div>
-      </ion-item>
-    </div>
+        <ion-item-divider>
+          <ion-label>Owners</ion-label>
+          <ion-buttons *ngIf="yourAccountBoolean==true" style="float: right;" slot="end" >
+          <ion-label style="font-weight: bold;">Edit Owners<ion-icon slot="end" name="create-sharp" (click)="toEditOwners($event)"></ion-icon></ion-label>
+        </ion-buttons>
+        </ion-item-divider>
+        <ion-item lines="none">
+            <div *ngIf="institutionKnowledgeOwner == true">
+            <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+            <ion-card-subtitle>{{resourceOwner.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-card-subtitle>
+          </div>
+          <div *ngFor="let o of ownersArray" >
+            <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=o.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+            <ion-card-subtitle>{{o.name}}<ion-icon *ngIf="o.isVerified == 'true'" name="checkmark-circle" size="big"></ion-icon> </ion-card-subtitle>
+          </div>
+        </ion-item>
+      </div>
 
       <ion-item-divider>
         <ion-label>Details</ion-label>
+        <ion-badge style="float: right;" slot="end">{{currResource.knowType}}</ion-badge>
       </ion-item-divider>
       <ion-item *ngIf="resourceType != 'knowledge'" lines="none">
         <p>Country: {{currResource.country}}</p>
       </ion-item>
       <ion-item *ngIf="resourceType == 'venue'" lines="none">
         <p>Address: {{currResource.address}}</p>
+      </ion-item>
+      <ion-item *ngIf="resourceType == 'knowledge' && currResource.link != ''" lines="none">
+        <p>Link: {{currResource.link}}</p>
+      </ion-item>
+      <ion-item *ngIf="resourceType == 'knowledge' && knowType =='patent' " lines="none">
+        <p *ngIf="currResource.patentNum != ''">Patent No.: {{currResource.patentNum}}</p>
+        <p *ngIf="currResource.expiry != null">Expiry Date: {{currResource.expiry}}</p>
+      </ion-item>
+      <ion-item *ngIf="resourceType == 'knowledge' && knowType =='publication' " lines="none">
+        <p *ngIf="currResource.issn != ''">ISSN: {{currResource.issn}}</p>
+        <p *ngIf="currResource.doi != ''">DOI: {{currResource.doi}}</p>
+        <p *ngIf="currResource.issueDate != null">Issue Date: {{currResource.issueDate}}</p>
       </ion-item>
       <ion-item lines="none">
         <p>Description: {{currResource.desc}}</p>

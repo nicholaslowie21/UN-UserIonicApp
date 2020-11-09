@@ -88,6 +88,7 @@ export class MyResourcesPage implements OnInit {
       this.resourceService.getInstitutionPrivateKnowledgeResource().subscribe((res) => {
          
           this.knowledgeResource = res.data.knowledges;
+          this.knowledgeResourceList = this.knowledgeResource;
           if(this.knowledgeResource.length > 0) {
             this.noKnowledgeResourceBoolean = false;
           } else {
@@ -107,7 +108,16 @@ export class MyResourcesPage implements OnInit {
         if(this.itemResource.length > 0) {
           this.noItemResourceBoolean = false;
           for(var i = 0; i < this.itemResource.length; i++) {
-            this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+            if(this.itemResource[i].imgPath.length > 0) {
+              for (var j = 0; j < this.itemResource[i].imgPath.length; j++) {
+                this.itemResource[i].imgPath[j] = this.sessionService.getRscPath() + this.itemResource[i].imgPath[j] + '?random+=' + Math.random(); 
+                console.log(1);
+              }
+              this.noItemPicBoolean = false;
+            } else {
+              this.noItemPicBoolean = true;
+            }
+            // this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
           }
         } else {
             this.noItemResourceBoolean = true;
@@ -123,6 +133,7 @@ export class MyResourcesPage implements OnInit {
 
       this.resourceService.getInstitutionPrivateVenueResource().subscribe((res) => {
         this.venueResource = res.data.venues
+        this.venueResourceList = this.venueResource;
         if(this.venueResource.length > 0) {
           this.noVenueResourceBoolean = false;
           for(var i = 0; i < this.venueResource.length; i++) {
@@ -145,6 +156,7 @@ export class MyResourcesPage implements OnInit {
   } else if(this.accountBoolean == false) {
         this.resourceService.getUserPrivateKnowledgeResource().subscribe((res) => {
         this.knowledgeResource = res.data.knowledges;
+        console.log(this.knowledgeResource);
         this.knowledgeResourceList = this.knowledgeResource;
         if(this.knowledgeResource.length > 0) {
           this.noKnowledgeResourceBoolean = false;

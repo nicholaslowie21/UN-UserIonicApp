@@ -226,6 +226,13 @@ export class ResourceService {
       "knowledgeId": data.knowledgeId,
       "title": data.title,
       "desc": data.desc,
+      "knowType": data.knowType,
+      "link": data.link,
+      "patentNum": data.patentNum,
+      "expiry": data.expiry,
+      "issn": data.issn,
+      "doi": data.doi,
+      "issueDate": data.issueDate
     }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),

@@ -8,8 +8,6 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-<form #form="ngForm" (ngSubmit)="createRes(form)">
-
   <div *ngIf="resultSuccess == true" style="color: blue;">
     {{message}}
   </div>
@@ -17,6 +15,7 @@
   <div *ngIf="resultError == true" style="color: red;">
     {{message}}
   </div>
+<form #form="ngForm" (ngSubmit)="createRes(form)">
 
   <ion-item>
     <ion-label>Resource Type*</ion-label>
@@ -56,32 +55,32 @@
 
   <ion-item *ngIf = "isKnowledgeType == true">
     <ion-label position="floating">Link</ion-label>
-    <ion-textarea ngModel name="link" [(ngModel)]="link" required minlength="3" #inlink="ngModel"></ion-textarea>
+    <ion-input ngModel name="link" [(ngModel)]="link" required minlength="3" #inlink="ngModel"></ion-input>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='patent'">
     <ion-label position="floating">Expiry Date (YYYY-MM-DD)</ion-label>
-    <ion-textarea ngModel name="expiry" [(ngModel)]="expiry" required minlength="3" #inexpiry="ngModel"></ion-textarea>
+    <ion-input ngModel name="expiry" [(ngModel)]="expiry" required minlength="3" #inexpiry="ngModel"></ion-input>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='patent'">
     <ion-label position="floating">Patent No.</ion-label>
-    <ion-textarea ngModel name="patentNum" [(ngModel)]="patentNum" required minlength="3" #inpatentnum="ngModel"></ion-textarea>
+    <ion-input ngModel name="patentNum" [(ngModel)]="patentNum" required minlength="3" #inpatentnum="ngModel"></ion-input>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='publication'">
     <ion-label position="floating">ISSN</ion-label>
-    <ion-textarea ngModel name="issn" [(ngModel)]="issn" required minlength="3" #inissn="ngModel"></ion-textarea>
+    <ion-input ngModel name="issn" [(ngModel)]="issn" required minlength="3" #inissn="ngModel"></ion-input>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='publication'">
     <ion-label position="floating">DOI</ion-label>
-    <ion-textarea ngModel name="doi" [(ngModel)]="doi" required minlength="3" #indoi="ngModel"></ion-textarea>
+    <ion-input ngModel name="doi" [(ngModel)]="doi" required minlength="3" #indoi="ngModel"></ion-input>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='publication'">
     <ion-label position="floating">Issue Date (YYYY-MM-DD)</ion-label>
-    <ion-textarea ngModel name="issueDate" [(ngModel)]="issueDate" required minlength="3" #inissuedate="ngModel"></ion-textarea>
+    <ion-input ngModel name="issueDate" [(ngModel)]="issueDate" required minlength="3" #inissuedate="ngModel"></ion-input>
   </ion-item>
 
   <ion-item *ngIf="isVenueType == true || isItemType == true">
