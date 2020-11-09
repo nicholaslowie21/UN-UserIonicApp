@@ -59,13 +59,25 @@
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='patent'">
-    <ion-label position="floating">Expiry Date (YYYY-MM-DD)</ion-label>
-    <ion-input ngModel name="expiry" [(ngModel)]="expiry" required minlength="3" #inexpiry="ngModel"></ion-input>
+    <ion-label position="floating">Expiry Date (YYYY-MM-DD)*</ion-label>
+    <ion-input ngModel name="expiry" [(ngModel)]="expiry" required minlength="10" #inexpiry="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && inexpiry.invalid">
+      <div *ngIf="inexpiry.errors.required">Expiry Date is required</div>
+      <div *ngIf="inexpiry.errors.minlength">
+        Expiry Date must be in the format of YYYY-MM-DD
+      </div>
+    </div>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='patent'">
-    <ion-label position="floating">Patent No.</ion-label>
+    <ion-label position="floating">Patent No.*</ion-label>
     <ion-input ngModel name="patentNum" [(ngModel)]="patentNum" required minlength="3" #inpatentnum="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && inpatentnum.invalid">
+      <div *ngIf="inpatentnum.errors.required">Patent No. is required</div>
+      <div *ngIf="inpatentnum.errors.minlength">
+        Patent No. must be at least 3 characters
+      </div>
+    </div>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='publication'">
