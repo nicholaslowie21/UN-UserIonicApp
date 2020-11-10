@@ -451,4 +451,8 @@ export class ViewOthersProfilePage implements OnInit {
   return await this.modal.present();
 }
 
+openChat() {
+  this.router.navigate(["/chatroom/" + this.id + "/" + this.accountType + "/" +this.name])
+}
+
 }

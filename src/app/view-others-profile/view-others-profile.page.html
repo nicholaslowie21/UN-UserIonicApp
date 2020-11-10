@@ -17,9 +17,9 @@
 
 <ion-content [fullscreen]="true"> 
 <ion-card>
-  <!--<ion-buttons>
-    <ion-icon size=large name="share-social-outline" (click)="presentActionSheet()" style="padding-top: 10px;padding-left:10px"></ion-icon>
-  </ion-buttons>-->
+  <ion-button expand="full" (click)="openChat()">
+    <ion-icon name="chatbubbles-sharp"></ion-icon>Chat with {{name}}
+  </ion-button>
   <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <div class="centered">
       

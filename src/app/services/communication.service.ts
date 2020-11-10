@@ -13,8 +13,10 @@ const httpOptions = {
 
 export class CommunicationService {
   API_URL: string;
+  CHAT_URL: string;
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService, private sessionService: SessionService) {
-    this.API_URL = this.sessionService.getRootPath() + '/communication/';
+    this.API_URL = this.sessionService.getRootPath() + '/communication';
+    this.CHAT_URL = this.API_URL + '/chat';
    }
 
    viewAnnouncements(): Observable<any> {
@@ -23,6 +25,35 @@ export class CommunicationService {
     }, error => this.handleError(error)),
     );
   }
+
+  chatWith(data): Observable<any> {
+    return this.http.post(this.CHAT_URL + '/chatAccount', {"chatType": "normal", "targetId": data.targetId, "targetType": data.targetType}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  sendChatMessage(data) {
+    return this.http.post(this.CHAT_URL + '/send', {"roomId": data.roomId, "message": data.message}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getChatRooms(): Observable<any> {
+    return this.http.get(this.CHAT_URL + '/rooms?chatType=normal', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getChatMessages(data): Observable<any> {
+    return this.http.get(this.CHAT_URL + '/chats?roomId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
 
   private handleError(error: HttpErrorResponse)
 	{

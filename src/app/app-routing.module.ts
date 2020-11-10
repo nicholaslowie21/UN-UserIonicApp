@@ -270,7 +270,8 @@ const routes: Routes = [
   {
     path: 'announcements',
     loadChildren: () => import('./announcements/announcements.module').then( m => m.AnnouncementsPageModule)
-  },  {
+  },
+  {
     path: 'view-announcement-details',
     loadChildren: () => import('./view-announcement-details/view-announcement-details.module').then( m => m.ViewAnnouncementDetailsPageModule)
   },
@@ -281,6 +282,10 @@ const routes: Routes = [
   {
     path: 'my-reports',
     loadChildren: () => import('./report/my-reports/my-reports.module').then( m => m.MyReportsPageModule)
+  },
+  {
+    path: 'chatroom/:Id/:type/:name',
+    loadChildren: () => import('./chats/chatroom/chatroom.module').then( m => m.ChatroomPageModule)
   }
 
 
