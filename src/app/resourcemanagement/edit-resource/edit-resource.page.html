@@ -73,7 +73,7 @@
 
   <ion-item *ngIf="resourceType == 'knowledge' && knowType =='patent'">
     <ion-label position="floating">Expiry Date (YYYY-MM-DD)</ion-label>
-    <ion-input ngModel name="expiry" [(ngModel)]="currResource.expiry" required minlength="3" #inexpiry="ngModel"></ion-input>
+    <ion-input ngModel name="expiry" [(ngModel)]="expiry" required minlength="3" #inexpiry="ngModel"></ion-input>
   </ion-item>
 
   <ion-item *ngIf="resourceType == 'knowledge' && knowType =='publication'">
