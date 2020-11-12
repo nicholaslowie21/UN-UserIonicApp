@@ -7,7 +7,8 @@ import { AuthService } from '../services/authentication.service';
 import { SessionService } from '../services/session.service';
 import { InstitutionService } from '../services/institution.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ActionSheetController, NavController } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController } from '@ionic/angular';
+import { CreateReportPage } from '../report/create-report/create-report.page';
 
 @Component({
   selector: 'app-view-others-profile',
@@ -44,6 +45,7 @@ export class ViewOthersProfilePage implements OnInit {
   profileFeed: any;
   reversedProfileFeed: any;
   page: any;
+  modal: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -55,7 +57,8 @@ export class ViewOthersProfilePage implements OnInit {
     private socialSharing: SocialSharing, 
     private actionSheet: ActionSheetController,
     private activatedRoute: ActivatedRoute,
-    private navCtrl: NavController) { 
+    private navCtrl: NavController,
+    private modalController: ModalController) { 
     
   }
 
@@ -439,5 +442,17 @@ export class ViewOthersProfilePage implements OnInit {
     //this.router.navigate([this.originPage]);
     this.tokenStorage.saveViewId(this.tokenStorage.getUser().data.user.id);
  }
+
+ async report() {
+  this.modal = await this.modalController.create({
+    component: CreateReportPage,
+    componentProps: {"targetId": this.id, "type": this.accountType, "name": this.name}
+  });
+  return await this.modal.present();
+}
+
+openChat() {
+  this.router.navigate(["/chatroom/" + this.id + "/" + this.accountType + "/" +this.name])
+}
 
 }

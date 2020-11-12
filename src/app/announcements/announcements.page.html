@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Announcements</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let a of announcements">
+    <ion-card-header>
+      <ion-card-title (click)="presentPopover($event, a)">{{a.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p class="customStyle">{{a.desc}}</p>
+      <p>{{formatDate(a.createdAt)}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,7 +1,7 @@
 import { AuthService } from '../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { ToastController } from '@ionic/angular';
+import { PopoverController, ToastController } from '@ionic/angular';
 import { TokenStorageService } from '../services/token-storage.service';
 import { ProjectService } from '../services/project.service';
 import { SessionService } from '../services/session.service';
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { InstitutionService } from '../services/institution.service';
 import { UserService } from '../services/user.service';
 import { MarketplaceService } from '../services/marketplace.service';
+import { AnnouncementsPage } from '../announcements/announcements.page';
+import { CommunicationService } from '../services/communication.service';
  
 @Component({
   selector: 'app-home',
@@ -25,6 +27,8 @@ export class HomePage implements OnInit {
   newsFeedList: any[];
   pages: string;
   discoverList: any[];
+  announcements: any;
+  unread: number;
  
   constructor(private marketplaceService: MarketplaceService,
     private institutionService: InstitutionService, 
@@ -34,7 +38,9 @@ export class HomePage implements OnInit {
     private storage: Storage, 
     private toastController: ToastController, 
     private tokenStorage: TokenStorageService, 
-    private sessionService: SessionService) { 
+    private sessionService: SessionService,
+    private popoverController:PopoverController,
+    private commService:CommunicationService) { 
     this.accountType = this.tokenStorage.getAccountType();
     this.currentUser = this.tokenStorage.getUser();
     if(this.accountType == "institution") {
@@ -48,12 +54,14 @@ export class HomePage implements OnInit {
     this.tokenStorage.getUser();
     this.getNewsFeed();
     this.getDiscover();
+    this.getAnnouncements();
   }
 
   ionViewDidEnter(){
     this.currentUser = this.tokenStorage.getUser();
     this.getNewsFeed();
     this.getDiscover();
+    this.getAnnouncements();
   }
  
   getNewsFeed() {
@@ -77,6 +85,26 @@ export class HomePage implements OnInit {
       console.log(err.error.msg);
     })
 
+  }
+
+  getAnnouncements() {
+    console.log(this.tokenStorage.getAnnouncementLength() == undefined);
+    if(this.tokenStorage.getAnnouncementLength() == undefined) {
+      this.tokenStorage.saveAnnouncementLength(0)
+    } 
+    this.commService.viewAnnouncements().subscribe((res) => {
+      this.announcements = res.data.announcements;
+      if(this.announcements != undefined) {
+        console.log(this.tokenStorage.getAnnouncementLength());
+        this.unread = this.announcements.length - this.tokenStorage.getAnnouncementLength();
+        this.tokenStorage.saveAnnouncementLength(this.announcements.length)
+        console.log(this.announcements.length);
+      }
+      
+  }, (err) => {
+    console.log("View Announcement Error: " + err.error.msg);
+  })
+  
   }
 
   getDiscover() {
@@ -163,6 +191,16 @@ export class HomePage implements OnInit {
   formatDate(date): any {
     let formattedDate = new Date(date).toUTCString();
     return formattedDate.substring(5, formattedDate.length-13);
+  }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: AnnouncementsPage,
+      cssClass: 'my-custom-class',
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
   }
  
 }

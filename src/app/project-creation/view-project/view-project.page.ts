@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 import { isRegExp } from 'util';
 import { FormGroup, NgForm } from '@angular/forms';
 import { EditRatingPage } from 'src/app/resourceNeeds/edit-rating/edit-rating.page';
+import { CreateReportPage } from 'src/app/report/create-report/create-report.page';
 
 @Component({
   selector: 'app-view-project',
@@ -476,5 +477,13 @@ console.log(this.completedBoolean);
 
   renderImg(imgPath): any {
     return this.sessionService.getRscPath() + imgPath;
+  }
+
+  async report() {
+    this.modal = await this.modalCtrl.create({
+      component: CreateReportPage,
+      componentProps: {"targetId": this.id, "type": "project", "name": this.projectToView.title}
+    });
+    return await this.modal.present();
   }
 }

@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Reports</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar>
+  <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="pending" checked>
+      <ion-label>Pending</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="progress">
+      <ion-label>Progress</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="solved">
+      <ion-label>Solved</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="declined">
+      <ion-label>Declined</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+  <ion-list [ngSwitch]="type">
+    <div *ngSwitchCase="'pending'" >
+      <div style="padding-left: 15px" *ngIf="(pendingReports == undefined || pendingReports.length == 0) == true">
+        You do not have any pending reports!
+        </div>
+      <ion-card *ngFor="let p of pendingReports">
+        <ion-card-header>
+          <ion-card-title>{{p.title}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p *ngIf="p.targetTitle != ''">Reported: {{p.targetTitle}}</p>
+          <p *ngIf="p.targetTitle == ''">Reported: {{p.targetName}}</p>
+          <p>Summary: {{p.summary}}</p>
+          <p>Created At: <ion-badge>{{formatDate(p.createdAt)}}</ion-badge></p>
+          <p>Last update: <ion-badge>{{formatDate(p.updatedAt)}}</ion-badge></p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngSwitchCase="'progress'" >
+      <div style="padding-left: 15px" *ngIf="(progressReports == undefined || progressReports.length == 0) == true">
+        You do not have any reports in progress!
+        </div>
+      <ion-card *ngFor="let p of progressReports">
+        <ion-card-header>
+          <ion-card-title>{{p.title}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p *ngIf="p.targetTitle != ''">Reported: {{p.targetTitle}}</p>
+          <p *ngIf="p.targetTitle == ''">Reported: {{p.targetName}}</p>
+          <p>Summary: {{p.summary}}</p>
+          <p>Created At: <ion-badge>{{formatDate(p.createdAt)}}</ion-badge></p>
+          <p>Last update: <ion-badge>{{formatDate(p.updatedAt)}}</ion-badge></p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngSwitchCase="'solved'" >
+      <div style="padding-left: 15px" *ngIf="(solvedReports == undefined || solvedReports.length == 0) == true">
+        You do not have any solved reports!
+        </div>
+      <ion-card *ngFor="let s of solvedReports">
+        <ion-card-header>
+          <ion-card-title>{{s.title}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p *ngIf="s.targetTitle != ''">Reported: {{s.targetTitle}}</p>
+          <p *ngIf="s.targetTitle == ''">Reported: {{s.targetName}}</p>
+          <p>Summary: {{s.summary}}</p>
+          <p>Created At: <ion-badge>{{formatDate(s.createdAt)}}</ion-badge></p>
+          <p>Last update: <ion-badge>{{formatDate(s.updatedAt)}}</ion-badge></p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngSwitchCase="'declined'" >
+      <div style="padding-left: 15px" *ngIf="(declinedReports == undefined || declinedReports.length == 0) == true">
+        You do not have any declined reports!
+        </div>
+      <ion-card *ngFor="let d of declinedReports">
+        <ion-card-header>
+          <ion-card-title>{{d.title}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p *ngIf="d.targetTitle != ''">Reported: {{d.targetTitle}}</p>
+          <p *ngIf="d.targetTitle == ''">Reported: {{d.targetName}}</p>
+          <p>Summary: {{d.summary}}</p>
+          <p>Created At: <ion-badge>{{formatDate(d.createdAt)}}</ion-badge></p>
+          <p>Last update: <ion-badge>{{formatDate(d.updatedAt)}}</ion-badge></p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-list>
+  
+</ion-content>

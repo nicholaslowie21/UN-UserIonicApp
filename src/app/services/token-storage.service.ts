@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
+const ANNOUNCEMENT_LENGTH = 'annLength';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,20 @@ export class TokenStorageService {
   projectId: any;
   currResourceTitle: any;
   viewId: any;
+  announcementLength: any;
 
   constructor() { }
 
   signOut(): void {
     window.sessionStorage.clear();
+  }
+
+  public saveAnnouncementLength(a) {
+    window.sessionStorage.setItem(ANNOUNCEMENT_LENGTH, a);
+  }
+
+  public getAnnouncementLength(): any {
+    return sessionStorage.getItem(ANNOUNCEMENT_LENGTH);
   }
 
   public saveToken(token: string): void {

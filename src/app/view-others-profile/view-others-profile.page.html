@@ -1,15 +1,15 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
       <ion-buttons slot="start">
         <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title slot="start">{{ username }}</ion-title>
-      <ion-icon *ngIf="isVerified == true" name="checkmark-circle" size="big"></ion-icon>
-    </ion-buttons>
-      
-      
+        <ion-title slot="start">{{ username }}</ion-title>
+        <ion-icon *ngIf="isVerified == true" name="checkmark-circle" size="big"></ion-icon>
+
+      <div slot="end">
+        <ion-button  color="danger" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon>Report</ion-button>
+      </div>
 
   </ion-toolbar>
   
@@ -17,9 +17,9 @@
 
 <ion-content [fullscreen]="true"> 
 <ion-card>
-  <!--<ion-buttons>
-    <ion-icon size=large name="share-social-outline" (click)="presentActionSheet()" style="padding-top: 10px;padding-left:10px"></ion-icon>
-  </ion-buttons>-->
+  <ion-button expand="full" (click)="openChat()">
+    <ion-icon name="chatbubbles-sharp"></ion-icon>Chat with {{name}}
+  </ion-button>
   <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <div class="centered">
       

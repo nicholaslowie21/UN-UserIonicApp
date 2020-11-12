@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" slot="start" (click)="dismiss()" style="padding-left:10px"></ion-icon>
+    </ion-buttons>
+    <ion-title>Create Report</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="createReport()">
+    <ion-item>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>You are reporting: {{name}}</ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </ion-item>
+    <ion-item>
+      <ion-label style="font-weight:bold;" position="floating">Title</ion-label>
+      <ion-textarea ngModel name="title" [(ngModel)]="title" required minlength="3" #intitle="ngModel"></ion-textarea>
+      <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
+        <div *ngIf="intitle.errors.required">Title is required</div>
+        <div *ngIf="intitle.errors.minlength">
+          Title must be at least 3 characters
+        </div>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label style="font-weight:bold;" position="floating">Summary</ion-label>
+      <ion-textarea ngModel name="summary" [(ngModel)]="summary" required minlength="3" #insum="ngModel"></ion-textarea>
+      <div class="alert-danger" *ngIf="form.submitted && insum.invalid">
+        <div *ngIf="insum.errors.required">Summary is required</div>
+        <div *ngIf="insum.errors.minlength">
+          Summary must be at least 3 characters
+        </div>
+      </div>
+    </ion-item>
+
+    <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Report</ion-button>
+  </form>
+</ion-content>

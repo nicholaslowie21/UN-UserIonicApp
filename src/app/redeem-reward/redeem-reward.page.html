@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+    <ion-title>Redeem Rewards</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card>
+  <ion-card-header>
+      <ion-card-title>You are claiming for:{{reward.title}}</ion-card-title>
+      <ion-card-subtitle>Your current rank is: {{currentUser.data.user.tier}}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <p>Your current wallet: {{currentUser.data.user.wallet}}</p>
+    <ion-grid>
+      <ion-row style="border: 10px;">
+        <ion-col >
+          Item
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+        <ion-col>
+          
+        </ion-col>
+        <ion-col>
+          Cost
+        </ion-col>
+      </ion-row>
+      <hr>
+      <ion-row>
+        <ion-col>
+          1 x {{reward.title}}
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+        <ion-col>
+          
+        </ion-col>
+        <ion-col>
+          {{reward.point}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Total
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+        <ion-col>
+          
+        </ion-col>
+        <ion-col>
+          {{reward.point}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Remaining Wallet
+        </ion-col>
+        <ion-col>
+
+        </ion-col>
+        <ion-col>
+          
+        </ion-col>
+        <ion-col>
+          {{currentUser.data.user.wallet-reward.point}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button expand="full" (click)="confirmRedeemReward()">Confirm</ion-button>
+  </ion-card-content>
+</ion-card>
+</ion-content>

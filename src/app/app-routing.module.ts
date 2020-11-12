@@ -238,20 +238,62 @@ const routes: Routes = [
   {
     path: 'rate-contributors',
     loadChildren: () => import('./resourceNeeds/rate-contributors/rate-contributors.module').then( m => m.RateContributorsPageModule)
-  },  {
+  },
+  {
     path: 'edit-rating',
     loadChildren: () => import('./resourceNeeds/edit-rating/edit-rating.module').then( m => m.EditRatingPageModule)
   },
   {
     path: 'my-project-requests',
     loadChildren: () => import('./resourcemanagement/my-project-requests/my-project-requests.module').then( m => m.MyProjectRequestsPageModule)
+  },
+  {
+    path: 'view-marketplace-rewards',
+    loadChildren: () => import('./view-marketplace-rewards/view-marketplace-rewards.module').then( m => m.ViewMarketplaceRewardsPageModule)
+  },
+  {
+    path: 'view-marketplace-reward-details/:Id',
+    loadChildren: () => import('./view-marketplace-reward-details/view-marketplace-reward-details.module').then( m => m.ViewMarketplaceRewardDetailsPageModule)
+  },
+  {
+    path: 'redeem-reward/:Id',
+    loadChildren: () => import('./redeem-reward/redeem-reward.module').then( m => m.RedeemRewardPageModule)
+  },
+  {
+    path: 'reward-confirmation',
+    loadChildren: () => import('./reward-confirmation/reward-confirmation.module').then( m => m.RewardConfirmationPageModule)
+  },
+  {
+    path: 'transfer-rewards',
+    loadChildren: () => import('./transfer-rewards/transfer-rewards.module').then( m => m.TransferRewardsPageModule)
+  },
+  {
+    path: 'announcements',
+    loadChildren: () => import('./announcements/announcements.module').then( m => m.AnnouncementsPageModule)
+  },
+  {
+    path: 'view-announcement-details',
+    loadChildren: () => import('./view-announcement-details/view-announcement-details.module').then( m => m.ViewAnnouncementDetailsPageModule)
+  },
+  {
+    path: 'create-report',
+    loadChildren: () => import('./report/create-report/create-report.module').then( m => m.CreateReportPageModule)
+  },
+  {
+    path: 'my-reports',
+    loadChildren: () => import('./report/my-reports/my-reports.module').then( m => m.MyReportsPageModule)
+  },
+  {
+    path: 'chatroom/:Id/:type/:name',
+    loadChildren: () => import('./chats/chatroom/chatroom.module').then( m => m.ChatroomPageModule)
+  },  {
+    path: 'edit-targets',
+    loadChildren: () => import('./accountmanagement/edit-targets/edit-targets.module').then( m => m.EditTargetsPageModule)
+  },
+  {
+    path: 'view-profile-targets',
+    loadChildren: () => import('./view-profile-targets/view-profile-targets.module').then( m => m.ViewProfileTargetsPageModule)
   }
-
-
-
-
-
-
 
 
 

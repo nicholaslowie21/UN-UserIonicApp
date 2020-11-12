@@ -5,5 +5,29 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-searchbar (ionInput)="filterChatList($event)" placeholder="Search"></ion-searchbar>
+  <ion-card *ngFor="let chatroom of chatroomList">
+      <ion-card-header>
+        <ion-badge style="float:right">{{chatroom.updatedAt| date:'dd.MM.yyyy'}}</ion-badge>
+        <div class="aligned">
+          <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=chatroom.targetImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+        
+          <div class="aligned" *ngIf="chatroom.user1username == currentUser.data.user.username" >
+            <ion-card-title (click)="enterChatRoom(chatroom)">{{chatroom.user2username}}</ion-card-title>
+          </div>
+          <div class="aligned" *ngIf="chatroom.user1username != currentUser.data.user.username" >
+            <ion-card-title (click)="enterChatRoom(chatroom)">{{chatroom.user1username}}</ion-card-title>
+          </div>
+          <div class="aligned" *ngIf="(chatroom.user1username == currentUser.data.user.username)&& (chatroom.user1read == false)" >
+            <ion-badge style="float: right" color=danger>Unread</ion-badge>
+          </div>
+          <div class="aligned" *ngIf="(chatroom.user1username != currentUser.data.user.username) && (chatroom.user2read == false)" >
+            <ion-badge style="float: right" color=danger>Unread</ion-badge>
+          </div>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{chatroom.lastMessage}}</p>
+      </ion-card-content>
+  </ion-card>
 </ion-content>
