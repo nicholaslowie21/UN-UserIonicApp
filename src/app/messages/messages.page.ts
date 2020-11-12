@@ -127,6 +127,7 @@ export class MessagesPage implements OnInit {
       this.isCurrFilterType = "normal"
     } else if(this.isCurrFilterType == "normal") {
       this.initializeChats();
+      this.isCurrFilterType = "all";
     }
   }  
 
