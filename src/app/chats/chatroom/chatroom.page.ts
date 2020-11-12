@@ -30,6 +30,7 @@ export class ChatroomPage implements OnInit {
   subscribe: any;
   image: string;
   type: string;
+  tempLength: any;
 
   constructor(private activatedRoute: ActivatedRoute, private communicationService: CommunicationService
     ,private tokenStorage: TokenStorageService,
@@ -54,7 +55,14 @@ export class ChatroomPage implements OnInit {
 
     this.source = interval(3000);
     this.subscribe = this.source.subscribe(() => {
-      this.initialise();
+      this.getMessage();
+      var newLength = this.messages.length;
+      console.log("tempLength" + this.tempLength);
+      console.log("newLength" + newLength)
+      if(this.messages != undefined && newLength > this.tempLength) {
+        this.updateScroll();
+        this.tempLength = newLength;
+      }
       console.log("timer is running")
     }
      );
@@ -64,7 +72,10 @@ export class ChatroomPage implements OnInit {
    ionViewDidLeave(){
     this.subscribe.unsubscribe();
  }
-
+  ionViewDidEnter() {
+    this.id = this.activatedRoute.snapshot.paramMap.get('Id');
+    this.initialise();
+  }
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     this.type = this.activatedRoute.snapshot.paramMap.get('type');
@@ -84,10 +95,21 @@ export class ChatroomPage implements OnInit {
     }, (err) => {
       console.log("*****************Get Chat Room Fail err: " + err.error.msg)
     })
-
+    
   }
 
   initialise() {
+    console.log(this.chatroom.id)
+    this.communicationService.getChatMessages(this.chatroom.id).subscribe((res) => {
+      this.tempLength = this.messages.length;
+      this.messages = res.data.chats
+  }, (err) => {
+    console.log("*****************Get Chat Room Fail err: " + err.error.msg)
+  })
+  this.updateScroll();
+  }
+
+  getMessage() {
     console.log(this.chatroom.id)
     this.communicationService.getChatMessages(this.chatroom.id).subscribe((res) => {
       this.messages = res.data.chats
@@ -96,6 +118,7 @@ export class ChatroomPage implements OnInit {
   })
   }
 
+
   sendMessage() {
     if(this.message != "") {
         this.messageData = {
@@ -103,13 +126,14 @@ export class ChatroomPage implements OnInit {
           "message": this.message
         }
         this.communicationService.sendChatMessage(this.messageData).subscribe((res) => {
-            this.initialise();
-            this.updateScroll();
+            
+            
         }, (err) => {
           console.log("Send Message failure err: " + err.error.msg);
         })
         this.message = "";
     }
+    this.initialise();
   }
 
   viewProfile(ev) {
@@ -123,7 +147,11 @@ export class ChatroomPage implements OnInit {
 
   updateScroll() {
     console.log('scrollToBottom');
-    this.content.scrollToBottom();
+    setTimeout(() => {
+      if (this.content.scrollToBottom) {
+          this.content.scrollToBottom(400);
+      }
+  }, 500);
   }
 
 }

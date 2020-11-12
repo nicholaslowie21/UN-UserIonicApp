@@ -7,7 +7,8 @@ import { AuthService } from '../services/authentication.service';
 import { SessionService } from '../services/session.service';
 import { InstitutionService } from '../services/institution.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ModalController, PopoverController } from '@ionic/angular';
+import { ViewProfileTargetsPage } from '../view-profile-targets/view-profile-targets.page';
 
 @Component({
   selector: 'app-profile',
@@ -30,6 +31,7 @@ export class ProfilePage implements OnInit {
   profileFeed: any;
   reversedProfileFeed: any[];
   page: any;
+  modal: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -39,7 +41,8 @@ export class ProfilePage implements OnInit {
     private sessionService: SessionService, 
     private institutionService: InstitutionService, 
     private socialSharing: SocialSharing, 
-    private actionSheet: ActionSheetController) { 
+    private actionSheet: ActionSheetController,
+    private modalController:ModalController) { 
     
   }
 
@@ -193,6 +196,21 @@ parseDate(d: String) {
 
   getProjects($event) {
     this.router.navigate(['/my-projects/' + this.currentUser.data.user.id]);
+  }
+
+  getTargets($event) {
+    this.router.navigate(['/view-profile-targets/']);
+  }
+
+  async presentModal(resource) {
+    this.modal = await this.modalController.create({
+      component: ViewProfileTargetsPage,
+      componentProps: {"accountId": this.currentUser.data.user.id, "accountType": this.accountType, "accountName": this.currentUser.data.user.name}
+      
+    });
+    this.modal.onWillDismiss().then((data) => {
+  });
+    return await this.modal.present();
   }
 
   getResources($event) {

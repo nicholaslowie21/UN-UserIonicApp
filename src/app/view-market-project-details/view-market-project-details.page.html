@@ -122,6 +122,18 @@
   <div>
     <ion-item-group *ngSwitchCase="'manage'" >
       <ion-card>
+        <ion-item-divider >
+          <ion-label color=dark>Targets</ion-label>
+          <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
+          </ion-buttons>
+          
+      </ion-item-divider>
+      <ion-item  (click)="presentModal()" routerDirection="forward">
+        <ion-icon name="golf-outline" slot="start"></ion-icon>
+        <ion-label>SDG Target Relevance</ion-label>
+      </ion-item>
+      </ion-card>
+      <ion-card>
       <ion-item-divider>
         <ion-label color=dark>Admins</ion-label>
         <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
@@ -129,8 +141,11 @@
           
         </ion-buttons>
       </ion-item-divider>
-  
+      <div style="text-align: center" *ngIf="(admins == undefined||admins.length == 0) == true">
+        <h4>There are no records of Admins for this project</h4>
+      </div>
       <ion-item (click)="viewAdminProfile($event, a)" *ngFor="let a of admins">
+        
         <div class="aligned">
           <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=a.ionicImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
           <ion-label >{{a.name}}</ion-label>
@@ -146,7 +161,9 @@
             
         </ion-buttons>
       </ion-item-divider>
-      
+      <div style="text-align: center" *ngIf="(kpis == undefined||kpis.length == 0) == true">
+        <h4>There are no records of KPIs for this project.</h4>
+      </div>
       <ion-card *ngFor="let k of kpis" lines="none">
         <ion-card-header>
           <ion-card-title>{{k.title}}</ion-card-title>
@@ -168,6 +185,9 @@
           
         </ion-buttons>
       </ion-item-divider>
+      <div style="text-align: center" *ngIf="(resourceNeeds == undefined||resourceNeeds.length == 0) == true">
+        <h4>There are no Resource Needs for this project.</h4>
+      </div>
       <ion-card *ngFor="let r of resourceNeeds">
           <ion-badge style="float: right;" class="{{r.type}}type">{{r.type}}</ion-badge>
           <ion-card-header>

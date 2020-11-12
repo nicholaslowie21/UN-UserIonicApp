@@ -12,7 +12,7 @@
         <ion-label>Edit Profile</ion-label>
       </ion-item>
       <ion-item routerLink="/edit-targets" routerDirection="forward">
-        <ion-icon name="target-outline" slot="start"></ion-icon>
+        <ion-icon name="golf-outline" slot="start"></ion-icon>
         <ion-label>Edit Targets</ion-label>
       </ion-item>
       <div *ngIf="accountBoolean == false">
@@ -80,6 +80,11 @@
       <h6><a href={{currentUser.data.user.website}}>{{ currentUser.data.user.website }}</a></h6>
       <h6 style="margin-top: 0px;" *ngIf="accountBoolean == true">{{currentUser.data.user.phone}}</h6>
       <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of sdgs">SDG {{sdg}}&nbsp;</ion-badge>
+      <br>
+      <ion-button (click)="presentModal($event)">
+        <ion-icon name="golf-outline" slot="start"></ion-icon>
+        <ion-label>Targets</ion-label>
+      </ion-button>
     </div>
 </ion-card>
 

@@ -165,7 +165,7 @@ export class UpdateProfilePage implements OnInit {
           this.resultSuccess = true;
           this.resultError = false;
           this.successToast();
-          this.router.navigateByUrl('/tabs/home');
+          //this.router.navigateByUrl('/tabs/home');
         },
         err => {
           this.resultSuccess = false;
@@ -189,7 +189,7 @@ export class UpdateProfilePage implements OnInit {
           this.resultSuccess = true;
           this.resultError = false;
           this.successToast();
-          this.router.navigateByUrl('/tabs/home');
+          //this.router.navigateByUrl('/tabs/home');
         },
         err => {
           this.resultSuccess = false;

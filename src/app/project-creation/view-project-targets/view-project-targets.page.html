@@ -3,12 +3,12 @@
     <ion-buttons slot="start">
       <ion-icon name="arrow-back" slot="start" (click)="dismiss()" style="padding-left:10px"></ion-icon>
     </ion-buttons>
-    <ion-title>{{accountName}}'s Targets</ion-title>
+    <ion-title>View SDG Targets</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list *ngFor= "let t of accountTargets">
+  <ion-list *ngFor= "let t of projectTargets">
     <ion-card>
       <ion-card-title>{{t.SDG}}.{{t.targetCode}}</ion-card-title>
       <p>{{t.desc}}</p>

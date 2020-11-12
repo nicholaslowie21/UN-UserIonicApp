@@ -286,13 +286,22 @@ const routes: Routes = [
   {
     path: 'chatroom/:Id/:type/:name',
     loadChildren: () => import('./chats/chatroom/chatroom.module').then( m => m.ChatroomPageModule)
-  },  {
+  },
+  {
     path: 'edit-targets',
     loadChildren: () => import('./accountmanagement/edit-targets/edit-targets.module').then( m => m.EditTargetsPageModule)
   },
   {
     path: 'view-profile-targets',
     loadChildren: () => import('./view-profile-targets/view-profile-targets.module').then( m => m.ViewProfileTargetsPageModule)
+  },
+  {
+    path: 'view-project-targets',
+    loadChildren: () => import('./project-creation/view-project-targets/view-project-targets.module').then( m => m.ViewProjectTargetsPageModule)
+  },
+  {
+    path: 'edit-project-targets/:Id',
+    loadChildren: () => import('./project-creation/edit-project-targets/edit-project-targets.module').then( m => m.EditProjectTargetsPageModule)
   }
 
 

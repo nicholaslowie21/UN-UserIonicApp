@@ -9,6 +9,7 @@ import { InstitutionService } from '../services/institution.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ActionSheetController, ModalController, NavController } from '@ionic/angular';
 import { CreateReportPage } from '../report/create-report/create-report.page';
+import { ViewProfileTargetsPage } from '../view-profile-targets/view-profile-targets.page';
 
 @Component({
   selector: 'app-view-others-profile',
@@ -453,6 +454,17 @@ export class ViewOthersProfilePage implements OnInit {
 
 openChat() {
   this.router.navigate(["/chatroom/" + this.id + "/" + this.accountType + "/" +this.name])
+}
+
+async presentModal(resource) {
+  this.modal = await this.modalController.create({
+    component: ViewProfileTargetsPage,
+    componentProps: {"accountId": this.currentUser.id, "accountType": this.accountType, "accountName": this.currentUser.name}
+    
+  });
+  this.modal.onWillDismiss().then((data) => {
+});
+  return await this.modal.present();
 }
 
 }

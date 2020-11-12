@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavController, ToastController, AlertController, ModalController } from '@ionic/angular';
 import { CreateMoneyRequestPage } from '../funding/create-money-request/create-money-request.page';
+import { ViewProjectTargetsPage } from '../project-creation/view-project-targets/view-project-targets.page';
 import { CreateReportPage } from '../report/create-report/create-report.page';
 import { InstitutionService } from '../services/institution.service';
 import { ProjectService } from '../services/project.service';
@@ -455,6 +456,17 @@ console.log(this.completedBoolean);
       component: CreateReportPage,
       componentProps: {"targetId": this.id, "type": "project", "name": this.projectToView.title}
     });
+    return await this.modal.present();
+  }
+
+  async presentModal() {
+    this.modal = await this.modalController.create({
+      component: ViewProjectTargetsPage,
+      componentProps: {"projectId": this.id, "projectName": this.projectToView.name}
+      
+    });
+    this.modal.onWillDismiss().then((data) => {
+  });
     return await this.modal.present();
   }
 

@@ -26,18 +26,33 @@ export class TargetService {
   }
 
   updateAccountTargets(data) {
-    return this.http.post(this.API_URL + '/account/targets', data.targetIds, httpOptions).pipe(
+    return this.http.post(this.API_URL + '/account/targets', {"targetIds": data.targetIds}, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
   }
 
   getAccountTargets(data): Observable<any> {
-    return this.http.get(this.API_URL + '/account/targets?accountId=' + data.id + "&accountType=" + data.accountType, httpOptions).pipe(
+    return this.http.get(this.API_URL + '/account/targets?accountId=' + data.accountId + "&accountType=" + data.accountType, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
   }
+
+  getProjectTargets(data): Observable<any> {
+    return this.http.get(this.API_URL + '/project/targets?projectId=' + data.projectId, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  updateProjectTargets(data) {
+    return this.http.post(this.API_URL + '/project/targets', {"projectId": data.projectId, "targetIds": data.targetIds}, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
 
 
 

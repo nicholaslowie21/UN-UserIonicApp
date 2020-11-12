@@ -30,6 +30,11 @@
       <h6 *ngIf="accountBoolean == false"><a href={{website}}>{{ website }}</a></h6>
       <h6 *ngIf="accountBoolean == true"><a href={{website}}>{{ website }}</a> | {{phone}}</h6>
       <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of sdgs">SDG {{sdg}}&nbsp;</ion-badge>
+      <br>
+      <ion-button (click)="presentModal($event)">
+        <ion-icon name="golf-outline" slot="start"></ion-icon>
+        <ion-label>Targets</ion-label>
+      </ion-button>
     </div>
 </ion-card>
 

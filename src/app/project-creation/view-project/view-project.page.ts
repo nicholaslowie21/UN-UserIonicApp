@@ -10,6 +10,7 @@ import { isRegExp } from 'util';
 import { FormGroup, NgForm } from '@angular/forms';
 import { EditRatingPage } from 'src/app/resourceNeeds/edit-rating/edit-rating.page';
 import { CreateReportPage } from 'src/app/report/create-report/create-report.page';
+import { ViewProjectTargetsPage } from '../view-project-targets/view-project-targets.page';
 
 @Component({
   selector: 'app-view-project',
@@ -246,6 +247,21 @@ console.log(this.completedBoolean);
 
   viewComments(ev, postId) {
     this.router.navigate(['/view-comments/' + postId]);
+  }
+
+  editTargets(ev) {
+    this.router.navigate(['/edit-project-targets/' + this.id]);
+  }
+
+  async presentModal() {
+    this.modal = await this.modalCtrl.create({
+      component: ViewProjectTargetsPage,
+      componentProps: {"projectId": this.id, "projectName": this.projectToView.name}
+      
+    });
+    this.modal.onWillDismiss().then((data) => {
+  });
+    return await this.modal.present();
   }
 
   back() {
