@@ -286,7 +286,15 @@ const routes: Routes = [
   {
     path: 'chatroom/:Id/:type/:name',
     loadChildren: () => import('./chats/chatroom/chatroom.module').then( m => m.ChatroomPageModule)
+  },  {
+    path: 'edit-targets',
+    loadChildren: () => import('./accountmanagement/edit-targets/edit-targets.module').then( m => m.EditTargetsPageModule)
+  },
+  {
+    path: 'view-profile-targets',
+    loadChildren: () => import('./view-profile-targets/view-profile-targets.module').then( m => m.ViewProfileTargetsPageModule)
   }
+
 
 
 ];
