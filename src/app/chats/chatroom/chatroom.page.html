@@ -1,13 +1,24 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="chatType == 'normal'">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
       <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
     </ion-buttons>
     <ion-title slot="end" (click)="viewProfile($event)">{{this.name}}</ion-title>
     <img slot="end" class="card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; float:right" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-     
   </ion-toolbar>
+
+  <div *ngIf="chatType == 'admin'" style="background-color: #ffc409">
+    <ion-toolbar color="warning">
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+        <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
+      </ion-buttons>
+      <ion-title slot="end" (click)="viewProfile($event)">{{this.name}}</ion-title>
+      <img slot="end" class="card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; float:right" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+    </ion-toolbar>
+    <h6 style="text-align: center; background-color: #ffc409;">You are now chatting with an admin</h6>
+  </div>
 </ion-header>
 <ion-content #scrollElement [scrollEvents]="true">
   <ion-grid fixed=true>

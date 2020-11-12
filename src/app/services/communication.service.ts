@@ -27,7 +27,7 @@ export class CommunicationService {
   }
 
   chatWith(data): Observable<any> {
-    return this.http.post(this.CHAT_URL + '/chatAccount', {"chatType": "normal", "targetId": data.targetId, "targetType": data.targetType}, httpOptions).pipe(
+    return this.http.post(this.CHAT_URL + '/chatAccount', {"chatType": data.chatType, "targetId": data.targetId, "targetType": data.targetType}, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

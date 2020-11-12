@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { CommunicationService } from '../services/communication.service';
 import { SessionService } from '../services/session.service';
 import { TokenStorageService } from '../services/token-storage.service';
@@ -16,6 +17,8 @@ export class MessagesPage implements OnInit {
   accountBoolean: boolean;
   isVerified: boolean;
   chatroomList: any[];
+  isCurrFilterType: String;
+  
   constructor(private communicationService:CommunicationService, 
     private router:Router,
     private tokenStorage: TokenStorageService,
@@ -36,6 +39,7 @@ export class MessagesPage implements OnInit {
       this.accountBoolean = false;
     }
     console.log(this.accountBoolean);
+    this.isCurrFilterType = "all";
     this.initializeChats();
 
    }
@@ -72,10 +76,10 @@ export class MessagesPage implements OnInit {
 
   enterChatRoom(r) {
     if(r.user1id == this.currentUser.data.user.id) {
-      this.router.navigate(["/chatroom/" + r.user2id + "/" + r.user2type + "/" + r.user2username + "/"])
+      this.router.navigate(["/chatroom/" + r.user2id + "/" + r.user2type + "/" + r.user2username + "/" + r.chatType + "/"])
     }
     if(r.user1id != this.currentUser.data.user.id) {
-      this.router.navigate(["/chatroom/" + r.user1id + "/" + r.user1type + "/" + r.user1username + "/"])
+      this.router.navigate(["/chatroom/" + r.user1id + "/" + r.user1type + "/" + r.user1username + "/" + r.chatType + "/"])
     }
    
   }
@@ -100,5 +104,30 @@ export class MessagesPage implements OnInit {
       }
     });
   }
+
+  filter() {
+    console.log("I am filtering")
+    if(this.isCurrFilterType == "all"){
+      this.initializeChats()
+      this.chatroomList = this.chatroomList.filter(chatroom => {
+        if(chatroom.chatType == 'admin') {
+          return chatroom;
+        }
+      })
+      console.log(this.chatroomList);
+      this.isCurrFilterType = "admin"
+    } else if(this.isCurrFilterType == "admin") {
+      this.initializeChats()
+      this.chatroomList = this.chatroomList.filter(chatroom => {
+        if(chatroom.chatType == 'normal') {
+          return chatroom;
+        }
+      })
+      console.log(this.chatroomList);
+      this.isCurrFilterType = "normal"
+    } else if(this.isCurrFilterType == "normal") {
+      this.initializeChats();
+    }
+  }  
 
 }

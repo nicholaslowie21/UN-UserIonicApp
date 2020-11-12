@@ -52,16 +52,16 @@ export class EditTargetsPage implements OnInit {
       "SDGs": sdgs
     }
 
-    this.targetService.getPossibleTargets(this.rdata).subscribe((res) => {
-      this.targetsList = res.data.targets
-      if(this.targetsList != undefined) {
-        for(var i = 0; i < this.targetsList.length; i++) {
-          this.targetsList[i].isChecked = false
-        }
-      }
-    }, (err) => {
-      console.log("****************View Possible Targets.page.ts error: " + err.error.msg);
-    })
+    // this.targetService.getPossibleTargets(this.rdata).subscribe((res) => {
+    //   this.targetsList = res.data.targets
+    //   if(this.targetsList != undefined) {
+    //     for(var i = 0; i < this.targetsList.length; i++) {
+    //       this.targetsList[i].isChecked = false
+    //     }
+    //   }
+    // }, (err) => {
+    //   console.log("****************View Possible Targets.page.ts error: " + err.error.msg);
+    // })
   }
 
   onChange(target) {

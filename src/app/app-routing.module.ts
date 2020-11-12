@@ -284,9 +284,10 @@ const routes: Routes = [
     loadChildren: () => import('./report/my-reports/my-reports.module').then( m => m.MyReportsPageModule)
   },
   {
-    path: 'chatroom/:Id/:type/:name',
+    path: 'chatroom/:Id/:type/:name/:chatType',
     loadChildren: () => import('./chats/chatroom/chatroom.module').then( m => m.ChatroomPageModule)
-  },  {
+  },
+  {
     path: 'edit-targets',
     loadChildren: () => import('./accountmanagement/edit-targets/edit-targets.module').then( m => m.EditTargetsPageModule)
   },

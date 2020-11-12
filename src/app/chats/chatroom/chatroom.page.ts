@@ -30,6 +30,7 @@ export class ChatroomPage implements OnInit {
   subscribe: any;
   image: string;
   type: string;
+  chatType: string;
 
   constructor(private activatedRoute: ActivatedRoute, private communicationService: CommunicationService
     ,private tokenStorage: TokenStorageService,
@@ -69,8 +70,9 @@ export class ChatroomPage implements OnInit {
     this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     this.type = this.activatedRoute.snapshot.paramMap.get('type');
     this.name = this.activatedRoute.snapshot.paramMap.get('name');
+    this.chatType = this.activatedRoute.snapshot.paramMap.get('chatType');
     this.data ={
-      "chatType": "normal",
+      "chatType": this.chatType,
       "targetId": this.id,
       "targetType": this.type
     }
