@@ -12,12 +12,17 @@ import { TokenStorageService } from '../services/token-storage.service';
 })
 export class MessagesPage implements OnInit {
   chatrooms: any;
+  adminChatrooms: any;
   currentUser: any;
   accountType: any;
   accountBoolean: boolean;
   isVerified: boolean;
+  type: String;
   chatroomList: any[];
-  isCurrFilterType: String;
+  adminChatroomList: any[];
+  noChatsBoolean: Boolean;
+  noAdminChatsBoolean: Boolean;
+  // isCurrFilterType: String;
   
   constructor(private communicationService:CommunicationService, 
     private router:Router,
@@ -39,13 +44,17 @@ export class MessagesPage implements OnInit {
       this.accountBoolean = false;
     }
     console.log(this.accountBoolean);
-    this.isCurrFilterType = "all";
+    this.noChatsBoolean = true;
+    this.noAdminChatsBoolean = true;
+    this.type = "user";
+    // this.isCurrFilterType = "all";
+    // Do u need to initialise in constructor?
     this.initializeChats();
 
    }
 
   ngOnInit() {
-    console.log("line44" + this.chatrooms);
+    console.log("line55" + this.chatrooms);
     this.initialise();
     this.initializeChats();
   }
@@ -54,23 +63,38 @@ export class MessagesPage implements OnInit {
     console.log("didEnter" + this.chatrooms);
     this.initialise();
     this.initializeChats();
-    console.log(this.chatroomList);
   }
 
 
   initialise() {
-    this.communicationService.getChatRooms().subscribe((res) => {
+    this.communicationService.getUserChatRooms().subscribe((res) => {
       this.chatrooms = res.data.chatRooms;
-      this.initializeChats();
+      this.chatroomList = this.chatrooms;
+      // this.initializeChats();
       if(this.chatrooms != undefined) {
         for(var i = 0; i < this.chatrooms.length; i ++) {
           this.chatrooms[i].targetImg = this.sessionService.getRscPath() + this.chatrooms[i].targetImg +'?random+=' + Math.random();
           console.log(this.chatrooms[i].targetImg);
-
+          this.noChatsBoolean = false;
         }
       }
     }, (err) => {
       console.log("****************Retrieval of Chatrooms error: " + err.error.msg)
+    })
+
+    this.communicationService.getAdminChatRooms().subscribe((res) => {
+      this.adminChatrooms = res.data.chatRooms;
+      this.adminChatroomList = this.adminChatrooms;
+      // this.initializeChats();
+      if(this.adminChatrooms != undefined) {
+        for(var i = 0; i < this.adminChatrooms.length; i ++) {
+          this.adminChatrooms[i].targetImg = this.sessionService.getRscPath() + this.adminChatrooms[i].targetImg +'?random+=' + Math.random();
+          console.log(this.adminChatrooms[i].targetImg);
+          this.noAdminChatsBoolean = false;
+        }
+      }
+    }, (err) => {
+      console.log("****************Retrieval of Admin Chatrooms error: " + err.error.msg)
     })
   }
 
@@ -85,50 +109,78 @@ export class MessagesPage implements OnInit {
   }
 
   initializeChats() {
-    console.log(this.chatrooms);
     this.chatroomList = this.chatrooms;
+    this.adminChatroomList = this.adminChatrooms;
     console.log(this.chatroomList);
+    console.log(this.adminChatroomList);
   }
   
    async filterChatList(evt) {
      this.initializeChats()
-    const searchTerm = evt.srcElement.value;
+     const searchTerm = evt.srcElement.value;
   
     if (!searchTerm) {
       return;
     }
   
     this.chatroomList = this.chatroomList.filter(chatroom => {
-      if (chatroom.user1username && searchTerm) {
+      if (chatroom.user1username == this.currentUser.data.user.username) {
+        if(chatroom.user2username && searchTerm) {
+          return (chatroom.user2username.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (chatroom.user2username.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+        }
+      } else {
+        if(chatroom.user1username && searchTerm) {
+          return (chatroom.user1username.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (chatroom.user2username.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+        }
+      }
+    });
+
+    this.adminChatroomList = this.adminChatroomList.filter(chatroom => {
+      if(chatroom.user1username == this.currentUser.data.user.username) {
+        if (chatroom.user2username && searchTerm) {
+          return (chatroom.user2username.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (chatroom.user2username.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+        }
+      } else {
+        if (chatroom.user1username && searchTerm) {
         return (chatroom.user1username.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (chatroom.user2username.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
       }
     });
   }
 
-  filter() {
-    console.log("I am filtering")
-    if(this.isCurrFilterType == "all"){
-      this.initializeChats()
-      this.chatroomList = this.chatroomList.filter(chatroom => {
-        if(chatroom.chatType == 'admin') {
-          return chatroom;
-        }
-      })
-      console.log(this.chatroomList);
-      this.isCurrFilterType = "admin"
-    } else if(this.isCurrFilterType == "admin") {
-      this.initializeChats()
-      this.chatroomList = this.chatroomList.filter(chatroom => {
-        if(chatroom.chatType == 'normal') {
-          return chatroom;
-        }
-      })
-      console.log(this.chatroomList);
-      this.isCurrFilterType = "normal"
-    } else if(this.isCurrFilterType == "normal") {
-      this.initializeChats();
-      this.isCurrFilterType = "all";
-    }
-  }  
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
+
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
+
+  // filter() {
+  //   console.log("I am filtering")
+  //   if(this.isCurrFilterType == "all"){
+  //     this.initializeChats()
+  //     this.chatroomList = this.chatroomList.filter(chatroom => {
+  //       if(chatroom.chatType == 'admin') {
+  //         return chatroom;
+  //       }
+  //     })
+  //     console.log(this.chatroomList);
+  //     this.isCurrFilterType = "admin"
+  //   } else if(this.isCurrFilterType == "admin") {
+  //     this.initializeChats()
+  //     this.chatroomList = this.chatroomList.filter(chatroom => {
+  //       if(chatroom.chatType == 'normal') {
+  //         return chatroom;
+  //       }
+  //     })
+  //     console.log(this.chatroomList);
+  //     this.isCurrFilterType = "normal"
+  //   } else if(this.isCurrFilterType == "normal") {
+  //     this.initializeChats();
+  //     this.isCurrFilterType = "all";
+  //   }
+  // }  
 
 }

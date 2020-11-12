@@ -1,39 +1,43 @@
-<ion-header>
+<ion-header style="background-color: #92949c;">
   <ion-toolbar *ngIf="chatType == 'normal'">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
       <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
     </ion-buttons>
-    <ion-title slot="end" (click)="viewProfile($event)">{{this.name}}</ion-title>
-    <img slot="end" class="card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; float:right" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+    <div class="aligned">
+      <img class="card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; float:left" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+      <ion-title (click)="viewProfile($event)">{{this.name}}</ion-title>
+    </div>
   </ion-toolbar>
 
-  <div *ngIf="chatType == 'admin'" style="background-color: #ffc409">
-    <ion-toolbar color="warning">
+  <div *ngIf="chatType == 'admin'" style="background-color: #92949c">
+    <ion-toolbar color="medium">
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
         <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
       </ion-buttons>
-      <ion-title slot="end" (click)="viewProfile($event)">{{this.name}}</ion-title>
-      <img slot="end" class="card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; float:right" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+      <div class="aligned">
+        <img class="card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; float:left" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <ion-title (click)="viewProfile($event)">{{this.name}}</ion-title>
+      </div>
     </ion-toolbar>
-    <h6 style="text-align: center; background-color: #ffc409;">You are now chatting with an admin</h6>
+    <h6 style="text-align: center; font-weight: bold; color: white;">This is an administrative chat</h6>
   </div>
 </ion-header>
-<ion-content #scrollElement [scrollEvents]="true">
-  <ion-grid fixed=true>
+<ion-content #scrollElement [scrollEvents]="true" >
+  <ion-grid fixed=true >
     <ion-row class="msgbubble" *ngFor="let message of messages">
       
-      <ion-col  size="5" *ngIf="message.accountId !== this.currentUser.data.user.id" class="message" [ngClass]="{'my_message': message.accountId === this.currentUser.data.user.id, 'other_message': message.accountId !== this.currentUser.data.user.id}">
-        <span class="user_name">{{ message.accountUsername }}:</span><br>
+      <ion-col  size="8" *ngIf="message.accountId !== this.currentUser.data.user.id" class="message" [ngClass]="{'my_message': message.accountId === this.currentUser.data.user.id, 'other_message': message.accountId !== this.currentUser.data.user.id}">
+        <span class="otherUser_name">{{ message.accountUsername }}:</span><br>
         <span>{{ message.message }}</span>
-        <div class="time">{{message.createdAt | date:'dd.MM hh:MM'}}</div>
+        <div class="other_time">{{message.createdAt | date:'dd MMM hh:mm a'}}</div>
       </ion-col>
  
-      <ion-col offset="7" size="5" *ngIf="message.accountId === this.currentUser.data.user.id" class="message" [ngClass]="{'my_message': message.accountId === this.currentUser.data.user.id, 'other_message': message.accountId !== this.currentUser.data.user.id}">
+      <ion-col offset="4" size="8" *ngIf="message.accountId === this.currentUser.data.user.id" class="message" [ngClass]="{'my_message': message.accountId === this.currentUser.data.user.id, 'other_message': message.accountId !== this.currentUser.data.user.id}">
         <span class="user_name">{{ message.accountUsername }}:</span><br>
         <span>{{ message.message }}</span>
-        <div class="time">{{message.createdAt | date:'dd.MM hh:MM'}}</div>
+        <div class="time">{{message.createdAt | date:'dd MMM hh:mm a'}}</div>
       </ion-col>
  
     </ion-row>
@@ -45,15 +49,15 @@
   <ion-toolbar>
     <ion-grid fixed=true>
     <ion-row class="message_row">
-      <ion-col size="9">
+      <ion-col size="10">
         <ion-item style="width:100%;">
           <ion-textarea [(ngModel)]="message" placeholder="Send a message" lineHeight="20" maxExpand="5"></ion-textarea>
         </ion-item>
       </ion-col>
-      <ion-col >
-        <ion-button color="primary" (click)="sendMessage()" [disabled]="message == ''">
-        Send
-      </ion-button>
+      <ion-col size="2">
+        <ion-button fill="clear" style="float: right;" (click)="sendMessage()" [disabled]="message == ''">
+          <ion-icon slot="end" name="send-sharp" color="primary"></ion-icon>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

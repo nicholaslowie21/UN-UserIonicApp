@@ -40,8 +40,15 @@ export class CommunicationService {
     );
   }
 
-  getChatRooms(): Observable<any> {
-    return this.http.get(this.CHAT_URL + '/rooms?chatType=normal', httpOptions).pipe(
+  getUserChatRooms(): Observable<any> {
+    return this.http.get(this.CHAT_URL + '/filtered/rooms?chatType=normal', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getAdminChatRooms(): Observable<any> {
+    return this.http.get(this.CHAT_URL + '/filtered/rooms?chatType=admin', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
