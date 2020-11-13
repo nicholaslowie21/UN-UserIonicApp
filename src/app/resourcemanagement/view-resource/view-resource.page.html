@@ -50,26 +50,27 @@
     </ion-card-header>
     <ion-card-content>
       <div *ngIf="resourceType == 'knowledge'">
-      <ion-item-divider>
-        <ion-label>Owners</ion-label>
-        <ion-buttons *ngIf="yourAccountBoolean==true" style="float: right;" slot="end" >
-        <ion-label style="font-weight: bold;">Edit Owners<ion-icon slot="end" name="create-sharp" (click)="toEditOwners($event)"></ion-icon></ion-label>
-      </ion-buttons>
-      </ion-item-divider>
-      <ion-item lines="none">
-          <div *ngIf="institutionKnowledgeOwner == true">
-          <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-          <ion-card-subtitle>{{resourceOwner.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-card-subtitle>
-        </div>
-        <div *ngFor="let o of ownersArray" >
-          <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=o.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-          <ion-card-subtitle>{{o.name}}<ion-icon *ngIf="o.isVerified == 'true'" name="checkmark-circle" size="big"></ion-icon> </ion-card-subtitle>
-        </div>
-      </ion-item>
-    </div>
+        <ion-item-divider>
+          <ion-label>Owners</ion-label>
+          <ion-buttons *ngIf="yourAccountBoolean==true" style="float: right;" slot="end" >
+          <ion-label style="font-weight: bold;">Edit Owners<ion-icon slot="end" name="create-sharp" (click)="toEditOwners($event)"></ion-icon></ion-label>
+        </ion-buttons>
+        </ion-item-divider>
+        <ion-item lines="none">
+            <div *ngIf="institutionKnowledgeOwner == true">
+            <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+            <ion-card-subtitle>{{resourceOwner.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-card-subtitle>
+          </div>
+          <div *ngFor="let o of ownersArray" >
+            <img class="card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=o.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+            <ion-card-subtitle>{{o.name}}<ion-icon *ngIf="o.isVerified == 'true'" name="checkmark-circle" size="big"></ion-icon> </ion-card-subtitle>
+          </div>
+        </ion-item>
+      </div>
 
       <ion-item-divider>
         <ion-label>Details</ion-label>
+        <ion-badge style="float: right;" slot="end">{{currResource.knowType}}</ion-badge>
       </ion-item-divider>
       <ion-item *ngIf="resourceType != 'knowledge'" lines="none">
         <p>Country: {{currResource.country}}</p>
@@ -77,6 +78,22 @@
       <ion-item *ngIf="resourceType == 'venue'" lines="none">
         <p>Address: {{currResource.address}}</p>
       </ion-item>
+
+      <ion-item *ngIf="resourceType == 'knowledge'" lines="none">
+        <div>
+        <h6 *ngIf="currResource.link != ''">Link: {{currResource.link}}</h6>
+        <div *ngIf="knowType =='patent'">
+          <h6>Patent No: {{currResource.patentNum}}</h6>
+          <h6>Expiry Date: {{formatDate(currResource.expiry)}}</h6>
+        </div>
+        <div *ngIf="knowType == 'publication'">
+          <h6 *ngIf="currResource.issn != ''">ISSN: {{currResource.issn}}</h6>
+          <h6 *ngIf="currResource.doi != ''">DOI: {{currResource.doi}}</h6>
+          <h6 *ngIf="currResource.issueDate != null">Issue Date: {{formatDate(currResource.issueDate)}}</h6>
+        </div>
+      </div>
+      </ion-item>
+
       <ion-item lines="none">
         <p>Description: {{currResource.desc}}</p>
       </ion-item>
@@ -132,7 +149,7 @@
           <ion-list [ngSwitch]="inStatus">
           <div *ngSwitchCase="'pending'">
             <ion-title>Pending Requests(Incoming)</ion-title>
-            <div style="padding-left: 15px" *ngIf="(incomingPendingResourceRequestList == undefined || incomingPendingResourceRequestList.length == 0) == true">
+            <div style="padding-left: 15px; padding-right: 15px;" *ngIf="(incomingPendingResourceRequestList == undefined || incomingPendingResourceRequestList.length == 0) == true">
               You do not have any pending incoming requests!
               </div>
             <div *ngFor="let m of incomingPendingResourceRequestList" >
@@ -163,7 +180,7 @@
         </div>
         <div *ngSwitchCase="'accepted'">
           <ion-title>Accepted Requests(Incoming)</ion-title>
-          <div style="padding-left: 15px" *ngIf="( incomingAcceptedResourceRequestList == undefined||incomingAcceptedResourceRequestList.length == 0) == true">
+          <div style="padding-left: 15px; padding-right: 15px;" *ngIf="( incomingAcceptedResourceRequestList == undefined||incomingAcceptedResourceRequestList.length == 0) == true">
             You do not have any accepted incoming requests!
             </div>
           <div *ngFor="let m of incomingAcceptedResourceRequestList" >
@@ -186,7 +203,7 @@
       </div>
       <div *ngSwitchCase="'declined'">
         <ion-title>Declined Requests(Incoming)</ion-title>
-        <div style="padding-left: 15px" *ngIf="(incomingDeclinedResourceRequestList == undefined|| incomingDeclinedResourceRequestList.length == 0) == true">
+        <div style="padding-left: 15px; padding-right: 15px;" *ngIf="(incomingDeclinedResourceRequestList == undefined|| incomingDeclinedResourceRequestList.length == 0) == true">
           You do not have any declined incoming requests!
           </div>
         <div *ngFor="let m of incomingDeclinedResourceRequestList" >
@@ -207,7 +224,7 @@
     </div>
     <div *ngSwitchCase="'cancelled'">
       <ion-title>Cancelled Requests(Incoming)</ion-title>
-      <div style="padding-left: 15px" *ngIf="(incomingCancelledResourceRequestList == undefined||incomingCancelledResourceRequestList.length == 0) == true">
+      <div style="padding-left: 15px; padding-right: 15px;" *ngIf="(incomingCancelledResourceRequestList == undefined||incomingCancelledResourceRequestList.length == 0) == true">
         You do not have any cancelled incoming requests!
         </div>
       <div *ngFor="let m of incomingCancelledResourceRequestList" >
@@ -251,7 +268,7 @@
               <div *ngSwitchCase="'pending'">
                 
                 <ion-title>Pending Requests(Outgoing)</ion-title>
-                <div style="padding-left: 15px" *ngIf="(outgoingPendingResourceRequestList == undefined || outgoingPendingResourceRequestList.length == 0) == true">
+                <div style="padding-left: 15px; padding-right: 15px;" *ngIf="(outgoingPendingResourceRequestList == undefined || outgoingPendingResourceRequestList.length == 0) == true">
                   You do not have any pending outgoing requests!
                   </div>
               <div *ngFor="let k of outgoingPendingResourceRequestList">
@@ -274,7 +291,7 @@
 
       <div *ngSwitchCase="'accepted'">
         <ion-title>Accepted Requests(Outgoing)</ion-title>
-        <div style="padding-left: 15px" *ngIf="(outgoingAcceptedResourceRequestList == undefined || outgoingAcceptedResourceRequestList.length == 0) == true">
+        <div style="padding-left: 15px; padding-right:15px;" *ngIf="(outgoingAcceptedResourceRequestList == undefined || outgoingAcceptedResourceRequestList.length == 0) == true">
           You do not have any accepted outgoing requests!
           </div>
       <div *ngFor="let k of outgoingAcceptedResourceRequestList">
@@ -297,7 +314,7 @@
 
     <div *ngSwitchCase="'declined'">
       <ion-title>Declined Requests(Outgoing)</ion-title>
-      <div style="padding-left: 15px" *ngIf="(outgoingDeclinedResourceRequestList == undefined || outgoingDeclinedResourceRequestList.length == 0) == true">
+      <div style="padding-left: 15px; padding-right: 15px;" *ngIf="(outgoingDeclinedResourceRequestList == undefined || outgoingDeclinedResourceRequestList.length == 0) == true">
         You do not have any declined outgoing requests!
         </div>
     <div *ngFor="let k of outgoingDeclinedResourceRequestList">
@@ -319,7 +336,7 @@
 
   <div *ngSwitchCase="'cancelled'">
     <ion-title>Cancelled Requests(Outgoing)</ion-title>
-    <div style="padding-left: 15px" *ngIf="(outgoingCancelledResourceRequestList == undefined || outgoingCancelledResourceRequestList.length == 0) == true">
+    <div style="padding-left: 15px; padding-right: 15px;" *ngIf="(outgoingCancelledResourceRequestList == undefined || outgoingCancelledResourceRequestList.length == 0) == true">
       You do not have any cancelled outgoing requests!
       </div>
   <div *ngFor="let k of outgoingCancelledResourceRequestList">
@@ -349,8 +366,8 @@
     <ion-item-divider color="primary">
       <ion-title style="color: white;">Resource Need Suggestions</ion-title>
     </ion-item-divider>
-    <div *ngIf="((suggestions != undefined) == false)|| (suggestions.length == 0)" style="padding-left: 15px;">
-        <h6>There are currently no suggested project resource needs for this resource</h6>
+    <div *ngIf="((suggestions != undefined) == false)|| (suggestions.length == 0)" style="padding-left: 15px; padding-right:15px;">
+      There are currently no suggested project resource needs for this resource
     </div>
     <div *ngIf="((suggestions != undefined && suggestions.length != 0) == true)">
       <!-- <ion-card-title style="padding-left: 15px">Here are some resource need suggestions to contribute to</ion-card-title> -->

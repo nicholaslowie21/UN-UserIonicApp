@@ -8,7 +8,19 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content>
+  <div *ngIf="resultSuccess == true" style="color: blue;">
+    {{message}}
+  </div>
+  
+  <div *ngIf="resultError == true" style="color: red;">
+    {{message}}
+  </div>
 <form #form="ngForm" (ngSubmit)="update()">
+  <ion-item *ngIf="resourceType == 'knowledge'">
+    <ion-label>Knowledge Type: {{currResource.knowType}}</ion-label>
+  </ion-item>
+  
   <ion-item>
     <ion-label position="floating">Title</ion-label>
     <ion-input ngModel name="title" [(ngModel)]="currResource.title" required minlength="3" #intitle="ngModel"></ion-input>
@@ -49,6 +61,36 @@
     </div>
   </ion-item>
 
+  <ion-item *ngIf="resourceType == 'knowledge'">
+    <ion-label position="floating">Link</ion-label>
+    <ion-input ngModel name="link" [(ngModel)]="currResource.link" required minlength="3" #inlink="ngModel"></ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="resourceType == 'knowledge' && knowType =='patent'">
+    <ion-label position="floating">Patent No.</ion-label>
+    <ion-input ngModel name="patentNum" [(ngModel)]="currResource.patentNum" required minlength="3" #inpatentnum="ngModel"></ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="resourceType == 'knowledge' && knowType =='patent'">
+    <ion-label position="floating">Expiry Date (YYYY-MM-DD)</ion-label>
+    <ion-input ngModel name="expiry" [(ngModel)]="expiry" required minlength="3" #inexpiry="ngModel"></ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="resourceType == 'knowledge' && knowType =='publication'">
+    <ion-label position="floating">ISSN</ion-label>
+    <ion-input ngModel name="issn" [(ngModel)]="currResource.issn" required minlength="3" #inissn="ngModel"></ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="resourceType == 'knowledge' && knowType =='publication'">
+    <ion-label position="floating">DOI</ion-label>
+    <ion-input ngModel name="doi" [(ngModel)]="currResource.doi" required minlength="3" #indoi="ngModel"></ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="resourceType == 'knowledge' && knowType =='publication'">
+    <ion-label position="floating">Issue Date</ion-label>
+    <ion-input ngModel name="issueDate" [(ngModel)]="currResource.issueDate" required minlength="3" #inissuedate="ngModel"></ion-input>
+  </ion-item>
+
   <ion-item>
     <ion-label>Status</ion-label>
     <ion-label>Inactive <ion-toggle [(ngModel)]="isActive" [checked]="isActive" name="status"></ion-toggle> Active </ion-label>
@@ -68,14 +110,4 @@
   <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Confirm</ion-button>
 </form>
 
-
-
-<ion-content>
-    <div *ngIf="resultSuccess == true" style="color: blue;">
-      {{message}}
-    </div>
-    
-    <div *ngIf="resultError == true" style="color: red;">
-      {{message}}
-    </div>
 </ion-content>

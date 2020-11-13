@@ -2,6 +2,10 @@
   .user_name {
     color: darkgray;
   }
+
+  .otherUser_name {
+    color: black;
+  }
   .message {
     padding: 10px !important;
     transition: all 250ms ease-in-out !important;
@@ -10,14 +14,14 @@
   }
   .my_message {
     align-self: flex-start;
-    background: darkblue !important;
-    color: white !important;
+    background: white !important;
+    color: black !important;
     border-top-right-radius: 0px !important;
     clear: both;
   }
   .other_message {
     align-self: flex-end;
-    background: darkcyan !important;
+    background: #6AA0FF!important;
     color: white !important;
     border-top-left-radius: 0px !important;
     clear: both;
@@ -26,7 +30,15 @@
     color: darkgray;
     float: right;
     font-size: small;
+    padding-bottom:0px;
   }
+  .other_time {
+    color: black;
+    float: right;
+    font-size: small;
+    padding-bottom: 0px;
+  }
+
   .message_row {
     background-color: #fff;
   }
@@ -69,6 +81,9 @@
 
 .aligned { 
   display: flex; 
-  align-items: right;
-
+  align-items: center;
 } 
+
+ion-content {
+  --ion-background-color: #CDDFFF;
+}

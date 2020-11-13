@@ -21,9 +21,16 @@ export class EditResourcePage implements OnInit {
   address: any;
   attachment: any;
   file: any;
+  link: any;
+  patentNum: any;
+  expiry: any;
+  issn: any;
+  doi: any;
+  issueDate: any;
   isActive: boolean;
   isOriginalActive: boolean;
   message: any;
+  knowType: any;
 
   countryData: any[];
   resultSuccess: boolean;
@@ -44,10 +51,6 @@ export class EditResourcePage implements OnInit {
         this.currResource = res.data.manpower;
 
         this.internalActive();
-        //Can call the other JSON parts if needed, like owner details
-
-        // To check w BG, bcs not all of them hv image Path...
-        // this.manpowerResource[i].imgPath = this.sessionService.getRscPath() + this.manpowerResource[i].imgPath  +'?random+=' + Math.random();
       }), err => {
         console.log('********** EditResource.ts - Manpower: ', err.error.msg);
       };
@@ -55,6 +58,14 @@ export class EditResourcePage implements OnInit {
       this.currResource = this.resourceService.viewKnowledgeResourceDetail(this.resourceId).subscribe((res) => {
         this.currResource = res.data.knowledge;
         this.internalActive();
+        this.knowType = this.currResource.knowType;
+        if(this.knowType == 'patent' && this.currResource.expiry != null) {
+          this.expiry = this.formatDate(this.currResource.expiry);
+          this.issueDate = "";
+        } else if(this.currResource.issueDate != null) {
+          this.issueDate = this.formatDate(this.currResource.issueDate);
+          this.expiry = "";
+        }
       }), err => {
         console.log('********** EditResource.ts - Knowledge: ', err.error.msg);
       };
@@ -163,6 +174,13 @@ export class EditResourcePage implements OnInit {
         "knowledgeId": this.resourceId,
         "title": this.currResource.title,
         "desc": this.currResource.desc,
+        "knowType": this.currResource.knowType,
+        "link": this.currResource.link,
+        "patentNum": this.currResource.patentNum,
+        "expiry": this.expiry,
+        "issn": this.currResource.issn,
+        "doi": this.currResource.doi,
+        "issueDate": this.issueDate
       }
       
       if (this.isActive != this.isOriginalActive) {
@@ -281,19 +299,27 @@ export class EditResourcePage implements OnInit {
     const formData = new FormData();
     console.log(this.attachment);
     formData.append('knowledgeId', this.resourceId);
-    formData.append('IP', this.attachment);
+    formData.append('attachment', this.attachment);
 
       this.resourceService.uploadKnowledgeAttachment(formData).subscribe(
         (res) => {
           this.successToast();
         },
         
-        (err) => this.failureToast(err.error.msg)
+        (err) => {
+          console.log(err);
+          this.failureToast(err.error.msg)
+        }
       );
   }
 
   back() {
     this.router.navigateByUrl("/view-resource/" + this.resourceType + "/" + this.resourceId);
+  }
+
+  formatDate(date): any {
+    // let formattedDate = new Date(date).toUTCString();
+    return date.substring(0, 10);
   }
 
   async successToast() {

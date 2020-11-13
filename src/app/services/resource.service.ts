@@ -149,13 +149,8 @@ export class ResourceService {
     );
   }
 
-  createKnowledgeResource(title: string, desc: string): Observable<any> {
-    let createKnowledgeReq = {
-      "title": title,
-      "desc": desc
-    }
-
-    return this.http.post(this.resourceAPI_URL + "/createKnowledge", createKnowledgeReq, httpOptions).pipe(
+  createKnowledgeResource(data): Observable<any> {
+  return this.http.post(this.resourceAPI_URL + "/createKnowledge", data).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
@@ -231,6 +226,13 @@ export class ResourceService {
       "knowledgeId": data.knowledgeId,
       "title": data.title,
       "desc": data.desc,
+      "knowType": data.knowType,
+      "link": data.link,
+      "patentNum": data.patentNum,
+      "expiry": data.expiry,
+      "issn": data.issn,
+      "doi": data.doi,
+      "issueDate": data.issueDate
     }, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),

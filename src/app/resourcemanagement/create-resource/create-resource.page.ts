@@ -17,28 +17,41 @@ export class CreateResourcePage implements OnInit {
   address: any;
   type: string;
   country: any;
+  attachment: any;
+  knowType: any;
+  link: any;
+  patentNum: any;
+  expiry: any;
+  issn: any;
+  doi: any;
+  issueDate: any;
   typeList: String[];
   countryData: any[];
+  knowTypeList: String[];
   
   message: string;
   isChosenType: boolean;
   isItemType: boolean;
   isVenueType: boolean;
+  isKnowledgeType: boolean;
   resultSuccess: boolean;
   resultError: boolean;
   image1: any;
   images: any;
+  file: any;
 
   constructor(private resourceService: ResourceService, private toastCtrl: ToastController, private router: Router, private tokenStorage: TokenStorageService) {
     this.resultSuccess = false;
     this.resultError = false;
     this.isVenueType = false;
     this.isItemType = false;
+    this.isKnowledgeType = false;
     this.isChosenType = false;
    }
 
   ngOnInit() {
     this.typeList = ["Manpower", "Knowledge", "Item", "Venue"];
+    this.knowTypeList = ["patent", "publication", "other"];
     if(this.tokenStorage.getToken()) {
       console.log(this.tokenStorage.getUser());
       this.country = this.tokenStorage.getUser().data.user.country;
@@ -84,14 +97,29 @@ export class CreateResourcePage implements OnInit {
     if (type == "Venue") {
       this.isVenueType = true;
       this.isItemType = false;
+      this.isKnowledgeType = false;
     } else if(type == "Item") {
       this.isItemType = true;
       this.isVenueType = false;
-    }else {
+      this.isKnowledgeType = false;
+    } else if (type == "Knowledge") {
       this.isItemType = false;
       this.isVenueType = false;
+      this.isKnowledgeType = true;
+
+      this.link = "";
+      this.patentNum = "";
+      this.issn = "";
+      this.doi = "";
+      this.expiry = "";
+      this.issueDate = "";
+    } else{
+      this.isItemType = false;
+      this.isVenueType = false;
+      this.isKnowledgeType = false;
     }
   }
+
 
   createRes(resourceForm:NgForm) {
     const formData = new FormData();
@@ -111,7 +139,19 @@ export class CreateResourcePage implements OnInit {
         console.log('********** CreateResourcePage.ts - Manpower: ', err.error.msg);
       });
     } else if (this.type == "Knowledge") {
-      this.resourceService.createKnowledgeResource(this.title, this.desc).subscribe((res) => {
+      formData.append("title", this.title);
+      formData.append("desc", this.desc);
+      formData.append("attachment", this.attachment);
+      formData.append("knowType", this.knowType);
+      formData.append("link", this.link);
+      formData.append("patentNum", this.patentNum);
+      formData.append("expiry", this.expiry);
+      formData.append("issn", this.issn);
+      formData.append("doi", this.doi);
+      formData.append("issueDate", this.issueDate);
+
+
+      this.resourceService.createKnowledgeResource(formData).subscribe((res) => {
         console.log(res);
         this.resultSuccess = true;
         this.resultError = false;
@@ -182,6 +222,14 @@ export class CreateResourcePage implements OnInit {
       const file = event.target.files;
       this.images = file;
       console.log(this.images);
+    }
+  }
+
+  selectAttachment(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.attachment = file;
+      console.log(this.attachment);
     }
   }
 
