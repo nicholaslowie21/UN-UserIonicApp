@@ -18,7 +18,7 @@
   </ion-item>
   <ion-label style="text-decoration: underline; float: right; padding-right: 5px" (click)="reset()">Reset</ion-label><br>
   <div style="text-align: center" *ngIf="(filterList == undefined||filterList.length == 0) == true">
-      <h4>No Records of Rewards could be found!</h4>
+      <h4 style="padding: 0px 10px;">No Records of Rewards could be found!</h4>
   </div>
   <ion-card  *ngFor="let n of filterList">
     <div class="aligned" *ngIf="n.accountName != ''">
@@ -40,14 +40,14 @@
       <ion-card-title (click)="viewDetails(n)">{{n.title}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-    <p class="customStyle">Reward Description: {{n.desc}}<br></p>
-    <p>External Sponsor: {{n.externalName}}<br></p>
-    <p>Country: {{n.country}}<br></p>
-    <p>Points: {{n.point}}</p>
-    <p>Minimum Tier: {{n.minTier}}</p>
-    <ion-card-subtitle>Start Date: <ion-badge color="dark">{{formatDate(n.createdAt)}}</ion-badge></ion-card-subtitle>
-    <ion-card-subtitle>End Date: <ion-badge color="dark">{{formatDate(n.endDate)}}</ion-badge></ion-card-subtitle>
-  </ion-card-content>
+      <p style="font-weight: bold;">{{n.desc}}</p>
+      <p *ngIf="n.externalName != ''">External Sponsor:{{n.externalName}}</p>
+      <p>Country:{{n.country}}</p>
+      <p>Points:{{n.point}}</p>
+      <!-- <p>Minimum Tier:{{n.minTier}}</p> -->
+      <ion-card-subtitle>Valid Date: <ion-badge color="dark">{{formatDate(n.createdAt)}} - {{formatDate(n.endDate)}}</ion-badge></ion-card-subtitle>
+      <!-- <ion-card-subtitle>End Date: <ion-badge color="dark">{{formatDate(n.endDate)}}</ion-badge></ion-card-subtitle> -->
+    </ion-card-content>
   </ion-card>
 </ion-content>
 
