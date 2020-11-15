@@ -25,20 +25,23 @@
       <ion-card-header>
         <ion-badge style="float:right">{{formatDate(chatroom.updatedAt)}}</ion-badge>
         <div class="aligned">
-          <div style="padding-right: 5px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=chatroom.targetImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
-            <div class="aligned" *ngIf="chatroom.user1username == currentUser.data.user.username" >
-              <ion-card-title (click)="enterChatRoom(chatroom)">{{chatroom.user2username}}</ion-card-title>
-              <ion-badge style="margin-left: 5px;" color=danger *ngIf="chatroom.user1read == false">Unread</ion-badge>
+          <img class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover; margin-right: 5px;" [src]=chatroom.targetImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+            <div *ngIf="chatroom.user1username == currentUser.data.user.username">
+              <div class="aligned">
+                <ion-card-title (click)="enterChatRoom(chatroom)">{{chatroom.user2username}}</ion-card-title>
+                <ion-badge style="margin-left: 5px;" color=danger *ngIf="chatroom.user1read == false">Unread</ion-badge>
+              </div>
+              <ion-card-subtitle class="customStyle">{{chatroom.lastMessage}}</ion-card-subtitle>
             </div>
-            <div class="aligned" *ngIf="chatroom.user1username != currentUser.data.user.username" >
-              <ion-card-title (click)="enterChatRoom(chatroom)">{{chatroom.user1username}}</ion-card-title>
-              <ion-badge style="margin-left: 5px;" color=danger *ngIf="chatroom.user2read == false">Unread</ion-badge>
+            <div *ngIf="chatroom.user1username != currentUser.data.user.username">
+              <div class="aligned">
+                <ion-card-title (click)="enterChatRoom(chatroom)">{{chatroom.user1username}}</ion-card-title>
+                <ion-badge style="margin-left: 5px;" color=danger *ngIf="chatroom.user2read == false">Unread</ion-badge>
+              </div>
+              <ion-card-subtitle class="customStyle">{{chatroom.lastMessage}}</ion-card-subtitle>
             </div>
         </div>
       </ion-card-header>
-      <ion-card-content>
-        {{chatroom.lastMessage}}
-      </ion-card-content>
     </ion-card>
   </div>
 
@@ -50,25 +53,23 @@
       <ion-card-header>
         <ion-badge style="float:right; ">{{formatDate(adminChat.updatedAt)}}</ion-badge>
         <div class="aligned">
-          <div style="padding-right: 5px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=adminChat.targetImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
-        
-          <div class="aligned" *ngIf="adminChat.user1username == currentUser.data.user.username" >
-            <ion-card-title>{{adminChat.user2username}}</ion-card-title>
+          <img class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover; margin-right: 5px;" [src]=adminChat.targetImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+          <div *ngIf="adminChat.user1username == currentUser.data.user.username" >
+            <div class="aligned">
+              <ion-card-title>{{adminChat.user2username}}</ion-card-title>
+              <ion-badge style="margin-left: 5px;" color=danger *ngIf="adminChat.user1read == false">Unread</ion-badge>
+            </div>
+            <ion-card-subtitle class="customStyle">{{adminChat.lastMessage}}</ion-card-subtitle>
           </div>
-          <div class="aligned" *ngIf="adminChat.user1username != currentUser.data.user.username" >
-            <ion-card-title>{{adminChat.user1username}}</ion-card-title>
-          </div>
-          <div class="aligned" *ngIf="(adminChat.user1username == currentUser.data.user.username)&& (adminChat.user1read == false)" >
-            <ion-badge style="margin-left: 5px;" color=danger>Unread</ion-badge>
-          </div>
-          <div class="aligned" *ngIf="(adminChat.user1username != currentUser.data.user.username) && (adminChat.user2read == false)" >
-            <ion-badge style="margin-left: 5px;" color=danger>Unread</ion-badge>
+          <div *ngIf="adminChat.user1username != currentUser.data.user.username" >
+            <div class="aligned">
+              <ion-card-title>{{adminChat.user1username}}</ion-card-title>
+              <ion-badge style="margin-left: 5px;" color=danger *ngIf="adminChat.user2read == false">Unread</ion-badge>
+            </div>
+            <ion-card-subtitle class="customStyle">{{adminChat.lastMessage}}</ion-card-subtitle>
           </div>
         </div>
       </ion-card-header>
-      <ion-card-content>
-        <p>{{adminChat.lastMessage}}</p>
-      </ion-card-content>
     </ion-card>
   </div>
   </ion-list>

@@ -47,8 +47,6 @@ export class MessagesPage implements OnInit {
     this.noChatsBoolean = true;
     this.noAdminChatsBoolean = true;
     this.type = "user";
-    // this.isCurrFilterType = "all";
-    // Do u need to initialise in constructor?
     this.initializeChats();
 
    }

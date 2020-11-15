@@ -1,17 +1,20 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Details</ion-title>
+    <ion-title>
+      <div class="ion-text-wrap">
+        {{title}}
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>{{title}}</ion-card-title>
+      <ion-badge>{{createdAt}}</ion-badge>
     </ion-card-header>
     <ion-card-content>
-      <p class="customStyle">{{desc}}</p>
-      <p>{{createdAt}}</p>
+      <p>{{desc}}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>
