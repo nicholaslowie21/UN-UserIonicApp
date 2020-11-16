@@ -23,6 +23,9 @@ export class RewardsPage implements OnInit {
   type: any;
   claimedVouchers: any;
   expiredVouchers: any;
+  noActiveVouchers: Boolean = true;
+  noClaimedVouchers: Boolean = true;
+  noExpiredVouchers: Boolean = true;
 
   constructor(private router: Router, 
     private sessionService: SessionService, 
@@ -58,6 +61,7 @@ export class RewardsPage implements OnInit {
         this.activeVouchers = res.data.vouchers
         if(this.activeVouchers != undefined) {
           for(var i = 0; i < this.activeVouchers.length; i ++) {
+            this.noActiveVouchers = false;
             this.activeVouchers[i].rewardImgPath = this.sessionService.getRscPath() + this.activeVouchers[i].rewardImgPath +'?random+=' + Math.random();
           }
         }
@@ -69,6 +73,7 @@ export class RewardsPage implements OnInit {
       this.claimedVouchers = res.data.vouchers
       if(this.claimedVouchers != undefined) {
         for(var i = 0; i < this.claimedVouchers.length; i ++) {
+          this.noClaimedVouchers = false;
           this.claimedVouchers[i].rewardImgPath = this.sessionService.getRscPath() + this.claimedVouchers[i].rewardImgPath +'?random+=' + Math.random();
         }
       }
@@ -80,6 +85,7 @@ export class RewardsPage implements OnInit {
     this.expiredVouchers = res.data.vouchers
     if(this.expiredVouchers != undefined) {
       for(var i = 0; i < this.expiredVouchers.length; i ++) {
+        this.noExpiredVouchers = false;
         this.expiredVouchers[i].rewardImgPath = this.sessionService.getRscPath() + this.expiredVouchers[i].rewardImgPath +'?random+=' + Math.random();
       }
     }
@@ -157,7 +163,7 @@ export class RewardsPage implements OnInit {
       "voucherTitle": voucher.rewardTitle, 
       "voucherDesc": voucher.rewardDesc, 
       "voucherImg":  voucher.rewardImgPath,
-      "claimedAt": voucher.claimedAt,
+      "claimedAt": voucher.createdAt,
       "endDate": voucher.endDate}
       
     });

@@ -135,7 +135,7 @@ export class ViewMarketplaceResourcesPage implements OnInit {
       
       if(h.ownerType == "institution") {
         this.router.navigate(['/view-others-profile/' + h.ownerUsername + "/" + h.ownerType ])
-      } else if(h.hostType == "user") {
+      } else if(h.ownerType == "user") {
         this.router.navigate(['/view-others-profile/' + h.ownerUsername + "/" + h.ownerType ])
       }
       

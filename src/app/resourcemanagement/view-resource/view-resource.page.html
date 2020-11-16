@@ -41,7 +41,7 @@
       <br>
       <ion-card-header>
       <ion-card-title>{{currResource.title}}</ion-card-title>
-      <div class="aligned" *ngIf ="resourceType !='knowledge'">
+      <div class="aligned" *ngIf ="resourceType !='knowledge'" (click)="viewFounderProfile(ev, resourceOwner, currResource.ownerType)">
         <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-title>{{resourceOwner.name}}<ion-icon *ngIf="resourceOwner.isVerified == 'true'" name="checkmark-circle" size="big" style="padding-left: 5px;"></ion-icon> </ion-title>
       </div>

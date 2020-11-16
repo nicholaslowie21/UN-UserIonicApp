@@ -10,13 +10,14 @@
 <ion-content>
     <ion-card>
       <ion-card-header>
-          <ion-card-title>{{msg}}</ion-card-title>
+          <ion-card-title style="text-align: center;">{{msg}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-          <ion-icon class="center" name="checkmark-circle-sharp"></ion-icon>
+          <ion-icon class="center" name="checkmark-circle-sharp" color="success"></ion-icon>
           <p style="text-align: center">Voucher Code: {{code}}</p>
           <p style="text-align: center">Claimed on: {{formatDate(claimedAt)}}</p>
           <p style="text-align: center">Expiry Date: {{formatDate(endDate)}}</p>
+          <br>
           <ion-button expand="full" (click)="dismiss()">Dismiss</ion-button>
       </ion-card-content>
     </ion-card>

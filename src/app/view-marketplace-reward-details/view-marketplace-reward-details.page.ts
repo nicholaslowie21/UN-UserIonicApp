@@ -76,4 +76,31 @@ export class ViewMarketplaceRewardDetailsPage implements OnInit {
     return await this.modal.present();
   }
 
+  viewFounderProfile(ev, h) {
+    var username = "";
+    if(h.id == this.currentUser.data.user.id) {
+      this.router.navigateByUrl("/tabs/profile");
+    } else {
+      
+      if(h.sponsorType == "institution" || h.sponsorType=="user") {
+        this.router.navigate(['/view-others-profile/' + h.accountUsername + "/" + h.sponsorType ])
+      }
+      // if(h.sponsorType == "institution") {
+      //     this.institutionService.viewInstitutionById(h.sponsorId).subscribe((res) => {
+      //       username = res.data.targetInstitution.username
+      //       this.router.navigate(['/view-others-profile/' + username + "/" + h.hostType ])
+      //     }, (err) => {
+      //       console.log("View Founder Profile error: " + err.error.msg);
+      //     })
+      // } else if(h.hostType == "user") {
+      //   this.userService.viewUserById(h.host).subscribe((res) => {
+      //     username = res.data.targetUser.username
+      //     this.router.navigate(['/view-others-profile/' + username + "/" + h.hostType ])
+      //   }, (err) => {
+      //     console.log("View Founder Profile error: " + err.error.msg);
+      //   })
+      // }
+      
+    }
+  }
 }

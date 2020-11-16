@@ -10,66 +10,42 @@
 <ion-content>
 <ion-card>
   <ion-card-header>
-      <ion-card-title>You are claiming for:{{reward.title}}</ion-card-title>
-      <ion-card-subtitle>Your current rank is: {{currentUser.data.user.tier}}</ion-card-subtitle>
+      <ion-card-title>You are claiming for: {{reward.title}}<ion-badge class="{{reward.minTier}}">{{reward.minTier}}</ion-badge></ion-card-title>
+      <ion-card-subtitle>Your current rank is: <ion-badge class="{{currentUser.data.user.tier}}">{{currentUser.data.user.tier}}</ion-badge></ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
     <p>Your current wallet: {{currentUser.data.user.wallet}}</p>
     <ion-grid>
       <ion-row style="border: 10px;">
-        <ion-col >
-          Item
+        <ion-col size="8">
+          <p style="font-size:medium">Item</p>
         </ion-col>
-        <ion-col>
-
-        </ion-col>
-        <ion-col>
-          
-        </ion-col>
-        <ion-col>
-          Cost
+        <ion-col size="4">
+          <p style="font-size: medium">Cost</p>
         </ion-col>
       </ion-row>
       <hr>
       <ion-row>
-        <ion-col>
+        <ion-col size="8">
           1 x {{reward.title}}
         </ion-col>
-        <ion-col>
-
-        </ion-col>
-        <ion-col>
-          
-        </ion-col>
-        <ion-col>
+        <ion-col size="4">
           {{reward.point}}
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          Total
+        <ion-col size="8">
+          <p style="font-weight: bold;">Total</p>
         </ion-col>
-        <ion-col>
-
-        </ion-col>
-        <ion-col>
-          
-        </ion-col>
-        <ion-col>
-          {{reward.point}}
+        <ion-col size="4">
+          <p style="font-weight: bold;">{{reward.point}}</p>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
+        <ion-col size="8">
           Remaining Wallet
         </ion-col>
-        <ion-col>
-
-        </ion-col>
-        <ion-col>
-          
-        </ion-col>
-        <ion-col>
+        <ion-col size="4">
           {{currentUser.data.user.wallet-reward.point}}
         </ion-col>
       </ion-row>

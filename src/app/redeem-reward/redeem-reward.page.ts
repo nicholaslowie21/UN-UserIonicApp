@@ -123,7 +123,7 @@ export class RedeemRewardPage implements OnInit {
   async completed(response) {
     this.modal = await this.modalController.create({
       component: RewardConfirmationPage,
-      componentProps: {"msg": response.msg, "code": response.data.voucher.code, "claimedAt": response.data.voucher.claimedAt, "endDate": response.data.voucher.endDate}
+      componentProps: {"msg": response.msg, "code": response.data.voucher.code, "claimedAt": response.data.voucher.createdAt, "endDate": response.data.voucher.endDate}
       
     });
     this.modal.onWillDismiss().then((data) => {

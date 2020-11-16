@@ -8,7 +8,7 @@
         <ion-icon *ngIf="isVerified == true" name="checkmark-circle" size="big"></ion-icon>
 
       <div slot="end">
-        <ion-button  color="danger" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon>Report</ion-button>
+        <ion-button  color="danger" fill="solid" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon></ion-button>
       </div>
 
   </ion-toolbar>
@@ -17,7 +17,7 @@
 
 <ion-content [fullscreen]="true"> 
 <ion-card>
-  <ion-button expand="full" (click)="openChat()">
+  <ion-button expand="block" fill="outline"  style="margin: 5px 10px 0px 10px" (click)="openChat()">
     <ion-icon name="chatbubbles-sharp"></ion-icon>Chat with {{name}}
   </ion-button>
   <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">

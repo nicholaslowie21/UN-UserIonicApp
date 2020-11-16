@@ -4,13 +4,17 @@
       <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{title}}</ion-title>
-    <div slot="end">
-    <ion-button slot="end" color="danger" *ngIf="founderBoolean==true && completedBoolean == false" (click)="complete($event)">Project<br>Completed</ion-button>
-  </div>
-  <div *ngIf="founderBoolean != true" slot="end">
-    <ion-button  color="danger" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon>Report</ion-button>
-  </div>
+    <ion-title>
+      <div class="ion-text-wrap">
+        {{title}}
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+    <ion-button slot="end" color="danger" *ngIf="founderBoolean==true && completedBoolean == false" (click)="complete($event)">Complete<br>Project</ion-button>
+  </ion-buttons>
+  <ion-buttons *ngIf="founderBoolean != true" slot="end">
+    <ion-button  color="danger" fill="solid" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon></ion-button>
+  </ion-buttons>
   </ion-toolbar>
 
   

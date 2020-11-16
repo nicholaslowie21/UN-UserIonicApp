@@ -20,7 +20,7 @@
   <div style="text-align: center" *ngIf="(filterList == undefined||filterList.length == 0) == true">
       <h4 style="padding: 0px 10px;">No Records of Rewards could be found!</h4>
   </div>
-  <ion-card  *ngFor="let n of filterList">
+  <ion-card  *ngFor="let n of filterList" (click)="viewDetails(n)">
     <div class="aligned" *ngIf="n.accountName != ''">
       <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewSponsorProfile($event, n)" style="width: 40px; height: 40px; object-fit: cover;" [src]=n.accountImgPath alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
       <div>
@@ -37,7 +37,7 @@
     <img [src]=n.imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
     <ion-card-header>
       <ion-badge class="{{n.minTier}}" style="float: right">{{n.minTier}}</ion-badge>
-      <ion-card-title (click)="viewDetails(n)">{{n.title}}</ion-card-title>
+      <ion-card-title>{{n.title}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <p style="font-weight: bold;">{{n.desc}}</p>
