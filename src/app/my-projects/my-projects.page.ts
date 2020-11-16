@@ -15,12 +15,15 @@ import { ProjectService } from '../services/project.service';
 export class MyProjectsPage implements OnInit {
   currProjects : any[];
   pastProjects : any[];
+  pastContributions: any[];
   accountBoolean: boolean;
   accountType: any;
   user: any;
+  avgRating: any;
 
   noCurrProjectBoolean: boolean;
   noPastProjectBoolean: boolean;
+  noPastContributionBoolean: boolean;
   code: any;
   resultSuccess: boolean;
   error: boolean;
@@ -31,7 +34,9 @@ export class MyProjectsPage implements OnInit {
   searchCurrentProjectString = '';
   currentProjectsList: any[];
   pastProjectsList: any[];
+  pastContributionsList: any[];
   type: string;
+  role: string;
 
   constructor(private navCtrl: NavController, private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
         /*this.accountType = this.tokenStorage.getAccountType();
@@ -43,6 +48,7 @@ export class MyProjectsPage implements OnInit {
           this.accountBoolean = false;
         }*/
         this.type = "currProj";
+        this.role = "admin"; //for ion segment for past involvements
         this.user = this.tokenStorage.getUser();
         this.accountType = this.tokenStorage.getAccountType();
         
@@ -134,6 +140,24 @@ export class MyProjectsPage implements OnInit {
           console.log('********** Past-projects(institution).ts: ', err.error.msg);
         };
 
+        this.projectService.getContributionByUser(this.id, "institution").subscribe((res) => {
+          this.pastContributions = res.data.contributions
+          this.avgRating = res.data.avgRating;
+          this.pastContributionsList = this.pastContributions;
+          if(this.pastContributions.length > 0) {
+            this.noPastContributionBoolean = false;
+            for(var i = 0; i < this.pastProjects.length; i++) {
+              this.pastContributions[i].ionicImgPath = this.sessionService.getRscPath() + this.pastContributions[i].ionicImgPath  +'?random+=' + Math.random();
+            }
+  
+            this.pastContributionsList = this.pastContributions.sort(function (a, b) {
+                  return a.updatedAt.localeCompare(b.updatedAt);
+                }).reverse();
+          } else {
+              this.noPastContributionBoolean = true;
+          }
+        })
+
     } else if(this.accountBoolean == false) {
           this.userService.viewUserById(this.id).subscribe((res) => {
                 this.name = res.data.targetUser.name;
@@ -161,29 +185,51 @@ export class MyProjectsPage implements OnInit {
       };
       console.log("retrieved projects")
       this.userService.getPastProjects(this.id).subscribe((res) => {
-            this.pastProjects = res.data.pastProjects
-            this.initializePast();
-            if(this.pastProjects.length > 0) {
-              this.noPastProjectBoolean = false;
-              for(var i = 0; i < this.pastProjects.length; i++) {
-                this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
-              }
+        this.pastProjects = res.data.pastProjects
+        this.initializePast();
+        if(this.pastProjects.length > 0) {
+          this.noPastProjectBoolean = false;
+          for(var i = 0; i < this.pastProjects.length; i++) {
+            this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
+          }
 
-              this.pastProjectsList = this.pastProjects.sort(function (a, b) {
-                return a.updatedAt.localeCompare(b.updatedAt);
-              }).reverse();
-            } else {
-                this.noPastProjectBoolean = true;
-            }
+          this.pastProjectsList = this.pastProjects.sort(function (a, b) {
+            return a.updatedAt.localeCompare(b.updatedAt);
+          }).reverse();
+        } else {
+            this.noPastProjectBoolean = true;
+        }
+        console.log(this.pastProjects);
+        console.log(this.pastProjectsList);
       }),
       err => {
         console.log('********** Past-projects(user).ts: ', err.error.msg);
       };
+
+      this.projectService.getContributionByUser(this.user.data.user.id, "user").subscribe((res) => {
+        console.log("I am at proj service endpt call" + res);
+        this.pastContributions = res.data.contributions
+        this.avgRating = res.data.avgRating;
+        this.pastContributionsList = this.pastContributions;
+        if(this.pastContributions.length > 0) {
+          this.noPastContributionBoolean = false;
+          for(var i = 0; i < this.pastProjects.length; i++) {
+            this.pastContributions[i].ionicImgPath = this.sessionService.getRscPath() + this.pastContributions[i].ionicImgPath  +'?random+=' + Math.random();
+          }
+
+          this.pastContributionsList = this.pastContributions.sort(function (a, b) {
+                return a.updatedAt.localeCompare(b.updatedAt);
+              }).reverse();
+        } else {
+            this.noPastContributionBoolean = true;
+        }
+        console.log(this.avgRating);
+        console.log(this.pastContributions);
+        console.log(this.pastContributionsList);
+      })
     }
     
   }
-
-  
 
   view(event, project) {
     this.router.navigate(["/view-project/" + project.id])
@@ -204,6 +250,7 @@ export class MyProjectsPage implements OnInit {
  }
  initializePast() {
   this.pastProjectsList = this.pastProjects;
+  this.pastContributionsList = this.pastContributions;
 }
 
  async filterCurrList(evt) {
@@ -229,11 +276,19 @@ async filterPastList(evt) {
     return;
   }
 
-  this.pastProjectsList = this.pastProjectsList.filter(pastProject => {
-    if (pastProject.title && searchTerm) {
-      return (pastProject.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-    }
-  });
+  if(this.role == 'admin') {
+    this.pastProjectsList = this.pastProjectsList.filter(pastProject => {
+      if (pastProject.title && searchTerm) {
+        return (pastProject.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+  } else {
+    this.pastContributionsList = this.pastContributionsList.filter(pastContribution => {
+      if (pastContribution.title && searchTerm) {
+        return (pastContribution.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
+  }
 }
 
 segmentChanged(ev: any) {

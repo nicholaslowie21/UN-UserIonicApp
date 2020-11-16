@@ -20,16 +20,22 @@ export class ViewOthersProjectsPage implements OnInit {
   name: any;
   currProjects: any;
   pastProjects: any;
+  pastContributions: any;
+  noPastContributionBoolean: boolean;
   noPastProjectBoolean: boolean;
   noCurrProjectBoolean: boolean;
   currentProjectsList: any;
   pastProjectsList: any;
+  pastContributionsList: any[];
   type: string;
+  role: string;
+  avgRating: any;
 
   constructor(private navCtrl: NavController, private router: Router, private activatedRoute: ActivatedRoute,	private tokenStorage : TokenStorageService, private institutionService: InstitutionService, private userService: UserService, private sessionService: SessionService, private alertController: AlertController, private projectService: ProjectService, private toastCtrl: ToastController) {
     this.user = this.tokenStorage.getUser();
     console.log(this.user);
     this.type = "currProj";
+    this.role = "admin";
     if(this.tokenStorage.getViewId() != this.user.data.user.id && this.tokenStorage.getViewId()!= undefined ){
         this.accountType = this.tokenStorage.getViewId().accountType;
     } else if(this.id == this.user.id){
@@ -104,6 +110,23 @@ if(this.accountBoolean == true)
     err => {
       console.log('********** Past-projects(institution).ts: ', err.error.msg);
     };
+    this.projectService.getContributionByUser(this.id, "institution").subscribe((res) => {
+      this.pastContributions = res.data.contributions
+      this.avgRating = res.data.avgRating;
+      this.pastContributionsList = this.pastContributions;
+      if(this.pastContributions.length > 0) {
+        this.noPastContributionBoolean = false;
+        for(var i = 0; i < this.pastProjects.length; i++) {
+          this.pastContributions[i].ionicImgPath = this.sessionService.getRscPath() + this.pastContributions[i].ionicImgPath  +'?random+=' + Math.random();
+        }
+
+        this.pastContributionsList = this.pastContributions.sort(function (a, b) {
+              return a.updatedAt.localeCompare(b.updatedAt);
+            }).reverse();
+      } else {
+          this.noPastContributionBoolean = true;
+      }
+    })
 
 } else if(this.accountBoolean == false) {
       this.userService.viewUserById(this.id).subscribe((res) => {
@@ -141,6 +164,27 @@ if(this.accountBoolean == true)
   err => {
     console.log('********** Past-projects(user).ts: ', err.error.msg);
   };
+
+  this.projectService.getContributionByUser(this.user.data.user.id, "user").subscribe((res) => {
+    this.pastContributions = res.data.contributions
+    this.avgRating = res.data.avgRating;
+    this.pastContributionsList = this.pastContributions;
+    if(this.pastContributions.length > 0) {
+      this.noPastContributionBoolean = false;
+      for(var i = 0; i < this.pastProjects.length; i++) {
+        this.pastContributions[i].ionicImgPath = this.sessionService.getRscPath() + this.pastContributions[i].ionicImgPath  +'?random+=' + Math.random();
+      }
+
+      this.pastContributionsList = this.pastContributions.sort(function (a, b) {
+            return a.updatedAt.localeCompare(b.updatedAt);
+          }).reverse();
+    } else {
+        this.noPastContributionBoolean = true;
+    }
+    console.log(this.avgRating);
+    console.log(this.pastContributions);
+    console.log(this.pastContributionsList);
+  })
 }
 }
 
@@ -165,6 +209,7 @@ initializeCurr() {
 }
 initializePast() {
  this.pastProjectsList = this.pastProjects;
+ this.pastContributionsList = this.pastContributions;
 }
 
 async filterCurrList(evt) {
@@ -190,11 +235,19 @@ async filterPastList(evt) {
    return;
  }
 
- this.pastProjectsList = this.pastProjectsList.filter(pastProject => {
-   if (pastProject.title && searchTerm) {
-     return (pastProject.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
-   }
- });
+ if(this.role == 'admin') {
+  this.pastProjectsList = this.pastProjectsList.filter(pastProject => {
+    if (pastProject.title && searchTerm) {
+      return (pastProject.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+    }
+  });
+} else {
+  this.pastContributionsList = this.pastContributionsList.filter(pastContribution => {
+    if (pastContribution.title && searchTerm) {
+      return (pastContribution.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+    }
+  });
+}
 }
 
 segmentChanged(ev: any) {

@@ -4,7 +4,7 @@
       <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{name}}'s Projects</ion-title>
+    <ion-title>{{name}}'s Project Involvements</ion-title>
     <ion-buttons *ngIf="user.data.user.id == id"label="Create" slot="end">
       <ion-icon name="add-circle-outline" style ="padding-right: 10px" slot="end" routerLink="/project-creation">
       </ion-icon>
@@ -16,7 +16,7 @@
         <ion-label>Current Projects</ion-label>
       </ion-segment-button>
       <ion-segment-button value="pastProj">
-        <ion-label>Past Projects</ion-label>
+        <ion-label>Past Involvements</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -31,43 +31,78 @@
     <div *ngIf="noCurrProjectBoolean == true">
       <p style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</p>
     </div>
-    <div *ngFor="let c of currentProjectsList">
-      <ion-card (click)="view($event, c)">
-        <img [src]=c.imgPath onerror="this.src='./assets/img/projects.jpg'" />
-      <ion-card-header>
-        <ion-badge style="float:right" class="role{{checkRole(c)}} ">&nbsp;{{checkRole(c)}}&nbsp;</ion-badge>
-        <ion-card-title >{{c.title}}</ion-card-title>
-        <ion-card-subtitle>{{c.role}}</ion-card-subtitle>
-        <ion-badge *ngFor="let s of c.SDGs" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
-        <ion-card-subtitle>Last Modified: {{formatDate(c.updatedAt)}}</ion-card-subtitle>
-      </ion-card-header>
+      <div *ngFor="let c of currentProjectsList">
+        <ion-card (click)="view($event, c)">
+          <img [src]=c.imgPath onerror="this.src='./assets/img/projects.jpg'" />
+        <ion-card-header>
+          <ion-badge style="float:right" class="role{{checkRole(c)}} ">&nbsp;{{checkRole(c)}}&nbsp;</ion-badge>
+          <ion-card-title >{{c.title}}</ion-card-title>
+          <ion-badge *ngFor="let s of c.SDGs" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
+          <ion-card-subtitle>Last Modified: {{formatDate(c.updatedAt)}}</ion-card-subtitle>
+        </ion-card-header>
 
-      <ion-card-content>
-        {{c.desc}}
-      </ion-card-content>
-      
-    </ion-card>
-    </div>
+        <ion-card-content>
+          {{c.desc}}
+        </ion-card-content>
+        
+      </ion-card>
+      </div>
     </div>
     <div *ngSwitchCase="'pastProj'">
-    <!-- <h2 style="padding-left:10px">Past Involvements</h2> -->
-    <ion-searchbar (ionInput)="filterPastList($event)" placeholder="Search"></ion-searchbar>
-    <div *ngIf="noPastProjectBoolean == true">
-      <p style="padding-left: 15px;">You have no previous projects! Start Creating Projects now!</p>
-    </div>
-    <div *ngFor="let p of pastProjectsList">
-    <ion-card (click)="view($event, p)">
-        <img [src]=p.imgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
-      <ion-card-header>
-        <ion-badge style="float:right" class="role{{checkRole(p)}} ">&nbsp;{{checkRole(p)}}&nbsp;</ion-badge>
-        <ion-card-title >{{p.title}}</ion-card-title>
-        <ion-card-subtitle>{{p.role}}</ion-card-subtitle>
-        <ion-badge *ngFor="let s of p.SDGs" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
-      </ion-card-header>
-
-      <ion-card-content>{{p.desc}}</ion-card-content>
-    </ion-card>
-    </div>
+      <ion-item-divider>
+        <ion-segment [(ngModel)]="role" (ionChange)="segmentChanged($event)">
+          <ion-segment-button value="admin" checked>
+            <ion-label>Founder/Admin</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="contributor">
+            <ion-label>Resource Contributor</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item-divider>
+    
+      <ion-list [ngSwitch]="role">
+      <ion-searchbar (ionInput)="filterPastList($event)" placeholder="Search"></ion-searchbar>
+      <div *ngSwitchCase="'admin'">
+        <div *ngIf="noPastProjectBoolean == true">
+          <p style="padding: 0px 15px;">You have no previous projects that you had a founder/admin role! Start Creating Projects now!</p>
+        </div>
+        <div *ngFor="let p of pastProjectsList">
+          <ion-card (click)="view($event, p)">
+              <img [src]=p.imgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
+            <ion-card-header>
+              <ion-badge style="float:right" class="role{{checkRole(p)}} ">&nbsp;{{checkRole(p)}}&nbsp;</ion-badge>
+              <ion-card-title >{{p.title}}</ion-card-title>
+              <ion-card-subtitle>{{p.role}}</ion-card-subtitle>
+              <ion-badge *ngFor="let s of p.SDGs" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge>
+            </ion-card-header>
+    
+            <ion-card-content>{{p.desc}}</ion-card-content>
+          </ion-card>
+        </div>
+      </div>
+      <div *ngSwitchCase="'contributor'">
+        <div *ngIf="noPastContributionBoolean == true">
+          <p style="padding: 0px 10px;">You have no previous projects where you contributed your resource! Start Creating Projects now!</p>
+        </div>
+        <div *ngIf="noPastContributionBoolean == false"><h4 style="padding: 0px 10px;">Overall Rating: {{avgRating}}</h4></div>
+        <div *ngFor="let p of pastContributionsList">
+        <ion-card (click)="view($event, p)">
+            <img [src]=p.ionicImgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
+          <ion-card-header>
+            <ion-badge style="float:right" class="roleContributor">&nbsp;Contributor&nbsp;</ion-badge>
+            <ion-card-title>{{p.projectTitle}}</ion-card-title>
+            <ion-card-subtitle >Need Title: {{p.needTitle}}</ion-card-subtitle>
+            <ion-card-subtitle >Resource Contributed: {{p.resourceTitle}}</ion-card-subtitle>
+            <ion-card-subtitle *ngIf="p.rating != ''">Rating: {{p.rating}}</ion-card-subtitle>
+            <!-- <ion-card-subtitle>{{p.role}}</ion-card-subtitle> -->
+            <!-- <ion-badge *ngFor="let s of p.SDGs" className="sdg{{s}}">SDG {{s}}&nbsp;</ion-badge> -->
+          </ion-card-header>
+  
+          <ion-card-content>{{p.desc}}</ion-card-content>
+        </ion-card>
+        </div>
+      </div>
+    </ion-list>
   </div>
   </ion-list>
   

@@ -315,6 +315,12 @@ export class ProjectService {
     );
   }
 
+  getContributionByUser(accId, accType): Observable<any>{
+    return this.http.get(this.API_URL + '/account/contributions?accountId=' + accId + "&accountType=" + accType, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)));
+  }
+
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

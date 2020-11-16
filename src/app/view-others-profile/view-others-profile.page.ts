@@ -95,12 +95,7 @@ export class ViewOthersProfilePage implements OnInit {
         console.log("Error retrieving User: " + err.error.msg);
       })
     }
-
-    
-
-   
 }
-
 
   initialiseUser() {
     this.viewInfo = {
@@ -134,7 +129,6 @@ export class ViewOthersProfilePage implements OnInit {
     if(this.currentUser.isVerified == "true") {
       this.isVerified = true;
     }
-
 
       this.userService.getBadges(this.currentUser.id).subscribe((res) => {
         this.badges = res.data.badges
@@ -453,7 +447,7 @@ export class ViewOthersProfilePage implements OnInit {
 }
 
 openChat() {
-  this.router.navigate(["/chatroom/" + this.id + "/" + this.accountType + "/" +this.name])
+  this.router.navigate(["/chatroom/" + this.id + "/" + this.accountType + "/" +this.name + "/normal"])
 }
 
 async presentModal(resource) {
