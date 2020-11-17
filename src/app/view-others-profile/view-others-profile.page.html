@@ -20,6 +20,12 @@
   <ion-button expand="full" (click)="openChat()">
     <ion-icon name="chatbubbles-sharp"></ion-icon>Chat with {{name}}
   </ion-button>
+  <ion-button expand="full" (click)="requestTestimonial()">
+    <ion-icon name="thumbs-up-sharp"></ion-icon>Request Testimonial
+  </ion-button>
+  <ion-button expand="full" (click)="writeTestimonial()">
+    <ion-icon name="pencil-sharp"></ion-icon>Write Testimonial for {{name}}
+  </ion-button>
   <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <div class="centered">
       
@@ -107,6 +113,11 @@
     <ion-item (click)="getResources($event)">
       <ion-icon  name="cube" slot="start"></ion-icon>
       <ion-label>Resources</ion-label>
+    </ion-item>
+
+    <ion-item (click)="getTestimonials($event)" routerDirection="forward">
+      <ion-icon  name="thumbs-up-outline" slot="start"></ion-icon>
+      <ion-label>Testimonials</ion-label>
     </ion-item>
   </ion-item-group>
   </ion-list>

@@ -169,6 +169,10 @@
       <ion-icon  name="cube" slot="start"></ion-icon>
       <ion-label>My Resources</ion-label>
     </ion-item>
+    <ion-item (click)="getTestimonials($event)" routerDirection="forward">
+      <ion-icon  name="thumbs-up-outline" slot="start"></ion-icon>
+      <ion-label>My Testimonials</ion-label>
+    </ion-item>
     <ion-item *ngIf="accountBoolean == false" routerLink="/rewards">
       <ion-icon name="gift-outline" slot="start"></ion-icon>
       <ion-label>Rewards</ion-label>

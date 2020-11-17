@@ -1,0 +1,218 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title >Testimonials</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="open" checked>
+        <ion-label *ngIf="this.id != currentUser.data.user.id">Testimonials</ion-label>
+        <ion-label *ngIf="this.id == currentUser.data.user.id">My Testimonials</ion-label>
+      </ion-segment-button>
+      <ion-segment-button *ngIf="this.id == currentUser.data.user.id" value="mine">
+        <ion-label>For Me</ion-label>
+      </ion-segment-button>
+      <ion-segment-button *ngIf="this.id == currentUser.data.user.id" value="others">
+        <ion-label>For Others</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list [ngSwitch]="segment">
+    <div *ngSwitchCase="'open'">
+      <div style="padding: 0px 20px;" *ngIf="(incomingOpenTestimonialsList == undefined || incomingOpenTestimonialsList.length == 0) == true">
+        You do not have any testimonials!
+        </div>
+      <div *ngFor="let d of incomingOpenTestimonialsList" >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Testimonial for: {{d.projectTitle}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="aligned">
+              <ion-card-content style="font-weight: bold;">By: <br> </ion-card-content>
+              <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=d.creatorImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+              <ion-label (click)="viewProfile($event, d.creatorUsername, d.creatorType)">{{d.creatorName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+              </div>
+              <br>
+              <ion-card-subtitle>{{d.desc}}</ion-card-subtitle>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    <div *ngSwitchCase="'mine'" >
+        <ion-segment [(ngModel)]="inStatus" (ionChange)="segmentChanged($event)" color="secondary">
+          <ion-segment-button value="requested" checked>
+            <ion-label>Requested</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="pending" >
+            <ion-label>Pending</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+    <ion-list [ngSwitch]="inStatus">
+      <div *ngSwitchCase="'requested'">
+        <ion-title>Requested Testimonials(Incoming)</ion-title>
+        <div style="padding: 0px 20px;" *ngIf="(incomingRequestedTestimonialsList == undefined || incomingRequestedTestimonialsList.length == 0) == true">
+          You do not have any requested testimonials!
+          </div>
+        <div *ngFor="let p of incomingRequestedTestimonialsList" >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Testimonial for: {{p.projectTitle}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="aligned">
+              <ion-card-content style="font-weight: bold;">Request sent to: <br> </ion-card-content>
+              <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.creatorImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+              <ion-label (click)="viewProfile($event, p.creatorUsername, p.creatorType)">{{p.creatorName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+              </div>
+              <br>
+              <ion-badge color="dark">Request Date: {{formatDate(p.createdAt)}}</ion-badge>
+              <ion-button expand=full (click)="cancelRequest($event, p)">Cancel Request</ion-button>
+          </ion-card-content>
+        </ion-card>
+        </div>
+      </div>
+    <div *ngSwitchCase="'pending'">
+      <ion-title>Pending Testimonials(Incoming)</ion-title>
+      <div style="padding: 0px 20px;" *ngIf="(incomingPendingTestimonialsList == undefined || incomingPendingTestimonialsList.length == 0) == true">
+        You do not have any pending testimonials!
+        </div>
+      <div *ngFor="let p of incomingPendingTestimonialsList" >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Testimonial for: {{p.projectTitle}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="aligned">
+              <ion-card-content style="font-weight: bold;">Request sent to: <br> </ion-card-content>
+              <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.creatorImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+              <ion-label (click)="viewProfile($event, p.creatorUsername, p.creatorType)">{{p.creatorName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+              </div>
+              <br>
+              <p>Testimonial: {{p.desc}}</p>
+              <ion-badge color="dark">Request Date: {{formatDate(p.createdAt)}}</ion-badge>
+              <ion-badge color="dark">Update Date: {{formatDate(p.updatedAt)}}</ion-badge>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-button expand=full (click)="acceptTestimonial($event, p)">Accept</ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button expand=full (click)="rejectRequest($event, p)">Reject</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+              
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </ion-list>
+    </div>
+
+    <div *ngSwitchCase="'others'">
+          <ion-segment [(ngModel)]="outStatus" (ionChange)="segmentChanged($event)" color="secondary">
+            <ion-segment-button value="outrequested" checked>
+              <ion-label>Requested</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="outpending">
+              <ion-label>Pending</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="outgiven">
+              <ion-label>Given</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+      <ion-list [ngSwitch]="outStatus">
+        <div *ngSwitchCase="'outrequested'">
+          <ion-title>Testimonials Requests</ion-title>
+          <div style="padding: 0px 20px;" *ngIf="(outgoingRequestedTestimonialsList == undefined || outgoingRequestedTestimonialsList.length == 0) == true">
+            You do not have any testimonial requests!
+            </div>
+          <div *ngFor="let p of outgoingRequestedTestimonialsList" >
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Testimonial for: {{p.projectTitle}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="aligned">
+                  <ion-card-content style="font-weight: bold;">Request by: <br> </ion-card-content>
+                  <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.targetImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                  <ion-label (click)="viewProfile($event, p.targetUsername, p.targetType)">{{p.targetName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+                  </div>
+                  <br>
+                  <ion-badge color="dark">Request Date: {{formatDate(p.createdAt)}}</ion-badge>
+                  <ion-badge color="dark">Update Date: {{formatDate(p.updatedAt)}}</ion-badge>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col>
+                        <ion-button expand=full (click)="acceptWriteTestimonial($event, p)">Accept</ion-button>
+                      </ion-col>
+                      <ion-col>
+                        <ion-button expand=full (click)="cancelOthersRequest($event, p)">Dismiss</ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                  
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+        <div *ngSwitchCase="'outpending'">
+          <ion-title>Pending Testimonial Requests</ion-title>
+          <div style="padding: 0px 20px;" *ngIf="(outgoingPendingTestimonialsList == undefined || outgoingPendingTestimonialsList.length == 0) == true">
+            You do not have any pending testimonials requests!
+            </div>
+          <div *ngFor="let p of outgoingPendingTestimonialsList" >
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Testimonial for: {{p.projectTitle}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="aligned">
+                  <ion-card-content style="font-weight: bold;">Request by: <br> </ion-card-content>
+                  <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.targetImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                  <ion-label (click)="viewProfile($event, p.targetUsername, p.targetType)">{{p.targetName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+                  </div>
+                  <br>
+                  <p>Testimonial: {{p.desc}}</p>
+                  <ion-badge color="dark">Request Date: {{formatDate(p.createdAt)}}</ion-badge>
+                  <ion-badge color="dark">Update Date: {{formatDate(p.updatedAt)}}</ion-badge>
+                  <ion-button expand=full (click)="deleteWrittenTestimonial($event, p)">Delete Testimonial</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+        <div *ngSwitchCase="'outgiven'">
+          <ion-title>Testimonial requests Given</ion-title>
+          <div style="padding: 0px 20px;" *ngIf="(outgoingGivenTestimonialsList == undefined || outgoingGivenTestimonialsList.length == 0) == true">
+            You have not given any testimonials yet!
+            </div>
+          <div *ngFor="let d of outgoingGivenTestimonialsList" >
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Testimonial for: {{d.projectTitle}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <div class="aligned">
+                  <ion-card-content style="font-weight: bold;">Request by: <br> </ion-card-content>
+                  <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=d.targetImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                  <ion-label (click)="viewProfile($event, d.targetUsername, d.targetType)">{{d.targetName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+                  </div>
+                  <br>
+                  <p>{{d.desc}}</p>
+                  <ion-badge color="dark">Request Date: {{formatDate(d.createdAt)}}</ion-badge>
+                  <ion-badge color="dark">Given Date: {{formatDate(d.updatedAt)}}</ion-badge>
+                  <ion-button expand=full (click)="deleteWrittenTestimonial($event, d)">Delete Testimonial</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+  </ion-list>
+  </div>
+</ion-list>
+</ion-content>

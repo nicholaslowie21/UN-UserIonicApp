@@ -198,6 +198,10 @@ parseDate(d: String) {
     this.router.navigate(['/my-projects/' + this.currentUser.data.user.id]);
   }
 
+  getTestimonials($event) {
+    this.router.navigate(["/my-testimonials/" + this.currentUser.data.user.id + "/" + this.accountType])
+  }
+
   getTargets($event) {
     this.router.navigate(['/view-profile-targets/']);
   }

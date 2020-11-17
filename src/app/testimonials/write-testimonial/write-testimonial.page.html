@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Write Testimonials</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Testimonial</ion-card-title>
+      <ion-card-subtitle>{{testimonial.targetName}}</ion-card-subtitle>
+      <ion-card-subtitle> For: {{testimonial.projectTitle}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-label>Details:</ion-label>
+    <ion-textarea [(ngModel)]="words"></ion-textarea>
+    <ion-button expand=full (click)="writeTestimonial()">Send Testimonial</ion-button>
+  </ion-card>
+  
+</ion-content>

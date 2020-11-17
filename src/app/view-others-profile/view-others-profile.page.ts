@@ -453,7 +453,19 @@ export class ViewOthersProfilePage implements OnInit {
 }
 
 openChat() {
-  this.router.navigate(["/chatroom/" + this.id + "/" + this.accountType + "/" +this.name])
+  this.router.navigate(["/chatroom/" + this.id + "/" + this.accountType + "/" +this.name + "/normal"])
+}
+
+requestTestimonial() {
+  this.router.navigate(["/request-testimonial/" + this.id + "/" + this.accountType + "/" +this.name])
+}
+
+writeTestimonial() {
+  this.router.navigate(["/testimonial-others/" + this.id + "/" + this.accountType + "/" +this.name])
+}
+
+getTestimonials($event) {
+  this.router.navigate(["/my-testimonials/" + this.id + "/" + this.accountType])
 }
 
 async presentModal(resource) {

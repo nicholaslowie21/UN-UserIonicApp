@@ -284,7 +284,7 @@ const routes: Routes = [
     loadChildren: () => import('./report/my-reports/my-reports.module').then( m => m.MyReportsPageModule)
   },
   {
-    path: 'chatroom/:Id/:type/:name',
+    path: 'chatroom/:Id/:type/:name/:chatType',
     loadChildren: () => import('./chats/chatroom/chatroom.module').then( m => m.ChatroomPageModule)
   },
   {
@@ -302,7 +302,26 @@ const routes: Routes = [
   {
     path: 'edit-project-targets/:Id',
     loadChildren: () => import('./project-creation/edit-project-targets/edit-project-targets.module').then( m => m.EditProjectTargetsPageModule)
+  },
+  {
+    path: 'my-testimonials/:Id/:type',
+    loadChildren: () => import('./testimonials/my-testimonials/my-testimonials.module').then( m => m.MyTestimonialsPageModule)
+  },
+  {
+    path: 'request-testimonial/:Id/:type/:name',
+    loadChildren: () => import('./testimonials/request-testimonial/request-testimonial.module').then( m => m.RequestTestimonialPageModule)
+  },
+  {
+    path: 'write-testimonial',
+    loadChildren: () => import('./testimonials/write-testimonial/write-testimonial.module').then( m => m.WriteTestimonialPageModule)
+  },
+  {
+    path: 'testimonial-others/:Id/:type/:name',
+    loadChildren: () => import('./testimonials/testimonial-others/testimonial-others.module').then( m => m.TestimonialOthersPageModule)
   }
+
+
+
 
 
 
