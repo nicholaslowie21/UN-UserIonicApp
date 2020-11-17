@@ -79,7 +79,7 @@ export class MyTestimonialsPage implements OnInit {
       "accountType": this.type
     }
 
-    this.testimonialService.getOpenedMyTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getOpenedMyTestimonials(this.requestData).subscribe((res: any) => {
       this.incomingOpenTestimonialsList = res.data.testimonials;
       if(this.incomingOpenTestimonialsList != undefined) {
         for(var i = 0; i < this.incomingOpenTestimonialsList.length; i ++) {
@@ -90,7 +90,7 @@ export class MyTestimonialsPage implements OnInit {
       console.log("***************Retrieve incoming Testimonials(requested) error: " + err.error.msg);
     })
 
-    this.testimonialService.getRequestedMyTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getRequestedMyTestimonials(this.requestData).subscribe((res: any) => {
       this.incomingRequestedTestimonialsList = res.data.testimonials;
       if(this.incomingRequestedTestimonialsList != undefined) {
         for(var i = 0; i < this.incomingRequestedTestimonialsList.length; i ++) {
@@ -101,7 +101,7 @@ export class MyTestimonialsPage implements OnInit {
       console.log("***************Retrieve incoming Testimonials(requested) error: " + err.error.msg);
     })
 
-    this.testimonialService.getPendingMyTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getPendingMyTestimonials(this.requestData).subscribe((res: any) => {
       this.incomingPendingTestimonialsList = res.data.testimonials;
       if(this.incomingPendingTestimonialsList != undefined) {
         for(var i = 0; i < this.incomingPendingTestimonialsList.length; i ++) {
@@ -112,7 +112,7 @@ export class MyTestimonialsPage implements OnInit {
       console.log("***************Retrieve incoming Testimonials(pending) error: " + err.error.msg);
     })
     
-    this.testimonialService.getCancelledMyTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getCancelledMyTestimonials(this.requestData).subscribe((res: any) => {
       this.incomingCancelledTestimonialsList = res.data.testimonials;
       if(this.incomingCancelledTestimonialsList != undefined) {
         for(var i = 0; i < this.incomingCancelledTestimonialsList.length; i ++) {
@@ -123,7 +123,7 @@ export class MyTestimonialsPage implements OnInit {
       console.log("***************Retrieve incoming Testimonials(cancelled) error: " + err.error.msg);
     })
 
-    this.testimonialService.getDismissedMyTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getDismissedMyTestimonials(this.requestData).subscribe((res: any) => {
       this.incomingDismissedTestimonialsList = res.data.testimonials;
       if(this.incomingDismissedTestimonialsList != undefined) {
         for(var i = 0; i < this.incomingDismissedTestimonialsList.length; i ++) {
@@ -135,7 +135,7 @@ export class MyTestimonialsPage implements OnInit {
       console.log("***************Retrieve incoming Testimonials(dismissed) error: " + err.error.msg);
     })
 
-    this.testimonialService.getCloseMyTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getCloseMyTestimonials(this.requestData).subscribe((res: any) => {
       this.incomingCloseTestimonialsList = res.data.testimonials;
       if(this.incomingCloseTestimonialsList != undefined) {
         for(var i = 0; i < this.incomingCloseTestimonialsList.length; i ++) {
@@ -155,7 +155,7 @@ export class MyTestimonialsPage implements OnInit {
       "accountId": this.id,
       "accountType": this.type
     }
-    this.testimonialService.getPendingOutgoingTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getPendingOutgoingTestimonials(this.requestData).subscribe((res: any) => {
       this.outgoingPendingTestimonialsList = res.data.testimonials
       if(this.outgoingPendingTestimonialsList != undefined) {
         for(var i = 0; i < this.outgoingPendingTestimonialsList.length; i ++) {
@@ -166,7 +166,7 @@ export class MyTestimonialsPage implements OnInit {
       console.log("Retrieve outgoing Pending Testimonials List err: " + err.error.msg)
     })
 
-    this.testimonialService.getRequestedOutgoingTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getRequestedOutgoingTestimonials(this.requestData).subscribe((res: any) => {
       this.outgoingRequestedTestimonialsList = res.data.testimonials
       if(this.outgoingRequestedTestimonialsList != undefined) {
         for(var i = 0; i < this.outgoingRequestedTestimonialsList.length; i ++) {
@@ -177,7 +177,7 @@ export class MyTestimonialsPage implements OnInit {
       console.log("Retrieve outgoing Requested Testimonials List err: " + err.error.msg)
     })
 
-    this.testimonialService.getDismissedOutgoingTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getDismissedOutgoingTestimonials(this.requestData).subscribe((res:any) => {
       this.outgoingDismissedTestimonialsList = res.data.testimonials
       if(this.outgoingDismissedTestimonialsList != undefined) {
         for(var i = 0; i < this.outgoingDismissedTestimonialsList.length; i ++) {
@@ -188,7 +188,7 @@ export class MyTestimonialsPage implements OnInit {
       console.log("Retrieve outgoing Dismissed Testimonials List err: " + err.error.msg)
     })
 
-    this.testimonialService.getOpenedOutgoingTestimonials(this.requestData).subscribe((res) => {
+    this.testimonialService.getOpenedOutgoingTestimonials(this.requestData).subscribe((res:any) => {
       this.outgoingGivenTestimonialsList = res.data.testimonials
       if(this.outgoingGivenTestimonialsList != undefined) {
         for(var i = 0; i < this.outgoingGivenTestimonialsList.length; i ++) {
