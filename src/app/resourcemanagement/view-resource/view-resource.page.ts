@@ -8,6 +8,8 @@ import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-nati
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from "@ionic-native/file/ngx";
 import { MarketplaceService } from 'src/app/services/marketplace.service';
+import { InstitutionService } from 'src/app/services/institution.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-view-resource',
@@ -83,7 +85,10 @@ export class ViewResourcePage implements OnInit {
     private toastCtrl: ToastController, 
     private file: File, 
     private transfer: FileTransfer,
-    private marketplaceService: MarketplaceService, private tokenStorage: TokenStorageService) {
+    private marketplaceService: MarketplaceService, 
+    private tokenStorage: TokenStorageService, 
+    private userService: UserService,
+    private institutionService: InstitutionService) {
     //See BG update project, for the toast
     this.retrieveResourceError = false;
     this.institutionKnowledgeOwner = false;
@@ -300,6 +305,15 @@ export class ViewResourcePage implements OnInit {
 
   viewProject(p) {
     this.router.navigate(['/view-market-project-details/' + p.projectId]);
+  }
+
+  viewFounderProfile(ev, h, ownerType) {
+    var username ="";
+    if(h.id == this.currentUser.data.user.id) {
+      this.router.navigateByUrl("/tabs/profile");
+    } else {
+      this.router.navigate(['/view-others-profile/' + h.username + "/" + ownerType ])
+    }
   }
   
   async delete(event)

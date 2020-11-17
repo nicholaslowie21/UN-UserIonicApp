@@ -5,46 +5,47 @@
     <ion-title>Reward Details</ion-title>
     </ion-buttons>
     <div *ngIf="id != reward.sponsorId" slot="end">
-      <ion-button  color="danger" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon>Report</ion-button>
+      <ion-button fill="solid" color="danger" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon></ion-button>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card  > 
+  <ion-card> 
     <img [src]=imgPath alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
     <ion-card-header>
+      <ion-badge class="{{reward.minTier}}" style="float: right">{{reward.minTier}}</ion-badge>
       <ion-card-title style="text-align: center" >{{reward.title}}</ion-card-title>
-      <div class="aligned">
+      <div class="aligned" *ngIf="reward.externalName == ''" (click)="viewFounderProfile($event, reward)">
         <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=accountImgPath  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-title>{{reward.accountName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-title>
       </div>
+      <p style="font-weight: bold;">{{reward.desc}}<br></p>
         <div>
         <ion-grid>
           <ion-row>
-            <ion-col>
+            <ion-col size="4">
                 Points
             </ion-col>
-            <ion-col>
+            <ion-col size="8">
                 Valid Date
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col>
+            <ion-col size="4">
                 {{reward.point}}
             </ion-col>
-            <ion-col>
-              <ion-card-subtitle>{{formatDate(reward.createdAt)}}-{{formatDate(reward.endDate)}}</ion-card-subtitle>
+            <ion-col size="8">
+              <ion-card-subtitle>{{formatDate(reward.createdAt)}} - {{formatDate(reward.endDate)}}</ion-card-subtitle>
             </ion-col>
           </ion-row>
         </ion-grid>
       </div>
-      
     </ion-card-header>
     <ion-card-content>
-    <p class="customStyle">Reward Description: {{reward.desc}}<br></p>
     <p>Country: {{reward.country}}<br></p>
-    <p>Minimum Tier: {{reward.minTier}}</p>
+    <p *ngIf="reward.externalName != ''">External Sponsor:{{reward.externalName}}</p>
+    <!-- <p>Minimum Tier: {{reward.minTier}}</p> -->
     <ion-button expand="full" (click)="redeem()">Redeem</ion-button>
   </ion-card-content>
   </ion-card>

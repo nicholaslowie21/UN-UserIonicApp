@@ -35,11 +35,11 @@ export class AnnouncementsPage implements OnInit {
     return formattedDate.substring(5, formattedDate.length-13);
   }
 
-  async presentPopover(ev: any, a) {
+  async presentPopover(a) {
     const popover = await this.popoverController.create({
       component: ViewAnnouncementDetailsPage,
       cssClass: 'my-custom-class',
-      event: ev,
+      // event: ev,
       componentProps: {"title": a.title, "desc": a.desc, "createdAt": this.formatDate(a.createdAt)},
       translucent: true
     });

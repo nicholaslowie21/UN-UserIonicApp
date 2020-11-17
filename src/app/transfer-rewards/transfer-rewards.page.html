@@ -17,7 +17,7 @@
             <ion-card-title>{{voucherTitle}}</ion-card-title>
           </ion-col>
           <ion-col>
-            <ion-card-subtitle style="text-align: right">{{code}}</ion-card-subtitle>
+            <ion-badge style="float: right;">{{code}}</ion-badge>
           </ion-col>
         </ion-row>
         <ion-row size="3">
@@ -32,13 +32,13 @@
     <ion-card-content>
       <ion-grid>
         <ion-row>
-          <ion-col><p>Validity: <ion-card-subtitle>{{formatDate(claimedAt)}}-{{formatDate(endDate)}}</ion-card-subtitle></p></ion-col>
+          <ion-col><p>Validity: <ion-badge color="dark">{{formatDate(claimedAt)}}-{{formatDate(endDate)}}</ion-badge></p></ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
 
-  <h1 style="padding-left: 15px">You can provide the transfer code to your friend as well!</h1>
+  <h3 style="padding-left: 15px">Transfer your reward voucher to a friend!</h3>
   <form name="form" (ngSubmit)="search(words)" novalidate>
     <ion-item transparent>
         <div class="form-group">
@@ -52,14 +52,16 @@
   </form>
   <ion-list >
     <ion-card *ngFor="let u of users">
-      <div class="aligned">
-      <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=u.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-      &nbsp;
-      <h6><div style="font-weight:bolder">{{u.username}}</div><br>{{u.country}}</h6>
-      <ion-toolbar >
-        <ion-button class="add" (click)="presentAlertConfirm(u)" >Transfer</ion-button>
-      </ion-toolbar>
-      </div>
+      <ion-card-content>
+        <div class="aligned">
+        <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=u.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        &nbsp;
+        <h6><div style="font-weight:bolder">{{u.username}}</div>{{u.country}}</h6>
+        <ion-toolbar >
+          <ion-button class="add" (click)="presentAlertConfirm(u)" >Transfer</ion-button>
+        </ion-toolbar>
+        </div>
+    </ion-card-content>
     </ion-card>
   </ion-list>
 </ion-content>

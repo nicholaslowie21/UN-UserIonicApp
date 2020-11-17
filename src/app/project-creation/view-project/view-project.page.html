@@ -67,7 +67,7 @@
   </ion-toolbar>
   <ion-list [ngSwitch]="page">
     <ion-item-group *ngSwitchCase="'feed'">
-      <ion-button *ngIf="founderBoolean==true || adminBoolean==true"  (click)="createPost($event)" expand="block" style="margin: 0px 10px;"><ion-icon name="pencil-outline"></ion-icon>Create New Post</ion-button>
+      <ion-button *ngIf="completedBoolean == false && (founderBoolean==true || adminBoolean==true)"  (click)="createPost($event)" expand="block" style="margin: 0px 10px;"><ion-icon name="pencil-outline"></ion-icon>Create New Post</ion-button>
       <div style="padding-left: 15px" *ngIf="(posts == undefined||posts.length == 0) == true">
           There is no feed for this project currently.
       </div>

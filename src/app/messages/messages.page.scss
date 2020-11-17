@@ -44,3 +44,10 @@ ion-refresher {
   z-index: 100;
   position: relative;
 }
+
+.customStyle {      
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
