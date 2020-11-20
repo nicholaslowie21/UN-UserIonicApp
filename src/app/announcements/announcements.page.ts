@@ -11,10 +11,13 @@ import { ViewAnnouncementDetailsPage } from '../view-announcement-details/view-a
 })
 export class AnnouncementsPage implements OnInit {
   announcements: any;
-
+  type: string;
+  notifications: any;
   constructor(private commService:CommunicationService, 
     private tokenStorage: TokenStorageService,
-    private popoverController: PopoverController) { }
+    private popoverController: PopoverController) {
+      this.type = "announce";
+     }
 
   ngOnInit() {
     this.initialise();
@@ -27,7 +30,12 @@ export class AnnouncementsPage implements OnInit {
       console.log("View Announcement Error: " + err.error.msg);
     })
       this.tokenStorage.saveAnnouncementLength(0);
-    console.log(this.announcements);
+      
+    this.commService.viewNotifications().subscribe((res) => {
+      this.notifications = res.data.notifications;
+    }, (err) => {
+      console.log("View Notifications Error: " + err.error.msg);
+    })
   }
 
   formatDate(date): any {
@@ -44,6 +52,10 @@ export class AnnouncementsPage implements OnInit {
       translucent: true
     });
     return await popover.present();
+  }
+
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
   }
 
 }

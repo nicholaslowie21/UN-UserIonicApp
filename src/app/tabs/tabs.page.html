@@ -13,8 +13,9 @@
       <ion-icon name="chatbox-ellipses-outline"></ion-icon>
       <!--<ion-label>Messages</ion-label>-->
     </ion-tab-button>
-    <ion-tab-button  tab="notifs">
-      <ion-icon name="notifications-outline"></ion-icon>
+    <ion-tab-button  tab="notifs" (click)="checkRead()">
+      <ion-icon name="notifications-outline" style="padding-right: 10px;"></ion-icon>
+      <ion-badge *ngIf="gotNotifs == true" color="danger" style="position: absolute; right: 2px; top: 5px;">!</ion-badge>
       <!--<ion-label>Notifications</ion-label>-->
     </ion-tab-button>
     <ion-tab-button tab="profile">

@@ -24,6 +24,7 @@ import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Downloader, DownloadRequest, NotificationVisibility } from '@ionic-native/downloader/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { PayPal } from '@ionic-native/paypal/ngx';
 // import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 /*Supply an array of whitelisted Domains
@@ -75,6 +76,7 @@ export function jwtOptionsFactory(storage:Storage) {
     ModalController,
     authInterceptorProviders,
     BarcodeScanner,
+    PayPal
     // QRScanner
   ],
   bootstrap: [AppComponent]
