@@ -26,6 +26,20 @@ export class CommunicationService {
     );
   }
 
+  viewNotifications(): Observable<any> {
+    return this.http.get(this.API_URL + '/notifications', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  gotNewNotifs(): Observable<any> {
+    return this.http.get(this.API_URL + '/gotNewNotif', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   chatWith(data): Observable<any> {
     return this.http.post(this.CHAT_URL + '/chatAccount', {"chatType": data.chatType, "targetId": data.targetId, "targetType": data.targetType}, httpOptions).pipe(
       tap(res => {

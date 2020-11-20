@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonTabs } from '@ionic/angular'
+import { CommunicationService } from '../services/communication.service';
 
 @Component({
   selector: 'app-tabs',
@@ -8,7 +9,16 @@ import { IonTabs } from '@ionic/angular'
 })
 export class TabsPage {
   private activeTab?: HTMLElement;
-  constructor() {}
+  gotNotifs: boolean = false;
+  constructor(private commService: CommunicationService) {}
+
+  ngOnInit() {
+    this.commService.gotNewNotifs().subscribe((res) => {
+      this.gotNotifs = res.data.gotNew;
+    }, (err) => {
+      console.log("View Notifications Error: " + err.error.msg);
+    })
+  }
 
   tabChange(tabsRef: IonTabs) {
     this.activeTab = (tabsRef.outlet as any).activatedView.element;
@@ -34,5 +44,14 @@ export class TabsPage {
     if (this.activeTab) {
       this.activeTab.dispatchEvent(new CustomEvent(eventName));
     }
+  }
+
+  checkRead() {
+    this.gotNotifs = false;
+    console.log("i ran");
+  }
+
+  ionSelected() {
+    this.checkRead();
   }
 }

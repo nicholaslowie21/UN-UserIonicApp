@@ -2,9 +2,21 @@
   <ion-toolbar>
     <ion-title>Announcements</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="announce" checked>
+        <ion-label>Announcments</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="notifs">
+        <ion-label>Notifications</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list [ngSwitch]="type">
+  <div *ngSwitchCase="'announce'">
   <ion-card *ngFor="let a of announcements">
     <ion-card-header>
       <ion-badge>{{formatDate(a.createdAt)}}</ion-badge>
@@ -14,4 +26,17 @@
       <p class="customStyle">{{a.desc}}</p>
     </ion-card-content>
   </ion-card>
+</div>
+<div *ngSwitchCase="'notifs'">
+  <ion-card *ngFor="let n of notifications">
+    <ion-card-header>
+      <ion-badge>{{formatDate(n.createdAt)}}</ion-badge>
+      <ion-card-title>{{n.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p class="customStyle">{{n.desc}}</p>
+    </ion-card-content>
+  </ion-card>
+</div>
+</ion-list>
 </ion-content>

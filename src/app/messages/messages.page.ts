@@ -20,8 +20,8 @@ export class MessagesPage implements OnInit {
   type: String;
   chatroomList: any[];
   adminChatroomList: any[];
-  noChatsBoolean: Boolean;
-  noAdminChatsBoolean: Boolean;
+  noChatsBoolean: boolean;
+  noAdminChatsBoolean: boolean;
   // isCurrFilterType: String;
   
   constructor(private communicationService:CommunicationService, 

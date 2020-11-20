@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { CreateMoneyRequestPage } from 'src/app/funding/create-money-request/create-money-request.page';
 import { InstitutionService } from 'src/app/services/institution.service';
 import { MarketplaceService } from 'src/app/services/marketplace.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
+import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
 
 @Component({
   selector: 'app-marketplace',
@@ -26,13 +27,20 @@ export class MarketplacePage implements OnInit {
   modal: HTMLIonModalElement;
   needId: any;
 
+  //paypal
+  paymentAmount: string = '1.00';
+  currency: string = 'USD';
+  currencyIcon: string = '$';
+
   constructor(private marketplaceService: MarketplaceService, 
     private sessionService: SessionService,
     private tokenStorage: TokenStorageService,
     private router: Router,
     private userService: UserService,
     private institutionService: InstitutionService,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private payPal: PayPal,
+    private alertController: AlertController) {
     this.accountType = this.tokenStorage.getAccountType();
     this.user = this.tokenStorage.getUser();
     if(this.accountType == "institution") {
@@ -178,5 +186,109 @@ export class MarketplacePage implements OnInit {
       return 0;
     }
     return parseFloat((received*100/total).toFixed(2));
+  }
+
+
+  payWithPaypal() {
+    console.log("Pay ????");
+    this.payPal.init({
+      PayPalEnvironmentProduction: 'YOUR_PRODUCTION_CLIENT_ID',
+      PayPalEnvironmentSandbox: 'ATYIGhVI_8iXzrGnY_2ppcz1AJR8mpQp6IxHxdWXRVXwbcVFamkz-6qjBiYSOHidvvRjvxwkir2jvIka'
+    }).then(() => {
+      // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
+      this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({
+        // Only needed if you get an "Internal Service Error" after PayPal login!
+        //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
+      })).then(() => {
+        let payment = new PayPalPayment(this.paymentAmount, this.currency, 'Description', 'sale');
+        this.payPal.renderSinglePaymentUI(payment).then((res) => {
+          console.log(res);
+          if(res.response.state == "approved") {
+            this.successmessage(res);
+          } else {
+            this.failuremessage(res);
+          }
+          // Successfully paid
+
+          // Example sandbox response
+          //
+          // {
+          //   "client": {
+          //     "environment": "sandbox",
+          //     "product_name": "PayPal iOS SDK",
+          //     "paypal_sdk_version": "2.16.0",
+          //     "platform": "iOS"
+          //   },
+          //   "response_type": "payment",
+          //   "response": {
+          //     "id": "PAY-1AB23456CD789012EF34GHIJ",
+          //     "state": "approved",
+          //     "create_time": "2016-10-03T13:33:33Z",
+          //     "intent": "sale"
+          //   }
+          // }
+        }, () => {
+          // Error or render dialog closed without being successful
+        });
+      }, () => {
+        // Error in configuration
+      });
+    }, () => {
+      // Error in initialization, maybe PayPal isn't supported or something else
+    });
+  }
+
+  async successmessage(res)
+	{
+		const alert = await this.alertController.create({
+			header: 'Your Payment is Successful!',
+			message: 'Transaction Id: ' + res.response.id + "\n" + "Status: " + res.response.state + "\n" + this.formatTDate(res.response.create_time),
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+  async failuremessage(res)
+	{
+		const alert = await this.alertController.create({
+			header: 'Your Payment has failed!',
+			message: 'Transaction Id: ' + res.response.id + "\nStatus: " + res.response.state + "\n" + this.formatTDate(res.response.create_time),
+			buttons: [
+			{
+			  text: 'Cancel',
+			  role: 'cancel',
+			  cssClass: 'secondary',
+			  handler: (blah) => {
+				
+			  }
+			}, {
+			  text: 'Okay',
+			  handler: () => {
+			  }
+			}
+			]
+		});
+
+		await alert.present(); 
+  }
+
+
+  formatTDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate;
   }
 }

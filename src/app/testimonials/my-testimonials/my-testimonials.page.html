@@ -40,6 +40,9 @@
               </div>
               <br>
               <ion-card-subtitle>{{d.desc}}</ion-card-subtitle>
+              <ion-button expand=full (click)="cancelRequest($event, d)">
+                <ion-icon name="trash-outline" color=danger></ion-icon>
+                Delete</ion-button>
           </ion-card-content>
         </ion-card>
       </div>
