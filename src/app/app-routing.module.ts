@@ -318,7 +318,12 @@ const routes: Routes = [
   {
     path: 'testimonial-others/:Id/:type/:name',
     loadChildren: () => import('./testimonials/testimonial-others/testimonial-others.module').then( m => m.TestimonialOthersPageModule)
+  },
+  {
+    path: 'view-paid-resource-details/:type/:id',
+    loadChildren: () => import('./paidResource/view-paid-resource-details/view-paid-resource-details.module').then( m => m.ViewPaidResourceDetailsPageModule)
   }
+
 
 
 

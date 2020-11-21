@@ -78,7 +78,14 @@
     </div>
     <div *ngFor="let i of itemResourceList">
       <ion-card (click)= "viewResource(i)">
-          <img className={{i.status}} [src]=i.imgPath  onerror="this.src='./assets/img/item.jpg'" />
+        <div *ngIf="i.imgPath == undefined || i.imgPath.length == 0">
+          <img class="{{i.status}}" src='./assets/img/item.jpg' />
+        </div>
+        <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
+          <ion-slide class="{{i.status}}" *ngFor ="let img of i.imgPath" >
+            <ion-img [src]=img onerror="this.src='./assets/img/item.jpg'" ></ion-img>
+          </ion-slide>
+        </ion-slides>
         <ion-card-header>
           <ion-card-title>{{i.title}}</ion-card-title>
           <ion-card-subtitle>{{i.region}}</ion-card-subtitle>
@@ -101,7 +108,16 @@
     </div>
       <div *ngFor="let v of venueResourceList">
         <ion-card (click)= "viewResource(v)">
-            <img className={{v.status}} [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
+          <div>
+            <div *ngIf="v.imgPath == undefined || v.imgPath.length == 0">
+              <img src='./assets/img/venue.jpg' />
+            </div>
+            <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
+              <ion-slide class="{{v.status}}" *ngFor ="let i of v.imgPath" >
+                <ion-img [src]=i onerror="this.src='./assets/img/item.jpg'" ></ion-img>
+              </ion-slide>
+            </ion-slides>
+            </div>
           <ion-card-header>
             <ion-card-title>{{v.title}}</ion-card-title>
             <ion-card-subtitle>Status: {{v.status}}</ion-card-subtitle>
