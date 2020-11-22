@@ -20,6 +20,9 @@
       <ion-segment-button value="venue">
         <ion-label>Venue</ion-label>
       </ion-segment-button>
+      <ion-segment-button value="paid">
+        <ion-label>Paid</ion-label>
+      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -28,7 +31,7 @@
   <ion-searchbar (ionInput)="filterList($event)" placeholder="Search"></ion-searchbar>
   <ion-list  [ngSwitch]="type">
     <div *ngSwitchCase="'manpower'" >
-      <div *ngIf="noManpowerResourceBoolean == true" style="padding-left: 15px;">
+      <div *ngIf="manpowerResourceList == undefined || manpowerResourceList.length == 0" style="padding-left: 15px;">
         <ion-label>There are no active manpower resource available!</ion-label>
       </div>
       <div *ngFor="let m of manpowerResourceList" >
@@ -59,7 +62,7 @@
 
 
     <div *ngSwitchCase="'knowledge'">
-      <div *ngIf="noKnowledgeResourceBoolean == true" style="padding-left: 15px;">
+      <div *ngIf="knowledgeResourceList == undefined || knowledgeResourceList.length == 0" style="padding-left: 15px;">
         <ion-label>There are no active knowledge resource available!</ion-label>
     </div>
     <div *ngFor="let k of knowledgeResourceList">
@@ -88,7 +91,7 @@
   </div>
 
     <div *ngSwitchCase="'item'">
-      <div *ngIf="noItemResourceBoolean == true" style="padding-left: 15px;">
+      <div *ngIf="itemResourceList == undefined || itemResourceList.length == 0" style="padding-left: 15px;">
         <ion-label>There are no active item resource available!</ion-label>
       </div>
 
@@ -104,7 +107,16 @@
             <ion-label>Resource Owner</ion-label>
           </div> 
         </div>
-          <img class="{{i.status}} full" [src]=i.imgPath  onerror="this.src='./assets/img/item.jpg'" />
+        <div>
+          <div *ngIf="i.imgPath == undefined || i.imgPath.length == 0">
+            <img class="{{i.status}}" src='./assets/img/item.jpg' />
+          </div>
+          <ion-slides pager=true paginationType=bullets zoom>
+            <ion-slide class="{{i.status}}" *ngFor ="let img of i.imgPath" >
+              <ion-img [src]=img onerror="this.src='./assets/img/item.jpg'" ></ion-img>
+            </ion-slide>
+          </ion-slides>
+          </div>
         <ion-card-header (click)= "viewResource(i)">
           <ion-card-title>{{i.title}}</ion-card-title>
           <ion-card-subtitle>{{i.country}}</ion-card-subtitle>
@@ -115,7 +127,7 @@
     </div>
 
     <div *ngSwitchCase="'venue'">
-      <div *ngIf="noVenueResourceBoolean == true" style="padding-left: 15px;">
+      <div *ngIf="venueResourceList == undefined || venueResourceList.length == 0" style="padding-left: 15px;">
         <ion-label>There are no active venue resource available!</ion-label>
     </div>
       <div *ngFor="let v of venueResourceList">
@@ -130,7 +142,16 @@
               <ion-label>Resource Owner</ion-label>
             </div> 
           </div>
-            <img class="{{v.status}} full" [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />
+          <div>
+            <div *ngIf="v.imgPath == undefined || v.imgPath.length == 0">
+              <img  src='./assets/img/venue.jpg' />
+            </div>
+            <ion-slides pager=true paginationType=bullets zoom>
+              <ion-slide class="{{v.status}}" *ngFor ="let img of v.imgPath" >
+                <ion-img [src]=img onerror="this.src='./assets/img/venue.jpg'" ></ion-img>
+              </ion-slide>
+            </ion-slides>
+            </div>
           <ion-card-header (click)= "viewResource(v)">
             <ion-card-title>{{v.title}}</ion-card-title>
             <ion-card-subtitle>{{v.country}}</ion-card-subtitle>
@@ -140,5 +161,42 @@
         </ion-card>
       </div>
       </div>
+
+      <div *ngSwitchCase="'paid'">
+        <div *ngIf="paidResourceList == undefined || paidResourceList.length == 0" style="padding-left: 15px;">
+          <ion-label>There are no active paid resources available!</ion-label>
+      </div>
+        <div *ngFor="let p of paidResourceList">
+          <ion-card>
+            <div class="aligned" (click)="viewFounderProfile($event, p)">
+              <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=p.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+              <div>
+                <div class = "aligned">
+                  <ion-label style="font-weight: bold">{{p.ownerName}}</ion-label>
+                  <ion-icon name="checkmark-circle" *ngIf="p.ownerIsVerified == 'true'" size="big"></ion-icon>
+                </div>
+                <ion-label>Resource Owner</ion-label>
+              </div> 
+            </div>
+            <div>
+              <div *ngIf="p.imgPaths == undefined || p.imgPaths.length == 0">
+                <img  src='./assets/img/cash.jpg' />
+              </div>
+              <ion-slides pager=true paginationType=bullets zoom>
+                <ion-slide *ngFor ="let img of p.imgPaths" >
+                  <ion-img [src]=img onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
+                </ion-slide>
+              </ion-slides>
+              </div>
+            <ion-card-header (click)= "viewPaidResource(p)">
+              <ion-card-title>{{p.title}}</ion-card-title>
+              <ion-card-subtitle style="font-weight:bolder" color=primary>$ {{p.price}}</ion-card-subtitle>
+              <ion-card-subtitle>{{p.country}}</ion-card-subtitle>
+              <ion-card-subtitle>{{p.category}}</ion-card-subtitle>
+              <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(p.updatedAt)}}</ion-badge></ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </div>
+        </div>
   </ion-list>
 </ion-content>

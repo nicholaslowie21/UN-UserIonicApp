@@ -3,14 +3,15 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <div *ngIf="yourAccountBoolean==false" slot="end">
+      <ion-button slot="end" (click)= "requestResource($event)" color="primary">Purchase</ion-button>
+    </div>
     <ion-title>View Resource Details</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card>
-      
-      <div *ngIf = "resourceType == 'item'">
         <div *ngIf="noPaidResourcePicBoolean == true">
           <img src='./assets/img/cash.jpg' />
         </div>
@@ -19,13 +20,15 @@
             <ion-img [src]=i onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
           </ion-slide>
         </ion-slides>
-      </div>
       <div>
         <ion-label *ngIf="yourAccountBoolean==true"  style="text-decoration: underline; float:right" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
       </div>
       <br>
       <ion-card-header>
       <ion-card-title>{{paidResource.title}}</ion-card-title>
+      <ion-item lines="none">
+        <ion-card-title color=primary>$ {{paidResource.price}}</ion-card-title>
+      </ion-item>
       <div class="aligned" *ngIf ="resourceType !='knowledge'" (click)="viewFounderProfile()">
         <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=paidResource.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
         <ion-title>{{paidResource.ownerName}}<ion-icon name="checkmark-circle" size="big" style="padding-left: 5px;"></ion-icon> </ion-title>
@@ -40,6 +43,10 @@
       </ion-item-divider>
       <ion-item lines="none">
         <p>Country: {{paidResource.country}}</p>
+      </ion-item>
+
+      <ion-item lines="none">
+        <p>Category: {{paidResource.category}}</p>
       </ion-item>
 
       <ion-item lines="none">
@@ -307,34 +314,6 @@
       <!--</ion-content>-->
       </div>
       </ion-list>
-  </div>
-  <div *ngIf="yourAccountBoolean==true">
-    <ion-item-divider color="primary">
-      <ion-title style="color: white;">Resource Need Suggestions</ion-title>
-    </ion-item-divider>
-    <div *ngIf="((suggestions != undefined) == false)|| (suggestions.length == 0)" style="padding-left: 15px; padding-right:15px;">
-      There are currently no suggested project resource needs for this resource
-    </div>
-    <div *ngIf="((suggestions != undefined && suggestions.length != 0) == true)">
-      <!-- <ion-card-title style="padding-left: 15px">Here are some resource need suggestions to contribute to</ion-card-title> -->
-      <ion-card *ngFor="let s of suggestions">
-        <img [src]=s.projectImg onerror="this.src='./assets/img/projects.jpg'" />
-        <ion-card-header>
-            <ion-card-title>Resource Need: {{s.title}}</ion-card-title>
-            <ion-badge *ngFor="let sd of s.projectSDGs" className="sdg{{sd}}">SDG {{sd}}&nbsp;</ion-badge>
-            <ion-card-subtitle>Country: {{s.country}}</ion-card-subtitle>
-            <ion-card-subtitle (click)="viewProject(s)">Project: {{s.projectTitle}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Resource Need Description: {{s.desc}}</p>
-          <p>Requested on: <ion-badge color="dark">{{formatDate(s.updatedAt)}}</ion-badge></p>
-          <br>
-          <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-            <ion-button (click)="contribute(s)">Contribute</ion-button> 
-          </ion-fab>
-        </ion-card-content>
-      </ion-card>
-    </div>
   </div>
 
 </ion-content>

@@ -53,3 +53,20 @@ ion-segment-button {
   min-width: 40px;
 
 }
+
+ion-img {
+  float: left;
+  width:  500px;
+  height: 250px;
+  object-fit: contain;
+}
+
+ion-slide {
+  background-color: white !important;
+  }
+
+  ion-slides.image-slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

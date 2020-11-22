@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
+import { PaidresourceService } from 'src/app/services/paidresource.service';
 import { ResourceService } from 'src/app/services/resource.service';
 import { SessionService } from 'src/app/services/session.service';
 
@@ -18,14 +19,21 @@ export class UploadResourcePicPage implements OnInit {
   data: { index: any; name: any; imgPath: any; };
   images: any;
   itemImages: any[];
+  paidImages: any;
 
-  constructor(private toastCtrl: ToastController, private router:Router, private activatedRoute: ActivatedRoute, private resourceService: ResourceService, private alertController: AlertController, private sessionService: SessionService) { }
+  constructor(private toastCtrl: ToastController, 
+    private router:Router, 
+    private activatedRoute: ActivatedRoute, 
+    private resourceService: ResourceService, 
+    private alertController: AlertController, 
+    private sessionService: SessionService,
+    private paidService: PaidresourceService) { }
 
   ngOnInit() {
     this.resourceId = this.activatedRoute.snapshot.paramMap.get('id');
     this.resourceType = this.activatedRoute.snapshot.paramMap.get('type');
     console.log(this.resourceType + " " + this.resourceId);
-    if(this.resourceType == 'venue' || this.resourceType == "item") {
+    if(this.resourceType == 'venue' || this.resourceType == "item" || this.resourceType == "paid") {
       this.initialise();
     }
   }
@@ -48,6 +56,10 @@ export class UploadResourcePicPage implements OnInit {
     }
 
     if(this.resourceType == 'venue' && event.target.files.length > 10 - this.venueImages.length) {
+      this.failureToast("Maximum allowable images is 10!");
+    }
+
+    if(this.resourceType == 'paid' && event.target.files.length > 10 - this.paidImages.length) {
       this.failureToast("Maximum allowable images is 10!");
     }
   }
@@ -95,6 +107,26 @@ export class UploadResourcePicPage implements OnInit {
           console.log('********** ViewResource.ts - Item: ', err.error.msg);
         };
 
+    } else if(this.resourceType == "paid") {
+      this.paidService.viewPaidResourceDetail(this.resourceId).subscribe((res) => {
+        console.log(res);
+        let paidImgPath = res.data.paidresource.imgPaths;
+        this.paidImages = [];
+        if (paidImgPath.length > 0) {
+          for (var i = 0; i < paidImgPath.length; i++) {
+            this.data= {
+              "index": i,
+              "name": "Paid Resource Image #" + (i + 1),
+              "imgPath": this.sessionService.getRscPath() + paidImgPath[i] + '?random+=' + Math.random() 
+
+            }
+            this.paidImages[i] = this.data;
+            
+          }
+        }
+      }), err => {
+        console.log('********** ViewResource.ts - Paid: ', err.error.msg);
+      };
     }
   }
 
@@ -130,6 +162,20 @@ export class UploadResourcePicPage implements OnInit {
         
         (err) => this.failureToast(err.error.msg)
       );
+    } else if(this.resourceType == 'paid' && this.images.length <= 10 - this.paidImages.length) {
+      formData.append('paidResourceId', this.resourceId);
+      for (let i = 0; i < this.images.length; i++) {
+        formData.append("paidResPics", this.images[i]);
+    }
+  
+      this.paidService.uploadPaidResourcePic(formData).subscribe(
+        (res) => {
+          this.successToast();
+          this.initialise();
+        },
+        
+        (err) => this.failureToast(err.error.msg)
+      );
     } else {
       this.failureToast("Maximum allowable images is 10!");
     }
@@ -137,7 +183,12 @@ export class UploadResourcePicPage implements OnInit {
 
 
   back() {
-    this.router.navigateByUrl("/view-resource/" + this.resourceType + "/" + this.resourceId);
+    if(this.resourceType != "paid") {
+      this.router.navigateByUrl("/view-resource/" + this.resourceType + "/" + this.resourceId);
+    } else if(this.resourceType == "paid") {
+      this.router.navigateByUrl("/view-paid-resource-details/" + this.resourceType + "/" + this.resourceId);
+    }
+    
   }
 
   remove(m) {
@@ -176,6 +227,25 @@ export class UploadResourcePicPage implements OnInit {
       console.log(err);
       this.failureToast(err.error.msg);
       console.log('********** UploadResourcePic.ts - Venue Pic Removal: ', err.error.msg);
+    };
+  }
+
+  removePaidPic(m) {
+    let removeData = {
+      "paidResourceId": this.resourceId,
+      "indexes": [m],
+    }
+    console.log(m);
+    this.paidService.deletePaidResourcePic(removeData).subscribe((res) => {
+      this.successToast();
+      this.initialise();
+      // this.router.navigateByUrl("/view-resource/knowledge/" + this.resourceId);
+    }
+   ),
+    err => {
+      console.log(err);
+      this.failureToast(err.error.msg);
+      console.log('********** UploadResourcePic.ts - Paid Resource Pic Removal: ', err.error.msg);
     };
   }
 

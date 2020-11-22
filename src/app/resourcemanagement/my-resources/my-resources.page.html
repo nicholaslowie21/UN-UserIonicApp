@@ -143,13 +143,13 @@
       </div>
 
       <div *ngSwitchCase="'paid'">
-        <div *ngIf="noVenueResourceBoolean == true" style="padding-left: 15px;">
+        <div *ngIf="noPaidResourceBoolean == true" style="padding-left: 15px;">
           <ion-label>You do not have any active paid resource! Create one now!</ion-label>
       </div>
         <div *ngFor="let p of paidResourceList">
           <ion-card (click)= "viewPaidResource(p)">
             <div>
-            <div *ngIf="p.imgPath == undefined || p.imgPath.length == 0">
+            <div *ngIf="p.imgPaths == undefined || p.imgPaths.length == 0">
               <img class="{{p.status}}" src='./assets/img/cash.jpg' />
             </div>
             <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>

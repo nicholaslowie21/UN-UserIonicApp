@@ -26,7 +26,7 @@ export class PaidresourceService {
 
   deletePaidResource(data): Observable<any> {
     return this.http.post(this.API_URL + "/status", {
-      "paidResourceId": data.paidResourceId,
+      "paidResourceId": data,
       "status": "deleted"
     }, httpOptions).pipe(
       tap(res => {
