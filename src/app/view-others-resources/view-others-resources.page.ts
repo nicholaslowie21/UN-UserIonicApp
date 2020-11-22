@@ -31,6 +31,9 @@ export class ViewOthersResourcesPage implements OnInit {
   knowledgeResourceList: any[];
   itemResourceList: any[];
   venueResourceList: any[];
+  viewEntered: boolean = false;
+  noItemPicBoolean: boolean;
+  noVenuePicBoolean: boolean;
 
   constructor(private userService: UserService, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
     this.accountType = this.tokenStorage.getViewId().accountType;
@@ -54,6 +57,7 @@ export class ViewOthersResourcesPage implements OnInit {
   ionViewDidEnter() {
     this.initialiseA();
     this.initialiseData();
+    this.viewEntered = true;
   }
 
   initialiseData() {
@@ -83,15 +87,24 @@ export class ViewOthersResourcesPage implements OnInit {
 
       this.resourceService.getInstitutionPrivateItemResource().subscribe((res) => {
         this.itemResource = res.data.items;
+        this.itemResourceList = this.itemResource;
         if(this.itemResource.length > 0) {
           this.noItemResourceBoolean = false;
           for(var i = 0; i < this.itemResource.length; i++) {
-            this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+            if(this.itemResource[i].imgPath.length > 0) {
+              for (var j = 0; j < this.itemResource[i].imgPath.length; j++) {
+                this.itemResource[i].imgPath[j] = this.sessionService.getRscPath() + this.itemResource[i].imgPath[j] + '?random+=' + Math.random(); 
+                console.log(1);
+              }
+              this.noItemPicBoolean = false;
+            } else {
+              this.noItemPicBoolean = true;
+            }
+            // this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
           }
         } else {
             this.noItemResourceBoolean = true;
         }
-
         this.itemResourceList = this.itemResource.sort(function (a, b) {
           return a.updatedAt.localeCompare(b.updatedAt);
         }).reverse();
@@ -233,7 +246,15 @@ export class ViewOthersResourcesPage implements OnInit {
         if(this.itemResource.length > 0) {
           this.noItemResourceBoolean = false;
           for(var i = 0; i < this.itemResource.length; i++) {
-            this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+            if(this.itemResource[i].imgPath.length > 0) {
+              for (var j = 0; j < this.itemResource[i].imgPath.length; j++) {
+                this.itemResource[i].imgPath[j] = this.sessionService.getRscPath() + this.itemResource[i].imgPath[j] + '?random+=' + Math.random(); 
+                console.log(1);
+              }
+              this.noItemPicBoolean = false;
+            } else {
+              this.noItemPicBoolean = true;
+            }
           }
         } else {
             this.noItemResourceBoolean = true;
@@ -288,31 +309,46 @@ export class ViewOthersResourcesPage implements OnInit {
       }
 
       this.resourceService.getUserItemResource(this.id).subscribe((res) => {
-      this.itemResource = res.data.items;
-      if(this.itemResource.length > 0) {
-        this.noItemResourceBoolean = false;
-        for(var i = 0; i < this.itemResource.length; i++) {
-          this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+        this.itemResource = res.data.items;
+        if(this.itemResource.length > 0) {
+          this.noItemResourceBoolean = false;
+          for(var i = 0; i < this.itemResource.length; i++) {
+            if(this.itemResource[i].imgPath.length > 0) {
+              for (var j = 0; j < this.itemResource[i].imgPath.length; j++) {
+                this.itemResource[i].imgPath[j] = this.sessionService.getRscPath() + this.itemResource[i].imgPath[j] + '?random+=' + Math.random(); 
+                console.log(1);
+              }
+              this.noItemPicBoolean = false;
+            } else {
+              this.noItemPicBoolean = true;
+            }
+          }
+          console.log(this.noItemPicBoolean);
+        } else {
+            this.noItemResourceBoolean = true;
         }
-      } else {
-          this.noItemResourceBoolean = true;
-      }
-
-      this.itemResourceList = this.itemResource.sort(function (a, b) {
-        return a.updatedAt.localeCompare(b.updatedAt);
-      }).reverse();
-      }),
-      err => {
-        console.log('********** Item Resource (user).ts: ', err.error.msg);
-      };
+        this.itemResourceList = this.itemResource.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
+        }),
+        err => {
+          console.log('********** Item Resource (user).ts: ', err.error.msg);
+        };
 
       this.resourceService.getUserVenueResource(this.id).subscribe((res) => {
-      this.venueResource = res.data.venues;
+        this.venueResource = res.data.venues;
+        console.log(this.venueResource);
       if(this.venueResource.length > 0) {
         this.noVenueResourceBoolean = false;
         for(var i = 0; i < this.venueResource.length; i++) {
           if(this.venueResource[i].imgPath.length > 0) {
-              this.venueResource[i].imgPath[0] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[0]  +'?random+=' + Math.random();
+            for (var j = 0; j < this.venueResource[i].imgPath.length; j++) {
+              this.venueResource[i].imgPath[j] = this.sessionService.getRscPath() + this.venueResource[i].imgPath[j] + '?random+=' + Math.random(); 
+              console.log(1);
+            }
+            this.noVenuePicBoolean = false;
+          } else {
+            this.noVenuePicBoolean = true;
           }
         }
       } else {

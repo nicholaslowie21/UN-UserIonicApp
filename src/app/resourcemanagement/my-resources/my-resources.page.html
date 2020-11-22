@@ -27,6 +27,9 @@
       <ion-segment-button value="venue">
         <ion-label>Venue</ion-label>
       </ion-segment-button>
+      <ion-segment-button value="paid">
+        <ion-label>Paid</ion-label>
+      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -115,7 +118,7 @@
         <ion-card (click)= "viewResource(v)">
           <div>
           <div *ngIf="v.imgPath == undefined || v.imgPath.length == 0">
-            <img src='./assets/img/venue.jpg' />
+            <img class="{{v.status}}" src='./assets/img/venue.jpg' />
           </div>
           <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
             <ion-slide class="{{v.status}}" *ngFor ="let i of v.imgPath" >
@@ -138,5 +141,38 @@
         </ion-card>
       </div>
       </div>
+
+      <div *ngSwitchCase="'paid'">
+        <div *ngIf="noPaidResourceBoolean == true" style="padding-left: 15px;">
+          <ion-label>You do not have any active paid resource! Create one now!</ion-label>
+      </div>
+        <div *ngFor="let p of paidResourceList">
+          <ion-card (click)= "viewPaidResource(p)">
+            <div>
+            <div *ngIf="p.imgPaths == undefined || p.imgPaths.length == 0">
+              <img class="{{p.status}}" src='./assets/img/cash.jpg' />
+            </div>
+            <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
+              <ion-slide class="{{p.status}}" *ngFor ="let i of p.imgPaths" >
+                <ion-img [src]=i onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
+              </ion-slide>
+            </ion-slides>
+            </div>
+              <!--<img class="{{v.status}} full" [src]=v.imgPath[0]  onerror="this.src='./assets/img/venue.jpg'" />-->
+            <ion-card-header>
+              <ion-card-title>{{p.title}}</ion-card-title>
+              <ion-badge class="{{p.status}}">{{p.status}}</ion-badge>
+              <ion-card-subtitle>{{p.region}}</ion-card-subtitle>
+              <ion-card-subtitle>{{p.address}}</ion-card-subtitle>
+              <ion-card-subtitle>Last Modified: {{formatDate(p.updatedAt)}}</ion-card-subtitle>
+            </ion-card-header>
+      
+            <ion-card-content>
+              <p>{{p.desc}}</p>
+              <p>$ {{p.price}}</p>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        </div>
   </ion-list>
 </ion-content>

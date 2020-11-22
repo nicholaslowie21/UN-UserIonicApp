@@ -4,6 +4,7 @@ import { SessionService } from '../../services/session.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { Router, ActivatedRoute } from  "@angular/router";
 import { ToastController } from '@ionic/angular';
+import { PaidresourceService } from 'src/app/services/paidresource.service';
 
 @Component({
   selector: 'app-edit-resource',
@@ -36,7 +37,13 @@ export class EditResourcePage implements OnInit {
   resultSuccess: boolean;
   resultError: boolean;
 
-  constructor(private resourceService: ResourceService, private sessionService: SessionService, private tokenStorageService: TokenStorageService, private router: Router, private activatedRoute: ActivatedRoute, private toastCtrl: ToastController) {
+  constructor(private resourceService: ResourceService, 
+    private sessionService: SessionService, 
+    private tokenStorageService: TokenStorageService, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute, 
+    private toastCtrl: ToastController,
+    private paidService: PaidresourceService) {
     this.resultSuccess = false;
     this.resultError = false;
    }
@@ -82,6 +89,13 @@ export class EditResourcePage implements OnInit {
         this.internalActive();
       }), (err) => {
         console.log('********** EditResource.ts - Venue: ', err.error.msg);
+      };
+    } else if(this.resourceType == "paid") {
+      this.currResource = this.paidService.viewPaidResourceDetail(this.resourceId).subscribe((res) => {
+        this.currResource = res.data.paidresource;
+        this.internalActive();
+      }), (err) => {
+        console.log('********** EditResource.ts - Paid: ', err.error.msg);
       };
     }
 
@@ -277,6 +291,44 @@ export class EditResourcePage implements OnInit {
         this.resultError = false;
         this.successToast();
         this.back();
+      },
+      err => {
+        this.resultSuccess = false;
+        this.resultError = true;
+        this.failureToast(err.error.msg);
+        console.log('********** EditResource.ts - Knowledge: ', err.error.msg);
+      });
+    } else if (this.resourceType == "paid") {
+      this.updateForm= {
+        "paidResourceId": this.resourceId,
+        "title": this.currResource.title,
+        "desc": this.currResource.desc,
+        "country": this.currResource.country,
+        "category": this.currResource.category,
+        "price": this.currResource.price
+      }
+
+      if (this.isActive != this.isOriginalActive) {
+        if(this.isActive == true) {
+          this.paidService.activatePaidResource(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Venue: ', err.error.msg);
+          });
+        } else {
+          this.paidService.deactivatePaidResource(this.resourceId).subscribe((res) => {},
+          err => {
+            this.failureToast(err.error.msg);
+            console.log('********** EditResource.ts - Venue: ', err.error.msg);
+          });
+        }
+      }
+      
+      this.paidService.updatePaidResource(this.updateForm).subscribe((res) => {
+        this.resultSuccess = true;
+        this.resultError = false;
+        this.successToast();
+        this.router.navigateByUrl("/view-paid-resource-details/" + this.resourceType + "/" + this.resourceId)
       },
       err => {
         this.resultSuccess = false;

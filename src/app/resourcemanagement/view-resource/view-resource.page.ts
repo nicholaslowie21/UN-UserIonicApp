@@ -101,20 +101,26 @@ export class ViewResourcePage implements OnInit {
   ngOnInit() {
     this.resourceId = this.activatedRoute.snapshot.paramMap.get('id');
     this.resourceType = this.activatedRoute.snapshot.paramMap.get('type');
+    console.log(this.resourceType);
     this.currentUser = this.tokenStorage.getUser();
     this.id = this.currentUser.data.user.id;
     console.log(this.resourceType + " " + this.resourceId);
     this.initialise();
-    this.initialiseRequests();
-    this.initialiseSuggestions();
+      this.initialiseSuggestions();
+      this.initialiseRequests();
+    
   }
 
   ionViewDidEnter() {
     this.viewEntered = true;
     this.initialise();
-    this.initialiseRequests();
-    this.initialiseSuggestions();
+    
+   
+      this.initialiseSuggestions();
+       this.initialiseRequests();
   }
+
+ 
 
   initialise() {
     this.ownerIds = [];
@@ -231,6 +237,7 @@ export class ViewResourcePage implements OnInit {
         console.log('********** ViewResource.ts - Venue: ', err.error.msg);
       };
     }
+       
   }
 
   initialiseSuggestions() {

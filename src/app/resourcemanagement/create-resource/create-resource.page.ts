@@ -4,6 +4,7 @@ import { ResourceService } from '../../services/resource.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Router } from  "@angular/router";
+import { PaidresourceService } from 'src/app/services/paidresource.service';
 
 @Component({
   selector: 'app-create-resource',
@@ -39,8 +40,15 @@ export class CreateResourcePage implements OnInit {
   image1: any;
   images: any;
   file: any;
+  isPaidType: boolean;
+  category: string | Blob;
+  price: any=5;
 
-  constructor(private resourceService: ResourceService, private toastCtrl: ToastController, private router: Router, private tokenStorage: TokenStorageService) {
+  constructor(private resourceService: ResourceService, 
+    private toastCtrl: ToastController, 
+    private router: Router, 
+    private tokenStorage: TokenStorageService,
+    private paidService: PaidresourceService) {
     this.resultSuccess = false;
     this.resultError = false;
     this.isVenueType = false;
@@ -50,7 +58,7 @@ export class CreateResourcePage implements OnInit {
    }
 
   ngOnInit() {
-    this.typeList = ["Manpower", "Knowledge", "Item", "Venue"];
+    this.typeList = ["Manpower", "Knowledge", "Item", "Venue", "Paid"];
     this.knowTypeList = ["patent", "publication", "other"];
     if(this.tokenStorage.getToken()) {
       console.log(this.tokenStorage.getUser());
@@ -98,14 +106,17 @@ export class CreateResourcePage implements OnInit {
       this.isVenueType = true;
       this.isItemType = false;
       this.isKnowledgeType = false;
+      this.isPaidType = false;
     } else if(type == "Item") {
       this.isItemType = true;
       this.isVenueType = false;
       this.isKnowledgeType = false;
+      this.isPaidType = false;
     } else if (type == "Knowledge") {
       this.isItemType = false;
       this.isVenueType = false;
       this.isKnowledgeType = true;
+      this.isPaidType = false;
 
       this.link = "";
       this.patentNum = "";
@@ -113,6 +124,11 @@ export class CreateResourcePage implements OnInit {
       this.doi = "";
       this.expiry = "";
       this.issueDate = "";
+    } else if(type == "Paid") {
+      this.isItemType = false;
+      this.isVenueType = false;
+      this.isKnowledgeType = false;
+      this.isPaidType = true;
     } else{
       this.isItemType = false;
       this.isVenueType = false;
@@ -213,6 +229,33 @@ export class CreateResourcePage implements OnInit {
         this.resultError = true;
         this.failureToast(err.error.msg);
         console.log('********** CreateResourcePage.ts - Venue: ', err.error.msg);
+      });
+    } else if(this.type == "Paid") {
+      formData.append("title", this.title);
+      formData.append("desc", this.desc);
+      formData.append("category", this.category);
+      formData.append("country", this.country);
+      formData.append("price", this.price);
+      
+      if(this.images != undefined) {
+          for (let i = 0; i < this.images.length; i++) {
+            formData.append("paidResourcePics", this.images[i]);
+          }
+      }
+
+      this.paidService.createPaidResource(formData).subscribe((res) => {
+        console.log(res);
+        this.resultSuccess = true;
+        this.resultError = false;
+        resourceForm.reset();
+        this.successToast();
+        this.router.navigateByUrl('/my-resources');
+      },
+      err => {
+        this.resultSuccess = false;
+        this.resultError = true;
+        this.failureToast(err.error.msg);
+        console.log('********** CreateResourcePage.ts - Item: ', err.error.msg);
       });
     }
   }

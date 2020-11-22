@@ -3,6 +3,7 @@ import { ResourceService } from '../../services/resource.service';
 import { SessionService } from '../../services/session.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { Router } from  "@angular/router";
+import { PaidresourceService } from 'src/app/services/paidresource.service';
 
 @Component({
   selector: 'app-my-resources',
@@ -31,9 +32,17 @@ export class MyResourcesPage implements OnInit {
   viewEntered: boolean = false;
   noVenuePicBoolean: boolean;
   noItemPicBoolean: boolean;
+  paidResource: any;
+  paidResourceList: any;
+  noPaidResourceBoolean: boolean;
+  noPaidResourcePicBoolean: boolean;
 
 
-  constructor(private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
+  constructor(private resourceService: ResourceService, 
+    private tokenStorage: TokenStorageService, 
+    private sessionService: SessionService, 
+    private router: Router,
+    private paidService: PaidresourceService) {
     this.accountType = this.tokenStorage.getAccountType();
         this.user = this.tokenStorage.getUser();
       console.log(this.accountType);
@@ -59,8 +68,10 @@ export class MyResourcesPage implements OnInit {
     console.log(this.isFilterAll);
     if(this.isFilterAll == true) {
       this.initialiseAll();
+      this.initialisePaid();
     } else {
       this.initialiseActiveOnly();
+      this.initialiseActivePaid();
     }
   }
 
@@ -69,6 +80,7 @@ export class MyResourcesPage implements OnInit {
     this.knowledgeResourceList = this.knowledgeResource;
     this.itemResourceList = this.itemResource;
     this.venueResourceList = this.venueResource;
+    this.paidResourceList = this.paidResource;
   }
 
   filter() {
@@ -80,6 +92,49 @@ export class MyResourcesPage implements OnInit {
       this.isFilterAll = false;
       this.initialiseFilter();
     }
+  }
+
+  initialiseActivePaid() {
+    this.initialisePaid();
+    if(this.paidResourceList.length > 0) {
+    for (var j = 0; j < this.paidResourceList.length; j++) {
+      if(this.paidResourceList[j].status == "inactive") {
+        this.paidResourceList.splice(j, 1);
+      }
+    }
+  }
+  }
+
+  initialisePaid() {
+    this.paidService.getAllMyPaidResources().subscribe((res) => {
+      this.paidResource = res.data.paidresource;
+      this.paidResourceList = this.paidResource;
+      if(this.paidResource.length > 0) {
+        this.noPaidResourceBoolean = false;
+        for(var i = 0; i < this.paidResource.length; i++) {
+          if(this.paidResource[i].imgPaths.length > 0) {
+            for (var j = 0; j < this.paidResource[i].imgPaths.length; j++) {
+              this.paidResource[i].imgPaths[j] = this.sessionService.getRscPath() + this.paidResource[i].imgPaths[j] + '?random+=' + Math.random(); 
+              console.log(1);
+            }
+            this.noPaidResourcePicBoolean = false;
+          } else {
+            this.noPaidResourcePicBoolean = true;
+          }
+          // this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+        }
+      } else {
+          this.noPaidResourceBoolean = true;
+      }
+      this.paidResourceList = this.paidResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
+    }
+    ),
+    err => {
+      console.log('********** Paid Resource.ts: ', err.error.msg);
+    };
+
   }
 
   initialiseAll() {
@@ -436,10 +491,20 @@ export class MyResourcesPage implements OnInit {
         return (venueRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
       }
     });
+
+    this.paidResourceList = this.paidResourceList.filter( paidRes => {
+      if (paidRes.title && searchTerm) {
+        return (paidRes.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+      }
+    });
   }
 
   viewResource(resource) {
     this.router.navigateByUrl("/view-resource/" + this.type + "/" + resource.id);
+  }
+
+  viewPaidResource(resource) {
+    this.router.navigateByUrl("/view-paid-resource-details/" + this.type + "/" + resource.id);
   }
 
   segmentChanged(ev: any) {

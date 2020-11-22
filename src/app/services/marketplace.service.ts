@@ -101,6 +101,13 @@ export class MarketplaceService {
     );
   }
 
+  getPaidResourceOffer(): Observable<any> {
+    return this.http.get(this.API_URL + '/paidresources', httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
   createNonKnowledgeResReq(data): Observable<any> {
     return this.http.post(this.API_URL + '/requestResource', {
       "needId": data.needId,

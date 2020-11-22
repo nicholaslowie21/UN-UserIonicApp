@@ -53,6 +53,25 @@
     </div>
   </ion-item>
 
+  <ion-item *ngIf = "isChosenType == true && isPaidType == true">
+    <ion-label position="floating">Price*(Minimum $5)</ion-label>
+    <ion-input type="number" ngModel name="price" [(ngModel)]="price" required  #inprice="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
+      <div *ngIf="indesc.errors.required">Price is required</div>
+    </div>
+  </ion-item>
+
+  <ion-item *ngIf= "isChosenType == true && isPaidType == true">
+    <ion-label position="floating">Category*</ion-label>
+    <ion-input ngModel name="category" [(ngModel)]="category" required minlength="4" #incategory="ngModel"></ion-input>
+    <div class="alert-danger" *ngIf="form.submitted && incategory.invalid">
+      <div *ngIf="incategory.errors.required">Category is required</div>
+      <div *ngIf="incategory.errors.minlength">
+        Title must be at least 4 characters
+      </div>
+    </div>
+  </ion-item>
+
   <ion-item *ngIf = "isKnowledgeType == true">
     <ion-label position="floating">Link</ion-label>
     <ion-input ngModel name="link" [(ngModel)]="link" required minlength="3" #inlink="ngModel"></ion-input>
