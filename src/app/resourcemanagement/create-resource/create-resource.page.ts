@@ -239,7 +239,7 @@ export class CreateResourcePage implements OnInit {
       
       if(this.images != undefined) {
           for (let i = 0; i < this.images.length; i++) {
-            formData.append("paidResourcePics", this.images[i]);
+            formData.append("paidResourcesPics", this.images[i]);
           }
       }
 
