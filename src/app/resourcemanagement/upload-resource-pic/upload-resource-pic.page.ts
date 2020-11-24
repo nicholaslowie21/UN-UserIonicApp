@@ -110,7 +110,7 @@ export class UploadResourcePicPage implements OnInit {
     } else if(this.resourceType == "paid") {
       this.paidService.viewPaidResourceDetail(this.resourceId).subscribe((res) => {
         console.log(res);
-        let paidImgPath = res.data.paidresource.imgPaths;
+        let paidImgPath = res.data.paidresource.imgPath;
         this.paidImages = [];
         if (paidImgPath.length > 0) {
           for (var i = 0; i < paidImgPath.length; i++) {

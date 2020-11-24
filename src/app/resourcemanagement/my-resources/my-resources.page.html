@@ -149,11 +149,11 @@
         <div *ngFor="let p of paidResourceList">
           <ion-card (click)= "viewPaidResource(p)">
             <div>
-            <div *ngIf="p.imgPaths == undefined || p.imgPaths.length == 0">
+            <div *ngIf="p.imgPath == undefined || p.imgPath.length == 0">
               <img class="{{p.status}}" src='./assets/img/cash.jpg' />
             </div>
             <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
-              <ion-slide class="{{p.status}}" *ngFor ="let i of p.imgPaths" >
+              <ion-slide class="{{p.status}}" *ngFor ="let i of p.imgPath" >
                 <ion-img [src]=i onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
               </ion-slide>
             </ion-slides>

@@ -60,9 +60,9 @@ export class ViewPaidResourceDetailsPage implements OnInit {
         this.yourAccountBoolean = true;
       }
       this.paidResource.ownerImg = this.sessionService.getRscPath() + this.paidResource.ownerImg + '?random+=' + Math.random(); 
-      if (this.paidResource.imgPaths.length > 0) {
-        for (var i = 0; i < this.paidResource.imgPaths.length; i++) {
-          this.paidResource.imgPaths[i] = this.sessionService.getRscPath() + this.paidResource.imgPaths[i] + '?random+=' + Math.random(); 
+      if (this.paidResource.imgPath.length > 0) {
+        for (var i = 0; i < this.paidResource.imgPath.length; i++) {
+          this.paidResource.imgPath[i] = this.sessionService.getRscPath() + this.paidResource.imgPath[i] + '?random+=' + Math.random(); 
         }
         this.noPaidResourcePicBoolean = false;
       } else {

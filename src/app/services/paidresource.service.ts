@@ -36,7 +36,7 @@ export class PaidresourceService {
 
   activatePaidResource(data): Observable<any> {
     return this.http.post(this.API_URL + "/status", {
-      "paidResourceId": data.paidResourceId,
+      "paidResourceId": data,
       "status": "active"
     }, httpOptions).pipe(
       tap(res => {
@@ -46,7 +46,7 @@ export class PaidresourceService {
 
   deactivatePaidResource(data): Observable<any> {
     return this.http.post(this.API_URL + "/status", {
-      "paidResourceId": data.paidResourceId,
+      "paidResourceId": data,
       "status": "inactive"
     }, httpOptions).pipe(
       tap(res => {

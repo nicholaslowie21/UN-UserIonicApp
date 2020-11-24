@@ -179,11 +179,11 @@
               </div> 
             </div>
             <div>
-              <div *ngIf="p.imgPaths == undefined || p.imgPaths.length == 0">
+              <div *ngIf="p.imgPath == undefined || p.imgPath.length == 0">
                 <img  src='./assets/img/cash.jpg' />
               </div>
               <ion-slides pager=true paginationType=bullets zoom>
-                <ion-slide *ngFor ="let img of p.imgPaths" >
+                <ion-slide *ngFor ="let img of p.imgPath" >
                   <ion-img [src]=img onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
                 </ion-slide>
               </ion-slides>

@@ -262,9 +262,9 @@ export class ViewMarketplaceResourcesPage implements OnInit {
         this.noPaidResourceBoolean = false;
         for(var i = 0; i < this.paidResource.length; i++) {
           this.paidResource[i].ownerImg = this.sessionService.getRscPath() + this.paidResource[i].ownerImg  +'?random+=' + Math.random();
-          if(this.paidResource[i].imgPaths.length > 0) {
-            for (var j = 0; j < this.paidResource[i].imgPaths.length; j++) {
-              this.paidResource[i].imgPaths[j] = this.sessionService.getRscPath() + this.paidResource[i].imgPaths[j] + '?random+=' + Math.random(); 
+          if(this.paidResource[i].imgPath.length > 0) {
+            for (var j = 0; j < this.paidResource[i].imgPath.length; j++) {
+              this.paidResource[i].imgPath[j] = this.sessionService.getRscPath() + this.paidResource[i].imgPath[j] + '?random+=' + Math.random(); 
               console.log(1);
             }
             this.noPaidResourcePicBoolean = false;

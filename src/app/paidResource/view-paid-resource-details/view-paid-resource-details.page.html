@@ -16,7 +16,7 @@
           <img src='./assets/img/cash.jpg' />
         </div>
         <ion-slides *ngIf="viewEntered" pager=true paginationType=bullets zoom>
-          <ion-slide class="{{paidResource.status}}" *ngFor ="let i of paidResource.imgPaths" >
+          <ion-slide class="{{paidResource.status}}" *ngFor ="let i of paidResource.imgPath" >
             <ion-img [src]=i onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
           </ion-slide>
         </ion-slides>
