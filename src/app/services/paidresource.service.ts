@@ -106,7 +106,60 @@ export class PaidresourceService {
     );
   }
 
+  createPaidResourceRequest(data) {
+    return this.http.post(this.API_URL + "/purchase/request", {
+      "paidResourceId": data.paidResourceId,
+      "projectId": data.projectId,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
 
+  updateBuyerPaidResourceRequestStatus(data) {
+    return this.http.post(this.API_URL + "/buyer/purchase/status", {
+      "paidRequestId": data.paidRequestId,
+      "status": data.status,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+
+  //seller status(accepted, declined, cancelled)
+  updateSellerPaidResourceRequestStatus(data) {
+    return this.http.post(this.API_URL + "/seller/purchase/status", {
+      "paidRequestId": data.paidRequestId,
+      "status": data.status,
+    }, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  getMyPurchases(data): Observable<any> {
+    return this.http.get(this.API_URL + '/my/purchase?status=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //paid res detail page
+  getPaidResourceIncomingRequest(data) {
+    return this.http.get(this.API_URL + '/seller/requests?status=' + data.status + '&paidResourceId=' + data.paidResourceId, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
+
+  //get project purchases
+  getProjectPurchases(data) {
+    return this.http.get(this.API_URL + '/project/purchase?projectId=' + data, httpOptions).pipe(
+      tap(res => {
+    }, error => this.handleError(error)),
+    );
+  }
 
   private handleError(error: HttpErrorResponse)
 	{
