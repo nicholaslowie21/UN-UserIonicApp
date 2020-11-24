@@ -64,7 +64,7 @@
         <img class="aligned card-img-top img-fluid d-block" style="width: 150px; height: 150px; object-fit: cover;" [src]=p.imgPath alt="Paid Image">
         <div style="padding-left: 10px;">
           <p style='font-weight: bold;'>{{p.name}}</p>
-          <ion-button style="fill: outline;" (click)="presentAlertConfirm($event, p.index)" >Remove</ion-button>
+          <ion-button style="fill: outline;" (click)="presentPaidAlertConfirm($event, p.index)" >Remove</ion-button>
         </div> 
       </div>
     

@@ -11,6 +11,7 @@ import { FormGroup, NgForm } from '@angular/forms';
 import { EditRatingPage } from 'src/app/resourceNeeds/edit-rating/edit-rating.page';
 import { CreateReportPage } from 'src/app/report/create-report/create-report.page';
 import { ViewProjectTargetsPage } from '../view-project-targets/view-project-targets.page';
+import { PaidresourceService } from 'src/app/services/paidresource.service';
 
 @Component({
   selector: 'app-view-project',
@@ -51,8 +52,22 @@ export class ViewProjectPage implements OnInit {
   updatedAt: any;
   posts: any[];
   modal: HTMLIonModalElement;
+  purchases: any;
 
-  constructor(private modalCtrl: ModalController, private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
+  constructor(private modalCtrl: ModalController, 
+    private institutionService: InstitutionService, 
+    private userService: UserService, 
+    private navCtrl: NavController, 
+    private toastCtrl: ToastController, 
+    private alertController: AlertController, 
+    private router: Router, 
+    private sessionService: SessionService, 
+    private tokenStorage: TokenStorageService, 
+    private projectService: ProjectService, 
+    private activatedRoute: ActivatedRoute,
+    private paidService: PaidresourceService) {
+      this.page = "feed";
+     }
 
   ngOnInit() {
     this.initialise();
@@ -170,6 +185,18 @@ this.projectService.getResourceContributions(this.id).subscribe((res)=>{
 },
 (err) => {
   console.log('******* Contributions retrieval error: ', err.error.msg);
+})
+
+this.paidService.getProjectPurchases(this.id).subscribe((res: any) => {
+  this.purchases = res.data.paidrequests;
+  if(this.purchases != undefined) {
+    for(var x = 0; x < this.purchases.length; x++) {
+      this.purchases[x].buyerImg = this.sessionService.getRscPath() + this.purchases[x].buyerImg +'?random+=' + Math.random();
+    }
+  }
+},
+(err) => {
+  console.log('******* Purchases retrieval error: ', err.error.msg);
 })
 
 this.projectService.getProjPost(this.id).subscribe((res) =>{

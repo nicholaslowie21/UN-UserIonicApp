@@ -321,5 +321,51 @@ export class UploadResourcePicPage implements OnInit {
     (await toast).present();
   }
 
+  async presentPaidAlertConfirm(ev, m) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm',
+      message: 'Are you sure you want to remove this image?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.removePaidPic(m);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+  async paidSuccessToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Update successful!',
+      duration: 2000,
+      position: 'middle',
+      cssClass: "toast-pass"      
+    });
+    (await toast).present();
+  }
+
+  async paidFailureToast(error) {
+    const toast = this.toastCtrl.create({
+      message: 'Update Unsuccessful: ' + error,
+      duration: 2000,
+      position: 'middle',
+      cssClass: "toast-fail"
+    });
+    (await toast).present();
+  }
+
 
 }

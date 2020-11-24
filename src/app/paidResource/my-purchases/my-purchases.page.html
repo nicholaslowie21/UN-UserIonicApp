@@ -1,0 +1,248 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Purchases</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment value="purchases" [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="purchases" checked>
+        <ion-label>Purchase Requests</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="paid">
+        <ion-label>My Purchases(Paid)</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list [ngSwitch]="type">
+    <div *ngSwitchCase="'purchases'" >
+        <ion-segment value ="pending" [(ngModel)]="inStatus" (ionChange)="segmentChanged($event)" color="secondary">
+          <ion-segment-button value="pending" checked>
+            Pending
+          </ion-segment-button>
+          <ion-segment-button value="accepted">
+            Accepted
+          </ion-segment-button>
+          <ion-segment-button value="declined">
+            Declined
+          </ion-segment-button>
+          <ion-segment-button value="cancelled">
+            Cancelled
+          </ion-segment-button>
+        </ion-segment>
+    <ion-list [ngSwitch]= "inStatus">
+        <div *ngSwitchCase="'pending'">
+          <div *ngIf="pendingPurchases == undefined || pendingPurchases.length == 0" style="padding-left: 15px;">
+            <ion-label>You do not have any pending purchase requests!</ion-label>
+          </div>
+          <div *ngFor="let p of pendingPurchases" >
+          <ion-card >
+            <div>
+              <div *ngIf="p.paidresource.imgPath == undefined || p.paidresource.imgPath.length == 0">
+                <img class="{{p.status}}" src='./assets/img/cash.jpg' />
+              </div>
+              <ion-slides pager=true paginationType=bullets zoom>
+                <ion-slide class="{{p.status}}" *ngFor ="let i of p.paidresource.imgPath" >
+                  <ion-img [src]=i onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
+                </ion-slide>
+              </ion-slides>
+              </div>
+            <ion-card-header>
+              <ion-card-title (click)= "viewResource(p)">{{p.paidresource.title}}</ion-card-title>
+              
+              <ion-badge class="{{p.status}}">{{p.status}}</ion-badge>
+              
+            </ion-card-header>
+
+            <ion-card-content>
+              <p>Owner: </p>
+              <div class="aligned">
+                <img (click)="viewProfile($event, p)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                <ion-label (click)="viewProfile($event, p)">{{p.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+              </div>
+              <p>Country: {{p.paidresource.country}}</p>
+              <p>{{p.paidresource.desc}}</p>
+              <ion-label>Category: {{p.paidresource.category}}</ion-label>
+              <ion-card-title color=primary>$ {{p.paidresource.price}}</ion-card-title>
+              <ion-card-subtitle>Last Modified: {{formatDate(p.updatedAt)}}</ion-card-subtitle>
+              <ion-button (click)="presentCancelRequest($event,p)" expand="full" color="danger">Cancel</ion-button>
+            </ion-card-content>
+          </ion-card>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'accepted'">
+          <div *ngIf="acceptedPurchases == undefined || acceptedPurchases.length == 0" style="padding-left: 15px;">
+            <ion-label>You do not have any accepted purchase requests!</ion-label>
+          </div>
+          <div *ngFor="let a of acceptedPurchases" >
+          <ion-card >
+            <div>
+              <div *ngIf="a.paidresource.imgPath == undefined || a.paidresource.imgPath.length == 0">
+                <img src='./assets/img/cash.jpg' />
+              </div>
+              <ion-slides pager=true paginationType=bullets zoom>
+                <ion-slide  *ngFor ="let i of a.paidresource.imgPath" >
+                  <ion-img [src]=i onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
+                </ion-slide>
+              </ion-slides>
+              </div>
+            <ion-card-header>
+              <ion-card-title (click)= "viewResource(a)">{{a.paidresource.title}}</ion-card-title>
+              
+              <ion-badge class="{{a.status}}">{{a.status}}</ion-badge>
+              
+            </ion-card-header>
+
+            <ion-card-content>
+              <p>Owner: </p>
+              <div class="aligned">
+                <img (click)="viewProfile($event, a)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=a.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                <ion-label (click)="viewProfile($event, a)">{{a.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+              </div>
+              <p>Country: {{a.paidresource.country}}</p>
+              <p>{{a.paidresource.desc}}</p>
+              <ion-label>Category: {{a.paidresource.category}}</ion-label>
+              <ion-card-title color=primary>$ {{a.paidresource.price}}</ion-card-title>
+              <ion-card-subtitle>Last Modified: {{formatDate(a.updatedAt)}}</ion-card-subtitle>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-button expand="full" color="success" (click)="payWithPaypal(a)">Make Payment with Paypal</ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button (click)="presentCancelRequest($event,a)" expand="full" color="danger">Cancel</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'declined'">
+          <div *ngIf="declinedPurchases == undefined || declinedPurchases.length == 0" style="padding-left: 15px;">
+            <ion-label>You do not have any declined purchase requests!</ion-label>
+          </div>
+          <div *ngFor="let d of declinedPurchases" >
+          <ion-card >
+            <div>
+              <div *ngIf="d.paidresource.imgPath == undefined || d.paidresource.imgPath.length == 0">
+                <img src='./assets/img/cash.jpg' />
+              </div>
+              <ion-slides pager=true paginationType=bullets zoom>
+                <ion-slide  *ngFor ="let i of d.paidresource.imgPath" >
+                  <ion-img [src]=i onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
+                </ion-slide>
+              </ion-slides>
+              </div>
+            <ion-card-header>
+              <ion-card-title (click)= "viewResource(d)">{{d.paidresource.title}}</ion-card-title>
+              
+              <ion-badge class="{{d.status}}">{{d.status}}</ion-badge>
+              
+            </ion-card-header>
+
+            <ion-card-content>
+              <p>Owner: </p>
+              <div class="aligned">
+                <img (click)="viewProfile($event, d)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=d.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                <ion-label (click)="viewProfile($event, d)">{{d.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+              </div>
+              <p>Country: {{d.paidresource.country}}</p>
+              <p>{{d.paidresource.desc}}</p>
+              <ion-label>Category: {{d.paidresource.category}}</ion-label>
+              <ion-card-title color=primary>$ {{d.paidresource.price}}</ion-card-title>
+              <ion-card-subtitle>Declined on: {{formatDate(d.updatedAt)}}</ion-card-subtitle>
+            </ion-card-content>
+          </ion-card>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'cancelled'">
+          <div *ngIf="cancelledPurchases == undefined || cancelledPurchases.length == 0" style="padding-left: 15px;">
+            <ion-label>You do not have any cancelled purchase requests!</ion-label>
+          </div>
+          <div *ngFor="let c of cancelledPurchases" >
+          <ion-card >
+            <div>
+              <div *ngIf="c.paidresource.imgPath == undefined || c.paidresource.imgPath.length == 0">
+                <img src='./assets/img/cash.jpg' />
+              </div>
+              <ion-slides pager=true paginationType=bullets zoom>
+                <ion-slide  *ngFor ="let i of c.paidresource.imgPath" >
+                  <ion-img [src]=i onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
+                </ion-slide>
+              </ion-slides>
+              </div>
+            <ion-card-header>
+              <ion-card-title (click)= "viewResource(c)">{{c.paidresource.title}}</ion-card-title>
+              
+              <ion-badge class="{{c.status}}">{{c.status}}</ion-badge>
+              
+            </ion-card-header>
+
+            <ion-card-content>
+              <p>Owner: </p>
+              <div class="aligned">
+                <img (click)="viewProfile($event, c)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=c.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                <ion-label (click)="viewProfile($event, c)">{{c.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+              </div>
+              <p>Country: {{c.paidresource.country}}</p>
+              <p>{{c.paidresource.desc}}</p>
+              <ion-label>Category: {{c.paidresource.category}}</ion-label>
+              <ion-card-title color=primary>$ {{c.paidresource.price}}</ion-card-title>
+              <ion-card-subtitle>Cancelled By: {{c.cancelType}}</ion-card-subtitle>
+              <ion-card-subtitle>Cancelled on: {{formatDate(c.updatedAt)}}</ion-card-subtitle>
+            </ion-card-content>
+          </ion-card>
+          </div>
+        </div>
+  </ion-list>
+    </div>
+
+    <div *ngSwitchCase="'paid'" >
+      <div *ngIf="paidPurchases == undefined || paidPurchases.length == 0" style="padding-left: 15px;">
+        <ion-label>You do not have any paid purchases! Create one now!</ion-label>
+      </div>
+      <div *ngFor="let pp of paidPurchases" >
+      <ion-card>
+        <div>
+          <div *ngIf="pp.paidresource.imgPath == undefined || pp.paidresource.imgPath.length == 0">
+            <img src='./assets/img/cash.jpg' />
+          </div>
+          <ion-slides pager=true paginationType=bullets zoom>
+            <ion-slide  *ngFor ="let i of pp.paidresource.imgPath" >
+              <ion-img [src]=i onerror="this.src='./assets/img/cash.jpg'" ></ion-img>
+            </ion-slide>
+          </ion-slides>
+          </div>
+        <ion-card-header>
+          <ion-card-title (click)= "viewResource(pp)">{{pp.paidresource.title}}</ion-card-title>
+          
+          <ion-badge class="{{pp.status}}">{{pp.status}}</ion-badge>
+          
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>Owner: </p>
+              <div class="aligned">
+                <img (click)="viewProfile($event, pp)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=pp.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                <ion-label (click)="viewProfile($event, pp)">{{pp.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+              </div>
+              <p>Country: {{pp.paidresource.country}}</p>
+              <p>{{pp.paidresource.desc}}</p>
+              <ion-label>Category: {{pp.paidresource.category}}</ion-label>
+              <ion-card-title color=primary>$ {{pp.paidresource.price}}</ion-card-title>
+              <ion-card-subtitle>Paid on: {{formatDate(pp.updatedAt)}}</ion-card-subtitle>
+            </ion-card-content>
+      </ion-card>
+      </div>
+    </div>
+  </ion-list>
+
+</ion-content>
