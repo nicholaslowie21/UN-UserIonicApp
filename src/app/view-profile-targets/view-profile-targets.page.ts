@@ -45,6 +45,10 @@ export class ViewProfileTargetsPage implements OnInit {
     this.initialise();
   }
 
+  ionViewDidEnter() {
+    this.initialise();
+  }
+
   initialise() {
     this.accountData = {
       "accountId": this.accountId,

@@ -155,14 +155,16 @@ export class EditTargetsPage implements OnInit {
     }
     this.targetService.updateAccountTargets(this.updateData).subscribe((res) => {
       this.successToast();
-      // this.router.navigate(['/view-profile-targets/' + this.currentUser.data.user.id + "/" + this.accountType + "/" + this.currentUser.data.user.name]);
-      this.router.navigate(['/tabs/profile'])
+      this.router.navigate(['/view-profile-targets/' + this.currentUser.data.user.id + "/" + this.accountType + "/" + this.currentUser.data.user.name]);
+      //this.router.navigate(['/tabs/profile'])
     }, (err) => {
       this.failureToast(err.error.msg);
     })
 
     
   }
+
+  
 
   async successToast() {
     let toast = this.toastCtrl.create({
