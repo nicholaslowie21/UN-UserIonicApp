@@ -30,7 +30,7 @@ export class UserRegisterPage implements OnInit {
 
   resultSuccess: boolean;
   resultError: boolean;
-  isChecked: boolean;
+  isChecked: boolean = false;
   constructor(private  authService:  AuthService, private  router:  Router, private toastCtrl: ToastController) { 
     this.resultSuccess = false;
 		this.resultError = false;
@@ -98,7 +98,7 @@ export class UserRegisterPage implements OnInit {
       this.failureToast(Error("Passwords do not match"));
     }
   } else if(this.isChecked == false) {
-    this.failureToast("Please accept the Terms & Conditions before creating the project!!")
+    this.failureToast("Please accept the Terms & Conditions before registering as a user!!")
   }
   }
 

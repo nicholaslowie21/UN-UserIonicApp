@@ -26,7 +26,7 @@ export class InstitutionRegisterPage implements OnInit {
   resultError: boolean;
   attachment: any;
   formData: any;
-  isChecked: boolean;
+  isChecked: boolean = false;
   constructor(private  authService:  AuthService, private  router:  Router, private toastCtrl: ToastController) { 
     this.resultSuccess = false;
 		this.resultError = false;
@@ -115,7 +115,7 @@ export class InstitutionRegisterPage implements OnInit {
     }
 
   } else if(this.isChecked == false) {
-    this.failureToast("Please accept the Terms & Conditions before creating the resource!!");
+    this.failureToast("Please accept the Terms & Conditions before registering an account!!");
   }
   }
 
