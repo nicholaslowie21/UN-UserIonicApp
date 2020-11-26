@@ -7,9 +7,9 @@
         <ion-title slot="start">{{ username }}</ion-title>
         <ion-icon *ngIf="isVerified == true" name="checkmark-circle" size="big"></ion-icon>
 
-      <div slot="end">
-        <ion-button  color="danger" fill="solid" (click)="report()"><ion-icon name="alert-circle-outline"></ion-icon></ion-button>
-      </div>
+      <ion-buttons slot="end">
+        <ion-button  color="danger" fill="solid" (click)="report()" style="margin-left: 10px"><ion-icon name="alert-circle-outline"></ion-icon></ion-button>
+      </ion-buttons>
 
   </ion-toolbar>
   
@@ -37,7 +37,7 @@
       <h6 *ngIf="accountBoolean == true"><a href={{website}}>{{ website }}</a> | {{phone}}</h6>
       <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of sdgs">SDG {{sdg}}&nbsp;</ion-badge>
       <br>
-      <ion-button (click)="presentModal($event)">
+      <ion-button (click)="viewTargets()">
         <ion-icon name="golf-outline" slot="start"></ion-icon>
         <ion-label>Targets</ion-label>
       </ion-button>

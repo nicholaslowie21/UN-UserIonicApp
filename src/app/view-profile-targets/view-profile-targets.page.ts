@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TargetService } from '../services/target.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-profile-targets',
@@ -9,9 +10,12 @@ import { TokenStorageService } from '../services/token-storage.service';
   styleUrls: ['./view-profile-targets.page.scss'],
 })
 export class ViewProfileTargetsPage implements OnInit {
-  @Input("accountId") accountId
-  @Input("accountType") accountType
-  @Input("accountName") accountName
+  // @Input("accountId") accountId
+  // @Input("accountType") accountType
+  // @Input("accountName") accountName
+  accountId: any;
+  accountType: any;
+  accountName: any;
   currentUser: any;
   sdgs: any;
   accountBoolean: boolean;
@@ -19,13 +23,25 @@ export class ViewProfileTargetsPage implements OnInit {
   accountData: { accountId: any; accountType: any; };
   accountTargets: any;
   accountTargetIds: any[] = [];
+  isMyAccount: boolean;
 
   constructor(private tokenStorage: TokenStorageService,
     private targetService: TargetService,
-    private modalCtrl: ModalController) { 
+    private modalCtrl: ModalController,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { 
   }
 
   ngOnInit() {
+    this.accountId = this.activatedRoute.snapshot.paramMap.get('Id');
+    this.accountType = this.activatedRoute.snapshot.paramMap.get('type');
+    this.accountName = this.activatedRoute.snapshot.paramMap.get('name');
+    this.currentUser = this.tokenStorage.getUser();
+    if(this.currentUser.data.user.id == this.accountId) {
+      this.isMyAccount = true;
+    } else {
+      this.isMyAccount = false;
+    }
     this.initialise();
   }
 
@@ -47,10 +63,10 @@ export class ViewProfileTargetsPage implements OnInit {
     })
   }
 
-  dismiss() {
-    this.modalCtrl.dismiss({
-      'dismissed': true
-    });
-  }
+  // dismiss() {
+  //   this.modalCtrl.dismiss({
+  //     'dismissed': true
+  //   });
+  // }
 
 }

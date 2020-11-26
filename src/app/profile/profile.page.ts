@@ -202,20 +202,20 @@ parseDate(d: String) {
     this.router.navigate(["/my-testimonials/" + this.currentUser.data.user.id + "/" + this.accountType])
   }
 
-  getTargets($event) {
-    this.router.navigate(['/view-profile-targets/']);
+  viewTargets($event) {
+    this.router.navigate(['/view-profile-targets/' + this.currentUser.data.user.id + "/" + this.accountType + "/" + this.currentUser.data.user.name]);
   }
 
-  async presentModal(resource) {
-    this.modal = await this.modalController.create({
-      component: ViewProfileTargetsPage,
-      componentProps: {"accountId": this.currentUser.data.user.id, "accountType": this.accountType, "accountName": this.currentUser.data.user.name}
+  // async presentModal(resource) {
+  //   this.modal = await this.modalController.create({
+  //     component: ViewProfileTargetsPage,
+  //     componentProps: {"accountId": this.currentUser.data.user.id, "accountType": this.accountType, "accountName": this.currentUser.data.user.name}
       
-    });
-    this.modal.onWillDismiss().then((data) => {
-  });
-    return await this.modal.present();
-  }
+  //   });
+  //   this.modal.onWillDismiss().then((data) => {
+  // });
+  //   return await this.modal.present();
+  // }
 
   getResources($event) {
     this.router.navigate(['/my-resources/' + this.currentUser.data.user.id]);

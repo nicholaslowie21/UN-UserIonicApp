@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { TargetService } from 'src/app/services/target.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-targets',
@@ -27,7 +28,8 @@ export class EditTargetsPage implements OnInit {
 
   constructor(private tokenStorage: TokenStorageService,
     private targetService: TargetService,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private router: Router) {
     this.currentUser = this.tokenStorage.getUser();
    
    this.accountType = this.tokenStorage.getAccountType();
@@ -153,9 +155,13 @@ export class EditTargetsPage implements OnInit {
     }
     this.targetService.updateAccountTargets(this.updateData).subscribe((res) => {
       this.successToast();
+      // this.router.navigate(['/view-profile-targets/' + this.currentUser.data.user.id + "/" + this.accountType + "/" + this.currentUser.data.user.name]);
+      this.router.navigate(['/tabs/profile'])
     }, (err) => {
       this.failureToast(err.error.msg);
     })
+
+    
   }
 
   async successToast() {

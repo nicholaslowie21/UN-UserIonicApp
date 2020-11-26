@@ -9,18 +9,18 @@
 
 <ion-content>
   <ion-item>
-    <ion-label position="floating">Choose SDG to set target for</ion-label>
+    <ion-label position="floating">Select SDG to set target for</ion-label>
     <ion-select placeholder="Filter by SDG" id="s" name="s" [(ngModel)]="sdgs" (ionChange)= "filterSDGS(sdgs)" multiple="true">
       <ion-select-option *ngFor="let s of sdgList" [value]="s">SDG {{s}}</ion-select-option>
     </ion-select>
   </ion-item>
-  <ion-list *ngFor= "let t of targetsList">
-    <ion-card>
-      <ion-card-title>{{t.SDG}}.{{t.targetCode}}</ion-card-title>
-      <ion-checkbox style = "float: right" color="primary" [(ngModel)]="t.isChecked" name="checkbox" (ionChange)="onChange($event.checked, t)"></ion-checkbox>
-      <p>{{t.desc}}</p>
-      
-    </ion-card>
-  </ion-list>
-  <ion-button *ngIf="this.retrieved == true" expand="full" (click)="updateTargets()">Update Targets</ion-button>
+  <ion-card *ngFor= "let t of targetsList">
+    <ion-card-header class="sdg{{t.SDG}}">
+      <ion-card-title style="color: white">{{t.SDG}}.{{t.targetCode}}  
+        <ion-checkbox style = "float: right" color="dark" [(ngModel)]="t.isChecked" name="checkbox" (ionChange)="onChange($event.checked, t)"></ion-checkbox>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content><p style="padding-top: 10px">{{t.desc}}</p></ion-card-content>
+  </ion-card>
+<ion-button *ngIf="this.retrieved == true" expand="full" (click)="updateTargets()" style="margin:10px">Update Targets</ion-button>
 </ion-content>

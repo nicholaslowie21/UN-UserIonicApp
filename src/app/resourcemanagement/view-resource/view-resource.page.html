@@ -38,6 +38,7 @@
       <div *ngIf = "resourceType == 'venue' || resourceType == 'item'">
         <ion-label *ngIf="yourAccountBoolean==true"  style="text-decoration: underline; float:right" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Resource Picture</ion-label>
       </div>
+      <ion-badge class="{{currResource.status}}">{{currResource.status}}</ion-badge>
       <br>
       <ion-card-header>
       <ion-card-title>{{currResource.title}}</ion-card-title>
@@ -46,9 +47,7 @@
         <ion-title>{{resourceOwner.name}}<ion-icon *ngIf="resourceOwner.isVerified == 'true'" name="checkmark-circle" size="big" style="padding-left: 5px;"></ion-icon> </ion-title>
       </div>
       <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(currResource.updatedAt)}}</ion-badge></ion-card-subtitle>
-      <ion-badge class="{{currResource.status}}">{{currResource.status}}</ion-badge>
     </ion-card-header>
-    <ion-card-content>
       <div *ngIf="resourceType == 'knowledge'">
         <ion-item-divider>
           <ion-label>Owners</ion-label>
@@ -72,34 +71,30 @@
         <ion-label>Details</ion-label>
         <ion-badge style="float: right;" slot="end">{{currResource.knowType}}</ion-badge>
       </ion-item-divider>
-      <ion-item *ngIf="resourceType != 'knowledge'" lines="none">
-        <p>Country: {{currResource.country}}</p>
-      </ion-item>
-      <ion-item *ngIf="resourceType == 'venue'" lines="none">
-        <p>Address: {{currResource.address}}</p>
+      <ion-item lines="none">
+        <div>
+          <p>{{currResource.desc}}</p>
+          <p *ngIf="resourceType != 'knowledge'">Country: {{currResource.country}}</p>
+          <h6 *ngIf="resourceType != 'knowledge'">Address: {{currResource.address}}</h6>
+        </div>
       </ion-item>
 
       <ion-item *ngIf="resourceType == 'knowledge'" lines="none">
         <div>
-        <h6 *ngIf="currResource.link != ''">Link: {{currResource.link}}</h6>
-        <div *ngIf="knowType =='patent'">
-          <h6>Patent No: {{currResource.patentNum}}</h6>
-          <h6>Expiry Date: {{formatDate(currResource.expiry)}}</h6>
+          <h6 *ngIf="currResource.link != ''">Link: {{currResource.link}}</h6>
+          <div *ngIf="knowType =='patent'">
+            <h6>Patent No: {{currResource.patentNum}}</h6>
+            <h6>Expiry Date: {{formatDate(currResource.expiry)}}</h6>
+          </div>
+          <div *ngIf="knowType == 'publication'">
+            <h6 *ngIf="currResource.issn != ''">ISSN: {{currResource.issn}}</h6>
+            <h6 *ngIf="currResource.doi != ''">DOI: {{currResource.doi}}</h6>
+            <h6 *ngIf="currResource.issueDate != null">Issue Date: {{formatDate(currResource.issueDate)}}</h6>
+          </div>
+          <p *ngIf="resourceType == 'knowledge' && currResource.attachment != ''">Attachment: <ion-button (click) = "download()">Download</ion-button></p>
         </div>
-        <div *ngIf="knowType == 'publication'">
-          <h6 *ngIf="currResource.issn != ''">ISSN: {{currResource.issn}}</h6>
-          <h6 *ngIf="currResource.doi != ''">DOI: {{currResource.doi}}</h6>
-          <h6 *ngIf="currResource.issueDate != null">Issue Date: {{formatDate(currResource.issueDate)}}</h6>
-        </div>
-      </div>
       </ion-item>
 
-      <ion-item lines="none">
-        <p>Description: {{currResource.desc}}</p>
-      </ion-item>
-      <ion-item *ngIf="resourceType == 'knowledge' && currResource.attachment != ''" lines="none" >
-        <p>Attachment: <ion-button (click) = "download()">Download</ion-button></p>
-      </ion-item>
       <br>
       <br>
       <div *ngIf="yourAccountBoolean==true">
@@ -113,7 +108,6 @@
           </ion-fab-list>
         </ion-fab>
       </div>
-    </ion-card-content>
   </ion-card>
 
   <div *ngIf="yourAccountBoolean==true">
