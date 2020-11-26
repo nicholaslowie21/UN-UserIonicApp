@@ -1,18 +1,21 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-icon name="arrow-back" slot="start" (click)="dismiss()" style="padding-left:10px"></ion-icon>
+      <!-- <ion-icon name="arrow-back" slot="start" (click)="dismiss()" style="padding-left:10px"></ion-icon> -->
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>{{accountName}}'s Targets</ion-title>
+    <ion-buttons slot="end" *ngIf="isMyAccount == true">
+      <ion-icon slot="icon-only" style="padding-right: 10px" name="create-outline" routerLink="/edit-targets" routerDirection="forward"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list *ngFor= "let t of accountTargets">
-    <ion-card>
-      <ion-card-title>{{t.SDG}}.{{t.targetCode}}</ion-card-title>
-      <p>{{t.desc}}</p>
-      
-    </ion-card>
-  </ion-list>
+  <ion-card *ngFor= "let t of accountTargets">
+    <ion-card-header class="sdg{{t.SDG}}">
+      <ion-card-title style="color: white">{{t.SDG}}.{{t.targetCode}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content><p style="padding-top: 10px">{{t.desc}}</p></ion-card-content>
+  </ion-card>
 </ion-content>

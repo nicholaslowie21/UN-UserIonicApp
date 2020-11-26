@@ -49,7 +49,7 @@ export class ViewProjectPage implements OnInit {
   totalCompletion = 0;
   totalProgress = 0;
   rating: any;
-  updatedAt: any;
+  createdAt: any;
   posts: any[];
   modal: HTMLIonModalElement;
   purchases: any;
@@ -110,7 +110,7 @@ export class ViewProjectPage implements OnInit {
       this.SDGs = this.projectToView.SDGs;
       this.hostType = this.projectToView.hostType;
       this.rating = this.projectToView.rating;
-      this.updatedAt = this.projectToView.updatedAt;
+      this.createdAt = this.projectToView.createdAt;
   },
   err => {
     console.log('********** View Projects.ts: ', err.error.msg);

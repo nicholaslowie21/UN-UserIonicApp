@@ -8,11 +8,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngFor= "let t of projectTargets">
-    <ion-card>
-      <ion-card-title>{{t.SDG}}.{{t.targetCode}}</ion-card-title>
-      <p>{{t.desc}}</p>
-      
-    </ion-card>
-  </ion-list>
+  <ion-card *ngFor= "let t of projectTargets">
+    <ion-card-header class="sdg{{t.SDG}}">
+      <ion-card-title style="color: white">{{t.SDG}}.{{t.targetCode}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content><p style="padding-top: 10px">{{t.desc}}</p></ion-card-content>
+  </ion-card>
 </ion-content>

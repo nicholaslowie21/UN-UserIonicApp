@@ -462,15 +462,19 @@ getTestimonials($event) {
   this.router.navigate(["/my-testimonials/" + this.id + "/" + this.accountType])
 }
 
-async presentModal(resource) {
-  this.modal = await this.modalController.create({
-    component: ViewProfileTargetsPage,
-    componentProps: {"accountId": this.currentUser.id, "accountType": this.accountType, "accountName": this.currentUser.name}
-    
-  });
-  this.modal.onWillDismiss().then((data) => {
-});
-  return await this.modal.present();
+viewTargets($event) {
+  this.router.navigate(['/view-profile-targets/' + this.currentUser.id + "/" + this.accountType + "/" + this.currentUser.name]);
 }
+
+// async presentModal(resource) {
+//   this.modal = await this.modalController.create({
+//     component: ViewProfileTargetsPage,
+//     componentProps: {"accountId": this.currentUser.id, "accountType": this.accountType, "accountName": this.currentUser.name}
+    
+//   });
+//   this.modal.onWillDismiss().then((data) => {
+// });
+//   return await this.modal.present();
+// }
 
 }
