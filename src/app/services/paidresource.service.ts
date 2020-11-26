@@ -100,7 +100,7 @@ export class PaidresourceService {
   }
 
   getAllOthersPaidResources(data): Observable<any> {
-    return this.http.get(this.API_URL + '/all/other?accountId=' + data.accountId + "&accountType=" + data.accountType, httpOptions).pipe(
+    return this.http.get(this.API_URL + '/all/others?accountId=' + data.accountId + "&accountType=" + data.accountType, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

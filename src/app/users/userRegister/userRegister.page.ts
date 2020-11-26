@@ -30,6 +30,7 @@ export class UserRegisterPage implements OnInit {
 
   resultSuccess: boolean;
   resultError: boolean;
+  isChecked: boolean;
   constructor(private  authService:  AuthService, private  router:  Router, private toastCtrl: ToastController) { 
     this.resultSuccess = false;
 		this.resultError = false;
@@ -76,6 +77,8 @@ export class UserRegisterPage implements OnInit {
   }
 
   register(registerForm:NgForm) {
+    console.log(this.isChecked);
+    if(this.isChecked == true) {
     if(this.password == this.confirmPassword){
           this.authService.register(this.name, this.username, this.email, this.password, this.country, this.salutation).subscribe((res) => {
             console.log(res);
@@ -94,6 +97,9 @@ export class UserRegisterPage implements OnInit {
     } else {
       this.failureToast(Error("Passwords do not match"));
     }
+  } else if(this.isChecked == false) {
+    this.failureToast("Please accept the Terms & Conditions before creating the project!!")
+  }
   }
 
   back() {

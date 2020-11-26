@@ -43,6 +43,8 @@ export class CreateResourcePage implements OnInit {
   isPaidType: boolean;
   category: string | Blob;
   price: any=5;
+  checked: boolean;
+  isChecked: boolean;
 
   constructor(private resourceService: ResourceService, 
     private toastCtrl: ToastController, 
@@ -138,7 +140,9 @@ export class CreateResourcePage implements OnInit {
 
 
   createRes(resourceForm:NgForm) {
-    const formData = new FormData();
+    console.log(this.isChecked);
+    if(this.isChecked == true) {
+      const formData = new FormData();
     if (this.type == "Manpower") {
       this.resourceService.createManpowerResource(this.title, this.desc).subscribe((res) => {
         console.log(res);
@@ -258,6 +262,10 @@ export class CreateResourcePage implements OnInit {
         console.log('********** CreateResourcePage.ts - Item: ', err.error.msg);
       });
     }
+    } else if(this.isChecked == false) {
+      this.failureToast("Please accept the Terms & Conditions before creating the resource!!");
+    }
+    
   }
 
   selectImage(event) {
@@ -295,4 +303,6 @@ export class CreateResourcePage implements OnInit {
     });
     (await toast).present();
   }
+
+
 }

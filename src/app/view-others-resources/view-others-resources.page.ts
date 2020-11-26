@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { PaidresourceService } from '../services/paidresource.service';
 import { ResourceService } from '../services/resource.service';
 import { SessionService } from '../services/session.service';
 import { TokenStorageService } from '../services/token-storage.service';
@@ -34,8 +35,12 @@ export class ViewOthersResourcesPage implements OnInit {
   viewEntered: boolean = false;
   noItemPicBoolean: boolean;
   noVenuePicBoolean: boolean;
+  paidResourceList: any;
+  paidResource: any;
+  noPaidResourceBoolean: boolean;
+  noPaidResourcePicBoolean: boolean;
 
-  constructor(private userService: UserService, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
+  constructor(private paidService: PaidresourceService, private userService: UserService, private navCtrl: NavController, private activatedRoute: ActivatedRoute, private resourceService: ResourceService, private tokenStorage: TokenStorageService, private sessionService: SessionService, private router: Router) {
     this.accountType = this.tokenStorage.getViewId().accountType;
     this.id = this.activatedRoute.snapshot.paramMap.get('Id');
     this.tokenStorage.saveViewId(this.id);
@@ -51,12 +56,15 @@ export class ViewOthersResourcesPage implements OnInit {
 
   ngOnInit() {
     this.initialiseA();
-    this.initialiseData();
+    //this.initialiseData();
+    this.initialiseActivePaid();
   }
   
   ionViewDidEnter() {
     this.initialiseA();
-    this.initialiseData();
+    this.initialisePaid();
+    //this.initialiseData();
+    this.initialiseActivePaid();
     this.viewEntered = true;
   }
 
@@ -65,6 +73,50 @@ export class ViewOthersResourcesPage implements OnInit {
     this.knowledgeResourceList = this.knowledgeResource;
     this.itemResourceList = this.itemResource;
     this.venueResourceList = this.venueResource;
+    this.paidResourceList = this.paidResource;
+  }
+
+  initialiseActivePaid() {
+    this.initialisePaid();
+    if(this.paidResourceList != undefined) {
+    for (var j = 0; j < this.paidResourceList.length; j++) {
+      if(this.paidResourceList[j].status == "inactive") {
+        this.paidResourceList.splice(j, 1);
+      }
+    }
+  }
+  }
+
+  initialisePaid() {
+    this.paidService.getAllOthersPaidResources({"accountId": this.id, "accountType": this.accountType}).subscribe((res) => {
+      this.paidResource = res.data.paidresource;
+      this.paidResourceList = this.paidResource;
+      if(this.paidResource.length > 0) {
+        this.noPaidResourceBoolean = false;
+        for(var i = 0; i < this.paidResource.length; i++) {
+          if(this.paidResource[i].imgPath.length > 0) {
+            for (var j = 0; j < this.paidResource[i].imgPath.length; j++) {
+              this.paidResource[i].imgPath[j] = this.sessionService.getRscPath() + this.paidResource[i].imgPath[j] + '?random+=' + Math.random(); 
+              console.log(1);
+            }
+            this.noPaidResourcePicBoolean = false;
+          } else {
+            this.noPaidResourcePicBoolean = true;
+          }
+          // this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+        }
+      } else {
+          this.noPaidResourceBoolean = true;
+      }
+      this.paidResourceList = this.paidResource.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
+    }
+    ),
+    err => {
+      console.log('********** Paid Resource.ts: ', err.error.msg);
+    };
+
   }
 
   initialise() {
@@ -435,6 +487,15 @@ export class ViewOthersResourcesPage implements OnInit {
 
   pop() {
     this.navCtrl.pop();
+  }
+
+  viewPaidResource(resource) {
+    this.router.navigateByUrl("/view-paid-resource-details/" + this.type + "/" + resource.id);
+  }
+
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
   }
 
 }

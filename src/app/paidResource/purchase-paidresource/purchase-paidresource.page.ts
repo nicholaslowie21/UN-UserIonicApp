@@ -87,7 +87,7 @@ export class PurchasePaidresourcePage implements OnInit {
 	{
 		const alert = await this.alertController.create({
 			header: 'Purchase Resource',
-			message: 'Payment will be requested when resource owner accepts the purchase. Confirm purchase this Resource?',
+			message: 'Payment will be requested when resource owner accepts the purchase. Confirm request to purchase this Resource?',
 			buttons: [
 			{
 			  text: 'Cancel',

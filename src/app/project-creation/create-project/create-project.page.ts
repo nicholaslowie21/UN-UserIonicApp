@@ -25,6 +25,7 @@ export class CreateProjectPage implements OnInit {
   sdgsList: any[];
   ratingsList: any[];
   form: any;
+  isChecked: boolean;
 
   constructor(private  userService:  UserService, 
     private  router:  Router, 
@@ -75,6 +76,9 @@ ionViewDidEnter() {
 
 create() {
 
+  console.log(this.isChecked);
+    if(this.isChecked == true) {
+
     this.form = {
     "title": this.title,
     "desc": this.desc,
@@ -93,6 +97,9 @@ create() {
     this.failureToast(err.error.msg);
     console.log('********** CreateProjects.ts: ', err.error.msg);
     });
+  } else if(this.isChecked == false) {
+    this.failureToast("Please accept the Terms & Conditions before creating the project!!")
+  }
 } 
 
 async successToast() {

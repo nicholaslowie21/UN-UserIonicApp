@@ -26,6 +26,7 @@ export class InstitutionRegisterPage implements OnInit {
   resultError: boolean;
   attachment: any;
   formData: any;
+  isChecked: boolean;
   constructor(private  authService:  AuthService, private  router:  Router, private toastCtrl: ToastController) { 
     this.resultSuccess = false;
 		this.resultError = false;
@@ -78,6 +79,8 @@ export class InstitutionRegisterPage implements OnInit {
   }
 
   register(registerForm:NgForm) {
+    console.log(this.isChecked);
+    if(this.isChecked == true) {
     if (this.attachment == null) {
       var errorMessage = 'Choose a file!';
       this.failureToast(errorMessage);
@@ -110,6 +113,10 @@ export class InstitutionRegisterPage implements OnInit {
     } else {
       this.failureToast(Error("Passwords do not match"));
     }
+
+  } else if(this.isChecked == false) {
+    this.failureToast("Please accept the Terms & Conditions before creating the resource!!");
+  }
   }
 
   back() {
