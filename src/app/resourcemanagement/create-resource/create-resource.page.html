@@ -63,7 +63,7 @@
 
   <ion-item *ngIf= "isChosenType == true && isPaidType == true">
     <ion-label position="floating">Category*</ion-label>
-    <ion-input ngModel name="category" [(ngModel)]="category" required minlength="4" #incategory="ngModel"></ion-input>
+    <ion-input ngModel name="category" placeholder="Items, Manpower, Venue" [(ngModel)]="category" required minlength="4" #incategory="ngModel"></ion-input>
     <div class="alert-danger" *ngIf="form.submitted && incategory.invalid">
       <div *ngIf="incategory.errors.required">Category is required</div>
       <div *ngIf="incategory.errors.minlength">

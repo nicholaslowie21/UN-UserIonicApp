@@ -89,16 +89,16 @@ export class HomePage implements OnInit {
 
   getAnnouncements() {
     console.log(this.tokenStorage.getAnnouncementLength() == undefined);
-    if(this.tokenStorage.getAnnouncementLength() == undefined) {
+    /*if(this.tokenStorage.getAnnouncementLength() == undefined) {
       this.tokenStorage.saveAnnouncementLength(0)
-    } 
+    } */
     this.commService.viewAnnouncements().subscribe((res) => {
       this.announcements = res.data.announcements;
       if(this.announcements != undefined) {
         console.log(this.tokenStorage.getAnnouncementLength());
         this.unread = this.announcements.length - this.tokenStorage.getAnnouncementLength();
+        console.log(this.unread);
         this.tokenStorage.saveAnnouncementLength(this.announcements.length)
-        console.log(this.announcements.length);
       }
       
   }, (err) => {

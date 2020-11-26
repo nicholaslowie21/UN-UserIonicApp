@@ -16,7 +16,7 @@ export class AnnouncementsPage implements OnInit {
   constructor(private commService:CommunicationService, 
     private tokenStorage: TokenStorageService,
     private popoverController: PopoverController) {
-      this.type = "announce";
+      this.type = "notifs";
      }
 
   ngOnInit() {

@@ -11,7 +11,7 @@
   <form #form="ngForm" (ngSubmit)="register(form)">
     <ion-item>
         <ion-label position="floating">Name</ion-label>
-        <ion-input ngModel name="name" [(ngModel)]="name" required minlength="3" #inname="ngModel"></ion-input>
+        <ion-input ngModel name="name" placeholder="World Poverty Organisation" [(ngModel)]="name" required minlength="3" #inname="ngModel"></ion-input>
         <div class="alert-danger" *ngIf="form.submitted && inname.invalid">
           <div *ngIf="inname.errors.required">Name is required</div>
           <div *ngIf="inname.errors.minlength">
@@ -22,7 +22,7 @@
   
     <ion-item>
       <ion-label position="floating">Username</ion-label>
-      <ion-input ngModel name="username" [(ngModel)]="username" required minlength="3" maxlength="20" #inusername="ngModel"></ion-input>
+      <ion-input ngModel name="username" placeholder="wporg" [(ngModel)]="username" required minlength="3" maxlength="20" #inusername="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inusername.invalid">
         <div *ngIf="inusername.errors.required">Username is required</div>
         <div *ngIf="inusername.errors.minlength">
@@ -36,7 +36,7 @@
   
     <ion-item>
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" ngModel name="email" [(ngModel)]="email" required #inemail="ngModel"></ion-input>
+      <ion-input type="email" ngModel name="email" placeholder="wporg@gmail.com" [(ngModel)]="email" required #inemail="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && inemail.invalid">
         <div *ngIf="inemail.errors.required">Email is required</div>
         <div *ngIf="inemail.errors.email">

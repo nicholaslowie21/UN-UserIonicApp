@@ -325,6 +325,10 @@ const routes: Routes = [
   },  {
     path: 'my-purchases',
     loadChildren: () => import('./paidResource/my-purchases/my-purchases.module').then( m => m.MyPurchasesPageModule)
+  },
+  {
+    path: 'purchase-paidresource',
+    loadChildren: () => import('./paidResource/purchase-paidresource/purchase-paidresource.module').then( m => m.PurchasePaidresourcePageModule)
   }
 
 
