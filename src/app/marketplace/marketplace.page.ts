@@ -59,19 +59,19 @@ export class MarketplacePage implements OnInit {
     {"id":10}, {"id":11}, {"id":12},
     {"id":13}, {"id":14}, {"id":15},
     {"id":16},{"id":17}]
-    this.initialise();
-    this.initializeLists();
+    // this.initialise();
+    // this.initializeLists();
   }
 
   ionViewDidEnter() {
-    this.initialise();
-    this.initializeLists();
+    // this.initialise();
+    // this.initializeLists();
   }
 
   ionModalDidDismiss() {
     console.log("help");
-    this.initialise();
-    this.initializeLists();
+    // this.initialise();
+    // this.initializeLists();
   }
 
   initialise() {
@@ -242,16 +242,17 @@ export class MarketplacePage implements OnInit {
 	{
 		const alert = await this.alertController.create({
 			header: 'Your Payment is Successful!',
-			message: 'Transaction Id: ' + res.response.id + "\n" + "Status: " + res.response.state + "\n" + this.formatTDate(res.response.create_time),
+			message: 'Transaction Id: ' + res.response.id + "\n" + this.formatTDate(res.response.create_time) + "\n\nStatus: " + res.response.state ,
 			buttons: [
-			{
-			  text: 'Cancel',
-			  role: 'cancel',
-			  cssClass: 'secondary',
-			  handler: (blah) => {
+			// {
+			//   text: 'Cancel',
+			//   role: 'cancel',
+			//   cssClass: 'secondary',
+			//   handler: (blah) => {
 				
-			  }
-			}, {
+			//   }
+      // }, 
+      {
 			  text: 'Okay',
 			  handler: () => {
 			  }
@@ -266,7 +267,7 @@ export class MarketplacePage implements OnInit {
 	{
 		const alert = await this.alertController.create({
 			header: 'Your Payment has failed!',
-			message: 'Transaction Id: ' + res.response.id + "\nStatus: " + res.response.state + "\n" + this.formatTDate(res.response.create_time),
+			message: 'Transaction Id: ' + res.response.id + "\n" + this.formatTDate(res.response.create_time) + "\n\nStatus: " + res.response.state,
 			buttons: [
 			{
 			  text: 'Cancel',

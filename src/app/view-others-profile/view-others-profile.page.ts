@@ -47,6 +47,7 @@ export class ViewOthersProfilePage implements OnInit {
   reversedProfileFeed: any;
   page: any;
   modal: any;
+  tier: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -95,6 +96,8 @@ export class ViewOthersProfilePage implements OnInit {
         console.log("Error retrieving User: " + err.error.msg);
       })
     }
+
+    console.log(this.currentUser);
 }
 
   initialiseUser() {
@@ -114,6 +117,7 @@ export class ViewOthersProfilePage implements OnInit {
     this.occupation = this.currentUser.occupation;
     this.skills = this.currentUser.skills;
     this.id = this.currentUser.id;
+    this.tier = this.currentUser.tier;
     this.image = this.sessionService.getRscPath() + this.currentUser.ionicImg +'?random+=' + Math.random();
     if(this.currentUser.occupation == "") {
       this.occupation = "-";
@@ -130,12 +134,7 @@ export class ViewOthersProfilePage implements OnInit {
       this.isVerified = true;
     }
 
-    const data = {
-      'userId': this.currentUser.id,
-      'accountType': this.accountType
-    };
-
-      this.userService.getBadges(data).subscribe((res) => {
+      this.userService.getBadges({"accountId": this.currentUser.id, "accountType": this.accountType}).subscribe((res) => {
         this.badges = res.data.badges
         console.log(this.badges);
         for(var i = 0; i < this.badges.length; i++) {
@@ -195,12 +194,7 @@ export class ViewOthersProfilePage implements OnInit {
     if(this.currentUser.isVerified == "true") {
       this.isVerified = true;
     }
-
-    const data = {
-      'institutionId': this.currentUser.id,
-      'accountType': this.accountType
-    };
-        this.institutionService.getBadges(data).subscribe((res) => {
+        this.institutionService.getBadges({"accountId": this.currentUser.id, "accountType": this.accountType}).subscribe((res) => {
           this.badges = res.data.badges
           console.log(this.badges);
           for(var i = 0; i < this.badges.length; i++) {

@@ -44,23 +44,22 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        Please consider donating to the KoCosD platform! Any amount will go a long way in supporting our cause!
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-card>
+    <br>
+    <div style="padding: 0px 15px">
+      <h3>Enjoying KoCoSD so far?</h3>
+    </div>
+    <ion-card>
     <ion-card-header>
-      <ion-card-title>Donate</ion-card-title>
-          Total Payment
-          <ion-label position="floating">Amount({{currency}} {{currencyIcon}}):</ion-label>
-          <ion-input ngModel name="paymentAmount" placeholder="Enter amount to donate" [(ngModel)]="paymentAmount" required #inpaymentAmount="ngModel"></ion-input>
-          <div class="alert-danger" *ngIf="inpaymentAmount.invalid">
-            <div *ngIf="inpaymentAmount.errors.required">Name is required</div>
-          </div>
+      <ion-card-title>Donate to Us</ion-card-title>
+      <ion-card-subtitle>Any amount will go a long way in keeping the platform running for our cause!</ion-card-subtitle>
     </ion-card-header>
+    <ion-item>
+      <ion-label position="floating">Total Payment Amount({{currency}} {{currencyIcon}}):</ion-label>
+      <ion-input ngModel name="paymentAmount" placeholder="Enter amount to donate" [(ngModel)]="paymentAmount" required #inpaymentAmount="ngModel" type="number"></ion-input>
+      <div class="alert-danger" *ngIf="inpaymentAmount.invalid">
+        <div *ngIf="inpaymentAmount.errors.required">Amount is required</div>
+      </div>
+    </ion-item>
     <ion-card-content>
       <ion-button expand="full" color="success" (click)="payWithPaypal()">Pay with PayPal</ion-button>
     </ion-card-content>
