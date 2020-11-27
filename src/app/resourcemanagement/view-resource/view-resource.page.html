@@ -75,7 +75,7 @@
         <div>
           <p>{{currResource.desc}}</p>
           <p *ngIf="resourceType != 'knowledge'">Country: {{currResource.country}}</p>
-          <h6 *ngIf="resourceType != 'knowledge'">Address: {{currResource.address}}</h6>
+          <h6 *ngIf="resourceType == 'venue'">Address: {{currResource.address}}</h6>
         </div>
       </ion-item>
 

@@ -48,7 +48,7 @@ export class ViewMarketProjectDetailsPage implements OnInit {
   totalCompletion = 0;
   totalProgress = 0;
   rating: any;
-  updatedAt: any;
+  createdAt: any;
   modal: any;
   constructor(private modalController: ModalController, private institutionService: InstitutionService, private userService: UserService, private navCtrl: NavController, private toastCtrl: ToastController, private alertController: AlertController, private router: Router, private sessionService: SessionService, private tokenStorage: TokenStorageService, private projectService: ProjectService, private activatedRoute: ActivatedRoute) { }
 
@@ -92,7 +92,7 @@ export class ViewMarketProjectDetailsPage implements OnInit {
       this.SDGs = this.projectToView.SDGs;
       this.hostType = this.projectToView.hostType;
       this.rating = this.projectToView.rating;
-      this.updatedAt = this.projectToView.updatedAt;
+      this.createdAt = this.projectToView.createdAt;
   },
   err => {
     console.log('********** View Projects.ts: ', err.error.msg);

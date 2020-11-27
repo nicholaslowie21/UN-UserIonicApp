@@ -130,8 +130,14 @@ export class ViewOthersProfilePage implements OnInit {
       this.isVerified = true;
     }
 
-      this.userService.getBadges(this.currentUser.id).subscribe((res) => {
+    const data = {
+      'userId': this.currentUser.id,
+      'accountType': this.accountType
+    };
+
+      this.userService.getBadges(data).subscribe((res) => {
         this.badges = res.data.badges
+        console.log(this.badges);
         for(var i = 0; i < this.badges.length; i++) {
           this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
         }
@@ -189,8 +195,14 @@ export class ViewOthersProfilePage implements OnInit {
     if(this.currentUser.isVerified == "true") {
       this.isVerified = true;
     }
-        this.institutionService.getBadges(this.currentUser.id).subscribe((res) => {
+
+    const data = {
+      'institutionId': this.currentUser.id,
+      'accountType': this.accountType
+    };
+        this.institutionService.getBadges(data).subscribe((res) => {
           this.badges = res.data.badges
+          console.log(this.badges);
           for(var i = 0; i < this.badges.length; i++) {
               this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
           }

@@ -26,23 +26,55 @@
   <img [src]=image alt="Project Picture" onerror="this.src='./assets/img/projects.jpg'">
   
   <ion-label style="float: right; text-decoration: underline ;" *ngIf="completedBoolean == false && (adminBoolean==true || founderBoolean==true)" (click)="upload($event)"><ion-icon name="camera"></ion-icon>Upload Project Picture</ion-label>
-  <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of SDGs">SDG {{sdg}}&nbsp;</ion-badge>
-  <div>
-    <div class="aligned">
-    <ion-card-content style="font-weight: bold;">Project Founder: <br> </ion-card-content>
-    <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=host.profilePic  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-    <ion-label (click)="viewFounderProfile($event, host)">{{host.name}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-    </div>
-    <ion-card-content><div style="font-weight: bold;">Project Description: </div>{{desc}} </ion-card-content>
-    <ion-card-content><div style="font-weight: bold;">Status: </div> {{status}}</ion-card-content>
-    <ion-card-content><div style="font-weight: bold;">Project Difficulty: </div> {{rating}}</ion-card-content>
-    <ion-label style="font-weight: bold; padding-left: 15px;"> Overall Need Progress: {{(totalProgress)}} %</ion-label>
-    <ion-card>
+  <ion-badge color="dark">{{status}}</ion-badge>
+  <ion-card-header>
+    <div class="aligned" (click)="viewFounderProfile($event, host)">
+      <div style="padding: 0px 5px 0px 0px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=host.profilePic alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+      <div>
+        <div class = "aligned">
+          <ion-label style="font-weight: bold">{{host.name}}</ion-label>
+          <ion-icon name="checkmark-circle" size="big"></ion-icon>
+        </div>
+        <ion-label>Project Founder</ion-label>
+      </div> 
+    </div> 
+    <ion-card-subtitle>Created at: <ion-badge color="dark">{{formatDate(createdAt)}}</ion-badge></ion-card-subtitle>
+  </ion-card-header>
+    <ion-item-divider>
+      <ion-label>Description</ion-label>
+    </ion-item-divider>
+    <ion-item lines = "none">
+      <p>{{desc}}</p>
+    </ion-item>
+    <ion-item lines = "none">
+      <p>
+        Country: {{country}} <br>
+        Project Difficulty: {{rating}}
+      </p>
+    </ion-item>
+
+    <ion-item-divider>
+      <ion-label>Development Goals</ion-label>
+      <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
+        <ion-label style="font-weight: bold;" (click)="editTargets($event)">Edit Targets<ion-icon slot="end" name="create-sharp" (click)="toEditOwners($event)"></ion-icon></ion-label>
+      </ion-buttons>
+    </ion-item-divider>
+    <ion-item lines = "none">
+      <ion-badge className="sdg{{sdg}}" *ngFor= "let sdg of SDGs">SDG {{sdg}}&nbsp;</ion-badge>
+    </ion-item>
+    <ion-item lines = "none">
+      <ion-button (click)="presentModal()" routerDirection="forward">
+        <ion-icon name="golf-outline" slot="start"></ion-icon>
+        <ion-label>View Targets</ion-label>
+      </ion-button>
+    </ion-item>
+    
+    <ion-item-divider>
+      <ion-label>Overall Need Progress: {{(totalProgress)}} %</ion-label>
+    </ion-item-divider>
+    <ion-item lines = "none">
       <ion-progress-bar value='{{totalProgress/100}}'></ion-progress-bar>
-    </ion-card>
-    <ion-card-content><div style="font-weight: bold;">Country: </div> {{country}}</ion-card-content>
-    <ion-card-content>Last Modified: {{formatDate(updatedAt)}}</ion-card-content>
-  </div>
+    </ion-item>
   <div *ngIf="founderBoolean==true||adminBoolean==true">
     <ion-fab *ngIf="completedBoolean == false" vertical="bottom" horizontal="end" slot="fixed">
       <ion-button>
@@ -125,18 +157,6 @@
   </ion-item-group>
   <div>
     <ion-item-group *ngSwitchCase="'manage'" >
-      <ion-card>
-        <ion-item-divider >
-          <ion-label color=dark>Targets</ion-label>
-          <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
-          </ion-buttons>
-          
-      </ion-item-divider>
-      <ion-item  (click)="presentModal()" routerDirection="forward">
-        <ion-icon name="golf-outline" slot="start"></ion-icon>
-        <ion-label>SDG Target Relevance</ion-label>
-      </ion-item>
-      </ion-card>
       <ion-card>
       <ion-item-divider>
         <ion-label color=dark>Admins</ion-label>
