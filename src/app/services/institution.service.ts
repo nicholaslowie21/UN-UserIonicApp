@@ -138,7 +138,7 @@ export class InstitutionService {
   }
 
   getBadges(data): Observable<any> {
-    return this.http.get(this.API_URL + '/badges?institutionId=' + data, httpOptions).pipe(
+    return this.http.get(this.API_URL + '/badges?institutionId=' + data.institutionId + '&accountType=' + data.accountType, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

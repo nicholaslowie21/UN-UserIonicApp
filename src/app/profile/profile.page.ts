@@ -51,13 +51,14 @@ export class ProfilePage implements OnInit {
    this.currentUser = this.tokenStorage.getUser();
    
    this.accountType = this.tokenStorage.getAccountType();
-   console.log(this.accountType);
+   
     if(this.accountType == "institution") {
       this.accountBoolean = true;
       if(this.currentUser.data.user.isVerified == true) {
         this.isVerified = true;
       }
     } else if(this.accountType == "user") {
+      console.log(typeof this.currentUser.data.user.isVerified);
       if(this.currentUser.data.user.isVerified == "true") {
         this.isVerified = true;
       }
@@ -66,8 +67,8 @@ export class ProfilePage implements OnInit {
     console.log(this.accountBoolean);
 
     if(this.accountBoolean == true)
-    {
-        this.institutionService.getBadges(this.currentUser.data.user.id).subscribe((res) => {
+    {   
+        this.institutionService.getBadges({"institutionId": this.currentUser.data.user.id, "accountType": this.accountType}).subscribe((res) => {
           this.badges = res.data.badges
           for(var i = 0; i < this.badges.length; i++) {
               this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
@@ -93,7 +94,7 @@ export class ProfilePage implements OnInit {
 
     } else if(this.accountBoolean == false) {
 
-      this.userService.getBadges(this.currentUser.data.user.id).subscribe((res) => {
+      this.userService.getBadges({"userId": this.currentUser.data.user.id, "accountType": this.accountType}).subscribe((res) => {
         this.badges = res.data.badges
         for(var i = 0; i < this.badges.length; i++) {
           this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();

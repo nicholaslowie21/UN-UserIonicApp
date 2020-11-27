@@ -123,7 +123,7 @@
     <ion-item-divider *ngIf="accountBoolean == false">
       <ion-label>Badge</ion-label>
     </ion-item-divider>
-    <ion-card-subtitle *ngIf="badges == undefined">Start contributing to earn some badges!!</ion-card-subtitle>
+    <ion-card-subtitle *ngIf="accountBoolean == false && badges == undefined">Start contributing to earn some badges!!</ion-card-subtitle>
     <ion-item *ngFor="let b of badges" lines="none">
       <div>
         <img [src]=b.imgPath />

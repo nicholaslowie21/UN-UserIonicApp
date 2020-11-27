@@ -27,7 +27,7 @@ export class RequestVerificationPage implements OnInit {
       this.notVerified = true;
     } else if(this.currentUser.isVerified == "pending"){
       this.pendingVerified = true;
-    } else {
+    } else if(this.currentUser.isVerified == "true"){
       this.verified = true;
     }
       

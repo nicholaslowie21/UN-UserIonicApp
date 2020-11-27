@@ -102,7 +102,7 @@ export class UserService {
   }
 
   getBadges(data): Observable<any> {
-    return this.http.get(this.API_URL + '/badges?userId=' + data, httpOptions).pipe(
+    return this.http.get(this.API_URL + '/badges?accountId=' + data.userId + '&accountType=' + data.accountType, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
