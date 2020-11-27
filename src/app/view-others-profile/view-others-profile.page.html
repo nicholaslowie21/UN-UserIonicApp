@@ -27,7 +27,7 @@
     <ion-icon name="pencil-sharp"></ion-icon>Write Testimonial for {{name}}
   </ion-button>
   <div class="centered">
-    <ion-label *ngIf="accountBoolean == false"  style="font-weight:bold; font-size:14px;">Tier: </ion-label><ion-badge class="{{currentUser.data.user.tier}}">{{currentUser.data.user.tier}}</ion-badge>
+    <ion-label *ngIf="accountBoolean == false"  style="font-weight:bold; font-size:14px;">Tier: </ion-label><ion-badge class="{{tier}}">{{tier}}</ion-badge>
   </div> 
   <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <div class="centered">
