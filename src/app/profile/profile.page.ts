@@ -32,6 +32,7 @@ export class ProfilePage implements OnInit {
   reversedProfileFeed: any[];
   page: any;
   modal: any;
+  user: any;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -65,7 +66,8 @@ export class ProfilePage implements OnInit {
       this.accountBoolean = false;
     }
     console.log(this.accountBoolean);
-
+    this.initialise();
+    console.log("line 70 " + this.user);
     if(this.accountBoolean == true)
     {   
         this.institutionService.getBadges({"institutionId": this.currentUser.data.user.id, "accountType": this.accountType}).subscribe((res) => {
@@ -119,6 +121,8 @@ export class ProfilePage implements OnInit {
         console.log('********** Profile Feed error(user).ts: ', err.error.msg);
       })
     }
+
+    
 }
 
 parseDate(d: String) {		
@@ -133,21 +137,23 @@ parseDate(d: String) {
   }
 
   ionViewDidEnter() {
+    this.initialise();
     this.image = '';
     console.log(this.tokenStorage.getUser());
     this.currentUser = this.tokenStorage.getUser();
     this.name = this.currentUser.data.user.name;
     this.image = this.sessionService.getRscPath() + this.tokenStorage.getUser().data.user.ionicImg +'?random+=' + Math.random();
-    if(this.currentUser.data.user.occupation == "") {
-      this.currentUser.data.user.occupation = "-";
+    this.initialise();
+    if(this.user.occupation == "") {
+      this.user.occupation = "-";
     }
-    if(this.currentUser.data.user.skills == "") {
-      this.currentUser.data.user.skills = "-";
+    if(this.user.skills == "") {
+      this.user.skills = "-";
     }
-    if(this.currentUser.data.user.bio == "") {
-      this.currentUser.data.user.bio = "-";
+    if(this.user.bio == "") {
+      this.user.bio = "-";
     }
-    this.sdgs = this.currentUser.data.user.SDGs;
+    this.sdgs = this.user.SDGs;
     this.accountType = this.currentUser.data.accountType;
 
     if(this.accountType == "institution") {
@@ -183,6 +189,25 @@ parseDate(d: String) {
     }
     
     
+  }
+
+  initialise() {
+    if(this.accountType == "user") {
+      console.log("iran");
+      this.user = this.userService.viewUserById(this.currentUser.data.user.id).subscribe((res) => {
+        this.user = res.data.targetUser;
+        console.log(this.user);
+      }, (err) => {
+        console.log("View User by Id err: " + err.error.msg)
+      })
+    } else if(this.accountType == "institution") {
+      this.user = this.institutionService.viewInstitutionById(this.currentUser.data.user.id).subscribe((res) => {
+        this.user = res.data.targetInstitution
+      }, (err) => {
+        console.log("View User by Id err: " + err.error.msg)
+      })
+    }
+     console.log(this.user);
   }
   
   logout() {
