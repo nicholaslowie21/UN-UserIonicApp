@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { ProjectService } from 'src/app/services/project.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
+import { TermsAndConditionsPage } from 'src/app/terms-and-conditions/terms-and-conditions.page';
 
 @Component({
   selector: 'app-create-project',
@@ -26,12 +27,14 @@ export class CreateProjectPage implements OnInit {
   ratingsList: any[];
   form: any;
   isChecked: boolean;
+  modal: any;
 
   constructor(private  userService:  UserService, 
     private  router:  Router, 
     private toastCtrl: ToastController, 
     private tokenStorage: TokenStorageService,
-    private projectService: ProjectService) { 
+    private projectService: ProjectService,
+    private modalController: ModalController) { 
 this.resultSuccess = false;
 this.resultError = false;
 
@@ -126,5 +129,15 @@ toProjects() {
   this.router.navigate(["/my-projects/" + this.user.id])
 }
 
+async presentModal() {
+  this.modal = await this.modalController.create({
+  component: TermsAndConditionsPage,
+  componentProps: {}
+      
+  });
+  this.modal.onWillDismiss().then((data) => {
+     });
+    return await this.modal.present();
+  }
 
 }

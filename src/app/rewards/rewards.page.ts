@@ -23,9 +23,9 @@ export class RewardsPage implements OnInit {
   type: any;
   claimedVouchers: any;
   expiredVouchers: any;
-  noActiveVouchers: Boolean = true;
-  noClaimedVouchers: Boolean = true;
-  noExpiredVouchers: Boolean = true;
+  noActiveVouchers: boolean = true;
+  noClaimedVouchers: boolean = true;
+  noExpiredVouchers: boolean = true;
 
   constructor(private router: Router, 
     private sessionService: SessionService, 

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { ResourceService } from '../../services/resource.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Router } from  "@angular/router";
 import { PaidresourceService } from 'src/app/services/paidresource.service';
+import { TermsAndConditionsPage } from 'src/app/terms-and-conditions/terms-and-conditions.page';
 
 @Component({
   selector: 'app-create-resource',
@@ -45,12 +46,14 @@ export class CreateResourcePage implements OnInit {
   price: any=5;
   checked: boolean;
   isChecked: boolean;
+  modal: any;
 
   constructor(private resourceService: ResourceService, 
     private toastCtrl: ToastController, 
     private router: Router, 
     private tokenStorage: TokenStorageService,
-    private paidService: PaidresourceService) {
+    private paidService: PaidresourceService,
+    private modalController:ModalController) {
     this.resultSuccess = false;
     this.resultError = false;
     this.isVenueType = false;
@@ -303,6 +306,17 @@ export class CreateResourcePage implements OnInit {
     });
     (await toast).present();
   }
+
+  async presentModal() {
+    this.modal = await this.modalController.create({
+    component: TermsAndConditionsPage,
+    componentProps: {}
+        
+    });
+    this.modal.onWillDismiss().then((data) => {
+       });
+      return await this.modal.present();
+    }
 
 
 }

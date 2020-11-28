@@ -330,6 +330,10 @@ const routes: Routes = [
   {
     path: 'purchase-paidresource',
     loadChildren: () => import('./paidResource/purchase-paidresource/purchase-paidresource.module').then( m => m.PurchasePaidresourcePageModule)
+  },
+  {
+    path: 'terms-and-conditions',
+    loadChildren: () => import('./terms-and-conditions/terms-and-conditions.module').then( m => m.TermsAndConditionsPageModule)
   }
 
 
