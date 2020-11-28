@@ -524,7 +524,7 @@ export class MyTestimonialsPage implements OnInit {
     const popover = await this.popoverController.create({
       component: WriteTestimonialPage,
       cssClass: 'my-custom-class',
-      event: ev,
+      // event: ev,
       componentProps:{"testimonial": t},
       translucent: true
     });

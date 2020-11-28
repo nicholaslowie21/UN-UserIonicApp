@@ -16,6 +16,7 @@ export class TestimonialOthersPage implements OnInit {
   commonProjectsList: any;
   words: any;
   testimonialData: {};
+  requestData: { accountId: string; accountType: string; projectId: any; };
   p: any;
 
   constructor(private activatedRoute: ActivatedRoute, 
@@ -52,6 +53,40 @@ export class TestimonialOthersPage implements OnInit {
       console.log("Write Testimonial for others error: " + err.error.msg)
     })
 
+  }
+
+  request() {
+    this.requestData ={
+      "accountId": this.id,
+      "accountType": this.type,
+      "projectId": this.p
+    }
+    this.testimonialService.requestTestimonial(this.requestData).subscribe((res) => {
+      this.reqSuccessToast();
+    }, (err) => {
+      this.reqFailureToast(err.error.msg);
+      console.log("Request Testimonial Error: " + err.error.msg)
+    })
+  }
+
+  async reqSuccessToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Testimonial requested successfully!',
+      duration: 2000,
+      position: 'middle',
+      cssClass: "toast-pass"      
+    });
+    (await toast).present();
+  }
+
+  async reqFailureToast(error) {
+    const toast = this.toastCtrl.create({
+      message: 'Testimonial requested Unsuccessfully: ' + error,
+      duration: 2000,
+      position: 'middle',
+      cssClass: "toast-fail"
+    });
+    (await toast).present();
   }
 
   async successToast() {

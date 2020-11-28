@@ -3,8 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-
-    <ion-title>Write Testimonial for {{name}}</ion-title>
+    <ion-title>      
+      <div class="ion-text-wrap">
+        Write or Request Testimonial from {{name}}
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,16 +15,31 @@
   <ion-card>
     <ion-card-header>
         <ion-card-title>Write Testimonial for {{name}}</ion-card-title>
-        <ion-card-subtitle>Choose a common Project</ion-card-subtitle>
-        <ion-select placeholder="Select Common Project" id="p" name="p" [(ngModel)]="p">
-          <ion-select-option *ngFor="let p of commonProjectsList" [value]="p.id"> {{p.title}}</ion-select-option>
-        </ion-select>
-        <ion-label>Details:</ion-label>
-        <ion-textarea [(ngModel)]="words"></ion-textarea>
-        <ion-button expand=full (click)="writeTestimonial()">Send Testimonial</ion-button>
+        <ion-card-subtitle>Choose a Project you have in common</ion-card-subtitle>
     </ion-card-header>
+    <ion-select placeholder="Select Common Project" id="p" name="p" [(ngModel)]="p">
+      <ion-select-option *ngFor="let p of commonProjectsList" [value]="p.id"> {{p.title}}</ion-select-option>
+    </ion-select>
+    <br>
+    <ion-card-subtitle style="padding-left: 15px">Details:</ion-card-subtitle>
+    <ion-item>
+      <ion-textarea [(ngModel)]="words" placeholder="Write your testimonial content here.."></ion-textarea>
+    </ion-item>
     <ion-card-content>
-
+      <ion-button expand=full (click)="writeTestimonial()">Send Testimonial</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <br>
+  <ion-card>
+    <ion-card-header>
+        <ion-card-title>Request Testimonial from {{name}}</ion-card-title>
+        <ion-card-subtitle>Choose a Project you have in common</ion-card-subtitle>
+    </ion-card-header>
+    <ion-select placeholder="Select Common Project" id="p" name="p" [(ngModel)]="p">
+      <ion-select-option *ngFor="let p of commonProjectsList" [value]="p.id"> {{p.title}}</ion-select-option>
+    </ion-select>
+    <ion-card-content>
+      <ion-button expand=full (click)="request()">Request Testimonial</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>

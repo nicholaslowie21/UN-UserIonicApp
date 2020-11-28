@@ -44,9 +44,10 @@
       </ion-select>
     </ion-item>
 
-    <ion-checkbox style="vertical-align:middle;"  color="primary" [(ngModel)]="isChecked" name="checkbox" ></ion-checkbox>
-  <ion-label style="padding-left: 15px;">I have read and agree to KoCoSD's <ion-label  (click)="presentModal()" style="text-decoration:underline;" color="primary">Terms and Conditions</ion-label></ion-label>
-   
+    <div style="padding: 10px 10px">
+      <ion-checkbox style="vertical-align:middle;"  color="primary" [(ngModel)]="isChecked" name="checkbox" ></ion-checkbox>
+      <ion-label style="padding-left: 10px;">I have read and agree to KoCoSD's <ion-label  (click)="presentModal()" style="text-decoration:underline;" color="primary">Terms and Conditions</ion-label></ion-label>
+    </div>
     <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Create</ion-button>
   </form>
 </ion-content>

@@ -8,12 +8,16 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>Testimonial</ion-card-title>
-      <ion-card-subtitle>{{testimonial.targetName}}</ion-card-subtitle>
-      <ion-card-subtitle> For: {{testimonial.projectTitle}}</ion-card-subtitle>
+      <ion-card-subtitle>For: {{testimonial.targetName}}</ion-card-subtitle>
+      <ion-card-subtitle>Based on: {{testimonial.projectTitle}}</ion-card-subtitle>
     </ion-card-header>
-    <ion-label>Details:</ion-label>
-    <ion-textarea [(ngModel)]="words"></ion-textarea>
-    <ion-button expand=full (click)="writeTestimonial()">Send Testimonial</ion-button>
+    <ion-item>
+      <ion-label position="floating">Details:</ion-label>
+      <ion-textarea [(ngModel)]="words" placeholder="Write your testimonial content here..."></ion-textarea>
+    </ion-item>
+    <ion-card-content>
+      <ion-button expand=full (click)="writeTestimonial()">Send Testimonial</ion-button>
+    </ion-card-content>
   </ion-card>
   
 </ion-content>

@@ -20,15 +20,12 @@
   <ion-button expand="block" fill="outline"  style="margin: 5px 10px 0px 10px" (click)="openChat()">
     <ion-icon name="chatbubbles-sharp"></ion-icon>Chat with {{name}}
   </ion-button>
-  <ion-button expand="full" (click)="requestTestimonial()">
+  <!-- <ion-button expand="full" (click)="requestTestimonial()">
     <ion-icon name="thumbs-up-sharp"></ion-icon>Request Testimonial
+  </ion-button> -->
+  <ion-button style="font-size: small" expand="block" fill="outline" style="margin: 5px 10px 0px 10px" (click)="writeTestimonial()">
+    <ion-icon name="pencil-sharp"></ion-icon>Write or Request Testimonial <br> from {{name}}
   </ion-button>
-  <ion-button style="font-size: small" expand="full" (click)="writeTestimonial()">
-    <ion-icon name="pencil-sharp"></ion-icon>Write Testimonial for {{name}}
-  </ion-button>
-  <div class="centered">
-    <ion-label *ngIf="accountBoolean == false"  style="font-weight:bold; font-size:14px;">Tier: </ion-label><ion-badge class="{{tier}}">{{tier}}</ion-badge>
-  </div> 
   <img class="card-img-top rounded-circle img-fluid d-block center" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=image alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
     <div class="centered">
       
@@ -67,17 +64,18 @@
       <p>Bio: {{bio}}</p>
     </ion-item>
 
-    <ion-item-divider>
+    <ion-item-divider *ngIf="noBadgeBoolean == false">
       <ion-label>Badge</ion-label>
     </ion-item-divider>
-
-    <ion-item *ngFor="let b of badges" lines="none">
-      <div>
-      <img [src]=b.imgPath />
-      <p style="padding-left: 5px">Tier: {{b.title}}</p>
-    </div>
-      
-    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let b of badges">
+          <img [src]=b.imgPath />
+          <p style="padding-left: 5px">Tier: <ion-badge class={{b.tier}}>{{b.title}}</ion-badge></p>
+          <p style="padding-left: 5px">{{b.description}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 </ion-card>
 
 <ion-toolbar>

@@ -48,6 +48,7 @@ export class ViewOthersProfilePage implements OnInit {
   page: any;
   modal: any;
   tier: any;
+  noBadgeBoolean: boolean;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -76,6 +77,8 @@ export class ViewOthersProfilePage implements OnInit {
       this.accountBoolean = false;
     }
     console.log(this.accountBoolean);
+
+    this.noBadgeBoolean = true;
     if(this.accountType == "institution") {
       this.accountBoolean = true;
       this.institutionService.viewInstitution(this.username).subscribe((res)=> {
@@ -134,16 +137,22 @@ export class ViewOthersProfilePage implements OnInit {
       this.isVerified = true;
     }
 
-      this.userService.getBadges({"accountId": this.currentUser.id, "accountType": this.accountType}).subscribe((res) => {
-        this.badges = res.data.badges
-        console.log(this.badges);
+    this.userService.getBadges({"userId": this.id, "accountType": this.accountType}).subscribe((res) => {
+      this.badges = res.data.badges
+      console.log(this.badges)
+      if (this.badges.length == 0) {
+        this.noBadgeBoolean = true;
+      } else {
         for(var i = 0; i < this.badges.length; i++) {
           this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
         }
-      }),
-      err => {
-        console.log('********** Badges(user).ts: ', err.error.msg);
-      };
+        this.noBadgeBoolean = false;
+      } 
+      console.log(this.noBadgeBoolean);
+    }),
+    err => {
+      console.log('********** Badges(user).ts: ', err.error.msg);
+    };
 
       this.userService.getUserProfileFeed(this.currentUser.id).subscribe((res) => {
         this.profileFeed = res.data.feeds;
@@ -160,7 +169,6 @@ export class ViewOthersProfilePage implements OnInit {
       }, (err) => {
         console.log('********** Profile Feed error(user).ts: ', err.error.msg);
       })
-
      
     }
 
@@ -194,12 +202,18 @@ export class ViewOthersProfilePage implements OnInit {
     if(this.currentUser.isVerified == "true") {
       this.isVerified = true;
     }
-        this.institutionService.getBadges({"accountId": this.currentUser.id, "accountType": this.accountType}).subscribe((res) => {
+        this.institutionService.getBadges({"institutionId": this.id, "accountType": this.accountType}).subscribe((res) => {
           this.badges = res.data.badges
-          console.log(this.badges);
-          for(var i = 0; i < this.badges.length; i++) {
-              this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+          console.log(this.badges)
+          if (this.badges.length == 0) {
+            this.noBadgeBoolean = true;
+          } else {
+            for(var i = 0; i < this.badges.length; i++) {
+                this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+            }
+            this.noBadgeBoolean = false;
           }
+          console.log(this.noBadgeBoolean);
         }),
         err => {
           console.log('********** Badges(institution).ts: ', err.error.msg);

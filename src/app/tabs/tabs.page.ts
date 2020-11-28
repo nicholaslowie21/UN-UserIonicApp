@@ -44,33 +44,33 @@ export class TabsPage {
 
     this.source = interval(3000);
     this.subscribe = this.source.subscribe(() => {
-      this.getAnnouncements();
+      // this.getAnnouncements();
       this.getChats();
-      var newLength = this.announcements.length;
-      console.log("tempLength" + this.tempLength);
-      console.log("newLength" + newLength)
-      if(this.announcements != undefined && newLength > this.tempLength) {
-        this.gotNewAnnouncement = true;
-        this.tempLength = newLength;
-      } else if(this.tempLength == newLength) {
-        this.gotNewAnnouncement = false;
-        this.tempLength = newLength;
-      } else {
-        this.tempLength = newLength;
-      }
-      console.log("timer is running")
+      // var newLength = this.announcements.length;
+      // console.log("tempLength" + this.tempLength);
+      // console.log("newLength" + newLength)
+      // if(this.announcements != undefined && newLength > this.tempLength) {
+      //   this.gotNewAnnouncement = true;
+      //   this.tempLength = newLength;
+      // } else if(this.tempLength == newLength) {
+      //   this.gotNewAnnouncement = false;
+      //   this.tempLength = newLength;
+      // } else {
+      //   this.tempLength = newLength;
+      // }
+      // console.log("timer is running")
     }
      );
   }
 
   ngOnInit() {
-    this.commService.gotNewNotifs().subscribe((res) => {
-      this.gotNotifs = res.data.gotNew;
-    }, (err) => {
-      console.log("View Notifications Error: " + err.error.msg);
-    })
+    // this.commService.gotNewNotifs().subscribe((res) => {
+    //   this.gotNotifs = res.data.gotNew;
+    // }, (err) => {
+    //   console.log("View Notifications Error: " + err.error.msg);
+    // })
 
-    this.getAnnouncements();
+    // this.getAnnouncements();
   }
 
 

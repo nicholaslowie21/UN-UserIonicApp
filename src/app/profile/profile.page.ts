@@ -33,6 +33,7 @@ export class ProfilePage implements OnInit {
   page: any;
   modal: any;
   user: any;
+  noBadgeBoolean: boolean;
   
   constructor(private auth: AuthService, 
     private http: HttpClient, 
@@ -68,13 +69,21 @@ export class ProfilePage implements OnInit {
     console.log(this.accountBoolean);
     this.initialise();
     console.log("line 70 " + this.user);
+    this.noBadgeBoolean = true;
+
     if(this.accountBoolean == true)
     {   
         this.institutionService.getBadges({"institutionId": this.currentUser.data.user.id, "accountType": this.accountType}).subscribe((res) => {
           this.badges = res.data.badges
-          for(var i = 0; i < this.badges.length; i++) {
-              this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+          if(this.badges.length == 0) {
+            this.noBadgeBoolean = true;
+          } else {
+            for(var i = 0; i < this.badges.length; i++) {
+                this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+            }
+            this.noBadgeBoolean = false;
           }
+          console.log(this.noBadgeBoolean);
         }),
         err => {
           console.log('********** Badges(institution).ts: ', err.error.msg);
@@ -98,9 +107,15 @@ export class ProfilePage implements OnInit {
 
       this.userService.getBadges({"userId": this.currentUser.data.user.id, "accountType": this.accountType}).subscribe((res) => {
         this.badges = res.data.badges
-        for(var i = 0; i < this.badges.length; i++) {
-          this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+        if(this.badges.length == 0) {
+          this.noBadgeBoolean = true;
+        } else {
+          for(var i = 0; i < this.badges.length; i++) {
+            this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+          }
+          this.noBadgeBoolean = false;
         }
+        console.log(this.noBadgeBoolean);
       }),
       err => {
         console.log('********** Badges(user).ts: ', err.error.msg);

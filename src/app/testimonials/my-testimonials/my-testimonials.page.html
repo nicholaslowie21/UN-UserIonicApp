@@ -24,22 +24,24 @@
 <ion-content>
   <ion-list [ngSwitch]="segment">
     <div *ngSwitchCase="'open'">
-      <div style="padding: 0px 20px;" *ngIf="(incomingOpenTestimonialsList == undefined || incomingOpenTestimonialsList.length == 0) == true">
+      <div style="padding: 0px 20px;" *ngIf="(incomingOpenTestimonialsList == undefined || incomingOpenTestimonialsList.length == 0) == true && this.id == currentUser.data.user.id">
         You do not have any testimonials!
-        </div>
+      </div>
+      <div style="padding: 0px 20px;" *ngIf="(incomingOpenTestimonialsList == undefined || incomingOpenTestimonialsList.length == 0) == true && this.id != currentUser.data.user.id">
+        This account has not received any testimonials yet.
+      </div>
       <div *ngFor="let d of incomingOpenTestimonialsList" >
         <ion-card>
           <ion-card-header>
             <ion-card-title>Testimonial for: {{d.projectTitle}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
+            <p>{{d.desc}}</p>
             <div class="aligned">
-              <ion-card-content style="font-weight: bold;">By: <br> </ion-card-content>
-              <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=d.creatorImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+              <p style="font-weight: bold; margin-right: 5px">By: <br> </p>
+              <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; margin-right: 5px" [src]=d.creatorImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
               <ion-label (click)="viewProfile($event, d.creatorUsername, d.creatorType)">{{d.creatorName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-              </div>
-              <br>
-              <ion-card-subtitle>{{d.desc}}</ion-card-subtitle>
+            </div>
               <ion-button *ngIf="currentUser.data.user.id == d.id" expand=full (click)="cancelRequest($event, d)">
                 <ion-icon name="trash-outline" color=danger></ion-icon>
                 Delete</ion-button>
@@ -65,15 +67,14 @@
         <div *ngFor="let p of incomingRequestedTestimonialsList" >
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Testimonial for: {{p.projectTitle}}</ion-card-title>
+            <ion-card-title>Testimonial based on: {{p.projectTitle}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <div class="aligned">
-              <ion-card-content style="font-weight: bold;">Request sent to: <br> </ion-card-content>
-              <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.creatorImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+              <p style="font-weight: bold; margin-right: 5px">Request sent to: </p>
+              <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; margin-right: 5px" [src]=p.creatorImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
               <ion-label (click)="viewProfile($event, p.creatorUsername, p.creatorType)">{{p.creatorName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-              </div>
-              <br>
+            </div>
               <ion-badge color="dark">Request Date: {{formatDate(p.createdAt)}}</ion-badge>
               <ion-button expand=full (click)="cancelRequest($event, p)">Cancel Request</ion-button>
           </ion-card-content>
@@ -88,16 +89,16 @@
       <div *ngFor="let p of incomingPendingTestimonialsList" >
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Testimonial for: {{p.projectTitle}}</ion-card-title>
+            <ion-card-title>Testimonial based on: {{p.projectTitle}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
+            <p>{{p.desc}}</p>
             <div class="aligned">
-              <ion-card-content style="font-weight: bold;">Request sent to: <br> </ion-card-content>
-              <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.creatorImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+              <p style="font-weight: bold; margin-right: 5px">Request written by: <br> </p>
+              <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; margin-right: 5px" [src]=p.creatorImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
               <ion-label (click)="viewProfile($event, p.creatorUsername, p.creatorType)">{{p.creatorName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-              </div>
+            </div>
               <br>
-              <p>Testimonial: {{p.desc}}</p>
               <ion-badge color="dark">Request Date: {{formatDate(p.createdAt)}}</ion-badge>
               <ion-badge color="dark">Update Date: {{formatDate(p.updatedAt)}}</ion-badge>
               <ion-grid>
@@ -139,15 +140,14 @@
           <div *ngFor="let p of outgoingRequestedTestimonialsList" >
             <ion-card>
               <ion-card-header>
-                <ion-card-title>Testimonial for: {{p.projectTitle}}</ion-card-title>
+                <ion-card-title>Testimonial based on: {{p.projectTitle}}</ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <div class="aligned">
-                  <ion-card-content style="font-weight: bold;">Request by: <br> </ion-card-content>
-                  <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.targetImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                  <p style="font-weight: bold; margin-right: 5px">Request by: <br> </p>
+                  <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; margin-right: 5px" [src]=p.targetImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
                   <ion-label (click)="viewProfile($event, p.targetUsername, p.targetType)">{{p.targetName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-                  </div>
-                  <br>
+                </div>
                   <ion-badge color="dark">Request Date: {{formatDate(p.createdAt)}}</ion-badge>
                   <ion-badge color="dark">Update Date: {{formatDate(p.updatedAt)}}</ion-badge>
                   <ion-grid>
@@ -173,16 +173,15 @@
           <div *ngFor="let p of outgoingPendingTestimonialsList" >
             <ion-card>
               <ion-card-header>
-                <ion-card-title>Testimonial for: {{p.projectTitle}}</ion-card-title>
+                <ion-card-title>Testimonial based on: {{p.projectTitle}}</ion-card-title>
               </ion-card-header>
               <ion-card-content>
+                <p>{{p.desc}}</p>
                 <div class="aligned">
-                  <ion-card-content style="font-weight: bold;">Request by: <br> </ion-card-content>
-                  <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.targetImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                  <p style="font-weight: bold; margin-right: 5px">Request written for: <br> </p>
+                  <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; margin-right: 5px" [src]=p.targetImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
                   <ion-label (click)="viewProfile($event, p.targetUsername, p.targetType)">{{p.targetName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-                  </div>
-                  <br>
-                  <p>Testimonial: {{p.desc}}</p>
+                </div>
                   <ion-badge color="dark">Request Date: {{formatDate(p.createdAt)}}</ion-badge>
                   <ion-badge color="dark">Update Date: {{formatDate(p.updatedAt)}}</ion-badge>
                   <ion-button expand=full (click)="deleteWrittenTestimonial($event, p)">Delete Testimonial</ion-button>
@@ -198,16 +197,15 @@
           <div *ngFor="let d of outgoingGivenTestimonialsList" >
             <ion-card>
               <ion-card-header>
-                <ion-card-title>Testimonial for: {{d.projectTitle}}</ion-card-title>
+                <ion-card-title>Testimonial based on: {{d.projectTitle}}</ion-card-title>
               </ion-card-header>
               <ion-card-content>
+                <p>{{d.desc}}</p>
                 <div class="aligned">
-                  <ion-card-content style="font-weight: bold;">Request by: <br> </ion-card-content>
-                  <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=d.targetImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+                  <p style="font-weight: bold; margin-right: 5px">Written for: <br> </p>
+                  <img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover; margin-right: 5px" [src]=d.targetImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
                   <ion-label (click)="viewProfile($event, d.targetUsername, d.targetType)">{{d.targetName}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
-                  </div>
-                  <br>
-                  <p>{{d.desc}}</p>
+                </div>
                   <ion-badge color="dark">Request Date: {{formatDate(d.createdAt)}}</ion-badge>
                   <ion-badge color="dark">Given Date: {{formatDate(d.updatedAt)}}</ion-badge>
                   <ion-button expand=full (click)="deleteWrittenTestimonial($event, d)">Delete Testimonial</ion-button>
