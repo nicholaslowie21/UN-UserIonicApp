@@ -52,6 +52,9 @@ export class TabsPage {
       if(this.announcements != undefined && newLength > this.tempLength) {
         this.gotNewAnnouncement = true;
         this.tempLength = newLength;
+      } else if(this.tempLength == newLength) {
+        this.gotNewAnnouncement = false;
+        this.tempLength = newLength;
       } else {
         this.tempLength = newLength;
       }
