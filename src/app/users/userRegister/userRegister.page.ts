@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from  "@angular/router";
 import { AuthService } from '../../services/authentication.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
+import { TermsAndConditionsPage } from 'src/app/terms-and-conditions/terms-and-conditions.page';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +32,11 @@ export class UserRegisterPage implements OnInit {
   resultSuccess: boolean;
   resultError: boolean;
   isChecked: boolean = false;
-  constructor(private  authService:  AuthService, private  router:  Router, private toastCtrl: ToastController) { 
+  modal: HTMLIonModalElement;
+  constructor(private  authService:  AuthService, 
+    private  router:  Router, 
+    private toastCtrl: ToastController,
+    private modalController: ModalController) { 
     this.resultSuccess = false;
 		this.resultError = false;
     
@@ -126,6 +131,17 @@ export class UserRegisterPage implements OnInit {
     });
     (await toast).present();
   }
+
+  async presentModal() {
+    this.modal = await this.modalController.create({
+    component: TermsAndConditionsPage,
+    componentProps: {}
+        
+    });
+    this.modal.onWillDismiss().then((data) => {
+       });
+      return await this.modal.present();
+    }
 
 
 }
