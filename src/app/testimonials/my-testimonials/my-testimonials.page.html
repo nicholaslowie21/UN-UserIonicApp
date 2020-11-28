@@ -40,7 +40,7 @@
               </div>
               <br>
               <ion-card-subtitle>{{d.desc}}</ion-card-subtitle>
-              <ion-button expand=full (click)="cancelRequest($event, d)">
+              <ion-button *ngIf="currentUser.data.user.id == d.id" expand=full (click)="cancelRequest($event, d)">
                 <ion-icon name="trash-outline" color=danger></ion-icon>
                 Delete</ion-button>
           </ion-card-content>
@@ -106,7 +106,7 @@
                     <ion-button expand=full (click)="acceptTestimonial($event, p)">Accept</ion-button>
                   </ion-col>
                   <ion-col>
-                    <ion-button expand=full (click)="rejectRequest($event, p)">Reject</ion-button>
+                    <ion-button expand=full color="danger" (click)="rejectRequest($event, p)">Dismiss</ion-button>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -156,7 +156,7 @@
                         <ion-button expand=full (click)="acceptWriteTestimonial($event, p)">Accept</ion-button>
                       </ion-col>
                       <ion-col>
-                        <ion-button expand=full (click)="cancelOthersRequest($event, p)">Dismiss</ion-button>
+                        <ion-button expand=full color="danger" (click)="cancelOthersRequest($event, p)">Dismiss</ion-button>
                       </ion-col>
                     </ion-row>
                   </ion-grid>
