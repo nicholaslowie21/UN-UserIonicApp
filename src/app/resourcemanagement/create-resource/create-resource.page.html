@@ -19,21 +19,21 @@
 
   <ion-item>
     <ion-label>Resource Type*</ion-label>
-    <ion-select ngModel name="type" [(ngModel)] = "type" #intype="ngModel" (ngModelChange)="renderType(type)">
+    <ion-select ngModel name="type" [(ngModel)] = "type" #intype="ngModel" (ngModelChange)="renderType(type)" placeholder="Select one">
       <ion-select-option *ngFor = "let t of typeList">{{t}}</ion-select-option>
     </ion-select>
   </ion-item>
 
   <ion-item *ngIf= "isKnowledgeType == true">
     <ion-label>Knowledge Type*</ion-label>
-    <ion-select ngModel name="knowType" [(ngModel)] = "knowType" #intype="ngModel">
+    <ion-select ngModel name="knowType" [(ngModel)] = "knowType" #intype="ngModel" placeholder="Select one">
       <ion-select-option *ngFor = "let k of knowTypeList">{{k}}</ion-select-option>
     </ion-select>
   </ion-item>
 
   <ion-item *ngIf="isChosenType == true">
       <ion-label position="floating">Title*</ion-label>
-      <ion-input ngModel name="title" [(ngModel)]="title" required minlength="3" #intitle="ngModel"></ion-input>
+      <ion-input ngModel name="title" [(ngModel)]="title" required minlength="3" #intitle="ngModel" placeholder="Enter resource name"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
         <div *ngIf="intitle.errors.required">Title is required</div>
         <div *ngIf="intitle.errors.minlength">
@@ -44,7 +44,7 @@
 
   <ion-item *ngIf = "isChosenType == true">
     <ion-label position="floating">Description*</ion-label>
-    <ion-textarea ngModel name="desc" [(ngModel)]="desc" required minlength="3" #indesc="ngModel"></ion-textarea>
+    <ion-textarea ngModel name="desc" [(ngModel)]="desc" required minlength="3" #indesc="ngModel" placeholder="Enter more description about your resource (purpose, quantity, quality, etc)"></ion-textarea>
     <div class="alert-danger" *ngIf="form.submitted && indesc.invalid">
       <div *ngIf="indesc.errors.required">Description is required</div>
       <div *ngIf="indesc.errors.minlength">
@@ -74,12 +74,12 @@
 
   <ion-item *ngIf = "isKnowledgeType == true">
     <ion-label position="floating">Link</ion-label>
-    <ion-input ngModel name="link" [(ngModel)]="link" required minlength="3" #inlink="ngModel"></ion-input>
+    <ion-input ngModel name="link" [(ngModel)]="link" required minlength="3" #inlink="ngModel" placeholder="Link includes https://"></ion-input>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='patent'">
-    <ion-label position="floating">Expiry Date (YYYY-MM-DD)*</ion-label>
-    <ion-input ngModel name="expiry" [(ngModel)]="expiry" required minlength="10" #inexpiry="ngModel"></ion-input>
+    <ion-label position="floating">Expiry Date*</ion-label>
+    <ion-input ngModel name="expiry" [(ngModel)]="expiry" required minlength="10" #inexpiry="ngModel" placeholder="Date in format YYYY-MM-DD"></ion-input>
     <div class="alert-danger" *ngIf="form.submitted && inexpiry.invalid">
       <div *ngIf="inexpiry.errors.required">Expiry Date is required</div>
       <div *ngIf="inexpiry.errors.minlength">
@@ -90,7 +90,7 @@
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='patent'">
     <ion-label position="floating">Patent No.*</ion-label>
-    <ion-input ngModel name="patentNum" [(ngModel)]="patentNum" required minlength="3" #inpatentnum="ngModel"></ion-input>
+    <ion-input ngModel name="patentNum" [(ngModel)]="patentNum" required minlength="3" #inpatentnum="ngModel" placeholder="Eg. X0000001"></ion-input>
     <div class="alert-danger" *ngIf="form.submitted && inpatentnum.invalid">
       <div *ngIf="inpatentnum.errors.required">Patent No. is required</div>
       <div *ngIf="inpatentnum.errors.minlength">
@@ -101,17 +101,17 @@
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='publication'">
     <ion-label position="floating">ISSN</ion-label>
-    <ion-input ngModel name="issn" [(ngModel)]="issn" required minlength="3" #inissn="ngModel"></ion-input>
+    <ion-input ngModel name="issn" [(ngModel)]="issn" required minlength="3" #inissn="ngModel" placeholder="Eg. 0028-0836"></ion-input>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='publication'">
     <ion-label position="floating">DOI</ion-label>
-    <ion-input ngModel name="doi" [(ngModel)]="doi" required minlength="3" #indoi="ngModel"></ion-input>
+    <ion-input ngModel name="doi" [(ngModel)]="doi" required minlength="3" #indoi="ngModel" placeholder="Eg. https://doi.org/10.1177/0022034520914246"></ion-input>
   </ion-item>
 
   <ion-item *ngIf = "isKnowledgeType == true && knowType=='publication'">
-    <ion-label position="floating">Issue Date (YYYY-MM-DD)</ion-label>
-    <ion-input ngModel name="issueDate" [(ngModel)]="issueDate" required minlength="3" #inissuedate="ngModel"></ion-input>
+    <ion-label position="floating">Issue Date</ion-label>
+    <ion-input ngModel name="issueDate" [(ngModel)]="issueDate" required minlength="3" #inissuedate="ngModel" placeholder="Date in format YYYY-MM-DD"></ion-input>
   </ion-item>
 
   <ion-item *ngIf="isVenueType == true || isItemType == true">
@@ -121,20 +121,20 @@
     </ion-select>
   </ion-item>
 
-  <ion-item *ngIf="isVenueType == true || isItemType == true || isPaidType == true">
-    <ion-label>Images</ion-label>
-    <ion-input type="file" multiple name="image1" (change)="selectImage($event)" ></ion-input>
-  </ion-item>
-
   <ion-item *ngIf="isVenueType == true">
     <ion-label position="floating">Address*</ion-label>
-    <ion-input ngModel name="address" [(ngModel)]="address" required minlength="3" #inaddress="ngModel"></ion-input>
+    <ion-input ngModel name="address" [(ngModel)]="address" required minlength="3" #inaddress="ngModel" placeholder="Enter address (including postal code)"></ion-input>
     <div class="alert-danger" *ngIf="form.submitted && inaddress.invalid">
       <div *ngIf="inaddress.errors.required">Address is required</div>
       <div *ngIf="inaddress.errors.minlength">
         Address must be at least 3 characters
       </div>
     </div>
+  </ion-item>
+
+  <ion-item *ngIf="isVenueType == true || isItemType == true || isPaidType == true">
+    <ion-label>Images</ion-label>
+    <ion-input type="file" multiple name="image1" (change)="selectImage($event)" ></ion-input>
   </ion-item>
 
   <ion-card *ngIf= "isKnowledgeType == true">
@@ -149,8 +149,11 @@
 
   <div style="padding: 10px 10px">
     <ion-checkbox style="vertical-align:middle;" *ngIf="isChosenType == true" color="primary" [(ngModel)]="isChecked" name="checkbox" ></ion-checkbox>
-    <ion-label style="padding-left: 10px;" *ngIf="isChosenType == true">I have read and agree to KoCoSD's <ion-label (click)="presentModal()" style="text-decoration:underline;" color="primary">Terms and Conditions</ion-label></ion-label>
+    <ion-label style="padding-left: 10px;" *ngIf="isChosenType == true">I have read and agree to KoCoSD's <ion-label (click)="presentModal()" style="text-decoration:underline;" color="primary">Terms and Conditions</ion-label>.</ion-label>
+    <ion-label *ngIf="isPaidType == true"> I agree that I will not receive the lump sum of the price, due to deduction for KoCoSD commission and PayPal service fee.</ion-label>
   </div>
+
+
   <ion-button type="submit" color="primary" expand="block" style = "margin-left: 10px; margin-right:10px;">Offer Resource</ion-button>
 </form>
 

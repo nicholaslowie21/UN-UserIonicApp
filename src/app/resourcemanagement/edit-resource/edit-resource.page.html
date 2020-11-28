@@ -55,7 +55,7 @@
     <ion-input ngModel name="category" [(ngModel)]="currResource.category" required #incategory="ngModel"></ion-input>
   </ion-item>
 
-  <ion-item *ngIf="resourceType != 'paid'">
+  <ion-item *ngIf="resourceType == 'paid'">
     <ion-label>Price</ion-label>
     <ion-input type="number" ngModel name="price" [(ngModel)]="currResource.price" required #inprice="ngModel"></ion-input>
   </ion-item>

@@ -41,7 +41,7 @@ export class ViewMarketplaceResourcesPage implements OnInit {
     private router: Router,
     private paidService: PaidresourceService) {
     this.currentUser = this.tokenStorage.getUser();
-    this.type = "manpower";
+    this.type = "item";
     // this.isFilterAll = true;
    }
 

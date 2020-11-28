@@ -8,17 +8,17 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="manpower" checked>
-        <ion-label>Manpower</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="knowledge">
-        <ion-label>Knowledge</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="item">
+      <ion-segment-button value="item" checked>
         <ion-label>Item</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="manpower">
+        <ion-label>Manpower</ion-label>
       </ion-segment-button>
       <ion-segment-button value="venue">
         <ion-label>Venue</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="knowledge">
+        <ion-label>Knowledge</ion-label>
       </ion-segment-button>
       <ion-segment-button value="paid">
         <ion-label>Paid</ion-label>
@@ -30,66 +30,6 @@
 <ion-content>
   <ion-searchbar (ionInput)="filterList($event)" placeholder="Search"></ion-searchbar>
   <ion-list  [ngSwitch]="type">
-    <div *ngSwitchCase="'manpower'" >
-      <div *ngIf="manpowerResourceList == undefined || manpowerResourceList.length == 0" style="padding-left: 15px;">
-        <ion-label>There are no active manpower resource available!</ion-label>
-      </div>
-      <div *ngFor="let m of manpowerResourceList" >
-      <ion-card>
-        <div class="aligned" (click)="viewFounderProfile($event, m)">
-          <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=m.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
-          <div>
-            <div class = "aligned" (click)="viewFounderProfile($event, m)">
-              <ion-label style="font-weight: bold">{{m.ownerName}}</ion-label>
-              <ion-icon name="checkmark-circle" *ngIf="m.ownerIsVerified == 'true'" size="big"></ion-icon>
-            </div>
-            <ion-label>Resource Owner</ion-label>
-          </div> 
-        </div>  
-        <img class="card-img-top rounded-circle img-fluid d-block center {{m.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=m.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-        <ion-card-header (click)= "viewResource(m)">
-          <ion-card-title>{{m.title}}</ion-card-title>
-          <ion-card-subtitle>{{m.country}}</ion-card-subtitle>
-          <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(m.updatedAt)}}</ion-badge></ion-card-subtitle>
-        </ion-card-header>
-
-        <!-- <ion-card-content>
-          <ion-label>{{m.desc}}</ion-label>
-        </ion-card-content> -->
-      </ion-card>
-      </div>
-    </div>
-
-
-    <div *ngSwitchCase="'knowledge'">
-      <div *ngIf="knowledgeResourceList == undefined || knowledgeResourceList.length == 0" style="padding-left: 15px;">
-        <ion-label>There are no active knowledge resource available!</ion-label>
-    </div>
-    <div *ngFor="let k of knowledgeResourceList">
-    <ion-card>
-      <div class="aligned" (click)="viewFounderProfile($event, k)">
-        <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=k.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
-        <div>
-          <div class = "aligned">
-            <ion-label style="font-weight: bold">{{k.ownerName}}</ion-label>
-            <ion-icon name="checkmark-circle" *ngIf="k.ownerIsVerified == 'true'" size="big"></ion-icon>
-          </div>
-          <ion-label>Resource Owner</ion-label>
-        </div> 
-      </div>
-        <img src="../../assets/img/knowledge.jpg" class="{{k.status}} full" />
-        <ion-card-header (click)= "viewResource(k)">
-          <ion-card-title>{{k.title}}</ion-card-title>
-          <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
-        </ion-card-header>
-
-        <!-- <ion-card-content>
-          <ion-label>{{k.desc}}</ion-label>
-        </ion-card-content> -->
-    </ion-card>
-    </div>
-  </div>
-
     <div *ngSwitchCase="'item'">
       <div *ngIf="itemResourceList == undefined || itemResourceList.length == 0" style="padding-left: 15px;">
         <ion-label>There are no active item resource available!</ion-label>
@@ -122,6 +62,35 @@
           <ion-card-subtitle>{{i.country}}</ion-card-subtitle>
           <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(i.updatedAt)}}</ion-badge></ion-card-subtitle>
         </ion-card-header>
+      </ion-card>
+      </div>
+    </div>
+    <div *ngSwitchCase="'manpower'" >
+      <div *ngIf="manpowerResourceList == undefined || manpowerResourceList.length == 0" style="padding-left: 15px;">
+        <ion-label>There are no active manpower resource available!</ion-label>
+      </div>
+      <div *ngFor="let m of manpowerResourceList" >
+      <ion-card>
+        <div class="aligned" (click)="viewFounderProfile($event, m)">
+          <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=m.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+          <div>
+            <div class = "aligned" (click)="viewFounderProfile($event, m)">
+              <ion-label style="font-weight: bold">{{m.ownerName}}</ion-label>
+              <ion-icon name="checkmark-circle" *ngIf="m.ownerIsVerified == 'true'" size="big"></ion-icon>
+            </div>
+            <ion-label>Resource Owner</ion-label>
+          </div> 
+        </div>  
+        <img class="card-img-top rounded-circle img-fluid d-block center {{m.status}}" style="margin-top:10px; width: 150px; height: 150px; object-fit: cover;" [src]=m.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
+        <ion-card-header (click)= "viewResource(m)">
+          <ion-card-title>{{m.title}}</ion-card-title>
+          <ion-card-subtitle>{{m.country}}</ion-card-subtitle>
+          <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(m.updatedAt)}}</ion-badge></ion-card-subtitle>
+        </ion-card-header>
+
+        <!-- <ion-card-content>
+          <ion-label>{{m.desc}}</ion-label>
+        </ion-card-content> -->
       </ion-card>
       </div>
     </div>
@@ -162,6 +131,35 @@
       </div>
       </div>
 
+    <div *ngSwitchCase="'knowledge'">
+      <div *ngIf="knowledgeResourceList == undefined || knowledgeResourceList.length == 0" style="padding-left: 15px;">
+        <ion-label>There are no active knowledge resource available!</ion-label>
+    </div>
+    <div *ngFor="let k of knowledgeResourceList">
+    <ion-card>
+      <div class="aligned" (click)="viewFounderProfile($event, k)">
+        <div style="padding: 10px 5px 10px 15px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 40px; height: 40px; object-fit: cover;" [src]=k.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+        <div>
+          <div class = "aligned">
+            <ion-label style="font-weight: bold">{{k.ownerName}}</ion-label>
+            <ion-icon name="checkmark-circle" *ngIf="k.ownerIsVerified == 'true'" size="big"></ion-icon>
+          </div>
+          <ion-label>Resource Owner</ion-label>
+        </div> 
+      </div>
+        <img src="../../assets/img/knowledge.jpg" class="{{k.status}} full" />
+        <ion-card-header (click)= "viewResource(k)">
+          <ion-card-title>{{k.title}}</ion-card-title>
+          <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(k.updatedAt)}}</ion-badge></ion-card-subtitle>
+        </ion-card-header>
+
+        <!-- <ion-card-content>
+          <ion-label>{{k.desc}}</ion-label>
+        </ion-card-content> -->
+    </ion-card>
+    </div>
+  </div>
+
       <div *ngSwitchCase="'paid'">
         <div *ngIf="paidResourceList == undefined || paidResourceList.length == 0" style="padding-left: 15px;">
           <ion-label>There are no active paid resources available!</ion-label>
@@ -190,9 +188,9 @@
               </div>
             <ion-card-header (click)= "viewPaidResource(p)">
               <ion-card-title>{{p.title}}</ion-card-title>
-              <ion-card-subtitle style="font-weight:bolder" color=primary>USD$ {{p.price}}</ion-card-subtitle>
+              <ion-card-title color="success">USD$ {{p.price}}</ion-card-title>
               <ion-card-subtitle>{{p.country}}</ion-card-subtitle>
-              <ion-card-subtitle>{{p.category}}</ion-card-subtitle>
+              <ion-badge color="primary">{{p.category}}</ion-badge>
               <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(p.updatedAt)}}</ion-badge></ion-card-subtitle>
             </ion-card-header>
           </ion-card>

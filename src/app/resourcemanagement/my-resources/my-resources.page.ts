@@ -51,7 +51,7 @@ export class MyResourcesPage implements OnInit {
         } else if(this.accountType == "user") {
           this.accountBoolean = false;
         }
-    this.type = "manpower";
+    this.type = "item";
     this.isFilterAll = true;
   }
 

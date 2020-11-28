@@ -13,25 +13,25 @@
       <ion-card-header>
         <ion-card-title>{{paidResource.title}}</ion-card-title>
       </ion-card-header>
+      <ion-item-divider>
+        <ion-label>Details</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <div>
+          <p>{{paidResource.desc}}</p>
+          <p>Category: <ion-badge>{{paidResource.category}}</ion-badge></p>
+        </div>
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label>Price: <ion-card-title color="success">USD${{paidResource.price}}</ion-card-title></ion-label>
+      </ion-item>
     </ion-card>
     <ion-item>
       <ion-label position="floating">Project Title</ion-label>
-      <ion-select ngModel name="currProject" [(ngModel)] = "currProject" #incurrProject="ngModel">
+      <ion-select ngModel name="currProject" [(ngModel)] = "currProject" #incurrProject="ngModel" placeholder="Select one">
         <ion-select-option value={{p.id}} *ngFor = "let p of projectList">{{p.title}}</ion-select-option>
       </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <p>Description: {{paidResource.desc}}</p>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Category: {{paidResource.category}}</ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Price: <ion-card-title color="primary">USD${{paidResource.price}}</ion-card-title></ion-label>
-      
     </ion-item>
 
     <ion-button type="submit" color="primary" expand="block" style="margin: 0px 10px;">Request to Purchase</ion-button>

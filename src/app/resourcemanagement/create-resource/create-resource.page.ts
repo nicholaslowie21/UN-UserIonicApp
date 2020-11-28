@@ -47,6 +47,8 @@ export class CreateResourcePage implements OnInit {
   checked: boolean;
   isChecked: boolean;
   modal: any;
+  accountType: any;
+  accountBoolean: boolean;
 
   constructor(private resourceService: ResourceService, 
     private toastCtrl: ToastController, 
@@ -63,12 +65,23 @@ export class CreateResourcePage implements OnInit {
    }
 
   ngOnInit() {
-    this.typeList = ["Manpower", "Knowledge", "Item", "Venue", "Paid"];
     this.knowTypeList = ["patent", "publication", "other"];
     if(this.tokenStorage.getToken()) {
       console.log(this.tokenStorage.getUser());
       this.country = this.tokenStorage.getUser().data.user.country;
+      this.accountType = this.tokenStorage.getAccountType();
+        
+      console.log(this.accountType);
+      if(this.accountType == "institution") {
+        this.accountBoolean = true;
+        this.typeList = [ "Item", "Venue", "Knowledge", "Paid"];
+      } else if(this.accountType == "user") {
+        this.accountBoolean = false;
+        this.typeList = [ "Item", "Manpower", "Venue", "Knowledge", "Paid"];
+      }
+      console.log(this.accountBoolean);
     }
+
 
     this.countryData = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla",
     "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas",
