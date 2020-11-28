@@ -53,7 +53,6 @@ export class TabsPage {
         this.gotNewAnnouncement = true;
         this.tempLength = newLength;
       } else {
-        this.gotNewAnnouncement = false;
         this.tempLength = newLength;
       }
       console.log("timer is running")
