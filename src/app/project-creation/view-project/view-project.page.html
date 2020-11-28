@@ -52,7 +52,7 @@
     <ion-item-divider>
       <ion-label>Development Goals</ion-label>
       <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
-        <ion-label style="font-weight: bold;" (click)="editTargets($event)">Edit Targets<ion-icon slot="end" name="create-sharp" (click)="toEditOwners($event)"></ion-icon></ion-label>
+        <ion-label style="font-weight: bold;" (click)="editTargets($event)">Edit Targets<ion-icon slot="end" name="create-sharp" (click)="editTargets($event)"></ion-icon></ion-label>
       </ion-buttons>
     </ion-item-divider>
     <ion-item lines = "none">
@@ -71,7 +71,8 @@
     <ion-item lines = "none">
       <ion-progress-bar value='{{totalProgress/100}}'></ion-progress-bar>
     </ion-item>
-
+    <br>
+    <br>
   <div *ngIf="founderBoolean==true||adminBoolean==true">
     <ion-fab *ngIf="completedBoolean == false" vertical="bottom" horizontal="end" slot="fixed">
       <ion-button>

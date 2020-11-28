@@ -48,7 +48,7 @@
       </div>
     </div>
     <div *ngSwitchCase="'mine'" >
-        <ion-segment [(ngModel)]="inStatus" (ionChange)="segmentChanged($event)" color="secondary">
+        <ion-segment value="requested" [(ngModel)]="inStatus" (ionChange)="segmentChanged($event)" color="secondary">
           <ion-segment-button value="requested" checked>
             <ion-label>Requested</ion-label>
           </ion-segment-button>
