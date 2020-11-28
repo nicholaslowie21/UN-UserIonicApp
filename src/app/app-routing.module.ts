@@ -308,10 +308,6 @@ const routes: Routes = [
     loadChildren: () => import('./testimonials/my-testimonials/my-testimonials.module').then( m => m.MyTestimonialsPageModule)
   },
   {
-    path: 'request-testimonial/:Id/:type/:name',
-    loadChildren: () => import('./testimonials/request-testimonial/request-testimonial.module').then( m => m.RequestTestimonialPageModule)
-  },
-  {
     path: 'write-testimonial',
     loadChildren: () => import('./testimonials/write-testimonial/write-testimonial.module').then( m => m.WriteTestimonialPageModule)
   },
@@ -335,14 +331,6 @@ const routes: Routes = [
     path: 'terms-and-conditions',
     loadChildren: () => import('./terms-and-conditions/terms-and-conditions.module').then( m => m.TermsAndConditionsPageModule)
   }
-
-
-
-
-
-
-
-
 ];
 @NgModule({
   imports: [
