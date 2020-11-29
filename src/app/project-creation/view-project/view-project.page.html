@@ -51,7 +51,7 @@
 
     <ion-item-divider>
       <ion-label>Development Goals</ion-label>
-      <ion-buttons *ngIf="completedBoolean == false && founderBoolean==true" style="float: right;" slot="end" >
+      <ion-buttons *ngIf="completedBoolean == false && (founderBoolean==true ||adminBoolean==true)" style="float: right;" slot="end" >
         <ion-label style="font-weight: bold;" (click)="editTargets($event)">Edit Targets<ion-icon slot="end" name="create-sharp" (click)="editTargets($event)"></ion-icon></ion-label>
       </ion-buttons>
     </ion-item-divider>
