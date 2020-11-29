@@ -120,20 +120,27 @@ export class MyProjectsPage implements OnInit {
         };
 
         this.institutionService.getPastProjects(this.id).subscribe((res) => {
-        this.pastProjects = res.data.pastProjects
-        this.initializePast();
-        if(this.pastProjects.length > 0) {
-          this.noPastProjectBoolean = false;
-          for(var i = 0; i < this.pastProjects.length; i++) {
-            this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
+          const pastProj = res.data.pastProjects
+          this.pastProjects = [];
+          
+          if(pastProj.length > 0) {
+            for(var i = 0; i < pastProj.length; i++) {
+              if(this.checkRole(pastProj[i]) != 'Contributor') {
+                pastProj[i].imgPath = this.sessionService.getRscPath() + pastProj[i].imgPath  +'?random+=' + Math.random();
+                this.pastProjects.push(pastProj[i])
+                this.noPastProjectBoolean = false;
+              }
+            }
+            
+          } else {
+              this.noPastProjectBoolean = true;
           }
-
-          this.pastProjectsList = this.pastProjects.sort(function (a, b) {
-                return a.updatedAt.localeCompare(b.updatedAt);
-              }).reverse();
-        } else {
-            this.noPastProjectBoolean = true;
-        }
+          if(this.noPastProjectBoolean == false) {
+            this.initializePast();
+            this.pastProjectsList = this.pastProjects.sort(function (a, b) {
+              return a.updatedAt.localeCompare(b.updatedAt);
+            }).reverse();
+          }
 
       }),
         err => {
@@ -239,8 +246,9 @@ export class MyProjectsPage implements OnInit {
   }
 
   view(event, project) {
-    this.router.navigate(["/view-project/" + project.id])
+    this.router.navigate(["/view-project/" + project])
   }
+
 
   back() {
     if(this.user.data.user.id != this.tokenStorage.getViewId() && this.tokenStorage.getViewId() != undefined) {

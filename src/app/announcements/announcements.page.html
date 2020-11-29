@@ -18,6 +18,7 @@
 <ion-content>
   <ion-list [ngSwitch]="type">
 <div *ngSwitchCase="'notifs'">
+  <div *ngIf="noNotificationBoolean == true">You have not received any notifications</div>
   <ion-card *ngFor="let n of notifications">
     <ion-card-header>
       <ion-badge>{{formatDate(n.createdAt)}}</ion-badge>
@@ -29,6 +30,7 @@
   </ion-card>
 </div>
 <div *ngSwitchCase="'announce'">
+  <div *ngIf = "noAnnouncementBoolean == true">There is no announcements yet</div>
   <ion-card *ngFor="let a of announcements">
     <ion-card-header>
       <ion-badge>{{formatDate(a.createdAt)}}</ion-badge>

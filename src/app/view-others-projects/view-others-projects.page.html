@@ -28,7 +28,7 @@
       <ion-label style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</ion-label>
     </div>
     <div *ngFor="let c of currentProjectsList">
-      <ion-card (click)="view($event, c)">
+      <ion-card (click)="view($event, c.id)">
         <img [src]=c.imgPath onerror="this.src='./assets/img/projects.jpg'" />
       <ion-card-header>
         <ion-badge style="float:right" class="role{{checkRole(c)}} ">&nbsp;{{checkRole(c)}}&nbsp;</ion-badge>
@@ -63,7 +63,7 @@
         <ion-label style="padding:0px 10px;">You have no previous projects! Start Creating Projects now!</ion-label>
       </div>
       <div *ngFor="let p of pastProjectsList">
-      <ion-card (click)="view($event, p)">
+      <ion-card (click)="view($event, p.id)">
           <img [src]=p.imgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
         <ion-card-header>
           <ion-badge style="float:right" class="role{{checkRole(p)}} ">&nbsp;{{checkRole(p)}}&nbsp;</ion-badge>
@@ -82,7 +82,7 @@
       </div>
       <div *ngIf="noPastContributionBoolean == false"><h4 style="padding: 0px 10px;">Overall Rating: {{avgRating}}</h4></div>
       <div *ngFor="let p of pastContributionsList">
-      <ion-card (click)="view($event, p)">
+      <ion-card (click)="view($event, p.projectId)">
           <img [src]=p.ionicImgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
         <ion-card-header>
           <ion-badge style="float:right" class="roleContributor">&nbsp;Contributor&nbsp;</ion-badge>
