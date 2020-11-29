@@ -11,6 +11,7 @@
     </ion-tab-button>
     <ion-tab-button  tab="messages">
       <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      <ion-badge *ngIf="chatNotRead == true" color="danger" style="position: absolute; right: 2px; top: 5px;">!</ion-badge>
       <ion-label>Messages</ion-label>
     </ion-tab-button>
     <!-- <ion-tab-button  tab="notifs" (click)="checkRead()">

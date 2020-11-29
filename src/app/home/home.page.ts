@@ -11,6 +11,7 @@ import { UserService } from '../services/user.service';
 import { MarketplaceService } from '../services/marketplace.service';
 import { AnnouncementsPage } from '../announcements/announcements.page';
 import { CommunicationService } from '../services/communication.service';
+import { interval } from 'rxjs';
  
 @Component({
   selector: 'app-home',
@@ -29,6 +30,11 @@ export class HomePage implements OnInit {
   discoverList: any[];
   announcements: any;
   unread: number;
+  gotNotifs: any;
+  tempLength: string;
+  gotNewAnnouncement: boolean;
+  subscribe: any;
+  source: any;
  
   constructor(private marketplaceService: MarketplaceService,
     private institutionService: InstitutionService, 
@@ -49,12 +55,30 @@ export class HomePage implements OnInit {
       this.accountBoolean = false;
     }
     this.pages = "feed";
+    this.source = interval(3000);
+    this.subscribe = this.source.subscribe(() => {
+          this.getAnnouncements();
+          var newLength = this.announcements.length;
+          if(this.announcements != undefined && newLength > this.tempLength) {
+              this.gotNewAnnouncement = true;
+              this.tempLength = newLength;
+           } else {
+            this.tempLength = newLength;
+       }
+      });
   }
+
   ngOnInit() {
     this.tokenStorage.getUser();
     this.getNewsFeed();
     this.getDiscover();
-    this.getAnnouncements();
+    this.commService.gotNewNotifs().subscribe((res) => {
+       this.gotNotifs = res.data.gotNew;
+      }, (err) => {
+      console.log("View Notifications Error: " + err.error.msg);
+      })
+
+      this.getAnnouncements();
   }
 
   ionViewDidEnter(){
@@ -88,16 +112,10 @@ export class HomePage implements OnInit {
   }
 
   getAnnouncements() {
-    console.log(this.tokenStorage.getAnnouncementLength() == undefined);
-    /*if(this.tokenStorage.getAnnouncementLength() == undefined) {
-      this.tokenStorage.saveAnnouncementLength(0)
-    } */
     this.commService.viewAnnouncements().subscribe((res) => {
       this.announcements = res.data.announcements;
       if(this.announcements != undefined) {
-        console.log(this.tokenStorage.getAnnouncementLength());
         this.unread = this.announcements.length - this.tokenStorage.getAnnouncementLength();
-        console.log(this.unread);
         this.tokenStorage.saveAnnouncementLength(this.announcements.length)
       }
       
@@ -194,6 +212,8 @@ export class HomePage implements OnInit {
   }
 
   async presentPopover(ev: any) {
+    this.gotNewAnnouncement = false;
+    this.gotNotifs = false;
     const popover = await this.popoverController.create({
       component: AnnouncementsPage,
       cssClass: 'my-custom-class',

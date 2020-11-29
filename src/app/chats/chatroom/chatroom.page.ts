@@ -58,13 +58,10 @@ export class ChatroomPage implements OnInit {
     this.subscribe = this.source.subscribe(() => {
       this.getMessage();
       var newLength = this.messages.length;
-      console.log("tempLength" + this.tempLength);
-      console.log("newLength" + newLength)
       if(this.messages != undefined && newLength > this.tempLength) {
         this.updateScroll();
         this.tempLength = newLength;
       }
-      console.log("timer is running")
     }
      );
 
@@ -112,7 +109,6 @@ export class ChatroomPage implements OnInit {
   }
 
   getMessage() {
-    console.log(this.chatroom.id)
     this.communicationService.getChatMessages(this.chatroom.id).subscribe((res) => {
       this.messages = res.data.chats
   }, (err) => {

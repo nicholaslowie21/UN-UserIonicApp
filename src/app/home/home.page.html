@@ -4,7 +4,9 @@
       Home
     </ion-title>
     <ion-buttons slot="end" (click)="presentPopover($event)">
+      
       <ion-icon slot="icon-only" name="megaphone-sharp" style="padding-right: 10px;"></ion-icon>
+      <ion-badge *ngIf="gotNotifs == true || gotNewAnnouncement == true" color="danger" style="position: absolute; right: 2px; top: -5px;">!</ion-badge>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
