@@ -32,7 +32,7 @@
 
     <ion-item>
       <ion-label position="floating">Level of Difficulty</ion-label>
-      <ion-select id="rating" name="rating" [(ngModel)]="rating">
+      <ion-select id="rating" name="rating" [(ngModel)]="rating" placeholder="Select one">
         <ion-select-option *ngFor="let rating of ratingsList" [value]="rating">{{rating}}</ion-select-option>
       </ion-select>
     </ion-item>

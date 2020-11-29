@@ -33,7 +33,7 @@
 
   <ion-item *ngIf="isChosenType == true">
       <ion-label position="floating">Title*</ion-label>
-      <ion-input ngModel name="title" [(ngModel)]="title" required minlength="3" #intitle="ngModel" placeholder="Enter resource name"></ion-input>
+      <ion-input ngModel name="title" [(ngModel)]="title" required minlength="3" #intitle="ngModel"></ion-input>
       <div class="alert-danger" *ngIf="form.submitted && intitle.invalid">
         <div *ngIf="intitle.errors.required">Title is required</div>
         <div *ngIf="intitle.errors.minlength">
@@ -54,11 +54,14 @@
   </ion-item>
 
   <ion-item *ngIf = "isChosenType == true && isPaidType == true">
-    <ion-label position="floating">Price*(Minimum $5)</ion-label>
+    <div>
+    <ion-label position="floating">Price*(Minimum US$5)</ion-label>
     <ion-input type="number" ngModel name="price" [(ngModel)]="price" required  #inprice="ngModel"></ion-input>
+    <p style="font-style:italic">A KoCoSD commission and PayPal transaction fee of 6% is deducted each time paid resource is purchased</p>
     <div class="alert-danger" *ngIf="form.submitted && inprice.invalid">
       <div *ngIf="indesc.errors.required">Price is required</div>
     </div>
+  </div>
   </ion-item>
 
   <ion-item *ngIf= "isChosenType == true && isPaidType == true">
@@ -150,7 +153,6 @@
   <div style="padding: 10px 10px">
     <ion-checkbox style="vertical-align:middle;" *ngIf="isChosenType == true" color="primary" [(ngModel)]="isChecked" name="checkbox" ></ion-checkbox>
     <ion-label style="padding-left: 10px;" *ngIf="isChosenType == true">I have read and agree to KoCoSD's <ion-label (click)="presentModal()" style="text-decoration:underline;" color="primary">Terms and Conditions</ion-label>.</ion-label>
-    <ion-label *ngIf="isPaidType == true"> I agree that I will not receive the lump sum of the price, due to deduction for KoCoSD commission and PayPal service fee.</ion-label>
   </div>
 
 

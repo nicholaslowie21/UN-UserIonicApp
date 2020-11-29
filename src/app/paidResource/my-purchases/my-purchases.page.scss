@@ -1,9 +1,8 @@
 
   ion-segment-button {
     font-size: 12px;
-    min-height: 40px;
+    min-height: 30px;
     min-width: 40px;
-  
   }
 
   ion-img {
@@ -85,11 +84,6 @@ ion-img {
 .segment-button.segment-activated{
   border: 2px dashed black !important;
 }
-
-ion-segment-button {
-  height: 40px;
-  min-height: 40px;
-  }
   
   ion-segment-button.segment-button-checked {
   border-bottom: 2px solid;

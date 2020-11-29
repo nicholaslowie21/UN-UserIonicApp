@@ -4,7 +4,7 @@
       <!--<ion-icon name="arrow-back" slot="start" (click)="back()" style="padding-left:10px"></ion-icon>-->
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{title}}</ion-title>
+    <ion-title><div class="ion-text-wrap">{{title}}</div></ion-title>
     <div slot="end">
     <ion-button slot="end" color="danger" *ngIf="founderBoolean==true && completedBoolean == false" (click)="complete($event)">Project<br>Completed</ion-button>
   </div>
