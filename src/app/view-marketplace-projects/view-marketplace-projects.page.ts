@@ -38,6 +38,7 @@ export class ViewMarketplaceProjectsPage implements OnInit {
     } else {
       this.accountBoolean = false;
     }
+    this.initialise();
     this.initializeProjs();
    }
 
@@ -53,6 +54,7 @@ export class ViewMarketplaceProjectsPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.initialise();
     this.initializeProjs();
   }
 
