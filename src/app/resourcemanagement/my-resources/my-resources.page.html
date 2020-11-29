@@ -17,7 +17,7 @@
     </ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-button routerLink="/my-project-requests" expand=full>My Outgoing Requests</ion-button>
+    <ion-button routerLink="/my-project-requests" expand="block"  style="margin: 0px 10px">My Outgoing Requests to Projects</ion-button>
     <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="item" checked>
         <ion-label>Item</ion-label>

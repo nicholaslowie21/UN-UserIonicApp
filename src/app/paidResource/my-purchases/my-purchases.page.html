@@ -55,20 +55,25 @@
               <ion-card-title (click)= "viewResource(p)">{{p.paidresource.title}}</ion-card-title>
               
               <ion-badge class="{{p.status}}">{{p.status}}</ion-badge>
-              
+              <ion-card-title color="success">US$ {{p.paidresource.price}}</ion-card-title>
             </ion-card-header>
 
             <ion-card-content>
-              <p>Owner: </p>
               <div class="aligned">
-                <img (click)="viewProfile($event, p)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=p.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-                <ion-label (click)="viewProfile($event, p)">{{p.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+                <div style="padding: 0px 5px 10px 0px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewProfile($event, p)" style="width: 40px; height: 40px; object-fit: cover;" [src]=p.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+                <div>
+                  <div class = "aligned">
+                    <ion-label style="font-weight: bold" (click)="viewProfile($event, p)">{{p.ownerUsername}}</ion-label>
+                    <ion-icon name="checkmark-circle" size="big"></ion-icon>
+                  </div>
+                  <ion-label>Resource Owner</ion-label>
+                </div> 
               </div>
-              <p>Country: {{p.paidresource.country}}</p>
-              <p>{{p.paidresource.desc}}</p>
-              <ion-label>Category: {{p.paidresource.category}}</ion-label>
-              <ion-card-title color=primary>$ {{p.paidresource.price}}</ion-card-title>
-              <ion-card-subtitle>Last Modified: {{formatDate(p.updatedAt)}}</ion-card-subtitle>
+              <ion-card-subtitle>{{p.paidresource.desc}}</ion-card-subtitle>
+              <p>Country: {{p.paidresource.country}}<br>
+                Category: {{p.paidresource.category}}
+              </p>
+              <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(p.updatedAt)}}</ion-badge></ion-card-subtitle>
               <ion-button (click)="presentCancelRequest($event,p)" expand="full" color="danger">Cancel</ion-button>
             </ion-card-content>
           </ion-card>
@@ -95,20 +100,27 @@
               <ion-card-title (click)= "viewResource(a)">{{a.paidresource.title}}</ion-card-title>
               
               <ion-badge class="{{a.status}}">{{a.status}}</ion-badge>
+              <ion-card-title color="success">US$ {{a.paidresource.price}}</ion-card-title>
               
             </ion-card-header>
 
             <ion-card-content>
-              <p>Owner: </p>
               <div class="aligned">
-                <img (click)="viewProfile($event, a)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=a.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-                <ion-label (click)="viewProfile($event, a)">{{a.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+                <div style="padding: 0px 5px 10px 0px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewProfile($event, a)" style="width: 40px; height: 40px; object-fit: cover;" [src]=a.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+                <div>
+                  <div class = "aligned">
+                    <ion-label style="font-weight: bold" (click)="viewProfile($event, a)">{{a.ownerUsername}}</ion-label>
+                    <ion-icon name="checkmark-circle" size="big"></ion-icon>
+                  </div>
+                  <ion-label>Resource Owner</ion-label>
+                </div> 
               </div>
-              <p>Country: {{a.paidresource.country}}</p>
-              <p>{{a.paidresource.desc}}</p>
-              <ion-label>Category: {{a.paidresource.category}}</ion-label>
-              <ion-card-title color=primary>$ {{a.paidresource.price}}</ion-card-title>
-              <ion-card-subtitle>Last Modified: {{formatDate(a.updatedAt)}}</ion-card-subtitle>
+              <ion-card-subtitle>{{a.paidresource.desc}}</ion-card-subtitle>
+              <p>Country: {{a.paidresource.country}}<br>
+                Category: {{a.paidresource.category}}
+              </p>
+              <ion-card-subtitle>Last Modified: <ion-badge color="dark">{{formatDate(a.updatedAt)}}</ion-badge></ion-card-subtitle>
+              
               <ion-grid>
                 <ion-row>
                   <ion-col>
@@ -144,20 +156,25 @@
               <ion-card-title (click)= "viewResource(d)">{{d.paidresource.title}}</ion-card-title>
               
               <ion-badge class="{{d.status}}">{{d.status}}</ion-badge>
-              
+              <ion-card-title color="success">US$ {{d.paidresource.price}}</ion-card-title>
             </ion-card-header>
 
             <ion-card-content>
-              <p>Owner: </p>
               <div class="aligned">
-                <img (click)="viewProfile($event, d)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=d.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-                <ion-label (click)="viewProfile($event, d)">{{d.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+                <div style="padding: 0px 5px 10px 0px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewProfile($event, d)" style="width: 40px; height: 40px; object-fit: cover;" [src]=d.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+                <div>
+                  <div class = "aligned">
+                    <ion-label style="font-weight: bold" (click)="viewProfile($event, d)">{{d.ownerUsername}}</ion-label>
+                    <ion-icon name="checkmark-circle" size="big"></ion-icon>
+                  </div>
+                  <ion-label>Resource Owner</ion-label>
+                </div> 
               </div>
-              <p>Country: {{d.paidresource.country}}</p>
-              <p>{{d.paidresource.desc}}</p>
-              <ion-label>Category: {{d.paidresource.category}}</ion-label>
-              <ion-card-title color=primary>$ {{d.paidresource.price}}</ion-card-title>
-              <ion-card-subtitle>Declined on: {{formatDate(d.updatedAt)}}</ion-card-subtitle>
+              <ion-card-subtitle>{{d.paidresource.desc}}</ion-card-subtitle>
+              <p>Country: {{d.paidresource.country}}<br>
+                Category: {{d.paidresource.category}}
+              </p>
+              <ion-card-subtitle>Declined on: <ion-badge color="dark">{{formatDate(d.updatedAt)}}</ion-badge></ion-card-subtitle>
             </ion-card-content>
           </ion-card>
           </div>
@@ -183,21 +200,26 @@
               <ion-card-title (click)= "viewResource(c)">{{c.paidresource.title}}</ion-card-title>
               
               <ion-badge class="{{c.status}}">{{c.status}}</ion-badge>
-              
+              <ion-card-title color="success">US$ {{c.paidresource.price}}</ion-card-title>
             </ion-card-header>
 
             <ion-card-content>
-              <p>Owner: </p>
               <div class="aligned">
-                <img (click)="viewProfile($event, c)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=c.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-                <ion-label (click)="viewProfile($event, c)">{{c.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+                <div style="padding: 0px 5px 10px 0px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewProfile($event, c)" style="width: 40px; height: 40px; object-fit: cover;" [src]=c.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+                <div>
+                  <div class = "aligned">
+                    <ion-label style="font-weight: bold" (click)="viewProfile($event, c)">{{c.ownerUsername}}</ion-label>
+                    <ion-icon name="checkmark-circle" size="big"></ion-icon>
+                  </div>
+                  <ion-label>Resource Owner</ion-label>
+                </div> 
               </div>
-              <p>Country: {{c.paidresource.country}}</p>
-              <p>{{c.paidresource.desc}}</p>
-              <ion-label>Category: {{c.paidresource.category}}</ion-label>
-              <ion-card-title color=primary>$ {{c.paidresource.price}}</ion-card-title>
+              <ion-card-subtitle>{{c.paidresource.desc}}</ion-card-subtitle>
+              <p>Country: {{c.paidresource.country}}<br>
+                Category: {{c.paidresource.category}}
+              </p><br>
               <ion-card-subtitle>Cancelled By: {{c.cancelType}}</ion-card-subtitle>
-              <ion-card-subtitle>Cancelled on: {{formatDate(c.updatedAt)}}</ion-card-subtitle>
+              <ion-card-subtitle>Cancelled on: <ion-badge color="dark">{{formatDate(c.updatedAt)}}</ion-badge></ion-card-subtitle>
             </ion-card-content>
           </ion-card>
           </div>
@@ -229,16 +251,21 @@
         </ion-card-header>
 
         <ion-card-content>
-          <p>Owner: </p>
-              <div class="aligned">
-                <img (click)="viewProfile($event, pp)" class="aligned card-img-top rounded-circle img-fluid d-block" style="width: 50px; height: 50px; object-fit: cover;" [src]=pp.ownerImg  alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'">
-                <ion-label (click)="viewProfile($event, pp)">{{pp.ownerUsername}}<ion-icon name="checkmark-circle" size="big"></ion-icon> </ion-label>
+          <div class="aligned">
+            <div style="padding: 0px 5px 10px 0px;"><img class="aligned card-img-top rounded-circle img-fluid d-block" (click)="viewProfile($event, pp)" style="width: 40px; height: 40px; object-fit: cover;" [src]=pp.ownerImg alt="Profile Picture" onerror="this.src='./assets/img/profpic.png'"></div>
+            <div>
+              <div class = "aligned">
+                <ion-label style="font-weight: bold" (click)="viewProfile($event, pp)">{{pp.ownerUsername}}</ion-label>
+                <ion-icon name="checkmark-circle" size="big"></ion-icon>
               </div>
-              <p>Country: {{pp.paidresource.country}}</p>
-              <p>{{pp.paidresource.desc}}</p>
-              <ion-label>Category: {{pp.paidresource.category}}</ion-label>
-              <ion-card-title color=primary>$ {{pp.paidresource.price}}</ion-card-title>
-              <ion-card-subtitle>Paid on: {{formatDate(pp.updatedAt)}}</ion-card-subtitle>
+              <ion-label>Resource Owner</ion-label>
+            </div> 
+          </div>
+          <ion-card-subtitle>{{pp.paidresource.desc}}</ion-card-subtitle>
+          <p>Country: {{pp.paidresource.country}}<br>
+            Category: {{pp.paidresource.category}}
+          </p>
+          <ion-card-subtitle>Paid on: <ion-badge color="dark">{{formatDate(pp.updatedAt)}}</ion-badge></ion-card-subtitle>
             </ion-card-content>
       </ion-card>
       </div>

@@ -6,22 +6,20 @@
     <ion-title>My Outgoing Requests</ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-item-divider>
-      <ion-segment [(ngModel)]="status" (ionChange)="segmentChanged($event)" color="secondary">
-        <ion-segment-button value="pending" checked>
-          Pending
-        </ion-segment-button>
-        <ion-segment-button value="accepted">
-          Accepted
-        </ion-segment-button>
-        <ion-segment-button value="declined">
-          Declined
-        </ion-segment-button>
-        <ion-segment-button value="cancelled">
-          Cancelled
-        </ion-segment-button>
-      </ion-segment>
-    </ion-item-divider>
+    <ion-segment [(ngModel)]="status" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="pending" checked>
+        Pending
+      </ion-segment-button>
+      <ion-segment-button value="accepted">
+        Accepted
+      </ion-segment-button>
+      <ion-segment-button value="declined">
+        Declined
+      </ion-segment-button>
+      <ion-segment-button value="cancelled">
+        Cancelled
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
@@ -31,7 +29,7 @@
     <div *ngSwitchCase="'pending'">
       <ion-title>Pending Requests(Outgoing)</ion-title>
       <div style="padding-left: 15px" *ngIf="(pendingProjectReqList == undefined || pendingProjectReqList.length == 0) == true">
-        You do not have any pending incoming requests!
+        You do not have any pending outgoing requests!
         </div>
       <div *ngFor="let m of pendingProjectReqList" >
       <ion-card>
@@ -76,7 +74,7 @@
 <div *ngSwitchCase="'declined'">
   <ion-title>Declined Requests(Outgoing)</ion-title>
   <div style="padding-left: 15px" *ngIf="(declinedProjectReqList == undefined|| declinedProjectReqList.length == 0) == true">
-    You do not have any declined incoming requests!
+    You do not have any declined outgoing requests!
     </div>
   <div *ngFor="let m of declinedProjectReqList" >
   <ion-card>
@@ -97,7 +95,7 @@
 <div *ngSwitchCase="'cancelled'">
 <ion-title>Cancelled Requests(Outgoing)</ion-title>
 <div style="padding-left: 15px" *ngIf="(cancelledProjectReqList == undefined||cancelledProjectReqList.length == 0) == true">
-  You do not have any cancelled incoming requests!
+  You do not have any cancelled outgoing requests!
   </div>
 <div *ngFor="let m of cancelledProjectReqList" >
 <ion-card>
