@@ -185,6 +185,23 @@ parseDate(d: String) {
       }, (err) => {
         console.log('********** Profile Feed error(Institution).ts: ', err.error.msg);
       })
+
+      this.institutionService.getBadges({"institutionId": this.currentUser.data.user.id, "accountType": this.accountType}).subscribe((res) => {
+        this.badges = res.data.badges
+        if(this.badges.length == 0) {
+          this.noBadgeBoolean = true;
+        } else {
+          for(var i = 0; i < this.badges.length; i++) {
+              this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+          }
+          this.noBadgeBoolean = false;
+        }
+        console.log(this.noBadgeBoolean);
+      }),
+      err => {
+        console.log('********** Badges(institution).ts: ', err.error.msg);
+      };
+
     } else if(this.accountType == "user") {
       this.userService.getUserProfileFeed(this.currentUser.data.user.id).subscribe((res) => {
         this.profileFeed = res.data.feeds;
@@ -201,6 +218,23 @@ parseDate(d: String) {
       }, (err) => {
         console.log('********** Profile Feed error(user).ts: ', err.error.msg);
       })
+
+      this.userService.getBadges({"userId": this.currentUser.data.user.id, "accountType": this.accountType}).subscribe((res) => {
+        this.badges = res.data.badges
+        if(this.badges.length == 0) {
+          this.noBadgeBoolean = true;
+        } else {
+          for(var i = 0; i < this.badges.length; i++) {
+            this.badges[i].imgPath = this.sessionService.getRscPath() + this.badges[i].imgPath +'?random+=' + Math.random();
+          }
+          this.noBadgeBoolean = false;
+        }
+        console.log(this.noBadgeBoolean);
+      }),
+      err => {
+        console.log('********** Badges(user).ts: ', err.error.msg);
+      };
+
     }
     
     

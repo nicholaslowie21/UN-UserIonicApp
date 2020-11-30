@@ -8,14 +8,14 @@
 </ion-header>
 
 <ion-content>
-    <h1 style="padding-left: 15px">Current tier: <ion-badge class="{{currentUser.data.user.tier}}">{{currentUser.data.user.tier}}</ion-badge></h1>
+    <h1 style="padding-left: 15px">Current tier: <ion-badge class="{{currentUser.tier}}">{{currentUser.tier}}</ion-badge></h1>
     <ion-grid>
       <ion-row style="padding: 0px 5px;">
         <ion-col>
-          <ion-icon name="ellipse-outline" style='margin-right: 5px;'></ion-icon>My points: {{currentUser.data.user.points}}
+          <ion-icon name="ellipse-outline" style='margin-right: 5px;'></ion-icon>My points: {{currentUser.points}}
         </ion-col>
         <ion-col style="text-align:right">
-          <ion-icon name="wallet-outline" style='margin-right: 5px;'></ion-icon>My wallet: {{currentUser.data.user.wallet}}
+          <ion-icon name="wallet-outline" style='margin-right: 5px;'></ion-icon>My wallet: {{currentUser.wallet}}
       </ion-col>
       </ion-row>
     </ion-grid>

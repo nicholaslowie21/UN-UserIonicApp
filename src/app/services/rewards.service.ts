@@ -32,7 +32,7 @@ export class RewardsService {
   }
 
   getFilteredMarketplaceReward(data): Observable<any> {
-    return this.http.get(this.API_URL + '/filter/tier/marketplace?minTier=' + data, httpOptions).pipe(
+    return this.http.get(this.API_URL + '/filter/tier/marketplace?tier=' + data, httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );
@@ -60,7 +60,7 @@ export class RewardsService {
   }
 
   getExpiredVouchers(): Observable<any> {
-    return this.http.get(this.API_URL + '/voucher?status=expired', httpOptions).pipe(
+    return this.http.get(this.API_URL + '/voucher?status=close', httpOptions).pipe(
       tap(res => {
     }, error => this.handleError(error)),
     );

@@ -80,6 +80,7 @@ export class ViewMarketplaceRewardsPage implements OnInit {
 
   filterTiers(tier) {
     this.tierFilterBoolean = true;
+    console.log(this.tier)
     this.rewardsService.getFilteredMarketplaceReward(this.tier).subscribe((res) => {
       this.filterList = res.data.rewards;
       if(this.filterList != undefined) {
@@ -126,7 +127,10 @@ export class ViewMarketplaceRewardsPage implements OnInit {
   }
 
   async filterRewardsList(evt) {
-    
+    if(this.tierFilterBoolean != true) {
+      this.initialiseRewards();
+      this.reset();
+    }
     this.tierFilterBoolean = false;
     const searchTerm = evt.srcElement.value;
   
@@ -139,10 +143,7 @@ export class ViewMarketplaceRewardsPage implements OnInit {
         return (reward.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) || (reward.accountName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) 
         || (reward.country.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
       }
-      if(this.tierFilterBoolean != true) {
-        this.initialiseRewards();
-        this.reset();
-      }
+      
     });
   }
 

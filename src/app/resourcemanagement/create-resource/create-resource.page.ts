@@ -45,7 +45,7 @@ export class CreateResourcePage implements OnInit {
   category: string | Blob;
   price: any=5;
   checked: boolean;
-  isChecked: boolean;
+  isChecked: boolean = false;
   modal: any;
   accountType: any;
   accountBoolean: boolean;

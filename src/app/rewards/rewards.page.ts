@@ -26,6 +26,7 @@ export class RewardsPage implements OnInit {
   noActiveVouchers: boolean = true;
   noClaimedVouchers: boolean = true;
   noExpiredVouchers: boolean = true;
+  user: any;
 
   constructor(private router: Router, 
     private sessionService: SessionService, 
@@ -38,10 +39,20 @@ export class RewardsPage implements OnInit {
     private toastCtrl: ToastController,
     private modalController: ModalController) {
     this.accountType = this.tokenStorage.getAccountType();
-    this.currentUser = this.tokenStorage.getUser();
+    this.user = this.tokenStorage.getUser();
     if(this.accountType == "institution") {
       this.accountBoolean = true;
+      this.currentUser = this.institutionService.viewInstitutionById(this.user.data.user.id).subscribe((res)=> {
+        this.currentUser = res.data.targetInstitution;
+      }, (err) => {
+        console.log("View Institution by Id");
+      })
     } else {
+      this.currentUser = this.userService.viewUserById(this.user.data.user.id).subscribe((res)=> {
+        this.currentUser = res.data.targetUser;
+      }, (err) => {
+        console.log("View User by Id");
+      })
       this.accountBoolean = false;
     }
     this.type = "active";
@@ -54,6 +65,21 @@ export class RewardsPage implements OnInit {
   ionViewDidEnter() {
     console.log("View entered")
     this.initialise();
+    if(this.accountType == "institution") {
+      this.accountBoolean = true;
+      this.currentUser = this.institutionService.viewInstitutionById(this.user.data.user.id).subscribe((res)=> {
+        this.currentUser = res.data.targetInstitution;
+      }, (err) => {
+        console.log("View Institution by Id");
+      })
+    } else {
+      this.currentUser = this.userService.viewUserById(this.user.data.user.id).subscribe((res)=> {
+        this.currentUser = res.data.targetUser;
+      }, (err) => {
+        console.log("View User by Id");
+      })
+      this.accountBoolean = false;
+    }
   }
 
   initialise() {
@@ -83,6 +109,7 @@ export class RewardsPage implements OnInit {
 
   this.rewardsService.getExpiredVouchers().subscribe((res)=> {
     this.expiredVouchers = res.data.vouchers
+    console.log(this.expiredVouchers);
     if(this.expiredVouchers != undefined) {
       for(var i = 0; i < this.expiredVouchers.length; i ++) {
         this.noExpiredVouchers = false;

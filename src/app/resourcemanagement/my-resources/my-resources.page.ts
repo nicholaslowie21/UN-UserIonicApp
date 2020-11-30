@@ -87,15 +87,18 @@ export class MyResourcesPage implements OnInit {
     if (this.isFilterAll == false) {
       this.isFilterAll = true;
       this.initialiseFilter();
+      this.initialiseActivePaid();
 
     } else {
       this.isFilterAll = false;
       this.initialiseFilter();
+      this.initialiseActivePaid();
+
     }
   }
 
   initialiseActivePaid() {
-    this.initialisePaid();
+    //this.initialisePaid();
     if(this.paidResourceList.length > 0) {
     for (var j = 0; j < this.paidResourceList.length; j++) {
       if(this.paidResourceList[j].status == "inactive") {
@@ -103,6 +106,7 @@ export class MyResourcesPage implements OnInit {
       }
     }
   }
+  console.log(this.paidResourceList);
   }
 
   initialisePaid() {
@@ -333,7 +337,6 @@ export class MyResourcesPage implements OnInit {
             if(this.itemResource[i].imgPath.length > 0) {
               for (var j = 0; j < this.itemResource[i].imgPath.length; j++) {
                 this.itemResource[i].imgPath[j] = this.sessionService.getRscPath() + this.itemResource[i].imgPath[j] + '?random+=' + Math.random(); 
-                console.log(1);
               }
               this.noItemPicBoolean = false;
             } else {
@@ -402,7 +405,15 @@ export class MyResourcesPage implements OnInit {
       if(this.itemResource.length > 0) {
         this.noItemResourceBoolean = false;
         for(var i = 0; i < this.itemResource.length; i++) {
-          this.itemResource[i].imgPath = this.sessionService.getRscPath() + this.itemResource[i].imgPath  +'?random+=' + Math.random();
+          if(this.itemResource[i].imgPath.length > 0) {
+            for (var j = 0; j < this.itemResource[i].imgPath.length; j++) {
+              this.itemResource[i].imgPath[j] = this.sessionService.getRscPath() + this.itemResource[i].imgPath[j] + '?random+=' + Math.random(); 
+              console.log(1);
+            }
+            this.noItemPicBoolean = false;
+          } else {
+            this.noItemPicBoolean = true;
+          }
         }
       } else {
           this.noItemResourceBoolean = true;

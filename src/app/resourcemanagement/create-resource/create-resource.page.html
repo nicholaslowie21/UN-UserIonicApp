@@ -151,8 +151,11 @@
   </ion-card>
 
   <div style="padding: 10px 10px">
-    <ion-checkbox style="vertical-align:middle;" *ngIf="isChosenType == true" color="primary" [(ngModel)]="isChecked" name="checkbox" ></ion-checkbox>
+    <ion-checkbox style="vertical-align:middle;" name="checked" #inchecked="ngModel" *ngIf="isChosenType == true" color="primary" [(ngModel)]="isChecked" name="checkbox" ></ion-checkbox>
     <ion-label style="padding-left: 10px;" *ngIf="isChosenType == true">I have read and agree to KoCoSD's <ion-label (click)="presentModal()" style="text-decoration:underline;" color="primary">Terms and Conditions</ion-label>.</ion-label>
+  </div>
+  <div class="alert-danger" *ngIf="form.submitted && isChecked == false">
+    Please accept the Terms & Conditions before creating the resource!!
   </div>
 
 
