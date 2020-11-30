@@ -168,6 +168,7 @@ export class RewardsPage implements OnInit {
       
     });
     this.modal.onWillDismiss().then((data) => {
+      this.initialise();
   });
     return await this.modal.present();
   }

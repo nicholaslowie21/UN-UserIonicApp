@@ -78,6 +78,7 @@ if(this.accountBoolean == true)
     })
     this.institutionService.getCurrentProjects(this.id).subscribe((res) => {
         this.currProjects = res.data.currProjects;
+        this.initializeCurr();
         if(this.currProjects.length > 0) {
           this.noCurrProjectBoolean = false;
           for(var i = 0; i < this.currProjects.length; i++) {
@@ -95,16 +96,27 @@ if(this.accountBoolean == true)
     };
 
     this.institutionService.getPastProjects(this.id).subscribe((res) => {
-    this.pastProjects = res.data.pastProjects
-    console.log(this.pastProjects.length);
-    if(this.pastProjects.length > 0) {
-      this.noPastProjectBoolean = false;
-      for(var i = 0; i < this.pastProjects.length; i++) {
-        this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
+      const pastProj = res.data.pastProjects
+      this.pastProjects = [];
+      
+      if(pastProj.length > 0) {
+        for(var i = 0; i < pastProj.length; i++) {
+          if(this.checkRole(pastProj[i]) != 'Contributor') {
+            pastProj[i].imgPath = this.sessionService.getRscPath() + pastProj[i].imgPath  +'?random+=' + Math.random();
+            this.pastProjects.push(pastProj[i])
+            this.noPastProjectBoolean = false;
+          }
+        }
+        
+      } else {
+          this.noPastProjectBoolean = true;
       }
-    } else {
-        this.noPastProjectBoolean = true;
-    }
+      if(this.noPastProjectBoolean == false) {
+        this.initializePast();
+        this.pastProjectsList = this.pastProjects.sort(function (a, b) {
+          return a.updatedAt.localeCompare(b.updatedAt);
+        }).reverse();
+      }
 
   }),
     err => {
@@ -136,7 +148,7 @@ if(this.accountBoolean == true)
       })
       this.userService.getCurrentProjects(this.id).subscribe((res) => {
       this.currProjects = res.data.currProjects
-
+      this.initializeCurr();
       if(this.currProjects.length > 0) {
         this.noCurrProjectBoolean = false;
         for(var i = 0; i < this.currProjects.length; i++) {
@@ -150,29 +162,40 @@ if(this.accountBoolean == true)
     console.log('********** Current-projects(user).ts: ', err.error.msg);
   };
   this.userService.getPastProjects(this.id).subscribe((res) => {
-        this.pastProjects = res.data.pastProjects
-
-        if(this.pastProjects.length > 0) {
+    const pastProj = res.data.pastProjects
+    this.pastProjects = [];
+    
+    if(pastProj.length > 0) {
+      for(var i = 0; i < pastProj.length; i++) {
+        if(this.checkRole(pastProj[i]) != 'Contributor') {
+          pastProj[i].imgPath = this.sessionService.getRscPath() + pastProj[i].imgPath  +'?random+=' + Math.random();
+          this.pastProjects.push(pastProj[i])
           this.noPastProjectBoolean = false;
-          for(var i = 0; i < this.pastProjects.length; i++) {
-            this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
-          }
-        } else {
-            this.noPastProjectBoolean = true;
         }
+      }
+      
+    } else {
+        this.noPastProjectBoolean = true;
+    }
+    if(this.noPastProjectBoolean == false) {
+      this.initializePast();
+      this.pastProjectsList = this.pastProjects.sort(function (a, b) {
+        return a.updatedAt.localeCompare(b.updatedAt);
+      }).reverse();
+    }
   }),
   err => {
     console.log('********** Past-projects(user).ts: ', err.error.msg);
   };
 
-  this.projectService.getContributionByUser(this.user.data.user.id, "user").subscribe((res) => {
+  this.projectService.getContributionByUser(this.id, "user").subscribe((res) => {
     this.pastContributions = res.data.contributions
     this.avgRating = res.data.avgRating;
     this.pastContributionsList = this.pastContributions;
     if(this.pastContributions.length > 0) {
       this.noPastContributionBoolean = false;
-      for(var i = 0; i < this.pastProjects.length; i++) {
-        this.pastContributions[i].ionicImgPath = this.sessionService.getRscPath() + this.pastContributions[i].ionicImgPath  +'?random+=' + Math.random();
+      for(var i = 0; i < this.pastContributions.length; i++) {
+        this.pastContributions[i].projectImg = this.sessionService.getRscPath() + this.pastContributions[i].projectImg  +'?random+=' + Math.random();
       }
 
       this.pastContributionsList = this.pastContributions.sort(function (a, b) {
@@ -191,7 +214,7 @@ if(this.accountBoolean == true)
 
 
 view(event, project) {
-this.router.navigate(["/view-project/" + project.id])
+this.router.navigate(["/view-project/" + project])
 }
 
 back() {

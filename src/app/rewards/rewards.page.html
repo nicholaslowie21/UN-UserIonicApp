@@ -34,7 +34,7 @@
       <ion-list  [ngSwitch]="type">
 
     <div *ngSwitchCase="'active'" >
-      <div *ngIf="noActiveVouchers == true">
+      <div *ngIf="activeVouchers == undefined || activeVouchers.length == 0">
         <h4 style="padding: 0px 10px;">You don't have any active reward vouchers! Redeem a reward in the marketplace now!</h4>
       </div>
       <ion-card *ngFor="let v of activeVouchers">

@@ -198,10 +198,7 @@ export class ViewOthersProfilePage implements OnInit {
       this.currentUser.bio = "-";
     }
     this.sdgs = this.currentUser.SDGs;
-
-    if(this.currentUser.isVerified == "true") {
-      this.isVerified = true;
-    }
+    this.isVerified = true;
         this.institutionService.getBadges({"institutionId": this.id, "accountType": this.accountType}).subscribe((res) => {
           this.badges = res.data.badges
           console.log(this.badges)
@@ -264,11 +261,14 @@ export class ViewOthersProfilePage implements OnInit {
         console.log("Error retrieving User: " + err.error.msg);
       })
     }
-
-    
     
   }
 
+  formatDate(date): any {
+    let formattedDate = new Date(date).toUTCString();
+    return formattedDate.substring(5, formattedDate.length-13);
+  }
+  
   getAffiliates($event) {
     this.router.navigate(['/affiliation-management/' + this.id]);
   }

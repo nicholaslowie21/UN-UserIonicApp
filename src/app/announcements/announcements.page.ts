@@ -13,6 +13,9 @@ export class AnnouncementsPage implements OnInit {
   announcements: any;
   type: string;
   notifications: any;
+  noAnnouncementBoolean: boolean;
+  noNotificationBoolean: boolean;
+
   constructor(private commService:CommunicationService, 
     private tokenStorage: TokenStorageService,
     private popoverController: PopoverController) {
@@ -26,6 +29,11 @@ export class AnnouncementsPage implements OnInit {
   initialise() {
     this.commService.viewAnnouncements().subscribe((res) => {
         this.announcements = res.data.announcements;
+        if(this.announcements.length == 0) {
+          this.noAnnouncementBoolean = true;
+        } else {
+          this.noAnnouncementBoolean = false;
+        }
     }, (err) => {
       console.log("View Announcement Error: " + err.error.msg);
     })
@@ -33,6 +41,11 @@ export class AnnouncementsPage implements OnInit {
       
     this.commService.viewNotifications().subscribe((res) => {
       this.notifications = res.data.notifications;
+      if(this.notifications.length == 0) {
+        this.noNotificationBoolean = true;
+      } else {
+        this.noNotificationBoolean = false;
+      }
     }, (err) => {
       console.log("View Notifications Error: " + err.error.msg);
     })
