@@ -32,7 +32,7 @@
       <p style="padding-left: 15px;">You have no current projects! Start Creating Projects now!</p>
     </div>
       <div *ngFor="let c of currentProjectsList">
-        <ion-card (click)="view($event, c)">
+        <ion-card (click)="viewProject($event, c)">
           <img [src]=c.imgPath onerror="this.src='./assets/img/projects.jpg'" />
         <ion-card-header>
           <ion-badge style="float:right" class="role{{checkRole(c)}} ">&nbsp;{{checkRole(c)}}&nbsp;</ion-badge>
@@ -50,7 +50,7 @@
     </div>
     <div *ngSwitchCase="'pastProj'">
       <ion-item-divider>
-        <ion-segment [(ngModel)]="role" (ionChange)="segmentChanged($event)">
+        <ion-segment value="admin" [(ngModel)]="role" (ionChange)="segmentChanged($event)">
           <ion-segment-button value="admin" checked>
             <ion-label>Founder/Admin</ion-label>
           </ion-segment-button>
@@ -63,11 +63,11 @@
       <ion-list [ngSwitch]="role">
       <ion-searchbar (ionInput)="filterPastList($event)" placeholder="Search"></ion-searchbar>
       <div *ngSwitchCase="'admin'">
-        <div *ngIf="noPastProjectBoolean == true">
+        <div *ngIf="pastProjectsList == undefined || pastProjectsList.length == 0">
           <p style="padding: 0px 15px;">You have no previous projects that you had a founder/admin role! Start Creating Projects now!</p>
         </div>
         <div *ngFor="let p of pastProjectsList">
-          <ion-card (click)="view($event, p)">
+          <ion-card (click)="viewContributedProject($event, p)">
               <img [src]=p.imgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
             <ion-card-header>
               <ion-badge style="float:right" class="role{{checkRole(p)}}">&nbsp;{{checkRole(p)}}&nbsp;</ion-badge>
@@ -86,8 +86,8 @@
         </div>
         <div *ngIf="noPastContributionBoolean == false"><h4 style="padding: 0px 10px;">Overall Rating: {{avgRating}}</h4></div>
         <div *ngFor="let p of pastContributionsList">
-        <ion-card (click)="view($event, p)">
-            <img [src]=p.ionicImgPath class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
+        <ion-card (click)="viewContributedProject($event, p)">
+            <img [src]=p.projectImg class="inactive" onerror="this.src='./assets/img/projects.jpg'" />
           <ion-card-header>
             <ion-badge style="float:right" class="roleContributor">&nbsp;Contributor&nbsp;</ion-badge>
             <ion-card-title>{{p.projectTitle}}</ion-card-title>

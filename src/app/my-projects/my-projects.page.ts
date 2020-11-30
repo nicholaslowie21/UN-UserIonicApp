@@ -124,6 +124,7 @@ export class MyProjectsPage implements OnInit {
         this.initializePast();
         if(this.pastProjects.length > 0) {
           this.noPastProjectBoolean = false;
+          
           for(var i = 0; i < this.pastProjects.length; i++) {
             this.pastProjects[i].imgPath = this.sessionService.getRscPath() + this.pastProjects[i].imgPath  +'?random+=' + Math.random();
           }
@@ -132,6 +133,7 @@ export class MyProjectsPage implements OnInit {
                 return a.updatedAt.localeCompare(b.updatedAt);
               }).reverse();
         } else {
+          
             this.noPastProjectBoolean = true;
         }
 
@@ -147,7 +149,7 @@ export class MyProjectsPage implements OnInit {
           if(this.pastContributions.length > 0) {
             this.noPastContributionBoolean = false;
             for(var i = 0; i < this.pastProjects.length; i++) {
-              this.pastContributions[i].ionicImgPath = this.sessionService.getRscPath() + this.pastContributions[i].ionicImgPath  +'?random+=' + Math.random();
+              this.pastContributions[i].projectImg = this.sessionService.getRscPath() + this.pastContributions[i].projectImg  +'?random+=' + Math.random();
             }
   
             this.pastContributionsList = this.pastContributions.sort(function (a, b) {
@@ -196,6 +198,7 @@ export class MyProjectsPage implements OnInit {
               this.noPastProjectBoolean = false;
             }
           }
+          console.log(this.pastProjects);
           
         } else {
             this.noPastProjectBoolean = true;
@@ -218,12 +221,13 @@ export class MyProjectsPage implements OnInit {
         this.pastContributions = res.data.contributions
         this.avgRating = res.data.avgRating;
         this.pastContributionsList = this.pastContributions;
+        
         if(this.pastContributions.length > 0) {
           this.noPastContributionBoolean = false;
-          for(var i = 0; i < this.pastProjects.length; i++) {
-            this.pastContributions[i].ionicImgPath = this.sessionService.getRscPath() + this.pastContributions[i].ionicImgPath  +'?random+=' + Math.random();
+          for(var i = 0; i < this.pastContributions.length; i++) {
+            this.pastContributions[i].projectImg = this.sessionService.getRscPath() + this.pastContributions[i].projectImg  +'?random+=' + Math.random();
           }
-
+          console.log(this.pastContributionsList);
           this.pastContributionsList = this.pastContributions.sort(function (a, b) {
                 return a.updatedAt.localeCompare(b.updatedAt);
               }).reverse();
@@ -238,9 +242,14 @@ export class MyProjectsPage implements OnInit {
     
   }
 
-  view(event, project) {
+  viewContributedProject(event, project) {
+    this.router.navigate(["/view-project/" + project.projectId])
+  }
+
+  viewProject(event, project) {
     this.router.navigate(["/view-project/" + project.id])
   }
+
 
   back() {
     if(this.user.data.user.id != this.tokenStorage.getViewId() && this.tokenStorage.getViewId() != undefined) {
