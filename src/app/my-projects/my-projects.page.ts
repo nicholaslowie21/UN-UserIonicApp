@@ -266,6 +266,10 @@ export class MyProjectsPage implements OnInit {
     }
  }
 
+ backNav() {
+   this.navCtrl.pop();
+ }
+
  initializeCurr() {
    this.currentProjectsList = this.currProjects;
  }

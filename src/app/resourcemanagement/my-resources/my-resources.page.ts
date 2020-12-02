@@ -4,6 +4,7 @@ import { SessionService } from '../../services/session.service';
 import { TokenStorageService } from '../../services/token-storage.service';
 import { Router } from  "@angular/router";
 import { PaidresourceService } from 'src/app/services/paidresource.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-my-resources',
@@ -42,7 +43,8 @@ export class MyResourcesPage implements OnInit {
     private tokenStorage: TokenStorageService, 
     private sessionService: SessionService, 
     private router: Router,
-    private paidService: PaidresourceService) {
+    private paidService: PaidresourceService,
+    private navCtrl: NavController) {
     this.accountType = this.tokenStorage.getAccountType();
         this.user = this.tokenStorage.getUser();
       console.log(this.accountType);
@@ -520,6 +522,10 @@ export class MyResourcesPage implements OnInit {
 
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
+  }
+
+  backNav() {
+    this.navCtrl.pop();
   }
 
 }

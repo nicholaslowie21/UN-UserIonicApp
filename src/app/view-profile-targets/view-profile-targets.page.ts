@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { TargetService } from '../services/target.service';
 import { TokenStorageService } from '../services/token-storage.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -29,7 +29,8 @@ export class ViewProfileTargetsPage implements OnInit {
     private targetService: TargetService,
     private modalCtrl: ModalController,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { 
+    private activatedRoute: ActivatedRoute,
+    private navCtrl: NavController) { 
   }
 
   ngOnInit() {
@@ -72,5 +73,7 @@ export class ViewProfileTargetsPage implements OnInit {
   //     'dismissed': true
   //   });
   // }
-
+  backNav() {
+    this.navCtrl.pop();
+  }
 }

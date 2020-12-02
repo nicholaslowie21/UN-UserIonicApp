@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { SessionService } from 'src/app/services/session.service';
 import { TestimonialService } from 'src/app/services/testimonial.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -43,7 +43,8 @@ export class MyTestimonialsPage implements OnInit {
     private toastCtrl: ToastController,
     private popoverController: PopoverController,
     private tokenStorage:TokenStorageService,
-    private router: Router) {
+    private router: Router,
+    private navCtrl: NavController) {
     this.segment = "open"
     this.inStatus = "requested"
     this.outStatus = "outrequested"
@@ -601,5 +602,10 @@ export class MyTestimonialsPage implements OnInit {
       this.router.navigate(['/view-others-profile/' + username + "/" + type ])
 
   }
+
+  backNav() {
+    this.navCtrl.pop();
+  }
+  
   
 }

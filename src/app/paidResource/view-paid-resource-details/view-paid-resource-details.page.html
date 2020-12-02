@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-icon name="arrow-back" slot="start" (click)="backNav()" style="padding-left:10px"></ion-icon>
+      <!--<ion-back-button></ion-back-button>-->
     </ion-buttons>
     <div *ngIf="yourAccountBoolean==false" slot="end">
       <ion-button slot="end" (click)= "purchase()" color="primary">Purchase</ion-button>
@@ -251,3 +252,4 @@
        </ion-list>
   </div>
 </ion-content>
+<ion-footer><ion-button routerLink="/tabs/profile" color="light" expand="full"></ion-button></ion-footer>

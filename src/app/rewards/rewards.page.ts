@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { InstitutionService } from '../services/institution.service';
 import { RewardsService } from '../services/rewards.service';
 import { SessionService } from '../services/session.service';
@@ -37,7 +37,8 @@ export class RewardsPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
     private toastCtrl: ToastController,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private navCtrl: NavController) {
     this.accountType = this.tokenStorage.getAccountType();
     this.user = this.tokenStorage.getUser();
     if(this.accountType == "institution") {
@@ -202,5 +203,9 @@ export class RewardsPage implements OnInit {
 
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
+  }
+
+  backNav() {
+    this.navCtrl.pop();
   }
 }

@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <!--<ion-icon name="arrow-back" slot="start" routerLink="/tabs/profile" style="padding-left:10px"></ion-icon>-->
-      <ion-back-button></ion-back-button>
+      <ion-icon name="arrow-back" slot="start" (click)="backNav()" style="padding-left:10px"></ion-icon>
+      <!--<ion-back-button></ion-back-button>-->
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-icon name="filter-outline" slot="end" style="padding-right: 10px" (click)="filter()"></ion-icon>
@@ -179,4 +179,5 @@
         </div>
         </div>
   </ion-list>
+  <ion-button routerLink="/tabs/profile" color="light" expand="full"></ion-button>
 </ion-content>

@@ -4,7 +4,7 @@ import { CommunicationService } from 'src/app/services/communication.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { interval } from 'rxjs';
 import { SessionService } from 'src/app/services/session.service';
-import { IonContent } from '@ionic/angular';
+import { IonContent, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-chatroom',
@@ -36,7 +36,8 @@ export class ChatroomPage implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private communicationService: CommunicationService
     ,private tokenStorage: TokenStorageService,
     private sessionService: SessionService,
-    private router: Router) {
+    private router: Router,
+    private navCtrl: NavController) {
     this.currentUser = this.tokenStorage.getUser();
    
    this.accountType = this.tokenStorage.getAccountType();
@@ -150,6 +151,10 @@ export class ChatroomPage implements OnInit {
           this.content.scrollToBottom(400);
       }
   }, 500);
+  }
+
+  backNav() {
+    this.navCtrl.pop();
   }
 
 }

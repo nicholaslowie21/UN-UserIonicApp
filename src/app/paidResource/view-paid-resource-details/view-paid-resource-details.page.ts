@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { PaidresourceService } from 'src/app/services/paidresource.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -39,7 +39,8 @@ export class ViewPaidResourceDetailsPage implements OnInit {
     private router: Router,
     private toastCtrl: ToastController,
     private alertController: AlertController,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private navCtrl: NavController) {
       this.requestType = "incoming";
     this.inStatus = "pending";
      }
@@ -427,5 +428,9 @@ export class ViewPaidResourceDetailsPage implements OnInit {
       cssClass: "toast-fail"
     });
     (await toast).present();
+  }
+
+  backNav() {
+    this.navCtrl.pop();
   }
 }

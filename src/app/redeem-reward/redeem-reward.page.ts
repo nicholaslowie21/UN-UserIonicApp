@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { RewardConfirmationPage } from '../reward-confirmation/reward-confirmation.page';
 import { InstitutionService } from '../services/institution.service';
 import { RewardsService } from '../services/rewards.service';
@@ -34,7 +34,8 @@ export class RedeemRewardPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
     private toastCtrl: ToastController,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private navCtrl: NavController) {
 
       this.accountType = this.tokenStorage.getAccountType();
     this.currentUser = this.tokenStorage.getUser();
@@ -129,6 +130,10 @@ export class RedeemRewardPage implements OnInit {
     this.modal.onWillDismiss().then((data) => {
   });
     return await this.modal.present();
+  }
+
+  backNav() {
+    this.navCtrl.pop();
   }
 
 }

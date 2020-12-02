@@ -497,4 +497,7 @@ viewTargets($event) {
 //   return await this.modal.present();
 // }
 
+backNav() {
+  this.navCtrl.pop();
+}
 }

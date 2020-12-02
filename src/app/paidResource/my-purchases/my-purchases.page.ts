@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { InstitutionService } from 'src/app/services/institution.service';
 import { PaidresourceService } from 'src/app/services/paidresource.service';
 import { SessionService } from 'src/app/services/session.service';
@@ -40,7 +40,8 @@ export class MyPurchasesPage implements OnInit {
     private institutionService: InstitutionService,
     private alertController: AlertController,
     private toastCtrl: ToastController,
-    private payPal: PayPal) {
+    private payPal: PayPal,
+    private navCtrl:NavController) {
     this.type = "purchases"
     this.inStatus = "pending";
    }
@@ -350,6 +351,10 @@ export class MyPurchasesPage implements OnInit {
   formatTDate(date): any {
     let formattedDate = new Date(date).toUTCString();
     return formattedDate;
+  }
+
+  backNav() {
+    this.navCtrl.pop();
   }
 
 }

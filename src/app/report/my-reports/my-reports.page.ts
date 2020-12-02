@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { ReportService } from 'src/app/services/report.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -18,7 +19,9 @@ export class MyReportsPage implements OnInit {
   declinedReports: any;
   type: any;
 
-  constructor(private tokenStorage: TokenStorageService, private reportService: ReportService) {
+  constructor(private tokenStorage: TokenStorageService, 
+    private reportService: ReportService,
+    private navCtrl: NavController) {
     this.currentUser = this.tokenStorage.getUser();
     this.type="pending";
    this.accountType = this.tokenStorage.getAccountType();
@@ -79,6 +82,10 @@ export class MyReportsPage implements OnInit {
   formatDate(date): any {
     let formattedDate = new Date(date).toUTCString();
     return formattedDate.substring(0, formattedDate.length-3);
+  }
+
+  backNav() {
+    this.navCtrl.pop();
   }
 
 }

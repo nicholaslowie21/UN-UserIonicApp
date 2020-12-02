@@ -1,9 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-    <ion-back-button></ion-back-button>
-    <ion-title>Redeem Rewards</ion-title>
+      <ion-icon name="arrow-back" slot="start" (click)="backNav()" style="padding-left:10px"></ion-icon>
+      <!--<ion-back-button></ion-back-button>-->
     </ion-buttons>
+    <ion-title>Redeem Rewards</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -54,3 +55,4 @@
   </ion-card-content>
 </ion-card>
 </ion-content>
+<ion-footer><ion-button routerLink="/tabs/profile" color="light" expand="full"></ion-button></ion-footer>
